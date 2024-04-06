@@ -1,7 +1,7 @@
 ---
 name: Fix
 about: 수정이 필요한 부분에 대하여 작성해주세요.
-title: ''
+title: "[Fix] "
 labels: ''
 assignees: ''
 
