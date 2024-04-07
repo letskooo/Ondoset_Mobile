@@ -14,6 +14,9 @@
 		47C29DC22BC23A4A00E3E2B9 /* OndosetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C29DC12BC23A4A00E3E2B9 /* OndosetTests.swift */; };
 		47C29DCC2BC23A4A00E3E2B9 /* OndosetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C29DCB2BC23A4A00E3E2B9 /* OndosetUITests.swift */; };
 		47C29DCE2BC23A4A00E3E2B9 /* OndosetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C29DCD2BC23A4A00E3E2B9 /* OndosetUITestsLaunchTests.swift */; };
+		47C29DDC2BC2450500E3E2B9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 47C29DDB2BC2450500E3E2B9 /* Lottie */; };
+		47C29DDF2BC2451600E3E2B9 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 47C29DDE2BC2451600E3E2B9 /* Kingfisher */; };
+		47C29DE22BC2453B00E3E2B9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 47C29DE12BC2453B00E3E2B9 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47C29DE22BC2453B00E3E2B9 /* Alamofire in Frameworks */,
+				47C29DDF2BC2451600E3E2B9 /* Kingfisher in Frameworks */,
+				47C29DDC2BC2450500E3E2B9 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +149,11 @@
 			dependencies = (
 			);
 			name = Ondoset;
+			packageProductDependencies = (
+				47C29DDB2BC2450500E3E2B9 /* Lottie */,
+				47C29DDE2BC2451600E3E2B9 /* Kingfisher */,
+				47C29DE12BC2453B00E3E2B9 /* Alamofire */,
+			);
 			productName = Ondoset;
 			productReference = 47C29DAD2BC23A4800E3E2B9 /* Ondoset.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +226,11 @@
 				Base,
 			);
 			mainGroup = 47C29DA42BC23A4800E3E2B9;
+			packageReferences = (
+				47C29DDA2BC2450500E3E2B9 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				47C29DDD2BC2451600E3E2B9 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				47C29DE02BC2453B00E3E2B9 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 47C29DAE2BC23A4800E3E2B9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -584,6 +600,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		47C29DDA2BC2450500E3E2B9 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.2;
+			};
+		};
+		47C29DDD2BC2451600E3E2B9 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
+		47C29DE02BC2453B00E3E2B9 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		47C29DDB2BC2450500E3E2B9 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47C29DDA2BC2450500E3E2B9 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		47C29DDE2BC2451600E3E2B9 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47C29DDD2BC2451600E3E2B9 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		47C29DE12BC2453B00E3E2B9 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47C29DE02BC2453B00E3E2B9 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 47C29DA52BC23A4800E3E2B9 /* Project object */;
 }
