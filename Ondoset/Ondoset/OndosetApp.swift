@@ -11,7 +11,7 @@ import SwiftUI
 struct OndosetApp: App {
     var body: some Scene {
         WindowGroup {
-            SplashView()
+            TestView()
         }
     }
 }
