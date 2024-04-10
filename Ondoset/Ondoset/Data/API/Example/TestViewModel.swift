@@ -10,7 +10,7 @@ import Combine
 
 class TestViewModel: ObservableObject {
     
-    let testUseCase: TestUseCase = TestUseCase()
+    let testUseCase: TestUseCase = TestUseCase.shared
     var cancelables = Set<AnyCancellable>()
     
     @Published var plainName: String = "이름이 나타납니다."
