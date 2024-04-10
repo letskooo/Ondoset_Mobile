@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		474E58192BC633DB005B4225 /* ComponentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E58182BC633DB005B4225 /* ComponentsView.swift */; };
 		474EBEF02BC51DE000341A18 /* AuthDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EBEEF2BC51DE000341A18 /* AuthDTO.swift */; };
+		47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BAF23A2BC65882002474E7 /* OndosetHome.swift */; };
+		47BAF23D2BC658AD002474E7 /* OndosetHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BAF23C2BC658AD002474E7 /* OndosetHomeViewModel.swift */; };
 		47BE3A132BC37FF900F27E38 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE3A122BC37FF900F27E38 /* Member.swift */; };
 		47BE3A152BC37FFF00F27E38 /* Clothes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE3A142BC37FFF00F27E38 /* Clothes.swift */; };
 		47BE3A182BC3800E00F27E38 /* Coordi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE3A172BC3800E00F27E38 /* Coordi.swift */; };
@@ -87,6 +89,8 @@
 /* Begin PBXFileReference section */
 		474E58182BC633DB005B4225 /* ComponentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentsView.swift; sourceTree = "<group>"; };
 		474EBEEF2BC51DE000341A18 /* AuthDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDTO.swift; sourceTree = "<group>"; };
+		47BAF23A2BC65882002474E7 /* OndosetHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OndosetHome.swift; sourceTree = "<group>"; };
+		47BAF23C2BC658AD002474E7 /* OndosetHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OndosetHomeViewModel.swift; sourceTree = "<group>"; };
 		47BE3A122BC37FF900F27E38 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		47BE3A142BC37FFF00F27E38 /* Clothes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clothes.swift; sourceTree = "<group>"; };
 		47BE3A172BC3800E00F27E38 /* Coordi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordi.swift; sourceTree = "<group>"; };
@@ -470,6 +474,8 @@
 			isa = PBXGroup;
 			children = (
 				47C29DF02BC2484200E3E2B9 /* SplashView.swift */,
+				47BAF23A2BC65882002474E7 /* OndosetHome.swift */,
+				47BAF23C2BC658AD002474E7 /* OndosetHomeViewModel.swift */,
 				47C29DF32BC2489100E3E2B9 /* SignIn */,
 				47C29DF22BC2488A00E3E2B9 /* SignUp */,
 			);
@@ -745,6 +751,7 @@
 				47C29DB12BC23A4800E3E2B9 /* OndosetApp.swift in Sources */,
 				47C29E372BC2516F00E3E2B9 /* CoordiUseCase.swift in Sources */,
 				47C29DF92BC2490600E3E2B9 /* OnboardingView.swift in Sources */,
+				47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */,
 				47E6BB6F2BC56D3600A72F3D /* AppError.swift in Sources */,
 				47BE3A3C2BC3CBBD00F27E38 /* Test.swift in Sources */,
 				474EBEF02BC51DE000341A18 /* AuthDTO.swift in Sources */,
@@ -760,6 +767,7 @@
 				47C29E2B2BC2504900E3E2B9 /* Constants.swift in Sources */,
 				47BE3A372BC3C16B00F27E38 /* Data+.swift in Sources */,
 				47C29E392BC2517E00E3E2B9 /* OOTDUseCase.swift in Sources */,
+				47BAF23D2BC658AD002474E7 /* OndosetHomeViewModel.swift in Sources */,
 				47C29E052BC249D000E3E2B9 /* RecordMainViewModel.swift in Sources */,
 				47C29DFB2BC2491900E3E2B9 /* OnboardingViewModel.swift in Sources */,
 				47BE3A1D2BC3809C00F27E38 /* MemberRepository.swift in Sources */,
