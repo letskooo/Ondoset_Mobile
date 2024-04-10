@@ -25,5 +25,6 @@ protocol EndPoint {
 
 extension EndPoint {
     /// 기본값으로 `nil`을 반환하며, 요청에 특정 헤더를 추가하려면 해당 프로퍼티를 override 해야합니다.
-    var headers: HTTPHeaders? { return ["Content-Type": "application/json"] }
+    var headers: HTTPHeaders? { return nil }
+//    var headers: HTTPHeaders? { return ["Content-Type": "application/json"] }
 }
