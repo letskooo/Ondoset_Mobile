@@ -14,9 +14,13 @@ struct SignInView: View {
     @State var pwInputText: String = ""
     @State var btnStatus: BtnStatus = .off
     
+//    @State private var path = NavigationPath()
+    @State private var path: [InitialViews] = []
+    
     var body: some View {
         
-        NavigationStack {
+        NavigationStack(path: $path) {
+            
             VStack(spacing: 0) {
                 
                 HStack {
@@ -46,22 +50,30 @@ struct SignInView: View {
                             updateBtnStatus()
                         }
            
-                    ButtonComponent(btnStatus: $btnStatus, btnText: "로그인") {
+                    ButtonComponent(btnStatus: $btnStatus, width: 340, btnText: "로그인", radius: 15) {
                         
                         // 로그인 API 호출
+                        
                     }
                     .padding(.top, 20)
                     
-                    NavigationLink(destination: SignUpView()) {
+                    Button {
+                        path.append(InitialViews.SignUpView)
+                        
+                    } label: {
                         HStack {
                             Text("회원가입")
                                 .font(Font.pretendard(.semibold, size: 13))
                                 .foregroundStyle(.main)
-                            
+
                             Image("rightChevron")
                         }
+                        .padding(.top, 20)
                     }
-                    .padding(.top, 20)
+                    .navigationDestination(for: InitialViews.self) { id in
+                        
+                        InitialNavPath.setInitialNavPath(id: id, path: $path)
+                    }
                 }
                 .offset(y: -20)
 
