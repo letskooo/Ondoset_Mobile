@@ -15,7 +15,7 @@ struct SignInView: View {
     @State var btnStatus: BtnStatus = .off
     
 //    @State private var path = NavigationPath()
-    @State private var path: [InitialViews] = []
+    @State private var path: [SignUpViews] = []
     
     var body: some View {
         
@@ -58,7 +58,7 @@ struct SignInView: View {
                     .padding(.top, 20)
                     
                     Button {
-                        path.append(InitialViews.SignUpView)
+                        path.append(SignUpViews.SignUpView)
                         
                     } label: {
                         HStack {
@@ -70,9 +70,9 @@ struct SignInView: View {
                         }
                         .padding(.top, 20)
                     }
-                    .navigationDestination(for: InitialViews.self) { id in
+                    .navigationDestination(for: SignUpViews.self) { id in
                         
-                        InitialNavPath.setInitialNavPath(id: id, path: $path)
+                        SignUpNavPath.setInitialNavPath(id: id, path: $path)
                     }
                 }
                 .offset(y: -20)

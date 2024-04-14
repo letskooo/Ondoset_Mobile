@@ -26,7 +26,7 @@ struct SignUpView: View {
     @State var isPwCheckPhraseHidden: Bool = true
     
     // @Binding
-    @Binding var path: [InitialViews]
+    @Binding var path: [SignUpViews]
     
     // @StateObject
     @StateObject var signUpVM: SignUpViewModel = .init()
@@ -105,7 +105,7 @@ struct SignUpView: View {
             ButtonComponent(btnStatus: $nextBtnStatus, width: 340, btnText: "다음으로", radius: 15) {
                 
                 if nextBtnStatus == .on {
-                    path.append(InitialViews.RegisterNickNameView)
+                    path.append(SignUpViews.RegisterNickNameView)
                 }
             }
             .padding(.top, 70)

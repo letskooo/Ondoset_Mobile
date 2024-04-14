@@ -15,7 +15,7 @@ struct RegisterNickNameView: View {
     @State var isNicknameWarningHidden: Bool = false
     
     // @Binding
-    @Binding var path: [InitialViews]
+    @Binding var path: [SignUpViews]
     
     // @Object
     @EnvironmentObject var signUpVM: SignUpViewModel

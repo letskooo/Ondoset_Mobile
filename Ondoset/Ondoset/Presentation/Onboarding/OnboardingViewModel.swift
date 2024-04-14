@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+class OnboardingViewModel: ObservableObject {
+    
+    @Published var onboardingList: [Int] = []
+    
+}

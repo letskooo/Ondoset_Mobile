@@ -86,8 +86,18 @@ extension APIManager {
                 method: endPoint.method,
                 parameters: parameters,
                 encoding: encoding,
+                headers: endPoint.headers,
+                interceptor: AuthManager()
+            )
+            
+        // 쿼리 파라미터 요청(토큰X)
+        case let .requestQueryParamsWithoutToken(parameters, encoding):
+            return AF.request(
+                "\(endPoint.baseURL)\(endPoint.path)",
+                method: endPoint.method,
+                parameters: parameters,
+                encoding: encoding,
                 headers: endPoint.headers
-//                interceptor: AuthManager()
             )
             
         // PathVariable 요청

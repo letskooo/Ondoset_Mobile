@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47058C0F2BC953FB002D7468 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47058C0E2BC953FB002D7468 /* SignInViewModel.swift */; };
 		474E58192BC633DB005B4225 /* ComponentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E58182BC633DB005B4225 /* ComponentsView.swift */; };
 		474EBEF02BC51DE000341A18 /* AuthDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EBEEF2BC51DE000341A18 /* AuthDTO.swift */; };
+		47705BF22BC770A2003B5D6E /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */; };
+		479058362BC907A3008FAD8E /* SecureFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479058352BC907A2008FAD8E /* SecureFieldComponent.swift */; };
+		47A718FD2BCB769200AD66A3 /* MemberDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A718FC2BCB769200AD66A3 /* MemberDTO.swift */; };
 		47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BAF23A2BC65882002474E7 /* OndosetHome.swift */; };
 		47BAF23D2BC658AD002474E7 /* OndosetHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BAF23C2BC658AD002474E7 /* OndosetHomeViewModel.swift */; };
 		47BE3A132BC37FF900F27E38 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE3A122BC37FF900F27E38 /* Member.swift */; };
@@ -65,6 +69,19 @@
 		47C29E332BC2515500E3E2B9 /* ClothesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C29E322BC2515500E3E2B9 /* ClothesUseCase.swift */; };
 		47C29E372BC2516F00E3E2B9 /* CoordiUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C29E362BC2516F00E3E2B9 /* CoordiUseCase.swift */; };
 		47C29E392BC2517E00E3E2B9 /* OOTDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C29E382BC2517E00E3E2B9 /* OOTDUseCase.swift */; };
+		47DF6F792BC6B9D900E64B12 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F702BC6B9D900E64B12 /* Pretendard-Black.otf */; };
+		47DF6F7A2BC6B9D900E64B12 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F712BC6B9D900E64B12 /* Pretendard-Thin.otf */; };
+		47DF6F7B2BC6B9D900E64B12 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F722BC6B9D900E64B12 /* Pretendard-Regular.otf */; };
+		47DF6F7C2BC6B9D900E64B12 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F732BC6B9D900E64B12 /* Pretendard-Light.otf */; };
+		47DF6F7D2BC6B9D900E64B12 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F742BC6B9D900E64B12 /* Pretendard-Medium.otf */; };
+		47DF6F7E2BC6B9D900E64B12 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F752BC6B9D900E64B12 /* Pretendard-SemiBold.otf */; };
+		47DF6F7F2BC6B9D900E64B12 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F762BC6B9D900E64B12 /* Pretendard-ExtraBold.otf */; };
+		47DF6F802BC6B9D900E64B12 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F772BC6B9D900E64B12 /* Pretendard-Bold.otf */; };
+		47DF6F812BC6B9D900E64B12 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F782BC6B9D900E64B12 /* Pretendard-ExtraLight.otf */; };
+		47DF6F992BC6BF6100E64B12 /* TextFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F982BC6BF6100E64B12 /* TextFieldComponent.swift */; };
+		47DF6F9B2BC6CC7C00E64B12 /* ButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F9A2BC6CC7C00E64B12 /* ButtonComponent.swift */; };
+		47DF6F9D2BC6FFD800E64B12 /* SignUpNavPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F9C2BC6FFD800E64B12 /* SignUpNavPath.swift */; };
+		47DF6F9F2BC7010100E64B12 /* RegisterNickNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F9E2BC7010100E64B12 /* RegisterNickNameView.swift */; };
 		47E6BB6F2BC56D3600A72F3D /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6BB6E2BC56D3600A72F3D /* AppError.swift */; };
 		47E6BB712BC56FD800A72F3D /* MemberEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6BB702BC56FD800A72F3D /* MemberEndPoint.swift */; };
 /* End PBXBuildFile section */
@@ -87,10 +104,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		47058C0E2BC953FB002D7468 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		474E58182BC633DB005B4225 /* ComponentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentsView.swift; sourceTree = "<group>"; };
 		474EBEEF2BC51DE000341A18 /* AuthDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDTO.swift; sourceTree = "<group>"; };
+		47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		479058352BC907A2008FAD8E /* SecureFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldComponent.swift; sourceTree = "<group>"; };
+		47A718FC2BCB769200AD66A3 /* MemberDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDTO.swift; sourceTree = "<group>"; };
 		47BAF23A2BC65882002474E7 /* OndosetHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OndosetHome.swift; sourceTree = "<group>"; };
 		47BAF23C2BC658AD002474E7 /* OndosetHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OndosetHomeViewModel.swift; sourceTree = "<group>"; };
+		47BAF23E2BC6673D002474E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		47BE3A122BC37FF900F27E38 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		47BE3A142BC37FFF00F27E38 /* Clothes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clothes.swift; sourceTree = "<group>"; };
 		47BE3A172BC3800E00F27E38 /* Coordi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordi.swift; sourceTree = "<group>"; };
@@ -137,15 +159,6 @@
 		47C29E0E2BC24A2300E3E2B9 /* OOTDMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDMainViewModel.swift; sourceTree = "<group>"; };
 		47C29E132BC24A5500E3E2B9 /* MyPageMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageMainView.swift; sourceTree = "<group>"; };
 		47C29E152BC24A6300E3E2B9 /* MyPageMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageMainViewModel.swift; sourceTree = "<group>"; };
-		47C29E1B2BC24DB000E3E2B9 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Regular.otf"; path = "../../../../../../iOS_SwiftUI/Namo_SwiftUI/Namo_SwiftUI/Common/Fonts/Pretendard-Regular.otf"; sourceTree = "<group>"; };
-		47C29E1C2BC24DB000E3E2B9 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-SemiBold.otf"; path = "../../../../../../iOS_SwiftUI/Namo_SwiftUI/Namo_SwiftUI/Common/Fonts/Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
-		47C29E1D2BC24DB000E3E2B9 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Light.otf"; path = "../../../../../../iOS_SwiftUI/Namo_SwiftUI/Namo_SwiftUI/Common/Fonts/Pretendard-Light.otf"; sourceTree = "<group>"; };
-		47C29E1E2BC24DB000E3E2B9 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Thin.otf"; path = "../../../../../../iOS_SwiftUI/Namo_SwiftUI/Namo_SwiftUI/Common/Fonts/Pretendard-Thin.otf"; sourceTree = "<group>"; };
-		47C29E1F2BC24DB000E3E2B9 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraBold.otf"; path = "../../../../../../iOS_SwiftUI/Namo_SwiftUI/Namo_SwiftUI/Common/Fonts/Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
-		47C29E202BC24DB000E3E2B9 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraLight.otf"; path = "../../../../../../iOS_SwiftUI/Namo_SwiftUI/Namo_SwiftUI/Common/Fonts/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
-		47C29E212BC24DB000E3E2B9 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Bold.otf"; path = "../../../../../../iOS_SwiftUI/Namo_SwiftUI/Namo_SwiftUI/Common/Fonts/Pretendard-Bold.otf"; sourceTree = "<group>"; };
-		47C29E222BC24DB000E3E2B9 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Medium.otf"; path = "../../../../../../iOS_SwiftUI/Namo_SwiftUI/Namo_SwiftUI/Common/Fonts/Pretendard-Medium.otf"; sourceTree = "<group>"; };
-		47C29E232BC24DB000E3E2B9 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Black.otf"; path = "../../../../../../iOS_SwiftUI/Namo_SwiftUI/Namo_SwiftUI/Common/Fonts/Pretendard-Black.otf"; sourceTree = "<group>"; };
 		47C29E242BC24DD600E3E2B9 /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
 		47C29E262BC24EA400E3E2B9 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		47C29E282BC2500200E3E2B9 /* ViewHiddenModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHiddenModifier.swift; sourceTree = "<group>"; };
@@ -154,6 +167,19 @@
 		47C29E322BC2515500E3E2B9 /* ClothesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesUseCase.swift; sourceTree = "<group>"; };
 		47C29E362BC2516F00E3E2B9 /* CoordiUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordiUseCase.swift; sourceTree = "<group>"; };
 		47C29E382BC2517E00E3E2B9 /* OOTDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDUseCase.swift; sourceTree = "<group>"; };
+		47DF6F702BC6B9D900E64B12 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Black.otf"; path = "../../../../../../../../../../.Trash/Pretendard-Black.otf"; sourceTree = "<group>"; };
+		47DF6F712BC6B9D900E64B12 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Thin.otf"; path = "../../../../../../../../../../.Trash/Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		47DF6F722BC6B9D900E64B12 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Regular.otf"; path = "../../../../../../../../../../.Trash/Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		47DF6F732BC6B9D900E64B12 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Light.otf"; path = "../../../../../../../../../../.Trash/Pretendard-Light.otf"; sourceTree = "<group>"; };
+		47DF6F742BC6B9D900E64B12 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Medium.otf"; path = "../../../../../../../../../../.Trash/Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		47DF6F752BC6B9D900E64B12 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-SemiBold.otf"; path = "../../../../../../../../../../.Trash/Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		47DF6F762BC6B9D900E64B12 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraBold.otf"; path = "../../../../../../../../../../.Trash/Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		47DF6F772BC6B9D900E64B12 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Bold.otf"; path = "../../../../../../../../../../.Trash/Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		47DF6F782BC6B9D900E64B12 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraLight.otf"; path = "../../../../../../../../../../.Trash/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		47DF6F982BC6BF6100E64B12 /* TextFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponent.swift; sourceTree = "<group>"; };
+		47DF6F9A2BC6CC7C00E64B12 /* ButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComponent.swift; sourceTree = "<group>"; };
+		47DF6F9C2BC6FFD800E64B12 /* SignUpNavPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNavPath.swift; sourceTree = "<group>"; };
+		47DF6F9E2BC7010100E64B12 /* RegisterNickNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNickNameView.swift; sourceTree = "<group>"; };
 		47E6BB6E2BC56D3600A72F3D /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		47E6BB702BC56FD800A72F3D /* MemberEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberEndPoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -186,10 +212,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		47058C0D2BC953DC002D7468 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		474E58172BC633CD005B4225 /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				474E58182BC633DB005B4225 /* ComponentsView.swift */,
+				479058352BC907A2008FAD8E /* SecureFieldComponent.swift */,
+				47DF6F982BC6BF6100E64B12 /* TextFieldComponent.swift */,
+				47DF6F9A2BC6CC7C00E64B12 /* ButtonComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -310,6 +346,7 @@
 			children = (
 				47BE3A342BC3BAF500F27E38 /* BaseResponse.swift */,
 				474EBEEF2BC51DE000341A18 /* AuthDTO.swift */,
+				47A718FC2BCB769200AD66A3 /* MemberDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -350,6 +387,7 @@
 		47C29DAF2BC23A4800E3E2B9 /* Ondoset */ = {
 			isa = PBXGroup;
 			children = (
+				47BAF23E2BC6673D002474E7 /* Info.plist */,
 				47C29DB02BC23A4800E3E2B9 /* OndosetApp.swift */,
 				47C29E172BC24CAD00E3E2B9 /* Common */,
 				47C29DE52BC2460000E3E2B9 /* Data */,
@@ -473,6 +511,7 @@
 		47C29DEE2BC2481D00E3E2B9 /* Initial */ = {
 			isa = PBXGroup;
 			children = (
+				47058C0D2BC953DC002D7468 /* New Group */,
 				47C29DF02BC2484200E3E2B9 /* SplashView.swift */,
 				47BAF23A2BC65882002474E7 /* OndosetHome.swift */,
 				47BAF23C2BC658AD002474E7 /* OndosetHomeViewModel.swift */,
@@ -485,7 +524,10 @@
 		47C29DF22BC2488A00E3E2B9 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				47DF6F9C2BC6FFD800E64B12 /* SignUpNavPath.swift */,
 				47C29DF62BC248D000E3E2B9 /* SignUpView.swift */,
+				47DF6F9E2BC7010100E64B12 /* RegisterNickNameView.swift */,
+				47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -494,6 +536,7 @@
 			isa = PBXGroup;
 			children = (
 				47C29DF42BC248C300E3E2B9 /* SignInView.swift */,
+				47058C0E2BC953FB002D7468 /* SignInViewModel.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -555,8 +598,9 @@
 		47C29E182BC24CEB00E3E2B9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				47C29E1A2BC24D9700E3E2B9 /* Font */,
+				47C29E1A2BC24D9700E3E2B9 /* Fonts */,
 				47C29E282BC2500200E3E2B9 /* ViewHiddenModifier.swift */,
+				47C29E242BC24DD600E3E2B9 /* Font+.swift */,
 				47C29E262BC24EA400E3E2B9 /* Color+.swift */,
 				47BE3A362BC3C16B00F27E38 /* Data+.swift */,
 			);
@@ -572,21 +616,20 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		47C29E1A2BC24D9700E3E2B9 /* Font */ = {
+		47C29E1A2BC24D9700E3E2B9 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				47C29E242BC24DD600E3E2B9 /* Font+.swift */,
-				47C29E232BC24DB000E3E2B9 /* Pretendard-Black.otf */,
-				47C29E212BC24DB000E3E2B9 /* Pretendard-Bold.otf */,
-				47C29E1F2BC24DB000E3E2B9 /* Pretendard-ExtraBold.otf */,
-				47C29E202BC24DB000E3E2B9 /* Pretendard-ExtraLight.otf */,
-				47C29E1D2BC24DB000E3E2B9 /* Pretendard-Light.otf */,
-				47C29E222BC24DB000E3E2B9 /* Pretendard-Medium.otf */,
-				47C29E1B2BC24DB000E3E2B9 /* Pretendard-Regular.otf */,
-				47C29E1C2BC24DB000E3E2B9 /* Pretendard-SemiBold.otf */,
-				47C29E1E2BC24DB000E3E2B9 /* Pretendard-Thin.otf */,
+				47DF6F702BC6B9D900E64B12 /* Pretendard-Black.otf */,
+				47DF6F772BC6B9D900E64B12 /* Pretendard-Bold.otf */,
+				47DF6F762BC6B9D900E64B12 /* Pretendard-ExtraBold.otf */,
+				47DF6F782BC6B9D900E64B12 /* Pretendard-ExtraLight.otf */,
+				47DF6F732BC6B9D900E64B12 /* Pretendard-Light.otf */,
+				47DF6F742BC6B9D900E64B12 /* Pretendard-Medium.otf */,
+				47DF6F722BC6B9D900E64B12 /* Pretendard-Regular.otf */,
+				47DF6F752BC6B9D900E64B12 /* Pretendard-SemiBold.otf */,
+				47DF6F712BC6B9D900E64B12 /* Pretendard-Thin.otf */,
 			);
-			path = Font;
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -703,8 +746,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47DF6F7D2BC6B9D900E64B12 /* Pretendard-Medium.otf in Resources */,
+				47DF6F802BC6B9D900E64B12 /* Pretendard-Bold.otf in Resources */,
 				47C29DB82BC23A4A00E3E2B9 /* Preview Assets.xcassets in Resources */,
+				47DF6F7F2BC6B9D900E64B12 /* Pretendard-ExtraBold.otf in Resources */,
+				47DF6F792BC6B9D900E64B12 /* Pretendard-Black.otf in Resources */,
+				47DF6F7E2BC6B9D900E64B12 /* Pretendard-SemiBold.otf in Resources */,
+				47DF6F7B2BC6B9D900E64B12 /* Pretendard-Regular.otf in Resources */,
 				47C29DB52BC23A4A00E3E2B9 /* Assets.xcassets in Resources */,
+				47DF6F7A2BC6B9D900E64B12 /* Pretendard-Thin.otf in Resources */,
+				47DF6F7C2BC6B9D900E64B12 /* Pretendard-Light.otf in Resources */,
+				47DF6F812BC6B9D900E64B12 /* Pretendard-ExtraLight.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -736,8 +788,10 @@
 				47C29DF72BC248D000E3E2B9 /* SignUpView.swift in Sources */,
 				47BE3A272BC388A700F27E38 /* KeyChainManager.swift in Sources */,
 				47BE3A182BC3800E00F27E38 /* Coordi.swift in Sources */,
+				47DF6F9B2BC6CC7C00E64B12 /* ButtonComponent.swift in Sources */,
 				47BE3A302BC3938D00F27E38 /* APIManager.swift in Sources */,
 				47BE3A232BC380BA00F27E38 /* OOTDRepository.swift in Sources */,
+				47DF6F9D2BC6FFD800E64B12 /* SignUpNavPath.swift in Sources */,
 				47BE3A212BC380AD00F27E38 /* CoordiRepository.swift in Sources */,
 				474E58192BC633DB005B4225 /* ComponentsView.swift in Sources */,
 				47C29E142BC24A5500E3E2B9 /* MyPageMainView.swift in Sources */,
@@ -752,13 +806,16 @@
 				47C29E372BC2516F00E3E2B9 /* CoordiUseCase.swift in Sources */,
 				47C29DF92BC2490600E3E2B9 /* OnboardingView.swift in Sources */,
 				47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */,
+				47A718FD2BCB769200AD66A3 /* MemberDTO.swift in Sources */,
 				47E6BB6F2BC56D3600A72F3D /* AppError.swift in Sources */,
 				47BE3A3C2BC3CBBD00F27E38 /* Test.swift in Sources */,
+				47DF6F9F2BC7010100E64B12 /* RegisterNickNameView.swift in Sources */,
 				474EBEF02BC51DE000341A18 /* AuthDTO.swift in Sources */,
 				47BE3A1F2BC380A400F27E38 /* ClothesRepository.swift in Sources */,
 				47C29E0D2BC24A1800E3E2B9 /* OOTDMainView.swift in Sources */,
 				47C29E082BC249E900E3E2B9 /* ClosetMainView.swift in Sources */,
 				47C29DFE2BC2498C00E3E2B9 /* HomeMainViewModel.swift in Sources */,
+				47058C0F2BC953FB002D7468 /* SignInViewModel.swift in Sources */,
 				47C29E0A2BC24A0200E3E2B9 /* ClosetMainViewModel.swift in Sources */,
 				47C29E332BC2515500E3E2B9 /* ClothesUseCase.swift in Sources */,
 				47C29DF52BC248C300E3E2B9 /* SignInView.swift in Sources */,
@@ -769,8 +826,10 @@
 				47C29E392BC2517E00E3E2B9 /* OOTDUseCase.swift in Sources */,
 				47BAF23D2BC658AD002474E7 /* OndosetHomeViewModel.swift in Sources */,
 				47C29E052BC249D000E3E2B9 /* RecordMainViewModel.swift in Sources */,
+				47705BF22BC770A2003B5D6E /* SignUpViewModel.swift in Sources */,
 				47C29DFB2BC2491900E3E2B9 /* OnboardingViewModel.swift in Sources */,
 				47BE3A1D2BC3809C00F27E38 /* MemberRepository.swift in Sources */,
+				47DF6F992BC6BF6100E64B12 /* TextFieldComponent.swift in Sources */,
 				47BE3A152BC37FFF00F27E38 /* Clothes.swift in Sources */,
 				47BE3A2E2BC3910900F27E38 /* EndPoint.swift in Sources */,
 				47C29DF12BC2484200E3E2B9 /* SplashView.swift in Sources */,
@@ -779,6 +838,7 @@
 				47C29E162BC24A6300E3E2B9 /* MyPageMainViewModel.swift in Sources */,
 				47BE3A452BC4C99B00F27E38 /* TestView.swift in Sources */,
 				47BE3A132BC37FF900F27E38 /* Member.swift in Sources */,
+				479058362BC907A3008FAD8E /* SecureFieldComponent.swift in Sources */,
 				47BE3A3A2BC3C97300F27E38 /* TestEndPoint.swift in Sources */,
 				47BE3A1A2BC3801300F27E38 /* OOTD.swift in Sources */,
 			);
@@ -946,6 +1006,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Ondoset/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Ondoset/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -975,6 +1036,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Ondoset/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Ondoset/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct SignUpRequestDTO: Codable {
+    
+    let id: String
+    let password: String
+    let nickname: String
+}

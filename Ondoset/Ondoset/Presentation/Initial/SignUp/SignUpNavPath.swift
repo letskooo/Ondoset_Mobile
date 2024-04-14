@@ -14,7 +14,7 @@ enum SignUpViews {
     case RegisterNickNameView
 }
 
-struct SignInNavPath {
+struct SignUpNavPath {
     
     var id: SignUpViews
     var path: [SignUpNavPath]

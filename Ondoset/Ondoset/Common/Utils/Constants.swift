@@ -11,7 +11,7 @@
 import UIKit
 
 let baseURLLL = "http://localhost:8080"
-let serverURL = ""
+let testServerURL = "http://ceprj.gachon.ac.kr:60019"
 
 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
 let screenWidth = windowScene?.screen.bounds.width ?? 0

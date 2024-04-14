@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct TextFieldView: View {
+struct TextFieldComponent: View {
     
-    var width: CGFloat
-    var placeholder: String
+    let width: CGFloat
+    let placeholder: String
     @Binding var inputText: String
     
     var body: some View {
@@ -34,5 +34,5 @@ struct TextFieldView: View {
 }
 
 #Preview {
-    TextFieldView(width: 340, placeholder: "아이디", inputText: .constant(""))
+    TextFieldComponent(width: 340, placeholder: "아이디", inputText: .constant(""))
 }
