@@ -12,11 +12,10 @@ struct SignInView: View {
     
     @State var idInputText: String = ""
     @State var pwInputText: String = ""
-    @State var btnStatus: BtnStatus = .off
-    
-//    @State private var path = NavigationPath()
-    @State private var path: [SignUpViews] = []
-    
+    @State var btnStatus: Bool = false
+
+    @State private var path: [String] = []
+
     var body: some View {
         
         NavigationStack(path: $path) {
@@ -42,15 +41,14 @@ struct SignInView: View {
                         .onChange(of: idInputText) { _ in
                             updateBtnStatus()
                         }
-                    
                         
-                    TextFieldComponent(width: 340, placeholder: "비밀번호", inputText: $pwInputText)
+                    SecureFieldComponent(width: 340, placeholder: "비밀번호", inputText: $pwInputText)
                         .padding(.top, 20)
                         .onChange(of: pwInputText) { _ in
                             updateBtnStatus()
                         }
            
-                    ButtonComponent(btnStatus: $btnStatus, width: 340, btnText: "로그인", radius: 15) {
+                    ButtonComponent(isBtnAvailable: $btnStatus, width: 340, btnText: "로그인", radius: 15) {
                         
                         // 로그인 API 호출
                         
@@ -58,7 +56,7 @@ struct SignInView: View {
                     .padding(.top, 20)
                     
                     Button {
-                        path.append(SignUpViews.SignUpView)
+                        path.append("SignUpView")
                         
                     } label: {
                         HStack {
@@ -70,9 +68,11 @@ struct SignInView: View {
                         }
                         .padding(.top, 20)
                     }
-                    .navigationDestination(for: SignUpViews.self) { id in
+                    .navigationDestination(for: String.self) { id in
                         
-                        SignUpNavPath.setInitialNavPath(id: id, path: $path)
+                        if id == "SignUpView" {
+                            SignUpView(path: $path)
+                        }
                     }
                 }
                 .offset(y: -20)
@@ -89,9 +89,9 @@ struct SignInView: View {
     
     private func updateBtnStatus() {
         if !idInputText.isEmpty && !pwInputText.isEmpty {
-            btnStatus = .on
+            btnStatus = true
         } else {
-            btnStatus = .off
+            btnStatus = false
         }
     }
 }

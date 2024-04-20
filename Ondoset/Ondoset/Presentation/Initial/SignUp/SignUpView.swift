@@ -9,27 +9,40 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    // @State
+    // 아이디 입력값
     @State var idInputText: String = ""
+    
+    // 비밀번호 입력값
     @State var pwInputText: String = ""
+    
+    // 비밀번호 확인 입력값
     @State var pwCheckInputText: String = ""
     
-    @State var duplicateIdCheckBtnStatus: BtnStatus = .off
-    @State var nextBtnStatus: BtnStatus = .off
+    // 아이디 중복 확인 버튼 활성화 여부
+    @State var duplicateIdCheckBtnStatus: Bool = false
     
+    // 아이디 안내문
     @State var idPhrase: String = "8자리 이상 아이디를 입력해주세요!"
+    
+    // 비밀번호 안내문
     @State var pwPhrase: String = "8자리 이상, 영문 및 숫자를 포함한 비밀번호를 입력해주세요!"
+    
+    // 비밀번호 확인 안내문
     @State var pwCheckPhrase: String = "비밀번호가 일치합니다."
     
+    // 아이디 안내문 숨기기 여부
     @State var isIdPhraseHidden: Bool = false
+    
+    // 비밀번호 안내문 숨기기 여부
     @State var isPwPhraseHidden: Bool = false
+    
+    // 비밀번호 확인 안내문 숨기기 여부
     @State var isPwCheckPhraseHidden: Bool = true
     
-    // @Binding
-    @Binding var path: [SignUpViews]
-    
-    // @StateObject
     @StateObject var signUpVM: SignUpViewModel = .init()
+    
+    // @Binding
+    @Binding var path: [String]
     
     var body: some View {
         
@@ -44,16 +57,11 @@ struct SignUpView: View {
                             signUpVM.idConditionCheck(id: id, isIdPhraseHidden: $isIdPhraseHidden, duplicateIdCheckBtnStatus: $duplicateIdCheckBtnStatus)
                         }
                     
-                    ButtonComponent(btnStatus: $duplicateIdCheckBtnStatus, width: 80, btnText: "중복 확인", radius: 8) {
+                    ButtonComponent(isBtnAvailable: $duplicateIdCheckBtnStatus, width: 80, btnText: "중복 확인", radius: 8) {
                         
-                        // 중복 확인 API 호출
-                        // 만약 중복된 결과가 나올 경우
-                        // idCheckPhrase = "중복된 아이디입니다. 새로운 아이디를 입력해주세요." 빨간색 텍스트
-                        // 중복되지 않은 결과가 나올 경우
-                        // "사용 가능한 아이디입니다." 하고 파란색 텍스트
-                        
-                        // 이곳에 updateBtnStatus() 로직 들어가야 함
-                        
+                        Task {
+                            await signUpVM.checkDuplicateId()
+                        }
                     }
                     .padding(.leading, 10)
                 }
@@ -62,13 +70,25 @@ struct SignUpView: View {
                     .font(Font.pretendard(.semibold, size: 10))
                     .padding(.top, 12)
                     .padding(.leading, 15)
+                    .foregroundStyle(signUpVM.idAvailable == .available ? .blue : .red)
                     .hidden(isIdPhraseHidden)
             }
             .padding(.top, 90)
+            .onChange(of: signUpVM.idAvailable) { _ in
+                
+                if signUpVM.idAvailable == .available {
+                    idPhrase = "사용 가능한 아이디입니다."
+                    isIdPhraseHidden = false
+                    updateBtnStatus()
+                } else if signUpVM.idAvailable == .unavailable {
+                    idPhrase = "중복된 아이디입니다. 다른 아이디를 입력해주세요."
+                    isIdPhraseHidden = false
+                }
+            }
             
             VStack(alignment: .leading, spacing: 0) {
                 
-                TextFieldComponent(width: 340, placeholder: "비밀번호", inputText: $pwInputText)
+                SecureFieldComponent(width: 340, placeholder: "비밀번호", inputText: $pwInputText)
                     .onChange(of: pwInputText) { pw in
                         
                         signUpVM.pwConditionCheck(pw: pw, isPwPhraseHidden: $isPwPhraseHidden)
@@ -84,12 +104,13 @@ struct SignUpView: View {
             
             
             VStack(alignment: .leading, spacing: 0) {
-                TextFieldComponent(width: 340, placeholder: "비밀번호 확인", inputText: $pwCheckInputText)
+                SecureFieldComponent(width: 340, placeholder: "비밀번호 확인", inputText: $pwCheckInputText)
                     .padding(.top, 20)
                     .onChange(of: pwCheckInputText) { _ in
                         
                         if pwInputText == pwCheckInputText {
                             isPwCheckPhraseHidden = false
+                            updateBtnStatus()
                         } else {
                             isPwCheckPhraseHidden = true
                         }
@@ -102,13 +123,19 @@ struct SignUpView: View {
                     .hidden(isPwCheckPhraseHidden)
             }
             
-            ButtonComponent(btnStatus: $nextBtnStatus, width: 340, btnText: "다음으로", radius: 15) {
+            NavigationLink(destination: RegisterNickNameView(path: $path, signUpVM: signUpVM)) {
                 
-                if nextBtnStatus == .on {
-                    path.append(SignUpViews.RegisterNickNameView)
-                }
+                Rectangle()
+                    .foregroundStyle(signUpVM.nextBtnStatus ? .main : .lightGray)
+                    .frame(width: 340, height: 50)
+                    .cornerRadius(15)
+                    .overlay(
+                        Text("다음으로")
+                            .font(Font.pretendard(.bold, size: 17))
+                            .foregroundStyle(signUpVM.nextBtnStatus ? .white : .darkGray)
+                    )
+                
             }
-            .padding(.top, 70)
             
             Spacer()
             
@@ -124,14 +151,20 @@ struct SignUpView: View {
                 } label: {
                     Image("leftChevron")
                 }
-                
             }
         }
     }
     
-    
+    private func updateBtnStatus() {
+        
+        if signUpVM.idAvailable == .available && isPwCheckPhraseHidden == false {
+            signUpVM.nextBtnStatus = true
+        } else {
+            signUpVM.nextBtnStatus = false
+        }
+    }
 }
 
 #Preview {
-    SignUpView(path: .constant([]))
+    SignUpView(signUpVM: SignUpViewModel(), path: .constant([]))
 }
