@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		47058C0F2BC953FB002D7468 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47058C0E2BC953FB002D7468 /* SignInViewModel.swift */; };
+		473EC52F2BD0FC6300AB59D2 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473EC52E2BD0FC6300AB59D2 /* SignInViewModel.swift */; };
 		474E58192BC633DB005B4225 /* ComponentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E58182BC633DB005B4225 /* ComponentsView.swift */; };
-		474EBEF02BC51DE000341A18 /* AuthDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EBEEF2BC51DE000341A18 /* AuthDTO.swift */; };
+		476EAC3D2BD2B28D008B2E15 /* SignUpSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EAC3C2BD2B28D008B2E15 /* SignUpSecondView.swift */; };
+		476EAC3F2BD2B2A1008B2E15 /* SignUpFirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EAC3E2BD2B2A1008B2E15 /* SignUpFirstView.swift */; };
 		47705BF22BC770A2003B5D6E /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */; };
 		479058362BC907A3008FAD8E /* SecureFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479058352BC907A2008FAD8E /* SecureFieldComponent.swift */; };
 		47A718FD2BCB769200AD66A3 /* MemberDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A718FC2BCB769200AD66A3 /* MemberDTO.swift */; };
@@ -80,7 +81,6 @@
 		47DF6F812BC6B9D900E64B12 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F782BC6B9D900E64B12 /* Pretendard-ExtraLight.otf */; };
 		47DF6F992BC6BF6100E64B12 /* TextFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F982BC6BF6100E64B12 /* TextFieldComponent.swift */; };
 		47DF6F9B2BC6CC7C00E64B12 /* ButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F9A2BC6CC7C00E64B12 /* ButtonComponent.swift */; };
-		47DF6F9D2BC6FFD800E64B12 /* SignUpNavPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F9C2BC6FFD800E64B12 /* SignUpNavPath.swift */; };
 		47DF6F9F2BC7010100E64B12 /* RegisterNickNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F9E2BC7010100E64B12 /* RegisterNickNameView.swift */; };
 		47E6BB6F2BC56D3600A72F3D /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6BB6E2BC56D3600A72F3D /* AppError.swift */; };
 		47E6BB712BC56FD800A72F3D /* MemberEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6BB702BC56FD800A72F3D /* MemberEndPoint.swift */; };
@@ -104,9 +104,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		47058C0E2BC953FB002D7468 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		473EC52E2BD0FC6300AB59D2 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		474E58182BC633DB005B4225 /* ComponentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentsView.swift; sourceTree = "<group>"; };
-		474EBEEF2BC51DE000341A18 /* AuthDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDTO.swift; sourceTree = "<group>"; };
+		476EAC3C2BD2B28D008B2E15 /* SignUpSecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondView.swift; sourceTree = "<group>"; };
+		476EAC3E2BD2B2A1008B2E15 /* SignUpFirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFirstView.swift; sourceTree = "<group>"; };
 		47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		479058352BC907A2008FAD8E /* SecureFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldComponent.swift; sourceTree = "<group>"; };
 		47A718FC2BCB769200AD66A3 /* MemberDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDTO.swift; sourceTree = "<group>"; };
@@ -178,7 +179,6 @@
 		47DF6F782BC6B9D900E64B12 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraLight.otf"; path = "../../../../../../../../../../.Trash/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		47DF6F982BC6BF6100E64B12 /* TextFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponent.swift; sourceTree = "<group>"; };
 		47DF6F9A2BC6CC7C00E64B12 /* ButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComponent.swift; sourceTree = "<group>"; };
-		47DF6F9C2BC6FFD800E64B12 /* SignUpNavPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpNavPath.swift; sourceTree = "<group>"; };
 		47DF6F9E2BC7010100E64B12 /* RegisterNickNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNickNameView.swift; sourceTree = "<group>"; };
 		47E6BB6E2BC56D3600A72F3D /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		47E6BB702BC56FD800A72F3D /* MemberEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberEndPoint.swift; sourceTree = "<group>"; };
@@ -212,11 +212,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		47058C0D2BC953DC002D7468 /* New Group */ = {
+		47058C0D2BC953DC002D7468 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
+				47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */,
+				47C29DF62BC248D000E3E2B9 /* SignUpView.swift */,
+				47DF6F9E2BC7010100E64B12 /* RegisterNickNameView.swift */,
+				476EAC3E2BD2B2A1008B2E15 /* SignUpFirstView.swift */,
+				476EAC3C2BD2B28D008B2E15 /* SignUpSecondView.swift */,
 			);
-			path = "New Group";
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 		474E58172BC633CD005B4225 /* Components */ = {
@@ -345,7 +350,6 @@
 			isa = PBXGroup;
 			children = (
 				47BE3A342BC3BAF500F27E38 /* BaseResponse.swift */,
-				474EBEEF2BC51DE000341A18 /* AuthDTO.swift */,
 				47A718FC2BCB769200AD66A3 /* MemberDTO.swift */,
 			);
 			path = DTO;
@@ -511,32 +515,20 @@
 		47C29DEE2BC2481D00E3E2B9 /* Initial */ = {
 			isa = PBXGroup;
 			children = (
-				47058C0D2BC953DC002D7468 /* New Group */,
 				47C29DF02BC2484200E3E2B9 /* SplashView.swift */,
 				47BAF23A2BC65882002474E7 /* OndosetHome.swift */,
 				47BAF23C2BC658AD002474E7 /* OndosetHomeViewModel.swift */,
+				47058C0D2BC953DC002D7468 /* SignUp */,
 				47C29DF32BC2489100E3E2B9 /* SignIn */,
-				47C29DF22BC2488A00E3E2B9 /* SignUp */,
 			);
 			path = Initial;
-			sourceTree = "<group>";
-		};
-		47C29DF22BC2488A00E3E2B9 /* SignUp */ = {
-			isa = PBXGroup;
-			children = (
-				47DF6F9C2BC6FFD800E64B12 /* SignUpNavPath.swift */,
-				47C29DF62BC248D000E3E2B9 /* SignUpView.swift */,
-				47DF6F9E2BC7010100E64B12 /* RegisterNickNameView.swift */,
-				47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */,
-			);
-			path = SignUp;
 			sourceTree = "<group>";
 		};
 		47C29DF32BC2489100E3E2B9 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				473EC52E2BD0FC6300AB59D2 /* SignInViewModel.swift */,
 				47C29DF42BC248C300E3E2B9 /* SignInView.swift */,
-				47058C0E2BC953FB002D7468 /* SignInViewModel.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -791,7 +783,6 @@
 				47DF6F9B2BC6CC7C00E64B12 /* ButtonComponent.swift in Sources */,
 				47BE3A302BC3938D00F27E38 /* APIManager.swift in Sources */,
 				47BE3A232BC380BA00F27E38 /* OOTDRepository.swift in Sources */,
-				47DF6F9D2BC6FFD800E64B12 /* SignUpNavPath.swift in Sources */,
 				47BE3A212BC380AD00F27E38 /* CoordiRepository.swift in Sources */,
 				474E58192BC633DB005B4225 /* ComponentsView.swift in Sources */,
 				47C29E142BC24A5500E3E2B9 /* MyPageMainView.swift in Sources */,
@@ -804,18 +795,19 @@
 				47E6BB712BC56FD800A72F3D /* MemberEndPoint.swift in Sources */,
 				47C29DB12BC23A4800E3E2B9 /* OndosetApp.swift in Sources */,
 				47C29E372BC2516F00E3E2B9 /* CoordiUseCase.swift in Sources */,
+				476EAC3F2BD2B2A1008B2E15 /* SignUpFirstView.swift in Sources */,
 				47C29DF92BC2490600E3E2B9 /* OnboardingView.swift in Sources */,
 				47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */,
 				47A718FD2BCB769200AD66A3 /* MemberDTO.swift in Sources */,
 				47E6BB6F2BC56D3600A72F3D /* AppError.swift in Sources */,
+				476EAC3D2BD2B28D008B2E15 /* SignUpSecondView.swift in Sources */,
 				47BE3A3C2BC3CBBD00F27E38 /* Test.swift in Sources */,
 				47DF6F9F2BC7010100E64B12 /* RegisterNickNameView.swift in Sources */,
-				474EBEF02BC51DE000341A18 /* AuthDTO.swift in Sources */,
 				47BE3A1F2BC380A400F27E38 /* ClothesRepository.swift in Sources */,
 				47C29E0D2BC24A1800E3E2B9 /* OOTDMainView.swift in Sources */,
 				47C29E082BC249E900E3E2B9 /* ClosetMainView.swift in Sources */,
 				47C29DFE2BC2498C00E3E2B9 /* HomeMainViewModel.swift in Sources */,
-				47058C0F2BC953FB002D7468 /* SignInViewModel.swift in Sources */,
+				473EC52F2BD0FC6300AB59D2 /* SignInViewModel.swift in Sources */,
 				47C29E0A2BC24A0200E3E2B9 /* ClosetMainViewModel.swift in Sources */,
 				47C29E332BC2515500E3E2B9 /* ClothesUseCase.swift in Sources */,
 				47C29DF52BC248C300E3E2B9 /* SignInView.swift in Sources */,
@@ -1004,6 +996,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Ondoset/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Ondoset/Info.plist;
@@ -1034,6 +1027,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Ondoset/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Ondoset/Info.plist;

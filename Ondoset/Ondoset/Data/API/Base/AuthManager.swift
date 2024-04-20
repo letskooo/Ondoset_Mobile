@@ -24,12 +24,11 @@ class AuthManager: RequestInterceptor {
         // Access Token 조회
         guard let accessToken = KeyChainManager.readItem(key: "accessToken") else {
             
-            // 로직 처리
-//            DispatchQueue.main.async {
-//                UserDefaults.standard.set(false, forKey: "isLogin")
-//                NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
-//            }
-//            
+            // accessToken이 없을 경우 강제 로그아웃
+            DispatchQueue.main.async {
+                UserDefaults.standard.set(false, forKey: "isLogin")
+            }
+        
 //            completion(.failure(APIError.customError("키체인 토큰 조회 실패. 로그인이 필요합니다.")))
             return
         }
@@ -62,12 +61,10 @@ class AuthManager: RequestInterceptor {
         guard let accessToken = KeyChainManager.readItem(key: "accessToken"),
               let refreshToken = KeyChainManager.readItem(key: "refreshToken") else {
             
-            // 토큰 없는 경우 에러 처리
-            
-//            DispatchQueue.main.async {
-//                UserDefaults.standard.set(false, forKey: "isLogin")
-//                NaverThirdPartyLoginConnection.getSharedInstance().requestDeleteToken()
-//            }
+            // 토큰 없는 경우 로그아웃 처리
+            DispatchQueue.main.async {
+                UserDefaults.standard.set(false, forKey: "isLogin")
+            }
 //            
 //            // 이것처럼 처리도 가능
 //            completion(.doNotRetryWithError(APIError.customError("키체인 토큰 조회 실패. 로그인이 필요합니다.")))
@@ -81,41 +78,41 @@ class AuthManager: RequestInterceptor {
             "refreshToken" : refreshToken
         ]
         
-//        AF.request(url, method: .post, parameters: parameters,
-//                   encoding: JSONEncoding.default).validate().responseDecodable(of: TokenReissuanceResponseDTO.self) { response in
-//            
-//            switch response.result {
-//                
-//                // 재발급 성공
-//                case .success(let result):
-//                    
-//                    // 재발급된 토큰을 키체인에 저장
-//                    KeyChainManager.addItem(key: "accessToken", value: result.accessToken)
-//                    //KeyChainManager.addItem(key: "refreshToken", value: result.refreshToken)
-//                    
-//                    // 기존에 보내고자 했던 요청 재시도
-//                    // 재시도 횟수 내일 때만 재시도
-//                    request.retryCount < self.retryLimit ?
-//                    completion(.retry) : completion(.doNotRetry)
-//    //                completion(.retry) : completion(.doNotRetryWithError(APIError.customError("재시도 횟수 초과"))) //
-//                    
-//                // 재발급 실패(refreshToken 만료)
-//                case .failure(let error):
-//                    // 토큰 갱신 실패 시 에러 처리
-//                    print(error)
-//                    
-//                    // 로그인 화면으로 이동
-//                    DispatchQueue.main.async {
-//                        UserDefaults.standard.set(false, forKey: "isLogin")
-//                     
-//                    }
-//                    
-//                    // 이것도 가능
-//                    completion(.doNotRetryWithError(error))
-//                    print("토큰 갱신 에러. 로그인 필요")
-//                }
-//                
-//            }
+        AF.request(url, method: .post, parameters: parameters,
+                   encoding: JSONEncoding.default).validate().responseDecodable(of: TokenReissuanceResponseDTO.self) { response in
+            
+            switch response.result {
+                
+                // 재발급 성공
+                case .success(let result):
+                    
+                    // 재발급된 토큰을 키체인에 저장
+                    KeyChainManager.addItem(key: "accessToken", value: result.accessToken)
+                    //KeyChainManager.addItem(key: "refreshToken", value: result.refreshToken)
+                    
+                    // 기존에 보내고자 했던 요청 재시도
+                    // 재시도 횟수 내일 때만 재시도
+                    request.retryCount < self.retryLimit ?
+                    completion(.retry) : completion(.doNotRetry)
+    //                completion(.retry) : completion(.doNotRetryWithError(APIError.customError("재시도 횟수 초과"))) //
+                    
+                // 재발급 실패(refreshToken 만료)
+                case .failure(let error):
+                    // 토큰 갱신 실패 시 에러 처리
+                    print(error)
+                    
+                    // 로그인 화면으로 이동
+                    DispatchQueue.main.async {
+                        UserDefaults.standard.set(false, forKey: "isLogin")
+                     
+                    }
+                    
+                    // 이것도 가능
+                    completion(.doNotRetryWithError(error))
+                    print("토큰 갱신 에러. 로그인 필요")
+                }
+                
+            }
 //            
         }
 }

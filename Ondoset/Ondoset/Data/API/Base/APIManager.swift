@@ -20,25 +20,89 @@ final class APIManager {
         return await request.serializingData().response
     }
     
+    // MARK: 기존 BaseResponse의 Result를 반환하는 메소드
     func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
         
         var result: Data = .init()
         
         do {
             let request = await self.requestData(endPoint: endPoint)
+            
             result = try request.result.get()
+            
         } catch {
+            print("네트워크 에러")
             return nil
         }
         
         do {
-            let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
             
-            return decodedData.result
+            let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
+                        
+            if decodedData.code == Constants.successResponseCode {
+                print(decodedData.code)
+                print(decodedData.message)
+                print(decodedData.result)
+
+                return decodedData.result
+            } else {
+                
+                print(decodedData.code)
+                print(decodedData.message)
+                return nil
+            }
+          
         } catch {
+            print("파싱 에러")
             return nil
         }
     }
+    
+    // MARK: BaseResponse 자체를 반환하는 메소드
+    
+    // 백엔드쪽과 회의 결과 모든 요청의 BaseResponse에 result를 함께 보내주는 것이 확정
+    
+//    func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
+//        
+//        var result: Data = .init()
+//        
+//        do {
+//            
+//            let request = await requestData(endPoint: endPoint)
+//            result = try request.result.get()
+//            
+//        } catch {
+//            print("네트워크 에러")
+//            return nil
+//        }
+//        
+//        do {
+//            
+//            let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
+//            
+//            if decodedData.code == Constants.successResponseCode {
+//                
+//                print(decodedData.code)
+//                print(decodedData.message)
+//                print(decodedData.result)
+//                
+//                return decodedData.result
+//                // 추후 추가적인 에러 처리
+//                
+//            } else {
+//                
+//                print(decodedData.code)
+//                print(decodedData.message)
+//                // 추후 추가적인 에러 처리
+//                
+//                return nil
+//            }
+//        
+//        } catch {
+//            print("파싱 에러")
+//            return nil
+//        }
+//    }
 }
 
 extension APIManager {
@@ -54,8 +118,8 @@ extension APIManager {
             return AF.request(
                 "\(endPoint.baseURL)\(endPoint.path)",
                 method: endPoint.method,
-                headers: endPoint.headers
-//                interceptor: AuthManager()
+                headers: endPoint.headers,
+                interceptor: AuthManager()
             )
             
         // RequestBody에 JSON 데이터로 요청
@@ -65,8 +129,8 @@ extension APIManager {
                 method: endPoint.method,
                 parameters: parameters,
                 encoder: JSONParameterEncoder.default,
-                headers: endPoint.headers
-//                interceptor: AuthManager()
+                headers: endPoint.headers,
+                interceptor: AuthManager()
             )
             
         // RequestBody에 JSON 데이터로 요청(토큰X)
@@ -105,8 +169,8 @@ extension APIManager {
             return AF.request(
                 "\(endPoint.baseURL)\(endPoint.path)",
                 method: endPoint.method,
-                headers: endPoint.headers
-//                interceptor: AuthManager()
+                headers: endPoint.headers,
+                interceptor: AuthManager()
             )
             
         case let .uploadImages(images):
