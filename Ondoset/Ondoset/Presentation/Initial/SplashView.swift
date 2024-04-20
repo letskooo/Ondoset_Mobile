@@ -11,16 +11,16 @@ struct SplashView: View {
     
     @State var isActive: Bool = false   // 다음 화면 활성화
     @AppStorage("isLogin") var isLogin: Bool = false
-    @AppStorage("isOnboardingDone") var isOnboardingDone: Bool = false
+    @AppStorage("isFirst") var isFirst: Bool = true
     
     var body: some View {
         ZStack {
             
             if !isLogin && isActive {
                 SignInView()
-            } else if isLogin && isActive && isOnboardingDone {
+            } else if isLogin && isActive && !isFirst {
                 OndosetHome()
-            } else if isLogin && isActive && !isOnboardingDone{
+            } else if isLogin && isActive && isFirst {
                 OnboardingView()
             } else {
                 

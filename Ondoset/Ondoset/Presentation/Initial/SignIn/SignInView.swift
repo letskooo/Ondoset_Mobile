@@ -14,7 +14,9 @@ struct SignInView: View {
     @State var pwInputText: String = ""
     @State var btnStatus: Bool = false
 
-    @State private var path: [String] = []
+    @State private var path: NavigationPath = .init()
+    
+    @StateObject var signInVM: SignInViewModel = .init()
 
     var body: some View {
         
@@ -51,12 +53,14 @@ struct SignInView: View {
                     ButtonComponent(isBtnAvailable: $btnStatus, width: 340, btnText: "로그인", radius: 15) {
                         
                         // 로그인 API 호출
-                        
+                        Task {
+                            await signInVM.signInMember(memberId: idInputText, password: pwInputText)
+                        }
                     }
                     .padding(.top, 20)
                     
                     Button {
-                        path.append("SignUpView")
+                        path.append("SignUpFirstView")
                         
                     } label: {
                         HStack {
@@ -70,9 +74,13 @@ struct SignInView: View {
                     }
                     .navigationDestination(for: String.self) { id in
                         
-                        if id == "SignUpView" {
-                            SignUpView(path: $path)
+                        if id == "SignUpFirstView" {
+                            SignUpFirstView(path: $path)
                         }
+                        
+//                        if id == "SignUpView" {
+//                            SignUpView(path: $path)
+//                        }
                     }
                 }
                 .offset(y: -20)
