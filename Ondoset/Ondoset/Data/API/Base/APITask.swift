@@ -29,6 +29,9 @@ public enum APITask {
     /// 쿼리 파라미터 요청(Query Parameter)
     case requestQueryParams(parameters: Parameters, encoding: ParameterEncoding)
     
+    /// 쿼리 파라미터 요청(토큰X)
+    case requestQueryParamsWithoutToken(parameters: Parameters, encoding: ParameterEncoding)
+    
     /// PathVariable 요청
     case requestPathVariable
     

@@ -9,7 +9,13 @@ import SwiftUI
 
 struct OOTDMainView: View {
     var body: some View {
-        Text("OOTD")
+        
+        /// 각 탭의 메인 뷰마다 NavigationStack을 두는 것으로 설계합니다.
+        
+        NavigationStack {
+            Text("OOTD")
+        }
+
     }
 }
 
