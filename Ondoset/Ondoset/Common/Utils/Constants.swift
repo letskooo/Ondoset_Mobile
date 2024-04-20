@@ -10,8 +10,17 @@
 
 import UIKit
 
+
+struct Constants {
+    
+    static let successResponseCode: String = "common_2000"
+    
+}
+
 let baseURLLL = "http://localhost:8080"
 let testServerURL = "http://ceprj.gachon.ac.kr:60019"
+
+let successResponseCode: String = "Common_2000"
 
 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
 let screenWidth = windowScene?.screen.bounds.width ?? 0
