@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SecureField: View {
+struct SecureFieldComponent: View {
     
     let width: CGFloat
     let placeholder: String
@@ -16,13 +16,14 @@ struct SecureField: View {
     var body: some View {
         ZStack {
             
-            TextField(placeholder, text: $inputText)
+            SecureField(placeholder, text: $inputText)
                 .frame(width: width-36, height: 48)
                 .font(Font.pretendard(.semibold, size: 15))
                 .padding(.horizontal, 18)
                 .background(.white)
                 .cornerRadius(12)
                 .shadow(color: Color(hex: 0xEDEEFA), radius: 4)
+                .textContentType(.newPassword)
             
             Rectangle()
                 .fill(.darkGray)
@@ -33,5 +34,5 @@ struct SecureField: View {
 }
 
 #Preview {
-    SecureField(width: 340, placeholder: "비밀번호", inputText: .constant(""))
+    SecureFieldComponent(width: 340, placeholder: "비밀번호", inputText: .constant(""))
 }

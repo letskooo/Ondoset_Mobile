@@ -7,15 +7,9 @@
 
 import SwiftUI
 
-enum BtnStatus {
-    
-    case on
-    case off
-}
-
 struct ButtonComponent: View {
     
-    @Binding var btnStatus: BtnStatus
+    @Binding var isBtnAvailable: Bool
     let width: CGFloat
     let btnText: String
     let radius: CGFloat
@@ -25,24 +19,24 @@ struct ButtonComponent: View {
         
         Button {
             
-            if self.btnStatus == .on {
+            if self.isBtnAvailable == true {
                 action()
             }
         } label: {
             
             Rectangle()
-                .foregroundStyle(self.btnStatus == .on ? .main : .lightGray)
+                .foregroundStyle(self.isBtnAvailable ? .main : .lightGray)
                 .frame(width: width, height: 50)
                 .cornerRadius(radius)
                 .overlay(
                     Text("\(btnText)")
                         .font(Font.pretendard(.bold, size: 17))
-                        .foregroundStyle(self.btnStatus == .on ? .white : .darkGray)
+                        .foregroundStyle(self.isBtnAvailable ? .white : .darkGray)
                 )
         }
     }
 }
 
 #Preview {
-    ButtonComponent(btnStatus: .constant(.on), width: 340, btnText: "다음으로", radius: 15, action: {})
+    ButtonComponent(isBtnAvailable: .constant(true), width: 340, btnText: "다음으로", radius: 15, action: {})
 }
