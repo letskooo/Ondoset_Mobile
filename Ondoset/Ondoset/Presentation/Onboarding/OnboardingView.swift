@@ -284,7 +284,6 @@ struct OnboardingView: View {
                                         if let activitySelected = activitySelected.first(where: { $0.value == true})?.key {
                                             activity = activitySelected
                                         }
-                                    
                                     }
                                 }
                                 
@@ -374,6 +373,7 @@ struct OnboardingView: View {
             .onChange(of: activity) { _ in updateButtonAvailability() }
             .onChange(of: goingOut) { _ in updateButtonAvailability() }
         }
+        .padding(.top, 40)
     }
     
     // 시작하기 버튼 활성화 여부 업데이트 메소드
