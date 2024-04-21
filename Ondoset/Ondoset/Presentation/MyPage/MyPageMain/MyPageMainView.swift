@@ -8,12 +8,21 @@
 import SwiftUI
 
 struct MyPageMainView: View {
+    
+    @StateObject var myPageVM: MyPageMainViewModel = .init()
+    
     var body: some View {
         
         /// 각 탭의 메인 뷰마다 NavigationStack을 두는 것으로 설계합니다.
         
         NavigationStack {
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            Text("마이 페이지")
+            
+            Button {
+                myPageVM.logout()
+            } label: {
+                Text("로그아웃")
+            }
         }
     }
 }
