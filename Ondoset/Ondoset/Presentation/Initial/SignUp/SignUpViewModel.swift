@@ -56,6 +56,11 @@ class SignUpViewModel: ObservableObject {
         isNextBtnAvailable = (isIdAvailable && isPwAvailable && isPwCheckCorrespond ? true : false)
     }
     
+    // 회원가입 버튼 활성화
+    func signUpBtnStatus() {
+        isSignUpBtnAvailable = (isIdAvailable && isPwAvailable && isPwCheckCorrespond && isNicknameAvailable ? true : false)
+    }
+    
     
     // 회원가입 아이디 조건 체크
     func idConditionCheck(id: String) {
@@ -89,6 +94,7 @@ class SignUpViewModel: ObservableObject {
         pwPhrase = (isPwAvailable ? "올바른 형식입니다." : "영문 및 숫자를 포함한 8자리 이상의 비밀번호를 입력해주세요.")
         
         updateBtnStatus()
+        signUpBtnStatus()
     }
     
     // MARK: API
@@ -100,8 +106,10 @@ class SignUpViewModel: ObservableObject {
             
             if isIdAvailable {
                 self.isIdAvailable = true
+                self.updateBtnStatus()
             } else {
                 self.isIdAvailable = false
+                self.updateBtnStatus()
             }
         }
     }
@@ -115,8 +123,10 @@ class SignUpViewModel: ObservableObject {
             
             if isNicknameAvailable {
                 self.isNicknameAvailable = true
+                self.signUpBtnStatus()
             } else {
                 self.isNicknameAvailable = false
+                self.signUpBtnStatus()
             }
         }
     }

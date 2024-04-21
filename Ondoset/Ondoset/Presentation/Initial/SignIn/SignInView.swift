@@ -39,18 +39,18 @@ struct SignInView: View {
                 VStack {
                     Image("loginIcon")
                     
-                    TextFieldComponent(width: 340, placeholder: "아이디", inputText: $idInputText)
+                    TextFieldComponent(width: screenWidth - 50, placeholder: "아이디", inputText: $idInputText)
                         .onChange(of: idInputText) { _ in
-                            updateBtnStatus()
+                            signInBtnStatus()
                         }
                         
-                    SecureFieldComponent(width: 340, placeholder: "비밀번호", inputText: $pwInputText)
+                    SecureFieldComponent(width: screenWidth - 50, placeholder: "비밀번호", inputText: $pwInputText)
                         .padding(.top, 20)
                         .onChange(of: pwInputText) { _ in
-                            updateBtnStatus()
+                            signInBtnStatus()
                         }
            
-                    ButtonComponent(isBtnAvailable: $btnStatus, width: 340, btnText: "로그인", radius: 15) {
+                    ButtonComponent(isBtnAvailable: $btnStatus, width: screenWidth - 50, btnText: "로그인", radius: 15) {
                         
                         // 로그인 API 호출
                         Task {
@@ -95,7 +95,7 @@ struct SignInView: View {
         }
     }
     
-    private func updateBtnStatus() {
+    private func signInBtnStatus() {
         if !idInputText.isEmpty && !pwInputText.isEmpty {
             btnStatus = true
         } else {

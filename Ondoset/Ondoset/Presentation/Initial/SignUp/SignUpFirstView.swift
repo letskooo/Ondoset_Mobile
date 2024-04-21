@@ -50,11 +50,12 @@ struct SignUpFirstView: View {
                 signUpVM.idPhrase = (signUpVM.isIdAvailable ? "사용 가능한 아이디입니다." : "중복된 아이디입니다. 다른 아이디를 입력해주세요.")
                 
                 signUpVM.updateBtnStatus()
+                signUpVM.signUpBtnStatus()
             }
             
             VStack(alignment: .leading, spacing: 0) {
                 
-                SecureFieldComponent(width: 340, placeholder: "비밀번호", inputText: $signUpVM.pwInputText)
+                SecureFieldComponent(width: screenWidth - 50, placeholder: "비밀번호", inputText: $signUpVM.pwInputText)
                     .onChange(of: signUpVM.pwInputText) { pw in
                         
                         signUpVM.pwConditionCheck(pw: pw)
@@ -70,7 +71,7 @@ struct SignUpFirstView: View {
             
             VStack(alignment: .leading, spacing: 0) {
                 
-                SecureFieldComponent(width: 340, placeholder: "비밀번호 확인", inputText: $signUpVM.pwCheckInputText)
+                SecureFieldComponent(width: screenWidth - 50, placeholder: "비밀번호 확인", inputText: $signUpVM.pwCheckInputText)
                     .padding(.top, 20)
                     .onChange(of: signUpVM.pwCheckInputText) { _ in
                         
@@ -84,6 +85,7 @@ struct SignUpFirstView: View {
                         signUpVM.pwCheckPhrase = (signUpVM.isPwCheckCorrespond ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다.")
                         
                         signUpVM.updateBtnStatus()
+                        signUpVM.signUpBtnStatus()
                     }
                 
                 Text(signUpVM.pwCheckPhrase)
@@ -99,7 +101,7 @@ struct SignUpFirstView: View {
                 
                 Rectangle()
                     .foregroundStyle(signUpVM.isNextBtnAvailable ? .main : .lightGray)
-                    .frame(width: 340, height: 50)
+                    .frame(width: screenWidth - 50, height: 50)
                     .cornerRadius(15)
                     .overlay(
                         Text("다음으로")
