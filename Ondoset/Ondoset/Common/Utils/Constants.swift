@@ -17,8 +17,8 @@ struct Constants {
     
 }
 
-let baseURLLL = "http://localhost:8080"
-let testServerURL = "http://ceprj.gachon.ac.kr:60019"
+let serverURL = "http://ceprj.gachon.ac.kr:60019"
+let ec2URL = "http://18.221.231.0:8080"
 
 let successResponseCode: String = "Common_2000"
 

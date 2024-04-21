@@ -20,7 +20,12 @@ enum MemberEndPoint {
 extension MemberEndPoint: EndPoint {
     
     var baseURL: String {
-        return "\(testServerURL)/member"
+        
+        /// 학과 서버
+        //return "\(serverURL)/member"
+        
+        /// EC2
+        return "\(ec2URL)/member"
     }
     
     var path: String {

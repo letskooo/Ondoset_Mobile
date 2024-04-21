@@ -23,7 +23,7 @@ enum TestEndPoint {
 extension TestEndPoint: EndPoint {
     
     var baseURL: String {
-        return "\(baseURLLL)/test"
+        return "\(serverURL)/test"
     }
     
     var path: String {

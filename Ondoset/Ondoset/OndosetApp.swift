@@ -12,7 +12,7 @@ struct OndosetApp: App {
     var body: some Scene {
         WindowGroup {
             SplashView()
-            // OndosetHome()
+//            OndosetHome()
             
             // 여기서 보고 싶은 초기 화면 설정
         }
