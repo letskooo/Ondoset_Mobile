@@ -53,7 +53,7 @@ final class APIManager {
             }
           
         } catch {
-            print("파싱 에러")
+            print("디코딩 에러")
             return nil
         }
     }

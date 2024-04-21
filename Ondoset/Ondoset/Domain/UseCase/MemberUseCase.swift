@@ -61,9 +61,12 @@ class MemberUseCase {
     }
     
     // 로그인
-    func signInMember(signInDTO: SignInRequestDTO) async {
+    func signInMember(signInDTO: SignInRequestDTO) async -> Bool? {
         
-        let result = await memberRepository.signInMember(signInDTO: signInDTO)!
+        guard let result = await memberRepository.signInMember(signInDTO: signInDTO) else {
+            
+            return false
+        }
         
         KeyChainManager.addItem(key: "accessToken", value: result.accessToken)
         KeyChainManager.addItem(key: "refreshToken", value: result.refreshToken)
@@ -80,6 +83,8 @@ class MemberUseCase {
             // 신규 사용자 여부
             UserDefaults.standard.set(result.isFirst, forKey: "isFirst")
         }
+        
+        return true
     }
     
     // 온보딩 결과 저장

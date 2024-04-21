@@ -36,7 +36,7 @@ struct SignInView: View {
                 
                 Spacer()
                 
-                VStack {
+                VStack() {
                     Image("loginIcon")
                     
                     TextFieldComponent(width: screenWidth - 50, placeholder: "아이디", inputText: $idInputText)
@@ -49,6 +49,17 @@ struct SignInView: View {
                         .onChange(of: pwInputText) { _ in
                             signInBtnStatus()
                         }
+                    
+                    HStack {
+                        
+                        Text(signInVM.signUpPhrase)
+                            .font(Font.pretendard(.semibold, size: 10))
+                            .foregroundStyle(signInVM.isSignInAvailable ?? true ? .clear : .red)
+                        
+                        Spacer()
+                    }
+                    .frame(width: screenWidth - 50)
+                    .padding(.top, 5)
            
                     ButtonComponent(isBtnAvailable: $btnStatus, width: screenWidth - 50, btnText: "로그인", radius: 15) {
                         
@@ -57,7 +68,7 @@ struct SignInView: View {
                             await signInVM.signInMember(memberId: idInputText, password: pwInputText)
                         }
                     }
-                    .padding(.top, 20)
+                    .padding(.top, 10)
                     
                     Button {
                         path.append("SignUpFirstView")
