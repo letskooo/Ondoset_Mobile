@@ -53,12 +53,17 @@ class SignUpViewModel: ObservableObject {
     // 다음으로 가기 버튼 활성화
     func updateBtnStatus() {
         
-        isNextBtnAvailable = (isIdAvailable && isPwAvailable && isPwCheckCorrespond ? true : false)
+        DispatchQueue.main.async {
+            self.isNextBtnAvailable = (self.isIdAvailable && self.isPwAvailable && self.isPwCheckCorrespond ? true : false)
+        }
     }
     
     // 회원가입 버튼 활성화
     func signUpBtnStatus() {
-        isSignUpBtnAvailable = (isIdAvailable && isPwAvailable && isPwCheckCorrespond && isNicknameAvailable ? true : false)
+        
+        DispatchQueue.main.async {
+            self.isSignUpBtnAvailable = (self.isIdAvailable && self.isPwAvailable && self.isPwCheckCorrespond && self.isNicknameAvailable ? true : false)
+        }
     }
     
     
@@ -69,12 +74,14 @@ class SignUpViewModel: ObservableObject {
         
         let idValid = NSPredicate(format: "SELF MATCHES %@", idCondition)
         
-        if idValid.evaluate(with: id) {
-            isIdCheckBtnAvailable = true
-            idPhrase = "올바른 형식입니다. 중복 확인을 해주세요."
-        } else {
-            isIdCheckBtnAvailable = false
-            idPhrase = "영문 8글자 이상의 아이디를 입력해주세요"
+        DispatchQueue.main.async {
+            if idValid.evaluate(with: id) {
+                self.isIdCheckBtnAvailable = true
+                self.idPhrase = "올바른 형식입니다. 중복 확인을 해주세요."
+            } else {
+                self.isIdCheckBtnAvailable = false
+                self.idPhrase = "영문 8글자 이상의 아이디를 입력해주세요"
+            }
         }
     }
     
@@ -84,15 +91,18 @@ class SignUpViewModel: ObservableObject {
         let pwCondition = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"
         let pwValid = NSPredicate(format: "SELF MATCHES %@", pwCondition)
         
-        if pwValid.evaluate(with: pw) {
+        DispatchQueue.main.async {
             
-            isPwAvailable = true
-        } else {
-            isPwAvailable = false
+            if pwValid.evaluate(with: pw) {
+                
+                self.isPwAvailable = true
+            } else {
+                self.isPwAvailable = false
+            }
+            
+            self.pwPhrase = (self.isPwAvailable ? "올바른 형식입니다." : "영문 및 숫자를 포함한 8자리 이상의 비밀번호를 입력해주세요.")
+            
         }
-        
-        pwPhrase = (isPwAvailable ? "올바른 형식입니다." : "영문 및 숫자를 포함한 8자리 이상의 비밀번호를 입력해주세요.")
-        
         updateBtnStatus()
         signUpBtnStatus()
     }
@@ -104,12 +114,14 @@ class SignUpViewModel: ObservableObject {
         
         if let isIdAvailable = await memberUseCase.checkDuplicateId(memberId: idInputText) {
             
-            if isIdAvailable {
-                self.isIdAvailable = true
-                self.updateBtnStatus()
-            } else {
-                self.isIdAvailable = false
-                self.updateBtnStatus()
+            DispatchQueue.main.async {
+                if isIdAvailable {
+                    self.isIdAvailable = true
+                    self.updateBtnStatus()
+                } else {
+                    self.isIdAvailable = false
+                    self.updateBtnStatus()
+                }
             }
         }
     }
@@ -121,12 +133,14 @@ class SignUpViewModel: ObservableObject {
             
             isNicknamePhraseHidden = false
             
-            if isNicknameAvailable {
-                self.isNicknameAvailable = true
-                self.signUpBtnStatus()
-            } else {
-                self.isNicknameAvailable = false
-                self.signUpBtnStatus()
+            DispatchQueue.main.async {
+                if isNicknameAvailable {
+                    self.isNicknameAvailable = true
+                    self.signUpBtnStatus()
+                } else {
+                    self.isNicknameAvailable = false
+                    self.signUpBtnStatus()
+                }
             }
         }
     }
