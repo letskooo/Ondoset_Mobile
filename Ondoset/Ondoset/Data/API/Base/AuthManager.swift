@@ -19,12 +19,7 @@ class AuthManager: RequestInterceptor {
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         
         // baseURL 확인
-        
-        /// 학과 서버
-        //guard urlRequest.url?.absoluteString.hasPrefix(serverURL) == true else { return }
-        
-        /// EC2
-        guard urlRequest.url?.absoluteString.hasPrefix(ec2URL) == true else { return }
+        guard urlRequest.url?.absoluteString.hasPrefix(Constants.serverURL) == true else { return }
         
         // Access Token 조회
         guard let accessToken = KeyChainManager.readItem(key: "accessToken") else {
@@ -63,11 +58,7 @@ class AuthManager: RequestInterceptor {
         // 해당 경로로 accessToken 재발급 요청
         // 현재 임시 URL. 추후 수정 필요
         
-        /// 학과 서버
-        //guard let url = URL(string: serverURL+"/member/jwt") else { return }
-        
-        /// EC2
-        guard let url = URL(string: ec2URL+"/member/jwt") else { return }
+        guard let url = URL(string: Constants.serverURL+"/member/jwt") else { return }
         
         guard let accessToken = KeyChainManager.readItem(key: "accessToken"),
               let refreshToken = KeyChainManager.readItem(key: "refreshToken") else {

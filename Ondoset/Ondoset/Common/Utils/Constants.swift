@@ -14,13 +14,15 @@ import UIKit
 struct Constants {
     
     static let successResponseCode: String = "common_2000"
-    
+    static let serverURL = isAvailableUnivURL ? univURL : ec2URL
 }
 
-let serverURL = "http://ceprj.gachon.ac.kr:60019"
+// 학과서버 죽으면 false, 쓸 수 있으면 true
+let isAvailableUnivURL: Bool = true
+
+let univURL = "http://ceprj.gachon.ac.kr:60019"
 let ec2URL = "http://3.38.192.49:8080"
 
-let successResponseCode: String = "Common_2000"
 
 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
 let screenWidth = windowScene?.screen.bounds.width ?? 0

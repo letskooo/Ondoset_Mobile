@@ -21,11 +21,8 @@ extension MemberEndPoint: EndPoint {
     
     var baseURL: String {
         
-        /// 학과 서버
-        //return "\(serverURL)/member"
+        return "\(Constants.serverURL)/member"
         
-        /// EC2
-        return "\(ec2URL)/member"
     }
     
     var path: String {
