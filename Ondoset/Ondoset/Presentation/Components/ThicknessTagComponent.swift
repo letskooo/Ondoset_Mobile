@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WeatherTagComponent: View {
+struct ThicknessTagComponent: View {
     
     @Binding var isSelected: Bool
 
@@ -30,5 +30,5 @@ struct WeatherTagComponent: View {
 }
 
 #Preview {
-    WeatherTagComponent(isSelected: .constant(true), thickness: .THIN)
+    ThicknessTagComponent(isSelected: .constant(false), thickness: .THIN)
 }
