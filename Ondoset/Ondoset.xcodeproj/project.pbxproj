@@ -101,6 +101,7 @@
 		47E740432BD91509003A71D5 /* OOTDComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E740422BD91509003A71D5 /* OOTDComponent.swift */; };
 		882A51C02BD938990048EE1A /* SegmentControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */; };
 		882A51C22BD9471D0048EE1A /* SearchBarComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */; };
+		8856A02B2BD9731F00FCBFB8 /* ClothesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,6 +217,7 @@
 		47E740422BD91509003A71D5 /* OOTDComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDComponent.swift; sourceTree = "<group>"; };
 		882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControlComponent.swift; sourceTree = "<group>"; };
 		882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarComponent.swift; sourceTree = "<group>"; };
+		8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -407,6 +409,7 @@
 				47BE3A342BC3BAF500F27E38 /* BaseResponse.swift */,
 				47A718FC2BCB769200AD66A3 /* MemberDTO.swift */,
 				47E7403A2BD8F788003A71D5 /* OotdDTO.swift */,
+				8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -845,6 +848,7 @@
 				47C29E272BC24EA400E3E2B9 /* Color+.swift in Sources */,
 				47C29E292BC2500200E3E2B9 /* ViewHiddenModifier.swift in Sources */,
 				474E8A752BD672CC0060E081 /* TempRate.swift in Sources */,
+				8856A02B2BD9731F00FCBFB8 /* ClothesDTO.swift in Sources */,
 				47BE3A3E2BC3CE1600F27E38 /* TestUseCase.swift in Sources */,
 				47C29DF72BC248D000E3E2B9 /* SignUpView.swift in Sources */,
 				47BE3A272BC388A700F27E38 /* KeyChainManager.swift in Sources */,
