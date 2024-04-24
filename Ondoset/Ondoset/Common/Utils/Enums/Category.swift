@@ -1,5 +1,5 @@
 //
-//  Enums.swift
+//  Category.swift
 //  Ondoset
 //
 //  Created by KoSungmin on 4/22/24.
