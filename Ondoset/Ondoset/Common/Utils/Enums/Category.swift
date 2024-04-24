@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum Category: String {
+enum Category: String, CaseIterable {
     
     case TOP        // 상의
     case BOTTOM     // 하의
