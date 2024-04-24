@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum Thickness {
+enum Thickness: String {
     
     case THIN       // 얇은
     case NORMAL     // 적당한
