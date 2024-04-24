@@ -31,7 +31,7 @@ struct ClothSelectedComponent: View {
     let width: CGFloat
     
     // 우측에 들어가는 내용
-    let additionBtn: AnyView? = nil
+    var additionBtn: AnyView? = nil
     
     var body: some View {
         
@@ -66,7 +66,7 @@ struct ClothSelectedComponent: View {
                         
                         Text(clothName)
                             .font(Font.pretendard(.semibold, size: 15))
-                                        
+                        
                         HStack {
                             
                             ClothTagComponent(isSelected: $tagSelected, tagTitle: clothTag, category: category)
@@ -79,17 +79,50 @@ struct ClothSelectedComponent: View {
                     
                     Spacer()
                     
-                    if additionBtn != nil {
-                        
-                        additionBtn
-                        padding(.trailing, 20)
+                    if let additionalButton = self.additionBtn {
+                        additionalButton
                     }
+                    
                 }
                 .padding(.leading, 18)
             }
     }
 }
 
+struct ClothOptionButton: View {
+    
+    let clothesId: Int
+    
+    var body: some View {
+        VStack {
+            Menu(content: {
+                Button(action: {
+                    print("옷 정보 수정: \(clothesId)")
+                }) {
+                    Text("옷 정보 수정")
+                    Image(systemName: "pencil")
+                }
+                
+                Button(role: .destructive,
+                       action: {
+                    print("옷 삭제: \(clothesId)")
+                }) {
+                    Text("옷 삭제")
+                    Image(systemName: "trash")
+                }
+            }, label: {
+                Image(systemName: "ellipsis")
+                    .frame(width:24, height: 24)
+                    .rotationEffect(.degrees(90))
+                    .foregroundColor(.gray)
+                    .clipShape(Circle())
+            })
+            Spacer()
+        }
+        .padding(.all, 12)
+    }
+}
+
 #Preview {
-    ClothSelectedComponent(tagSelected: true, category: .TOP, clothName: "가천 후드티", clothTag: "후드티", clothThickness: .THICK, width: screenWidth - 40)
+    ClothSelectedComponent(tagSelected: true, category: .TOP, clothName: "가천 후드티", clothTag: "후드티", clothThickness: .THICK, width: screenWidth - 40, additionBtn: AnyView(ClothOptionButton(clothesId: 1)))
 }
