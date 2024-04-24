@@ -30,7 +30,8 @@ struct SegmentControlComponent: View {
             LazyHGrid(rows: [GridItem(.flexible())]) {
                 ForEach(tabMenus.indices, id: \.self) { index in
                     Button(action: {
-                        self.selectedTab = index
+                        self.$selectedTab.wrappedValue = index
+                        print(index)
                     }){
                         Text(tabMenus[index])
                             .font(Font.pretendard(.bold, size: 17))
@@ -43,7 +44,7 @@ struct SegmentControlComponent: View {
                 }
             }
         }
-        
+        .frame(height: 44)
         
     }
 }
