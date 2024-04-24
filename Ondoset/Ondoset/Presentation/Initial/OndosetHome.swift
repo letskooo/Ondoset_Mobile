@@ -43,6 +43,7 @@ struct OndosetHome: View {
                 
                 TabView(selectedTab: $selectedTab)
                     .hidden(wholeVM.isTabBarHidden)
+                    .border(Color(hex: 0xE0E0E0), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                     .overlay {
                         if wholeVM.isTabBarAlertStatus {
                             Color.black.opacity(0.5)
@@ -101,8 +102,9 @@ struct TabView: View {
             Spacer()
             
         }
-        .frame(width: screenWidth, height: 80)
+        .frame(width: screenWidth, height: 62)
         .background(Color(hex: 0xF8F8F8))
+        .padding(.bottom, 20)
     }
 }
 
