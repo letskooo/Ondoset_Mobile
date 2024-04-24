@@ -33,7 +33,6 @@ struct SearchBarComponent: View {
                         .padding(8)
                 }
                 .clipShape(Circle())
-                .padding(.trailing, 10)
             }
             .padding(.horizontal, 10)
         }
