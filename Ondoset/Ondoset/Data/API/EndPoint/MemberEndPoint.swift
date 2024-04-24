@@ -14,7 +14,10 @@ enum MemberEndPoint {
     case checkNicknameDuplicate(nickname: String)             // 닉네임 중복 체크
     case signUpMember(signUpDTO: SignUpRequestDTO)            // 회원가입
     case signInMember(signInDTO: SignInRequestDTO)            // 로그인
-    case saveOnboarding(onboardingDTO: OnboardingRequestDTO)
+    case saveOnboarding(onboardingDTO: OnboardingRequestDTO)  // 온보딩 결과 저장
+    case withdrawMember                                       // 회원탈퇴
+    case updateNickname(nickname: String)                     // 닉네임 수정
+    case updateProfileImage(profileImage: Data)            // 프로필 이미지 수정
 }
 
 extension MemberEndPoint: EndPoint {
@@ -22,7 +25,6 @@ extension MemberEndPoint: EndPoint {
     var baseURL: String {
         
         return "\(Constants.serverURL)/member"
-        
     }
     
     var path: String {
@@ -39,15 +41,21 @@ extension MemberEndPoint: EndPoint {
             return "/login"
         case .saveOnboarding(onboardingDTO: _):
             return "/on-boarding"
+        case .withdrawMember:
+            return "/delete"
+        case .updateNickname(nickname: let nickname):
+            return "/nickname"
+        case .updateProfileImage(profileImage: let profileImage):
+            return "/profile-pic"
         }
     }
     
     var method: HTTPMethod {
         
         switch self {
-        case .checkIdDuplicate, .checkNicknameDuplicate:
+        case .checkIdDuplicate, .checkNicknameDuplicate ,.withdrawMember:
             return .get
-        case .signUpMember, .signInMember, .saveOnboarding:
+        case .signUpMember, .signInMember, .saveOnboarding, .updateNickname, .updateProfileImage:
             return .post
         }
     }
@@ -76,8 +84,16 @@ extension MemberEndPoint: EndPoint {
             return .requestJsonWithoutToken(parameters: dto)
             
         case .saveOnboarding(onboardingDTO: let dto):
-            return .requsetJson(parameters: dto)
+            return .requestJson(parameters: dto)
     
+        case .withdrawMember:
+            return .requestPlain
+            
+        case let .updateNickname(nickname):
+            return .requestJson(parameters: nickname)
+            
+        case let .updateProfileImage(profileImage):
+            return .uploadImage(image: profileImage)
         }
     }
     
@@ -85,8 +101,10 @@ extension MemberEndPoint: EndPoint {
         
         switch self {
             
-        case .signUpMember, .signInMember, .saveOnboarding:
+        case .signUpMember, .signInMember, .saveOnboarding, .updateNickname:
             return ["Content-Type": "application/json"]
+        case .updateProfileImage:
+            return ["Content-Type": "multipart/form-data"]
         default:
             return nil
         }

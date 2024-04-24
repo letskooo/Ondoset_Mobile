@@ -92,6 +92,13 @@
 		47DF6F9F2BC7010100E64B12 /* RegisterNickNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F9E2BC7010100E64B12 /* RegisterNickNameView.swift */; };
 		47E6BB6F2BC56D3600A72F3D /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6BB6E2BC56D3600A72F3D /* AppError.swift */; };
 		47E6BB712BC56FD800A72F3D /* MemberEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6BB702BC56FD800A72F3D /* MemberEndPoint.swift */; };
+		47E740322BD8DAF0003A71D5 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E740312BD8DAF0003A71D5 /* SettingView.swift */; };
+		47E740372BD8DE72003A71D5 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E740362BD8DE72003A71D5 /* ImagePicker.swift */; };
+		47E7403B2BD8F788003A71D5 /* OotdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7403A2BD8F788003A71D5 /* OotdDTO.swift */; };
+		47E7403D2BD8FB71003A71D5 /* OOTDEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7403C2BD8FB71003A71D5 /* OOTDEndPoint.swift */; };
+		47E7403F2BD90D46003A71D5 /* ClothesEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7403E2BD90D46003A71D5 /* ClothesEndPoint.swift */; };
+		47E740412BD90D5A003A71D5 /* CoordiEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E740402BD90D5A003A71D5 /* CoordiEndPoint.swift */; };
+		47E740432BD91509003A71D5 /* OOTDComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E740422BD91509003A71D5 /* OOTDComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,6 +205,13 @@
 		47DF6F9E2BC7010100E64B12 /* RegisterNickNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNickNameView.swift; sourceTree = "<group>"; };
 		47E6BB6E2BC56D3600A72F3D /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		47E6BB702BC56FD800A72F3D /* MemberEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberEndPoint.swift; sourceTree = "<group>"; };
+		47E740312BD8DAF0003A71D5 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		47E740362BD8DE72003A71D5 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		47E7403A2BD8F788003A71D5 /* OotdDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OotdDTO.swift; sourceTree = "<group>"; };
+		47E7403C2BD8FB71003A71D5 /* OOTDEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDEndPoint.swift; sourceTree = "<group>"; };
+		47E7403E2BD90D46003A71D5 /* ClothesEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesEndPoint.swift; sourceTree = "<group>"; };
+		47E740402BD90D5A003A71D5 /* CoordiEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordiEndPoint.swift; sourceTree = "<group>"; };
+		47E740422BD91509003A71D5 /* OOTDComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +264,7 @@
 				474E8A682BD645AB0060E081 /* ClothSelectedComponent.swift */,
 				474E8A782BD67A430060E081 /* ClothTagComponent.swift */,
 				474E8A7A2BD6820C0060E081 /* ThicknessTagComponent.swift */,
+				47E740422BD91509003A71D5 /* OOTDComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -281,6 +296,9 @@
 			isa = PBXGroup;
 			children = (
 				47E6BB702BC56FD800A72F3D /* MemberEndPoint.swift */,
+				47E7403C2BD8FB71003A71D5 /* OOTDEndPoint.swift */,
+				47E7403E2BD90D46003A71D5 /* ClothesEndPoint.swift */,
+				47E740402BD90D5A003A71D5 /* CoordiEndPoint.swift */,
 			);
 			path = EndPoint;
 			sourceTree = "<group>";
@@ -382,6 +400,7 @@
 			children = (
 				47BE3A342BC3BAF500F27E38 /* BaseResponse.swift */,
 				47A718FC2BCB769200AD66A3 /* MemberDTO.swift */,
+				47E7403A2BD8F788003A71D5 /* OotdDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -497,6 +516,7 @@
 		47C29DE62BC2461200E3E2B9 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				47E740302BD8DADD003A71D5 /* Setting */,
 				47C29E122BC24A3F00E3E2B9 /* MyPageMain */,
 			);
 			path = MyPage;
@@ -636,6 +656,7 @@
 				474E8A6D2BD670710060E081 /* Enums */,
 				47BE3A282BC3897B00F27E38 /* ErrorHandling */,
 				47C29E2A2BC2504900E3E2B9 /* Constants.swift */,
+				47E740362BD8DE72003A71D5 /* ImagePicker.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -654,6 +675,14 @@
 				47DF6F712BC6B9D900E64B12 /* Pretendard-Thin.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		47E740302BD8DADD003A71D5 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				47E740312BD8DAF0003A71D5 /* SettingView.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -812,11 +841,13 @@
 				47BE3A3E2BC3CE1600F27E38 /* TestUseCase.swift in Sources */,
 				47C29DF72BC248D000E3E2B9 /* SignUpView.swift in Sources */,
 				47BE3A272BC388A700F27E38 /* KeyChainManager.swift in Sources */,
+				47E7403F2BD90D46003A71D5 /* ClothesEndPoint.swift in Sources */,
 				474E8A7B2BD6820C0060E081 /* ThicknessTagComponent.swift in Sources */,
 				47BE3A182BC3800E00F27E38 /* Coordi.swift in Sources */,
 				47DF6F9B2BC6CC7C00E64B12 /* ButtonComponent.swift in Sources */,
 				47BE3A302BC3938D00F27E38 /* APIManager.swift in Sources */,
 				47BE3A232BC380BA00F27E38 /* OOTDRepository.swift in Sources */,
+				47E7403D2BD8FB71003A71D5 /* OOTDEndPoint.swift in Sources */,
 				47BE3A212BC380AD00F27E38 /* CoordiRepository.swift in Sources */,
 				47C29E142BC24A5500E3E2B9 /* MyPageMainView.swift in Sources */,
 				47BE3A402BC3CE2B00F27E38 /* TestRepository.swift in Sources */,
@@ -832,7 +863,10 @@
 				476EAC3F2BD2B2A1008B2E15 /* SignUpFirstView.swift in Sources */,
 				47C29DF92BC2490600E3E2B9 /* OnboardingView.swift in Sources */,
 				474E8A692BD645AB0060E081 /* ClothSelectedComponent.swift in Sources */,
+				47E740322BD8DAF0003A71D5 /* SettingView.swift in Sources */,
 				47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */,
+				47E7403B2BD8F788003A71D5 /* OotdDTO.swift in Sources */,
+				47E740372BD8DE72003A71D5 /* ImagePicker.swift in Sources */,
 				47A718FD2BCB769200AD66A3 /* MemberDTO.swift in Sources */,
 				47E6BB6F2BC56D3600A72F3D /* AppError.swift in Sources */,
 				476EAC3D2BD2B28D008B2E15 /* SignUpSecondView.swift in Sources */,
@@ -848,6 +882,7 @@
 				474E8A732BD672BA0060E081 /* Thickness.swift in Sources */,
 				47C29E332BC2515500E3E2B9 /* ClothesUseCase.swift in Sources */,
 				47C29DF52BC248C300E3E2B9 /* SignInView.swift in Sources */,
+				47E740432BD91509003A71D5 /* OOTDComponent.swift in Sources */,
 				47C29E002BC249A400E3E2B9 /* HomeMainView.swift in Sources */,
 				474E8A6F2BD6707E0060E081 /* Category.swift in Sources */,
 				47BE3A2A2BC3898E00F27E38 /* ErrorHandler.swift in Sources */,
@@ -856,6 +891,7 @@
 				47C29E392BC2517E00E3E2B9 /* OOTDUseCase.swift in Sources */,
 				47BAF23D2BC658AD002474E7 /* WholeViewModel.swift in Sources */,
 				47C29E052BC249D000E3E2B9 /* RecordMainViewModel.swift in Sources */,
+				47E740412BD90D5A003A71D5 /* CoordiEndPoint.swift in Sources */,
 				47705BF22BC770A2003B5D6E /* SignUpViewModel.swift in Sources */,
 				47C29DFB2BC2491900E3E2B9 /* OnboardingViewModel.swift in Sources */,
 				47BE3A1D2BC3809C00F27E38 /* MemberRepository.swift in Sources */,
@@ -961,7 +997,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1018,7 +1054,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

@@ -21,7 +21,7 @@ public enum APITask {
     // var params: Parameters = [ "query" : query ]
 
     /// RequestBody에 JSON 데이터로 요청
-    case requsetJson(parameters: Encodable)
+    case requestJson(parameters: Encodable)
     
     /// RequestBody에 JSON 데이터로 요청(토큰X)
     case requestJsonWithoutToken(parameters: Encodable)
@@ -36,8 +36,8 @@ public enum APITask {
     case requestPathVariable
     
     /// 이미지 업로드
-    case uploadImages(imagesData: [Data?])
+    case uploadImage(image: Data)
     
     /// form 데이터 요청
-    case uploadImagesWithData(imageData: [Data?], data: [String: Any])
+    case uploadImagesWithData(image: Data, data: [String: Any])
 }

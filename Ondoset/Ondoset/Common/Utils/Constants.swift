@@ -14,7 +14,7 @@ import UIKit
 struct Constants {
     
     static let successResponseCode: String = "common_2000"
-    static let serverURL = isAvailableUnivURL ? univURL : ec2URL
+    static var serverURL = isAvailableUnivURL ? univURL : ec2URL
 }
 
 // 학과서버 죽으면 false, 쓸 수 있으면 true

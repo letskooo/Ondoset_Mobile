@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+class OOTDUseCase {
+    
+    static let shared = OOTDUseCase()
+    
+    let ootdRepository: OOTDRepository = OOTDRepository.shared
+    
+    
+}
