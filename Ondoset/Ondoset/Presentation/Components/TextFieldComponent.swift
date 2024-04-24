@@ -11,6 +11,7 @@ struct TextFieldComponent: View {
     
     let width: CGFloat
     let placeholder: String
+    var font: Font = .pretendard(.semibold, size: 15)
     @Binding var inputText: String
     
     var body: some View {
@@ -19,7 +20,7 @@ struct TextFieldComponent: View {
             
             TextField(placeholder, text: $inputText)
                 .frame(width: width-36, height: 48)
-                .font(Font.pretendard(.semibold, size: 15))
+                .font(font)
                 .padding(.horizontal, 18)
                 .background(.white)
                 .cornerRadius(12)
