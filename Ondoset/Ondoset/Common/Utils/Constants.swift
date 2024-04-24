@@ -27,3 +27,5 @@ let ec2URL = "http://3.38.192.49:8080"
 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
 let screenWidth = windowScene?.screen.bounds.width ?? 0
 let screenHeight = windowScene?.screen.bounds.height ?? 0
+
+

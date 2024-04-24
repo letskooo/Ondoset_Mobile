@@ -12,29 +12,34 @@ struct SettingView: View {
     @State var profileImage: UIImage = UIImage()
     @State private var openPhoto: Bool = false
     
+    @State var showAlert: Bool = false
+    
     @ObservedObject var myPageVM: MyPageMainViewModel
     
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        VStack {
-        
-            Button {
+        ZStack {
+            
+            
+            VStack {
                 
-                self.openPhoto = true
                 
-            } label: {
-                Text("이미지 불러오기")
+                Button {
+                    showAlert = true
+                } label: {
+                    Text("로그아웃")
+                }
+                
+                Spacer()
             }
             
-            Image(uiImage: self.profileImage)
-                .resizable()
-                .frame(minWidth: 96, maxWidth: 96)
-                .scaledToFit()
-                .clipShape(Circle())
-            
-            Spacer()
-            
+            if showAlert {
+                
+                AlertComponent(showAlert: $showAlert, alertTitle: "로그아웃", alertContent: "정말 로그아웃 하시겠어요?", rightBtnTitle: "확인", rightBtnAction: {
+                    myPageVM.logout()
+                })
+            }
         }
         .navigationTitle("설정")
         .navigationBarTitleDisplayMode(.inline)
