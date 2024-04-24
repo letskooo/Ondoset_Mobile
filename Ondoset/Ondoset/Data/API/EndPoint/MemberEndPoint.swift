@@ -20,7 +20,9 @@ enum MemberEndPoint {
 extension MemberEndPoint: EndPoint {
     
     var baseURL: String {
-        return "\(testServerURL)/member"
+        
+        return "\(Constants.serverURL)/member"
+        
     }
     
     var path: String {

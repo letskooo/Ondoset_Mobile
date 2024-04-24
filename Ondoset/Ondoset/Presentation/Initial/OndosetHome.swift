@@ -19,7 +19,7 @@ enum Tab {
 struct OndosetHome: View {
     
     @State var selectedTab: Tab = .home
-    @StateObject var ondosetHomeVM: OndosetHomeViewModel = .init()
+    @EnvironmentObject var wholeVM: WholeViewModel
     
     var body: some View {
         
@@ -42,7 +42,14 @@ struct OndosetHome: View {
                 Spacer()
                 
                 TabView(selectedTab: $selectedTab)
-                    .hidden(ondosetHomeVM.isTabBarHidden)
+                    .hidden(wholeVM.isTabBarHidden)
+                    .overlay {
+                        if wholeVM.isTabBarAlertStatus {
+                            Color.black.opacity(0.5)
+                        } else {
+                            Color.clear
+                        }
+                    }
             }
         }
     }

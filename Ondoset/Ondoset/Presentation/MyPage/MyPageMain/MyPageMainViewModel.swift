@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+class MyPageMainViewModel: ObservableObject {
+    
+    
+    func logout() {
+        
+        DispatchQueue.main.async {
+            UserDefaults.standard.set(false, forKey: "isLogin")
+        }
+    }
+}

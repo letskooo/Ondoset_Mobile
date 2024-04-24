@@ -25,11 +25,22 @@ struct SignUpSecondView: View {
             HStack {
                 
                 TextFieldComponent(width: 250, placeholder: "닉네임", inputText: $signUpVM.nicknameInputText)
+                    .onChange(of: signUpVM.nicknameInputText) { nickname in
+                        
+                        if nickname.count > 0 {
+                            signUpVM.isNicknameCheckBtnAvailable = true
+                        } else {
+                            signUpVM.isNicknameCheckBtnAvailable = false
+                            signUpVM.nicknamePhrase = ""
+                        }
+                        
+                        signUpVM.signUpBtnStatus()
+                    }
         
                 ButtonComponent(isBtnAvailable: $signUpVM.isNicknameCheckBtnAvailable, width: 80, btnText: "중복 확인", radius: 8) {
                     
                     Task {
-                        
+                        await signUpVM.checkDuplicateNickname()
                     }
                 }
             }
@@ -42,7 +53,7 @@ struct SignUpSecondView: View {
                 .foregroundStyle(signUpVM.isNicknameCheckBtnAvailable ? .blue : .black)
                 .hidden(signUpVM.isNicknamePhraseHidden)
             
-            ButtonComponent(isBtnAvailable: $signUpVM.isSignUpBtnAvailable, width: 340, btnText: "회원가입", radius: 15) {
+            ButtonComponent(isBtnAvailable: $signUpVM.isSignUpBtnAvailable, width: screenWidth - 50, btnText: "회원가입", radius: 15) {
                 
                 Task {
                     

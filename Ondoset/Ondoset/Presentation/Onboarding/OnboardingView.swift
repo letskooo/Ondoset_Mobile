@@ -87,7 +87,7 @@ struct OnboardingView: View {
                                     }
                                 }
                             }
-                            .frame(width: 325, height: 50)
+                            .frame(width: screenWidth - 65, height: 50)
                             .background(.white)
                             .cornerRadius(15)
                             .onTapGesture {
@@ -95,7 +95,7 @@ struct OnboardingView: View {
                             }
                             
                         }
-                        .frame(width: 350, height: 115)
+                        .frame(width: screenWidth - 40, height: 115)
                         .background(.ondosetBackground)
                         .cornerRadius(15)
                         .shadow(color: .gray.opacity(0.2), radius: 5, y: 5)
@@ -148,9 +148,9 @@ struct OnboardingView: View {
                                 }
                                 
                             }
-                            .frame(width: 325, height: 50)
+                            .frame(width: screenWidth - 65, height: 50)
                         }
-                        .frame(width: 350, height: 115)
+                        .frame(width: screenWidth - 40, height: 115)
                         .background(.ondosetBackground)
                         .cornerRadius(15)
                         .shadow(color: .gray.opacity(0.2), radius: 5, y: 5)
@@ -188,7 +188,7 @@ struct OnboardingView: View {
                                     }
                                 }
                             }
-                            .frame(width: 325, height: 50)
+                            .frame(width: screenWidth - 65, height: 50)
                             .background(.white)
                             .cornerRadius(15)
                             .onTapGesture {
@@ -196,7 +196,7 @@ struct OnboardingView: View {
                             }
                             
                         }
-                        .frame(width: 350, height: 115)
+                        .frame(width: screenWidth - 40, height: 115)
                         .background(.ondosetBackground)
                         .cornerRadius(15)
                         .shadow(color: .gray.opacity(0.2), radius: 5, y: 5)
@@ -234,7 +234,7 @@ struct OnboardingView: View {
                                     }
                                 }
                             }
-                            .frame(width: 325, height: 50)
+                            .frame(width: screenWidth - 65, height: 50)
                             .background(.white)
                             .cornerRadius(15)
                             .onTapGesture {
@@ -242,7 +242,7 @@ struct OnboardingView: View {
                             }
                             
                         }
-                        .frame(width: 350, height: 115)
+                        .frame(width: screenWidth - 40, height: 115)
                         .background(.ondosetBackground)
                         .cornerRadius(15)
                         .shadow(color: .gray.opacity(0.2), radius: 5, y: 5)
@@ -284,15 +284,14 @@ struct OnboardingView: View {
                                         if let activitySelected = activitySelected.first(where: { $0.value == true})?.key {
                                             activity = activitySelected
                                         }
-                                    
                                     }
                                 }
                                 
                             }
-                            .frame(width: 325)
+                            .frame(width: screenWidth - 65)
                             .padding(.leading, 40)
                         }
-                        .frame(width: 350)
+                        .frame(width: screenWidth - 40)
                         .padding(.vertical, 20)
                         .background(.ondosetBackground)
                         .cornerRadius(15)
@@ -338,17 +337,17 @@ struct OnboardingView: View {
                                     }
                                 }
                             }
-                            .frame(width: 325)
+                            .frame(width: screenWidth - 65)
                             .padding(.leading, 40)
                         }
-                        .frame(width: 350)
+                        .frame(width: screenWidth - 40)
                         .padding(.vertical, 20)
                         .background(.ondosetBackground)
                         .cornerRadius(15)
                         .shadow(color: .gray.opacity(0.2), radius: 5, y: 5)
                     }
                     
-                    ButtonComponent(isBtnAvailable: $isBtnAvailable, width: 340, btnText: "시작하기", radius: 15) {
+                    ButtonComponent(isBtnAvailable: $isBtnAvailable, width: screenWidth - 40, btnText: "시작하기", radius: 15) {
                         
                         Task {
                             
@@ -363,6 +362,7 @@ struct OnboardingView: View {
                         
                     }
                     .padding(.top, 20)
+                    .padding(.bottom, 30)
                 }
                 .padding(.top, 50)
             }
@@ -373,6 +373,7 @@ struct OnboardingView: View {
             .onChange(of: activity) { _ in updateButtonAvailability() }
             .onChange(of: goingOut) { _ in updateButtonAvailability() }
         }
+        .padding(.top, 40)
     }
     
     // 시작하기 버튼 활성화 여부 업데이트 메소드

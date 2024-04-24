@@ -36,28 +36,39 @@ struct SignInView: View {
                 
                 Spacer()
                 
-                VStack {
+                VStack() {
                     Image("loginIcon")
                     
-                    TextFieldComponent(width: 340, placeholder: "아이디", inputText: $idInputText)
+                    TextFieldComponent(width: screenWidth - 50, placeholder: "아이디", inputText: $idInputText)
                         .onChange(of: idInputText) { _ in
-                            updateBtnStatus()
+                            signInBtnStatus()
                         }
                         
-                    SecureFieldComponent(width: 340, placeholder: "비밀번호", inputText: $pwInputText)
+                    SecureFieldComponent(width: screenWidth - 50, placeholder: "비밀번호", inputText: $pwInputText)
                         .padding(.top, 20)
                         .onChange(of: pwInputText) { _ in
-                            updateBtnStatus()
+                            signInBtnStatus()
                         }
+                    
+                    HStack {
+                        
+                        Text(signInVM.signUpPhrase)
+                            .font(Font.pretendard(.semibold, size: 10))
+                            .foregroundStyle(signInVM.isSignInAvailable ?? true ? .clear : .red)
+                        
+                        Spacer()
+                    }
+                    .frame(width: screenWidth - 50)
+                    .padding(.top, 5)
            
-                    ButtonComponent(isBtnAvailable: $btnStatus, width: 340, btnText: "로그인", radius: 15) {
+                    ButtonComponent(isBtnAvailable: $btnStatus, width: screenWidth - 50, btnText: "로그인", radius: 15) {
                         
                         // 로그인 API 호출
                         Task {
                             await signInVM.signInMember(memberId: idInputText, password: pwInputText)
                         }
                     }
-                    .padding(.top, 20)
+                    .padding(.top, 10)
                     
                     Button {
                         path.append("SignUpFirstView")
@@ -95,7 +106,7 @@ struct SignInView: View {
         }
     }
     
-    private func updateBtnStatus() {
+    private func signInBtnStatus() {
         if !idInputText.isEmpty && !pwInputText.isEmpty {
             btnStatus = true
         } else {
