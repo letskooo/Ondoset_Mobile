@@ -12,13 +12,30 @@ class MyPageMainViewModel: ObservableObject {
     let memberUseCase: MemberUseCase = MemberUseCase.shared
     let ootdUseCase: OOTDUseCase = OOTDUseCase.shared
     
-//    @Published var memberProfile: MemberProfile = .init(memberId: <#T##String#>, memberName: <#T##String#>, profileImage: <#T##String#>, ootdList: <#T##[OOTD]#>, likeCount: <#T##Int#>, followingCount: <#T##Int#>)
+    @Published var memberProfile: MemberProfile?
     
-    // 내 프로필 조회
-    func readMyProfile() {
+    init() {
         
+        Task {
+            
+            await readMyProfile()
+        }
     }
     
+    // 내 프로필 조회
+    func readMyProfile() async {
+        
+        if let profile = await ootdUseCase.readMyProfile() {
+            
+            print("======")
+            print(profile.profileImage)
+            print("======")
+            
+            DispatchQueue.main.async {
+                self.memberProfile = profile
+            }
+        }
+    }
     
     // 프로필 이미지 변경
     func changeProfileImage() {

@@ -7,12 +7,4 @@
 
 import Foundation
 
-struct MemberProfile {
-    
-    let memberId: String
-    let memberName: String
-    let profileImage: String
-    let ootdList: [OOTD]
-    let likeCount: Int
-    let followingCount: Int
-}
+

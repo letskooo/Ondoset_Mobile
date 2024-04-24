@@ -21,6 +21,8 @@
 		476EAC3F2BD2B2A1008B2E15 /* SignUpFirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EAC3E2BD2B2A1008B2E15 /* SignUpFirstView.swift */; };
 		47705BF22BC770A2003B5D6E /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */; };
 		479058362BC907A3008FAD8E /* SecureFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479058352BC907A2008FAD8E /* SecureFieldComponent.swift */; };
+		47A46ED22BD97B3E0096525F /* LikeOOTDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A46ED12BD97B3E0096525F /* LikeOOTDView.swift */; };
+		47A46ED52BD97D9A0096525F /* FollowingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A46ED42BD97D9A0096525F /* FollowingListView.swift */; };
 		47A718FD2BCB769200AD66A3 /* MemberDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A718FC2BCB769200AD66A3 /* MemberDTO.swift */; };
 		47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BAF23A2BC65882002474E7 /* OndosetHome.swift */; };
 		47BAF23D2BC658AD002474E7 /* WholeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BAF23C2BC658AD002474E7 /* WholeViewModel.swift */; };
@@ -136,6 +138,8 @@
 		476EAC3E2BD2B2A1008B2E15 /* SignUpFirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFirstView.swift; sourceTree = "<group>"; };
 		47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		479058352BC907A2008FAD8E /* SecureFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldComponent.swift; sourceTree = "<group>"; };
+		47A46ED12BD97B3E0096525F /* LikeOOTDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeOOTDView.swift; sourceTree = "<group>"; };
+		47A46ED42BD97D9A0096525F /* FollowingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingListView.swift; sourceTree = "<group>"; };
 		47A718FC2BCB769200AD66A3 /* MemberDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDTO.swift; sourceTree = "<group>"; };
 		47BAF23A2BC65882002474E7 /* OndosetHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OndosetHome.swift; sourceTree = "<group>"; };
 		47BAF23C2BC658AD002474E7 /* WholeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WholeViewModel.swift; sourceTree = "<group>"; };
@@ -525,7 +529,6 @@
 		47C29DE62BC2461200E3E2B9 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
-				47E740302BD8DADD003A71D5 /* Setting */,
 				47C29E122BC24A3F00E3E2B9 /* MyPageMain */,
 			);
 			path = MyPage;
@@ -634,6 +637,9 @@
 			children = (
 				47C29E132BC24A5500E3E2B9 /* MyPageMainView.swift */,
 				47C29E152BC24A6300E3E2B9 /* MyPageMainViewModel.swift */,
+				47A46ED12BD97B3E0096525F /* LikeOOTDView.swift */,
+				47A46ED42BD97D9A0096525F /* FollowingListView.swift */,
+				47E740312BD8DAF0003A71D5 /* SettingView.swift */,
 			);
 			path = MyPageMain;
 			sourceTree = "<group>";
@@ -685,14 +691,6 @@
 			);
 			name = Fonts;
 			path = ../Fonts;
-			sourceTree = "<group>";
-		};
-		47E740302BD8DADD003A71D5 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				47E740312BD8DAF0003A71D5 /* SettingView.swift */,
-			);
-			path = Setting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -844,6 +842,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47A46ED52BD97D9A0096525F /* FollowingListView.swift in Sources */,
 				47C29E252BC24DD600E3E2B9 /* Font+.swift in Sources */,
 				47C29E272BC24EA400E3E2B9 /* Color+.swift in Sources */,
 				47C29E292BC2500200E3E2B9 /* ViewHiddenModifier.swift in Sources */,
@@ -918,6 +917,7 @@
 				47BE3A2C2BC38C8000F27E38 /* APITask.swift in Sources */,
 				47C29E162BC24A6300E3E2B9 /* MyPageMainViewModel.swift in Sources */,
 				47BE3A452BC4C99B00F27E38 /* TestView.swift in Sources */,
+				47A46ED22BD97B3E0096525F /* LikeOOTDView.swift in Sources */,
 				47BE3A132BC37FF900F27E38 /* Member.swift in Sources */,
 				479058362BC907A3008FAD8E /* SecureFieldComponent.swift in Sources */,
 				47BE3A3A2BC3C97300F27E38 /* TestEndPoint.swift in Sources */,
