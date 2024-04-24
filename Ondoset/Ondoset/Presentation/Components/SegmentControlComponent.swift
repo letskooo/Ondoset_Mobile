@@ -5,8 +5,6 @@
 //  Created by 박민서 on 4/24/24.
 //
 
-import Foundation
-
 import SwiftUI
 
 enum MyClosetTab: String, CaseIterable {

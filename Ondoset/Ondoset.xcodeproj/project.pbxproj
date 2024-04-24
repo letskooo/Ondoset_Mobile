@@ -100,6 +100,7 @@
 		47E740412BD90D5A003A71D5 /* CoordiEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E740402BD90D5A003A71D5 /* CoordiEndPoint.swift */; };
 		47E740432BD91509003A71D5 /* OOTDComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E740422BD91509003A71D5 /* OOTDComponent.swift */; };
 		882A51C02BD938990048EE1A /* SegmentControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */; };
+		882A51C22BD9471D0048EE1A /* SearchBarComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,6 +215,7 @@
 		47E740402BD90D5A003A71D5 /* CoordiEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordiEndPoint.swift; sourceTree = "<group>"; };
 		47E740422BD91509003A71D5 /* OOTDComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDComponent.swift; sourceTree = "<group>"; };
 		882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControlComponent.swift; sourceTree = "<group>"; };
+		882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +270,7 @@
 				474E8A7A2BD6820C0060E081 /* ThicknessTagComponent.swift */,
 				47E740422BD91509003A71D5 /* OOTDComponent.swift */,
 				882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */,
+				882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -861,6 +864,7 @@
 				47BE3A352BC3BAF500F27E38 /* BaseResponse.swift in Sources */,
 				47C29E032BC249C300E3E2B9 /* RecordMainView.swift in Sources */,
 				47E6BB712BC56FD800A72F3D /* MemberEndPoint.swift in Sources */,
+				882A51C22BD9471D0048EE1A /* SearchBarComponent.swift in Sources */,
 				47C29DB12BC23A4800E3E2B9 /* OndosetApp.swift in Sources */,
 				47C29E372BC2516F00E3E2B9 /* CoordiUseCase.swift in Sources */,
 				474E8A712BD672680060E081 /* Satisfaction.swift in Sources */,
