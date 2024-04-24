@@ -23,7 +23,7 @@ enum TestEndPoint {
 extension TestEndPoint: EndPoint {
     
     var baseURL: String {
-        return "\(serverURL)/test"
+        return "\(Constants.serverURL)/test"
     }
     
     var path: String {
@@ -50,7 +50,7 @@ extension TestEndPoint: EndPoint {
         case .testRequestPlain:
             return .requestPlain
         case .testRequestJson(dto: let dto):
-            return .requsetJson(parameters: dto)
+            return .requestJson(parameters: dto)
         case let .testRequestQueryParams(data):
             let params = [
                 "name" : data.name,

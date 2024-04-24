@@ -57,52 +57,6 @@ final class APIManager {
             return nil
         }
     }
-    
-    // MARK: BaseResponse 자체를 반환하는 메소드
-    
-    // 백엔드쪽과 회의 결과 모든 요청의 BaseResponse에 result를 함께 보내주는 것이 확정
-    
-//    func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
-//        
-//        var result: Data = .init()
-//        
-//        do {
-//            
-//            let request = await requestData(endPoint: endPoint)
-//            result = try request.result.get()
-//            
-//        } catch {
-//            print("네트워크 에러")
-//            return nil
-//        }
-//        
-//        do {
-//            
-//            let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
-//            
-//            if decodedData.code == Constants.successResponseCode {
-//                
-//                print(decodedData.code)
-//                print(decodedData.message)
-//                print(decodedData.result)
-//                
-//                return decodedData.result
-//                // 추후 추가적인 에러 처리
-//                
-//            } else {
-//                
-//                print(decodedData.code)
-//                print(decodedData.message)
-//                // 추후 추가적인 에러 처리
-//                
-//                return nil
-//            }
-//        
-//        } catch {
-//            print("파싱 에러")
-//            return nil
-//        }
-//    }
 }
 
 extension APIManager {
@@ -123,7 +77,7 @@ extension APIManager {
             )
             
         // RequestBody에 JSON 데이터로 요청
-        case let .requsetJson(parameters):
+        case let .requestJson(parameters):
             return AF.request(
                 "\(endPoint.baseURL)\(endPoint.path)",
                 method: endPoint.method,
@@ -173,23 +127,18 @@ extension APIManager {
                 interceptor: AuthManager()
             )
             
-        case let .uploadImages(images):
+        // form 데이터로 이미지 전송
+        case let .uploadImage(image):
             return AF.upload(multipartFormData: { multipartFormData in
-                for image in images {
-                    if let image = image {
-                        multipartFormData.append(image, withName: "img", fileName: "\(image).png", mimeType: "image/png")
-                    }
-                }
-            }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers)  // 나중에 AuthManager를 인터셉터로 해줘야 함
+                
+                multipartFormData.append(image, withName: "img", fileName: "\(image).jpeg", mimeType: "image/jpeg")
+            }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers)
             
         // form 데이터 요청
-        case let .uploadImagesWithData(images, body):
+        case let .uploadImagesWithData(image, body):
             return AF.upload(multipartFormData: { multipartFormData in
-                for image in images {
-                    if let image = image {
-                        multipartFormData.append(image, withName: "img", fileName: "\(image).jpeg", mimeType: "image/jpeg")
-                    }
-                }
+                
+                multipartFormData.append(image, withName: "img", fileName: "\(image).jpeg", mimeType: "image/jpeg")
                 
                 for (key, value) in body {
                     if let data = String(describing: value).data(using: .utf8) {

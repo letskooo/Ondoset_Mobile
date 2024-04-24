@@ -21,6 +21,8 @@ class AuthManager: RequestInterceptor {
         // baseURL 확인
         guard urlRequest.url?.absoluteString.hasPrefix(Constants.serverURL) == true else { return }
         
+        //guard urlRequest.url?.absoluteString.hasPrefix(univURL) == true else { return }
+        
         // Access Token 조회
         guard let accessToken = KeyChainManager.readItem(key: "accessToken") else {
             
@@ -59,6 +61,8 @@ class AuthManager: RequestInterceptor {
         // 현재 임시 URL. 추후 수정 필요
         
         guard let url = URL(string: Constants.serverURL+"/member/jwt") else { return }
+        
+        //guard let url = URL(string: univURL+"/member/jwt") else { return }
         
         guard let accessToken = KeyChainManager.readItem(key: "accessToken"),
               let refreshToken = KeyChainManager.readItem(key: "refreshToken") else {

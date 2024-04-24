@@ -8,8 +8,6 @@
 import Foundation
 import Combine
 
-
-
 class MemberUseCase {
     
     static let shared = MemberUseCase()
@@ -97,5 +95,24 @@ class MemberUseCase {
             // 온보딩 완료로 신규 사용자 여부 false
             UserDefaults.standard.set(false, forKey: "isFirst")
         }
+    }
+    
+    // 회원 탈퇴
+    func withdrawMember() async {
+        
+        _ = await memberRepository.withdrawMember()
+        
+    }
+    
+    // 닉네임 변경
+    func updateNickname(nickname: String) async {
+        
+        _ = await memberRepository.updateNickname(nickname: nickname)
+    }
+    
+    // 프로필 이미지 변경
+    func updateProfileImage(profileImage: Data) async {
+        
+        _ = await memberRepository.updateProfileImage(profileImage: profileImage)
     }
 }

@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+struct OOTD {
+    
+    let ootdId: Int
+    let date: Int
+    let lowestTemp: Int
+    let highestTemp: Int
+    let imageURL: String
+}

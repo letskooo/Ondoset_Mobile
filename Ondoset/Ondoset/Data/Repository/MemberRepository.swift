@@ -41,4 +41,22 @@ final class MemberRepository {
         
         return await APIManager.shared.performRequest(endPoint: MemberEndPoint.saveOnboarding(onboardingDTO: onboardingDTO))
     }
+    
+    // 회원탈퇴
+    func withdrawMember() async -> String? {
+        
+        return await APIManager.shared.performRequest(endPoint: MemberEndPoint.withdrawMember)
+    }
+    
+    // 닉네임 수정
+    func updateNickname(nickname: String) async -> String? {
+        
+        return await APIManager.shared.performRequest(endPoint: MemberEndPoint.updateNickname(nickname: nickname))
+    }
+    
+    // 프로필 이미지 수정
+    func updateProfileImage(profileImage: Data) async -> String? {
+        
+        return await APIManager.shared.performRequest(endPoint: MemberEndPoint.updateProfileImage(profileImage: profileImage))
+    }
 }

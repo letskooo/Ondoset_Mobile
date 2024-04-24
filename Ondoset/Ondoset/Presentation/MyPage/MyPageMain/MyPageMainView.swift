@@ -16,11 +16,14 @@ struct MyPageMainView: View {
     var body: some View {
         
         /// 각 탭의 메인 뷰마다 NavigationStack을 두는 것으로 설계합니다.
-        
         NavigationStack {
             
             ZStack {
+                
                 VStack {
+                    
+                    header
+                    
                     Text("마이 페이지")
                     
                     Button {
@@ -40,6 +43,34 @@ struct MyPageMainView: View {
                 }
             }
         }
+        .onAppear {
+            
+            myPageVM.readMyProfile()
+            
+        }
+        
+        
+    }
+    
+    private var header: some View {
+        
+        HStack {
+            
+            Spacer()
+            
+            NavigationLink(destination: SettingView(myPageVM: myPageVM)) {
+                
+                Image("setting")
+                    .padding(.trailing, 16)
+                
+            }
+        }
+        .frame(width: screenWidth, height: 45)
+        .overlay {
+            Text("아이디")
+                .font(Font.pretendard(.bold, size: 18))
+        }
+
     }
 }
 
