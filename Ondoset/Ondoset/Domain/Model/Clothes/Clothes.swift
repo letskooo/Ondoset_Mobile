@@ -5,4 +5,11 @@
 //  Created by KoSungmin on 4/8/24.
 //
 
-import Foundation
+struct Clothes {
+    var clothesId: Int
+    var name: String
+    var imageURL: String?
+    var category: Category
+    var tag: String
+    var thickness: Thickness
+}
