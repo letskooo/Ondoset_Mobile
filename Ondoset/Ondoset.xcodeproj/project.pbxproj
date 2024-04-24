@@ -104,6 +104,7 @@
 		882A51C02BD938990048EE1A /* SegmentControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */; };
 		882A51C22BD9471D0048EE1A /* SearchBarComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */; };
 		8856A02B2BD9731F00FCBFB8 /* ClothesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */; };
+		8856A02D2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -222,6 +223,7 @@
 		882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControlComponent.swift; sourceTree = "<group>"; };
 		882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarComponent.swift; sourceTree = "<group>"; };
 		8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesDTO.swift; sourceTree = "<group>"; };
+		8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankDataIndicateComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +279,7 @@
 				47E740422BD91509003A71D5 /* OOTDComponent.swift */,
 				882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */,
 				882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */,
+				8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -849,6 +852,7 @@
 				474E8A752BD672CC0060E081 /* TempRate.swift in Sources */,
 				8856A02B2BD9731F00FCBFB8 /* ClothesDTO.swift in Sources */,
 				47BE3A3E2BC3CE1600F27E38 /* TestUseCase.swift in Sources */,
+				8856A02D2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift in Sources */,
 				47C29DF72BC248D000E3E2B9 /* SignUpView.swift in Sources */,
 				47BE3A272BC388A700F27E38 /* KeyChainManager.swift in Sources */,
 				47E7403F2BD90D46003A71D5 /* ClothesEndPoint.swift in Sources */,
