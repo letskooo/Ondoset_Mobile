@@ -23,6 +23,10 @@ struct SegmentControlComponent: View {
     
     var body: some View {
         ZStack() {
+            Divider()
+                .background(.lightGray)
+                .offset(CGSize(width: 0, height: 16.3))
+            
             LazyHGrid(rows: [GridItem(.flexible())]) {
                 ForEach(tabMenus.indices, id: \.self) { index in
                     Button(action: {
@@ -30,16 +34,14 @@ struct SegmentControlComponent: View {
                     }){
                         Text(tabMenus[index])
                             .font(Font.pretendard(.bold, size: 17))
-                            .foregroundStyle(selectedTab == index ? .blue : .darkGray)
-                            .underline(selectedTab == index, color: .blue)
+                            .foregroundStyle(selectedTab == index ? .main : .darkGray)
+                            .underline(selectedTab == index, color: .main)
                             .baselineOffset(10)
                             .padding(.horizontal, 10)
                             .padding(.top, 10)
                     }
                 }
             }
-            Divider()
-                .offset(CGSize(width: 0, height: 16.5))
         }
         
         
