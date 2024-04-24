@@ -56,6 +56,9 @@ struct ClothSelectedComponent: View {
                         
                         // 카테고리 이미지
                         category.categoryImage
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 48, height: 48)
                     }
                     
                     Rectangle()
