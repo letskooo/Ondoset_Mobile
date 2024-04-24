@@ -30,7 +30,7 @@ struct OOTDComponent: View {
 
                         Text(date)
                             .padding(.leading, 20)
-                            .font(Font.pretendard(.semibold, size: 18))
+                            .font(Font.pretendard(.semibold, size: 12))
 
                         Spacer()
 
@@ -39,20 +39,20 @@ struct OOTDComponent: View {
                             HStack {
                                 Text("\(minTemp)°C")
                                     .foregroundStyle(.blue)
-                                    .font(Font.pretendard(.semibold, size: 18))
+                                    .font(Font.pretendard(.semibold, size: 10))
 
                                 Text("/")
-                                    .font(Font.pretendard(.semibold, size: 18))
+                                    .font(Font.pretendard(.semibold, size: 10))
 
                                 Text("\(maxTemp)°C")
                                     .foregroundStyle(.red)
-                                    .font(Font.pretendard(.semibold, size: 18))
+                                    .font(Font.pretendard(.semibold, size: 10))
                             }
                             .padding(.trailing, 20)
                         }
                     }
-                    .padding(.top, 10)
-                    .padding(.bottom, 10)
+                    .padding(.top, 3)
+                    .padding(.bottom, 3)
                     .background(Color(hex: 0xFFFFFF)).opacity(0.8)
 
                     Spacer()
