@@ -10,6 +10,7 @@ import SwiftUI
 struct ClosetMainView: View {
     // MARK: States
     @State var selectedTab: Int = 1
+    @State var presentMyClothing: Bool = false
     
     // mock data
     @State var clothesData: [Clothes] = ClothesDTO.mockData()
@@ -21,7 +22,7 @@ struct ClosetMainView: View {
         
         // MARK: Main View
         NavigationStack {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 SegmentControlComponent(selectedTab: $selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue})
                     .padding(.bottom, 15)
                 
@@ -31,26 +32,36 @@ struct ClosetMainView: View {
                 })
                 .padding(.horizontal, 18)
                 
-                ScrollView {
-                    LazyVStack(spacing: 16, content: {
-                        ForEach(clothesData, id: \.clothesId) { item in
-                            ClothSelectedComponent(
-                                category: item.category,
-                                clothName: item.name,
-                                clothTag: item.tag,
-                                clothThickness: item.thickness,
-                                width: screenWidth - 40,
-                                additionBtn: AnyView(ClothOptionButton(clothesId: item.clothesId))
-                            )
-                        }
-                    })
+                if clothesData.isEmpty {
+                    VStack(alignment: .center) {
+                        Spacer()
+                        BlankDataIndicateComponent(explainText: "아직 등록된 옷이 없어요\n오른쪽 아래의 옷 추가 버튼을 눌러 옷을 추가해주세요")
+                        Spacer()
+                    }
                 }
-                .padding(.vertical, 20)
+                else {
+                    ScrollView {
+                        LazyVStack(spacing: 16, content: {
+                            ForEach(clothesData, id: \.clothesId) { item in
+                                ClothSelectedComponent(
+                                    category: item.category,
+                                    clothName: item.name,
+                                    clothTag: item.tag,
+                                    clothThickness: item.thickness,
+                                    width: screenWidth - 40,
+                                    additionBtn: AnyView(ClothOptionButton(clothesId: item.clothesId))
+                                )
+                            }
+                        })
+                    }
+                    .padding(.vertical, 20)
+                }
             }
         }
         .overlay{
             Button(action: {
                 print("add!")
+                self.presentMyClothing = true
             }, label: {
                 ZStack {
                     Circle()
@@ -67,6 +78,9 @@ struct ClosetMainView: View {
                     
             })
             .offset(x: 145, y: 290)
+        }
+        .sheet(isPresented: $presentMyClothing) {
+            NavigationView { MyClothingView() }
         }
 
     }
