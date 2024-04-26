@@ -9,6 +9,8 @@ import SwiftUI
 
 struct FollowingListView: View {
     
+    @State var searchText: String = ""
+    
     @ObservedObject var myPageVM: MyPageMainViewModel
     
     @Environment(\.dismiss) private var dismiss
@@ -16,10 +18,24 @@ struct FollowingListView: View {
     var body: some View {
         VStack {
             
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 
+                VStack(spacing: 0) {
+                    
+                    SearchBarComponent(searchText: $searchText, placeHolder: "닉네임을 검색하세요") { _ in
+                        
+                        
+                        
+                    }
+                    .padding(.horizontal, 18)
+                    .padding(.top, 5)
+                    
+                    Rectangle()
+                        .frame(width: screenWidth, height: 1)
+                        .foregroundStyle(Color(hex: 0xEDEEFA))
+                        .padding(.top, 18)
+                }
             }
-            
         }
         .navigationTitle("팔로잉한 계정")
         .navigationBarTitleDisplayMode(.inline)

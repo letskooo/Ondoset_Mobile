@@ -14,16 +14,18 @@ struct SettingView: View {
     
     @State var showAlert: Bool = false
     
-    @ObservedObject var myPageVM: MyPageMainViewModel
+    @StateObject var settingVM: SetttingViewModel = .init()
     
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack {
-            
-            
+    
             VStack {
                 
+                VStack {
+                    
+                }
                 
                 Button {
                     showAlert = true
@@ -37,7 +39,7 @@ struct SettingView: View {
             if showAlert {
                 
                 AlertComponent(showAlert: $showAlert, alertTitle: "로그아웃", alertContent: "정말 로그아웃 하시겠어요?", rightBtnTitle: "확인", rightBtnAction: {
-                    myPageVM.logout()
+                    settingVM.logout()
                 })
             }
         }
@@ -63,5 +65,5 @@ struct SettingView: View {
 }
 
 #Preview {
-    SettingView(myPageVM: MyPageMainViewModel())
+    SettingView(settingVM: SetttingViewModel())
 }
