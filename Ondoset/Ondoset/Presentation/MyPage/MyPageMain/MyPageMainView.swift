@@ -43,7 +43,7 @@ struct MyPageMainView: View {
                         .font(Font.pretendard(.bold, size: 18))
                 }
                 
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     
                     VStack(spacing: 0) {
                         
@@ -56,7 +56,7 @@ struct MyPageMainView: View {
                                     .frame(width: 96, height: 96)
                                     .clipShape(Circle())
                                     .overlay {
-                                        Circle().stroke(.darkGray, lineWidth: 0.5)
+                                        Circle().stroke(.main, lineWidth: 0.5)
                                     }
                                     .padding(.leading, 35)
                                 
@@ -88,7 +88,7 @@ struct MyPageMainView: View {
                                         .padding(.leading, 24)
                                 }
                                 
-                                NavigationLink(destination: LikeOOTDView(myPageVM: myPageVM)) {
+                                NavigationLink(destination: LikeOOTDView()) {
                                     
                                     HStack {
                                         
@@ -105,7 +105,7 @@ struct MyPageMainView: View {
                                     }
                                 }
                                 
-                                NavigationLink(destination: FollowingListView(myPageVM: myPageVM)) {
+                                NavigationLink(destination: FollowingListView()) {
                                     
                                     HStack {
                                         
@@ -121,12 +121,6 @@ struct MyPageMainView: View {
                                         Image("rightChevron2")
                                     }
                                 }
-                                
-                                
-                                
-                                
-                                
-                                
                             }
                             
                             Spacer()
@@ -155,6 +149,15 @@ struct MyPageMainView: View {
                                     OOTDComponent(date: dateString, minTemp: myOotdList[index].lowestTemp, maxTemp: myOotdList[index].highestTemp, ootdImageURL: myOotdList[index].imageURL) {
                                     }
                                     .frame(width: screenWidth/2)
+                                    .onAppear {
+                                        
+                                        if index == myOotdList.count - 1 {
+                                            Task {
+                                                await myPageVM.pagingMyProfileOOTD()
+                                            }
+                                        }
+                                        
+                                    }
                                 }
                             }
                             
@@ -176,6 +179,7 @@ struct MyPageMainView: View {
                         await myPageVM.readMyProfile()
                     }
                 }
+                .padding(.bottom, 50)
                 
                 Spacer()
             }
