@@ -191,13 +191,13 @@ struct OOTDMainView: View {
                                 
                                 Spacer()
                                 
-                                Button {
+                                NavigationLink(destination: AddOOTDView()) {
                                     
-                                } label: {
                                     Image("addMainButton")
+                                        .padding(.trailing, 10)
+                                        .padding(.bottom, 30)
+                                    
                                 }
-                                .padding(.trailing, 10)
-                                .padding(.bottom, 30)
                             }
                         }
 

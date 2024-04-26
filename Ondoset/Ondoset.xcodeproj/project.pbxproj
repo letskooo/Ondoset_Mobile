@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4705797C2BDBD0EF0009A2CF /* AddOOTDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4705797B2BDBD0EE0009A2CF /* AddOOTDViewModel.swift */; };
+		4705797E2BDBD1190009A2CF /* AddOOTDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4705797D2BDBD1190009A2CF /* AddOOTDView.swift */; };
+		470579812BDBD3450009A2CF /* GetCoordiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470579802BDBD3450009A2CF /* GetCoordiView.swift */; };
 		4738B5C92BD9A88D0025DAF6 /* FollowingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4738B5C82BD9A88D0025DAF6 /* FollowingViewModel.swift */; };
 		473BC8F92BD4F4B500E6D197 /* AlertComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BC8F82BD4F4B500E6D197 /* AlertComponent.swift */; };
 		473EC52F2BD0FC6300AB59D2 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473EC52E2BD0FC6300AB59D2 /* SignInViewModel.swift */; };
@@ -129,6 +132,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4705797B2BDBD0EE0009A2CF /* AddOOTDViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOOTDViewModel.swift; sourceTree = "<group>"; };
+		4705797D2BDBD1190009A2CF /* AddOOTDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOOTDView.swift; sourceTree = "<group>"; };
+		470579802BDBD3450009A2CF /* GetCoordiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCoordiView.swift; sourceTree = "<group>"; };
 		4738B5C82BD9A88D0025DAF6 /* FollowingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewModel.swift; sourceTree = "<group>"; };
 		473BC8F82BD4F4B500E6D197 /* AlertComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertComponent.swift; sourceTree = "<group>"; };
 		473EC52E2BD0FC6300AB59D2 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
@@ -262,6 +268,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4705797A2BDBD0A50009A2CF /* AddOOTD */ = {
+			isa = PBXGroup;
+			children = (
+				4705797B2BDBD0EE0009A2CF /* AddOOTDViewModel.swift */,
+				4705797D2BDBD1190009A2CF /* AddOOTDView.swift */,
+				470579802BDBD3450009A2CF /* GetCoordiView.swift */,
+			);
+			path = AddOOTD;
+			sourceTree = "<group>";
+		};
 		47058C0D2BC953DC002D7468 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -569,6 +585,7 @@
 		47C29DE72BC2461900E3E2B9 /* OOTD */ = {
 			isa = PBXGroup;
 			children = (
+				4705797A2BDBD0A50009A2CF /* AddOOTD */,
 				47C29E0B2BC24A0A00E3E2B9 /* OOTDMain */,
 			);
 			path = OOTD;
@@ -722,14 +739,6 @@
 			);
 			name = Fonts;
 			path = ../Fonts;
-			sourceTree = "<group>";
-		};
-		47E740302BD8DADD003A71D5 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				47E740312BD8DAF0003A71D5 /* SettingView.swift */,
-			);
-			path = Setting;
 			sourceTree = "<group>";
 		};
 		882228EE2BD98D3200CFF8B9 /* MyClothing */ = {
@@ -914,6 +923,7 @@
 				47C29E312BC2514B00E3E2B9 /* MemberUseCase.swift in Sources */,
 				47BE3A352BC3BAF500F27E38 /* BaseResponse.swift in Sources */,
 				47C29E032BC249C300E3E2B9 /* RecordMainView.swift in Sources */,
+				4705797E2BDBD1190009A2CF /* AddOOTDView.swift in Sources */,
 				47E6BB712BC56FD800A72F3D /* MemberEndPoint.swift in Sources */,
 				882A51C22BD9471D0048EE1A /* SearchBarComponent.swift in Sources */,
 				47C29DB12BC23A4800E3E2B9 /* OndosetApp.swift in Sources */,
@@ -921,6 +931,7 @@
 				474E8A712BD672680060E081 /* Satisfaction.swift in Sources */,
 				476EAC3F2BD2B2A1008B2E15 /* SignUpFirstView.swift in Sources */,
 				47C29DF92BC2490600E3E2B9 /* OnboardingView.swift in Sources */,
+				470579812BDBD3450009A2CF /* GetCoordiView.swift in Sources */,
 				474E8A692BD645AB0060E081 /* ClothSelectedComponent.swift in Sources */,
 				47E740322BD8DAF0003A71D5 /* SettingView.swift in Sources */,
 				47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */,
@@ -930,6 +941,7 @@
 				47E6BB6F2BC56D3600A72F3D /* AppError.swift in Sources */,
 				476EAC3D2BD2B28D008B2E15 /* SignUpSecondView.swift in Sources */,
 				47BE3A3C2BC3CBBD00F27E38 /* Test.swift in Sources */,
+				4705797C2BDBD0EF0009A2CF /* AddOOTDViewModel.swift in Sources */,
 				47DF6F9F2BC7010100E64B12 /* RegisterNickNameView.swift in Sources */,
 				47BE3A1F2BC380A400F27E38 /* ClothesRepository.swift in Sources */,
 				473BC8F92BD4F4B500E6D197 /* AlertComponent.swift in Sources */,

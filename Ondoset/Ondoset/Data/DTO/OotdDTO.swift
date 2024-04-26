@@ -136,3 +136,15 @@ extension ReadWeatherOOTDListResponseDTO {
         return ootds
     }
 }
+
+// OOTD 등록 DTO
+struct AddOOTD {
+    
+    let departTime: Int
+    let arrivalTime: Int
+    let weather: String
+    let lowestTemp: Int
+    let highestTemp: Int
+    let image: Data
+    let wearingList: [String]
+}
