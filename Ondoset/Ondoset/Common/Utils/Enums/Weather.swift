@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum Weather {
+enum Weather: CaseIterable {
     
     case SUNNY          // 맑음
     case PARTLY_CLOUDY  // 조금 흐림
@@ -16,6 +16,28 @@ enum Weather {
     case RAINY          // 비
     case SLEET          // 눈비
     case SNOWY          // 눈
+}
+
+extension Weather {
+    
+    var stringValue: String {
+        
+        switch self {
+            
+        case .SUNNY:
+            return "SUNNY"
+        case .PARTLY_CLOUDY:
+            return "PARTLY_CLOUDY"
+        case .CLOUDY:
+            return "CLOUDY"
+        case .RAINY:
+            return "RAINY"
+        case .SLEET:
+            return "SLEET"
+        case .SNOWY:
+            return "SNOWY"
+        }
+    }
 }
 
 extension Weather {
