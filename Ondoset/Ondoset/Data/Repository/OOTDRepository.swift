@@ -22,4 +22,22 @@ final class OOTDRepository {
         
         return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.myProfilePaging(lastPage: lastPage))
     }
+    
+    // 공감한 OOTD 조회
+    func readLikeOOTDList(lastPage: Int) async -> ReadLikeOOTDListResponseDTO? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.readLikeOOTDList(lastPage: lastPage))
+    }
+    
+    // 팔로잉 목록 조회
+    func readFollowingList(lastPage: Int) async -> ReadFollowingListResponseDTO? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.readFollowingList(lastPage: lastPage))
+    }
+    
+    // 날씨뷰 OOTD 조회
+    func readWeatherOOTDList(data: ReadWeatherOOTDRequestDTO) async ->  ReadWeatherOOTDListResponseDTO? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.readWeatherOOTDList(data: data))
+    }
 }

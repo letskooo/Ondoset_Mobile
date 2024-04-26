@@ -30,6 +30,8 @@ final class APIManager {
             
             result = try request.result.get()
             
+            print(String(data: result, encoding: .utf8))
+            
         } catch {
             print("네트워크 에러")
             return nil

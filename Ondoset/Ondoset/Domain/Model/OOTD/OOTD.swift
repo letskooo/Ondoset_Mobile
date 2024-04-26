@@ -21,8 +21,29 @@ struct MemberProfile: Hashable {
     let memberId: String
     let memberNickname: String
     let profileImage: String
-    let ootdList: [OOTD]
+    var ootdList: [OOTD]
     let ootdCount: Int
     let likeCount: Int
     let followingCount: Int    
+}
+
+struct PagingOOTD: Hashable {
+    
+    let lastPage: Int
+    let ootdList: [OOTD]
+}
+
+struct Following: Hashable {
+    
+    let memberId: Int
+    let nickname: String
+    let imageURL: String?
+    var isFollowing: Bool
+    let ootdCount: Int
+}
+
+struct PagingFollowing: Hashable {
+    
+    let lastPage: Int
+    let followingList: [Following]
 }
