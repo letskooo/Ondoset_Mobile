@@ -131,66 +131,76 @@ struct OOTDMainView: View {
                             
                         }
                         
+                        VStack {
                             
-                        HStack(alignment: .top, spacing: 12) {
+                            HStack(alignment: .top, spacing: 12) {
 
-                            VStack {
-                                
-                                Button {
+                                VStack {
                                     
-                                    withAnimation(.spring()) {
-                                        openWeatherOptions.toggle()
+                                    Button {
+                                        
+                                        withAnimation(.spring()) {
+                                            openWeatherOptions.toggle()
+                                        }
+                                        
+                                    } label: {
+                                        ootdMainVM.selectedWeather.imageWhite
+                                            .frame(width: 34, height: 34)
+                                            .background(.main)
+                                            .cornerRadius(50)
                                     }
                                     
-                                } label: {
-                                    ootdMainVM.selectedWeather.imageWhite
-                                        .frame(width: 34, height: 34)
-                                        .background(.main)
-                                        .cornerRadius(50)
-                                }
-                                
-                                if openWeatherOptions {
-                                    
-                                    weatherListView
-                                }
-                            }
-                            
-                            VStack {
-                                
-                                Button {
-
-                                    withAnimation(.spring()) {
-                                        openTempRateOptions.toggle()
+                                    if openWeatherOptions {
+                                        
+                                        weatherListView
                                     }
-
-                                } label: {
-
-                                    Text("\(ootdMainVM.selectedTempRate.section)")
-                                        .foregroundStyle(.white)
-                                        .padding(.horizontal, 10)
-                                        .padding(.vertical, 5)
-                                        .background(.main)
-                                        .cornerRadius(50)
                                 }
                                 
-                                if openTempRateOptions {
+                                VStack {
                                     
-                                    tempRateListView
+                                    Button {
+
+                                        withAnimation(.spring()) {
+                                            openTempRateOptions.toggle()
+                                        }
+
+                                    } label: {
+
+                                        Text("\(ootdMainVM.selectedTempRate.section)")
+                                            .foregroundStyle(.white)
+                                            .padding(.horizontal, 10)
+                                            .padding(.vertical, 5)
+                                            .background(.main)
+                                            .cornerRadius(50)
+                                    }
+                                    
+                                    if openTempRateOptions {
+                                        
+                                        tempRateListView
+                                    }
                                 }
 
+                                Spacer()
                             }
-
+                            .padding(.leading, 30)
+                            .padding(.vertical, 15)
                             
-
                             Spacer()
+                            
+                            HStack {
+                                
+                                Spacer()
+                                
+                                Button {
+                                    
+                                } label: {
+                                    Image("addMainButton")
+                                }
+                                .padding(.trailing, 10)
+                                .padding(.bottom, 30)
+                            }
                         }
-                        .padding(.leading, 30)
-                        .padding(.vertical, 15)
-                    
-                        
-                        
-                        
-                        
+
                     }
                     .tag("날씨")
                     .padding(.bottom, 40)

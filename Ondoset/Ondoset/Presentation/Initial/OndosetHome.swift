@@ -102,9 +102,9 @@ struct CustomTabView: View {
             Spacer()
             
         }
-        .frame(width: screenWidth, height: 62)
+        .frame(width: screenWidth, height: 85)
         .background(Color(hex: 0xF8F8F8))
-        .padding(.bottom, 20)
+//        .padding(.bottom, 20)
     }
 }
 
