@@ -39,14 +39,14 @@ struct OOTDComponent: View {
                             HStack {
                                 Text("\(minTemp)°C")
                                     .foregroundStyle(.blue)
-                                    .font(Font.pretendard(.semibold, size: 10))
+                                    .font(Font.pretendard(.bold, size: 11))
 
                                 Text("/")
-                                    .font(Font.pretendard(.semibold, size: 10))
+                                    .font(Font.pretendard(.bold, size: 11))
 
                                 Text("\(maxTemp)°C")
                                     .foregroundStyle(.red)
-                                    .font(Font.pretendard(.semibold, size: 10))
+                                    .font(Font.pretendard(.bold, size: 11))
                             }
                             .padding(.trailing, 20)
                         }
@@ -63,6 +63,10 @@ struct OOTDComponent: View {
             .edgesIgnoringSafeArea(.all)
             .onTapGesture {
                 action()
+            }
+            .onAppear {
+//                ImageCache.default.clearMemoryCache()
+//                ImageCache.default.clearDiskCache()
             }
         
 //        Image("testImage3")

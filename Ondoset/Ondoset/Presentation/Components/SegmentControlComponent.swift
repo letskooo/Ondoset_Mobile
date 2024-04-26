@@ -27,7 +27,7 @@ struct SegmentControlComponent: View {
                 .background(.lightGray)
                 .offset(CGSize(width: 0, height: 16.3))
             
-            LazyHGrid(rows: [GridItem(.flexible())]) {
+            LazyHGrid( rows: [GridItem(.flexible())]) {
                 ForEach(tabMenus.indices, id: \.self) { index in
                     Button(action: {
                         self.$selectedTab.wrappedValue = index

@@ -8,11 +8,30 @@
 import SwiftUI
 
 struct FollowingBtnComponent: View {
+    
+    @Binding var isFollowing: Bool 
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    
+        Button {
+            
+        } label: {
+            Text("팔로잉")
+                .font(Font.pretendard(.semibold, size: 13))
+                .foregroundStyle(isFollowing ? .main : .white)
+                .padding(.horizontal, 35)
+                .padding(.vertical, 6)
+                .background(isFollowing ? Color(hex: 0xEDEEFA) : .main)
+                .cornerRadius(10)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(.main)
+                }
+        }
+        
     }
 }
 
 #Preview {
-    FollowingBtnComponent()
+    FollowingBtnComponent(isFollowing: .constant(false))
 }

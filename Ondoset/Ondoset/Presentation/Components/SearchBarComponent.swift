@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SearchBarComponent: View {
     
-    @State var searchText: String = ""
+    @Binding var searchText: String
     let placeHolder: String
     var searchAction: (String) -> Void
 
@@ -40,5 +40,5 @@ struct SearchBarComponent: View {
 }
 
 #Preview {
-    SearchBarComponent(placeHolder: "등록한 옷을 검색하세요", searchAction: { print($0) })
+    SearchBarComponent(searchText: .constant(""), placeHolder: "등록한 옷을 검색하세요", searchAction: { print($0) })
 }
