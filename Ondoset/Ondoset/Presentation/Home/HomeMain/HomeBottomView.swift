@@ -69,21 +69,28 @@ struct TodaysSetUpView: View {
     ]
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHGrid(rows: [
-                GridItem(.flexible(), spacing: 10, alignment: .leading),
-                GridItem(.flexible(), spacing: 10, alignment: .leading),
-                GridItem(.flexible(), spacing: 10, alignment: .leading)
-            ], content: {
-                ForEach(setUp, id: \.clothesId) { cloth in
-                    ClothTagComponent(isSelected: $test, tagTitle: cloth.name, category: cloth.category)
-                }
-            })
-            .frame(height: 100)
-            .padding(.horizontal, 20)
-            .padding(.bottom, 20)
+        VStack {
+            // 옷 표시 스크롤뷰
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHGrid(rows: [
+                    GridItem(.flexible(), spacing: 10, alignment: .leading),
+                    GridItem(.flexible(), spacing: 10, alignment: .leading),
+                    GridItem(.flexible(), spacing: 10, alignment: .leading)
+                ], content: {
+                    ForEach(setUp, id: \.clothesId) { cloth in
+                        ClothTagComponent(isSelected: $test, tagTitle: cloth.name, category: cloth.category)
+                    }
+                })
+                .frame(height: 100)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
+            }
+            Spacer()
+            // 추위미터기 버튼
+            // TODO: 해당 버튼 컴포넌트에 색 지정 부분도 추가해야 합니다
+            ButtonComponent(isBtnAvailable: $test, width: 340, btnText: "추위 미터기 확인하기", radius: 15, action: { print("날 죽여라")})
+                .padding()
         }
-        
     }
 }
 // MARK: SetUpHistoryView
