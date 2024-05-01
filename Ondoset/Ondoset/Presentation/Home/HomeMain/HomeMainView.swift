@@ -50,6 +50,47 @@ struct WeatherHeaderView: View {
     }
 }
 
+struct WeatherMainView: View {
+    var body: some View {
+        HStack(alignment: .center) {
+            Spacer()
+            VStack(spacing: 15) {
+                // 상단 전날 온도 차이 표시
+                HStack(spacing: 0) {
+                    Text("어제보다 ")
+                        .font(.pretendard(.medium, size: 15))
+                    Text("-4°C")
+                        .font(.pretendard(.bold, size: 15))
+                        .foregroundStyle(.min)
+                }
+                // 중간 큰 온도 표시
+                HStack(alignment: .top, spacing: 0) {
+                    Text("4")
+                        .font(.pretendard(.bold, size: 50))
+                    Text("°C")
+                        .font(.pretendard(.medium, size: 25))
+                        .padding(.top, 5)
+                }
+                // 하단 체감 온도 표시
+                Text("체감온도 3°C")
+                    .font(.pretendard(.medium, size: 15))
+                
+            }
+            Spacer()
+            Image(uiImage: .weatherSunny)
+            Spacer()
+        }
+        .overlay {
+            Text("제공: 기상청")
+                .font(.pretendard(.medium, size: 10))
+                .foregroundStyle(.darkGray)
+                .offset(x: 160, y: 80)
+        }
+        .padding()
+        .background(Color.sub1Light)
+    }
+}
+
 #Preview {
-    WeatherHeaderView()
+    WeatherMainView()
 }
