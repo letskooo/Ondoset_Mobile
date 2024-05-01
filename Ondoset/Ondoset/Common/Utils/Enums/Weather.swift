@@ -101,3 +101,10 @@ extension Weather {
         }
     }
 }
+
+extension Weather: CaseIterable {
+    /// String에서 해당하는 enum 타입으로 변환합니다.
+    static func getType(from string: String) -> Weather? {
+        return self.allCases.first { "\($0)" == string }
+    }
+}
