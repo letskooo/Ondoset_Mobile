@@ -23,11 +23,33 @@ struct SelectDateView: View {
         HStack {
             Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                 Image(systemName: "chevron.backward")
+                    .foregroundStyle(.darkGray)
             })
             Text("2024.03.15")
             Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                 Image(systemName: "chevron.forward")
+                    .foregroundStyle(.darkGray)
             })
         }
     }
+}
+
+struct WeatherHeaderView: View {
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Image(systemName: "scope")
+                    .padding()
+                Spacer()
+                SelectDateView()
+                Spacer()
+                Image(systemName: "mappin.and.ellipse")
+                    .padding()
+            }
+        }
+    }
+}
+
+#Preview {
+    WeatherHeaderView()
 }
