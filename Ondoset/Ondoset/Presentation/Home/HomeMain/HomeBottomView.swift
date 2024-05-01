@@ -205,16 +205,20 @@ struct AIRecommendView: View {
 // MARK: OthersOOTDView
 struct OthersOOTDView: View {
     var body: some View {
-        HStack(spacing: 3) {
-            OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ", action: { print("OOTD Tapped")})
-                .background(.ondosetBackground)
-            OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ", action: { print("OOTD Tapped")})
-                .background(.ondosetBackground)
-            OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ", action: { print("OOTD Tapped")})
-                .background(.ondosetBackground)
+        VStack {
+            Spacer()
+            HStack(spacing: 3) {
+                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ", action: { print("OOTD Tapped")})
+                    .background(.ondosetBackground)
+                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ", action: { print("OOTD Tapped")})
+                    .background(.ondosetBackground)
+                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ", action: { print("OOTD Tapped")})
+                    .background(.ondosetBackground)
+            }
+            .padding(3)
+            .background(.white)
+            Spacer()
         }
-        .padding(3)
-        .background(.white)
     }
 }
 // MARK: HomeBottomFooterView

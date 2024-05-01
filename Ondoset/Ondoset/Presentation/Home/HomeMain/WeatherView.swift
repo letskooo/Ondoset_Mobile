@@ -138,6 +138,9 @@ struct WeatherView: View {
     
     // MARK: WeatherFooterView
     struct WeatherFooterView: View {
+        // state
+        @State var isFold: Bool = false
+        
         var body: some View {
             VStack(spacing: 0) {
                 // lev1 - 일교차 + 폴드 버튼
@@ -155,8 +158,10 @@ struct WeatherView: View {
                     }
                     .padding()
                     Spacer()
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        Image(systemName: "chevron.down")
+                    Button(action: {
+                        isFold.toggle()
+                    }, label: {
+                        Image(systemName: isFold ? "chevron.up" : "chevron.down")
                             .foregroundStyle(.main)
                     })
                     .padding()
@@ -165,8 +170,11 @@ struct WeatherView: View {
                     .frame(height: 2)
                     .overlay(Color.ondosetBackground)
                     .padding(.horizontal)
-                // lev2 - 주간 날씨
-                HourlyWeatherView()
+                    .padding(.bottom, 5)
+                if !isFold {
+                    // lev2 - 주간 날씨
+                    HourlyWeatherView()
+                }
             }
         }
     }
