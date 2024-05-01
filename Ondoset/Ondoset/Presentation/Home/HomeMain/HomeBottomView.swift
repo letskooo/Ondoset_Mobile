@@ -14,7 +14,7 @@ struct HomeBottomView: View {
     var body: some View {
         VStack(spacing: 0) {
             HomeBottomHeaderView()
-            SetUpHistoryView()
+            AIRecommendView()
             HomeBottomFooterView(currentPage: $currentPage)
         }
         .background(Color.ondosetBackground)
@@ -143,6 +143,49 @@ struct SetUpHistoryView: View {
     }
 }
 // MARK: AIRecommendView
+struct AIRecommendView: View {
+    // states
+    @State var test: Bool = true
+    
+    // property
+    let setUp: [Clothes] = [
+        .init(clothesId: 0, name: "asdfadsf", category: .ACC, tag: "asdf", thickness: .NORMAL),
+        .init(clothesId: 1, name: "zvxc", category: .OUTER, tag: "asdf", thickness: .THIN),
+        .init(clothesId: 2, name: "aㅁㄴf", category: .BOTTOM, tag: "asdf", thickness: .NORMAL),
+        .init(clothesId: 3, name: "zvxㅁ", category: .OUTER, tag: "asdf", thickness: .THIN),
+        .init(clothesId: 4, name: "asdf", category: .TOP, tag: "asdf", thickness: .THICK),
+        .init(clothesId: 5, name: "zvxㅁ", category: .OUTER, tag: "asdf", thickness: .THIN),
+        .init(clothesId: 6, name: "asdf", category: .TOP, tag: "asdf", thickness: .THICK)
+    ]
+    
+    var body: some View {
+        ScrollView(.vertical) {
+            ForEach(1...3, id: \.self) { index in
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: [
+                        GridItem(.flexible(),spacing: 10, alignment: .leading),
+                        GridItem(.flexible(), spacing: 10, alignment: .leading)
+                    ]) {
+                        Text("#\(index)")
+                            .font(Font.pretendard(.semibold, size: 13))
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 4)
+                            .background(index % 2 == 0 ? .ondosetBackground : .white )
+                            .foregroundColor(.black)
+                            .cornerRadius(30)
+                        ForEach(setUp, id: \.clothesId) { cloth in
+                            ClothTagComponent(isSelected: $test, tagTitle: cloth.name, category: cloth.category)
+                        }
+                    }
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
+                    
+                }
+                .background(index % 2 == 0 ? .white : .ondosetBackground  )
+            }
+        }
+    }
+}
 // MARK: OthersOOTDView
 
 // MARK: HomeBottomFooterView
