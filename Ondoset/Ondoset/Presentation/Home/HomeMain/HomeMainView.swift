@@ -19,8 +19,6 @@ struct HomeMainView: View {
 }
 
 
-
-
 #Preview {
-    WeatherView()
+    HomeMainView()
 }
