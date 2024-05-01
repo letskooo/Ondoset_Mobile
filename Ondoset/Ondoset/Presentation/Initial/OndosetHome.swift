@@ -41,7 +41,7 @@ struct OndosetHome: View {
             VStack {
                 Spacer()
                 
-                TabView(selectedTab: $selectedTab)
+                AppTabView(selectedTab: $selectedTab)
                     .hidden(wholeVM.isTabBarHidden)
                     .border(Color(hex: 0xE0E0E0), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                     .overlay {
@@ -56,7 +56,7 @@ struct OndosetHome: View {
     }
 }
 
-struct TabView: View {
+struct AppTabView: View {
     
     @Binding var selectedTab: Tab
     
