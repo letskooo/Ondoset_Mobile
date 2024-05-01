@@ -104,6 +104,7 @@
 		882228F02BD98D8700CFF8B9 /* MyClothingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882228EF2BD98D8700CFF8B9 /* MyClothingView.swift */; };
 		882A51C02BD938990048EE1A /* SegmentControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */; };
 		882A51C22BD9471D0048EE1A /* SearchBarComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */; };
+		884E607F2BE2AC0F00682663 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884E607E2BE2AC0F00682663 /* Weather.swift */; };
 		8856A02B2BD9731F00FCBFB8 /* ClothesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */; };
 		8856A02D2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */; };
 /* End PBXBuildFile section */
@@ -224,6 +225,7 @@
 		882228EF2BD98D8700CFF8B9 /* MyClothingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyClothingView.swift; sourceTree = "<group>"; };
 		882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControlComponent.swift; sourceTree = "<group>"; };
 		882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarComponent.swift; sourceTree = "<group>"; };
+		884E607E2BE2AC0F00682663 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesDTO.swift; sourceTree = "<group>"; };
 		8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankDataIndicateComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -334,6 +336,7 @@
 		47BE3A0D2BC37F8200F27E38 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				884E607D2BE2AC0400682663 /* Weather */,
 				47BE3A0E2BC37FBA00F27E38 /* Member */,
 				47BE3A102BC37FDC00F27E38 /* Clothes */,
 				47BE3A112BC37FE100F27E38 /* Coordi */,
@@ -699,20 +702,20 @@
 			path = ../Fonts;
 			sourceTree = "<group>";
 		};
-		47E740302BD8DADD003A71D5 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				47E740312BD8DAF0003A71D5 /* SettingView.swift */,
-			);
-			path = Setting;
-			sourceTree = "<group>";
-		};
 		882228EE2BD98D3200CFF8B9 /* MyClothing */ = {
 			isa = PBXGroup;
 			children = (
 				882228EF2BD98D8700CFF8B9 /* MyClothingView.swift */,
 			);
 			path = MyClothing;
+			sourceTree = "<group>";
+		};
+		884E607D2BE2AC0400682663 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				884E607E2BE2AC0F00682663 /* Weather.swift */,
+			);
+			path = Weather;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -938,6 +941,7 @@
 				47C29DF12BC2484200E3E2B9 /* SplashView.swift in Sources */,
 				47BE3A322BC3951800F27E38 /* AuthManager.swift in Sources */,
 				474E8A772BD672EC0060E081 /* Weather.swift in Sources */,
+				884E607F2BE2AC0F00682663 /* Weather.swift in Sources */,
 				47BE3A2C2BC38C8000F27E38 /* APITask.swift in Sources */,
 				47C29E162BC24A6300E3E2B9 /* MyPageMainViewModel.swift in Sources */,
 				47BE3A452BC4C99B00F27E38 /* TestView.swift in Sources */,
