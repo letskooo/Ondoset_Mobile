@@ -115,8 +115,8 @@ struct HourlyWeatherView: View {
     ]
     
     var body: some View {
-        ScrollView(.horizontal) {
-            LazyHStack {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
                 ForEach(hourlyWeather, id: \.self) { item in
                     VStack {
                         Text(item.time)
@@ -133,6 +133,7 @@ struct HourlyWeatherView: View {
                 }
             }
         }
+        .padding()
     }
 }
 
@@ -166,10 +167,22 @@ struct WeatherFooterView: View {
                 .overlay(Color.ondosetBackground)
                 .padding(.horizontal)
             // lev2 - 주간 날씨
+            HourlyWeatherView()
+        }
+    }
+}
+
+// MARK: WeatherView
+struct WeatherView: View {
+    var body: some View {
+        VStack(spacing: 0){
+            WeatherHeaderView()
+            WeatherMainView()
+            WeatherFooterView()
         }
     }
 }
 
 #Preview {
-    HourlyWeatherView()
+    WeatherView()
 }
