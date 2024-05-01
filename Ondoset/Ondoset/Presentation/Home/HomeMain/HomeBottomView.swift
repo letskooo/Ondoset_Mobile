@@ -18,20 +18,25 @@ struct HomeBottomHeaderView: View {
     var isOOTD: Bool = false
     
     var body: some View {
-        HStack {
-            Text("오늘은 이렇게 입기로 했어요!")
-                .font(.pretendard(.semibold, size: 17))
-            Spacer()
-            if isOOTD {
-                Button(action: {}, label: {
-                    HStack(spacing: 0) {
-                        Text("OOTD")
-                            .font(.pretendard(.semibold, size: 13))
-                        Image(systemName: "chevron.forward")
-                    }
-                    .foregroundStyle(.main)
-                })
+        VStack {
+            HStack {
+                Text("오늘은 이렇게 입기로 했어요!")
+                    .font(.pretendard(.semibold, size: 17))
+                Spacer()
+                if isOOTD {
+                    Button(action: {}, label: {
+                        HStack(spacing: 0) {
+                            Text("OOTD")
+                                .font(.pretendard(.semibold, size: 13))
+                            Image(systemName: "chevron.forward")
+                        }
+                        .foregroundStyle(.main)
+                    })
+                }
             }
+            Divider()
+                .frame(height: 2)
+                .overlay(Color.white)
         }
         .padding()
     }
