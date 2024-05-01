@@ -12,12 +12,28 @@ struct HomeBottomView: View {
     @State var currentPage: Int = 0
     
     var body: some View {
-        VStack(spacing: 0) {
-            HomeBottomHeaderView()
-            OthersOOTDView()
-            HomeBottomFooterView(currentPage: $currentPage)
+        TabView(selection: $currentPage) {
+            ForEach(0..<4) { index in
+                VStack(spacing: 0) {
+                    HomeBottomHeaderView()
+                    switch index {
+                    case 0:
+                        TodaysSetUpView()
+                    case 1:
+                        SetUpHistoryView()
+                    case 2:
+                        AIRecommendView()
+                    case 3:
+                        OthersOOTDView()
+                    default:
+                        Spacer()
+                    }
+                    HomeBottomFooterView(currentPage: $currentPage)
+                }
+                .background(Color.ondosetBackground)
+            }
         }
-        .background(Color.ondosetBackground)
+        .tabViewStyle(.page(indexDisplayMode: .never))
     }
 }
 
