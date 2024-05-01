@@ -80,3 +80,24 @@ extension Weather {
         }
     }
 }
+
+extension Weather {
+    /// 메인 화면 날씨 표시화면에 사용되는 큰 이미지
+    var frontImage: Image {
+        switch self {
+            
+        case .SUNNY:
+            return Image(.weatherSunny)
+        case .PARTLY_CLOUDY:
+            return Image(.weatherPartlyCloudy)
+        case .CLOUDY:
+            return Image(.weatherCloudy)
+        case .RAINY:
+            return Image(.weatherRainy)
+        case .SLEET:
+            return Image(.weatherSleet)
+        case .SNOWY:
+            return Image(.weatherSnowy)
+        }
+    }
+}
