@@ -34,6 +34,7 @@ struct SelectDateView: View {
     }
 }
 
+// MARK: WeatherHeaderView
 struct WeatherHeaderView: View {
     var body: some View {
         VStack(spacing: 0) {
@@ -50,6 +51,7 @@ struct WeatherHeaderView: View {
     }
 }
 
+// MARK: WeatherMainView
 struct WeatherMainView: View {
     var body: some View {
         HStack(alignment: .center) {
@@ -91,6 +93,40 @@ struct WeatherMainView: View {
     }
 }
 
+// MARK: WeatherFooterView
+struct WeatherFooterView: View {
+    var body: some View {
+        VStack(spacing: 0) {
+            // lev1 - 일교차 + 폴드 버튼
+            HStack {
+                // 일교차
+                HStack(spacing: 0) {
+                    Text("4°C")
+                        .font(.pretendard(.bold, size: 13))
+                        .foregroundStyle(.min)
+                    Text("/")
+                        .font(.pretendard(.medium, size: 13))
+                    Text("15°C")
+                        .font(.pretendard(.bold, size: 13))
+                        .foregroundStyle(.max)
+                }
+                .padding()
+                Spacer()
+                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    Image(systemName: "chevron.down")
+                        .foregroundStyle(.main)
+                })
+                .padding()
+            }
+            Divider()
+                .frame(height: 2)
+                .overlay(Color.ondosetBackground)
+                .padding(.horizontal)
+            // lev2 - 주간 날씨
+        }
+    }
+}
+
 #Preview {
-    WeatherMainView()
+    WeatherFooterView()
 }
