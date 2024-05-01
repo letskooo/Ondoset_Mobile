@@ -18,6 +18,8 @@ struct HomeMainView: View {
     }
 }
 
+// MARK:  SelectDateView
+/// WeatherHeaderView에 들어가는 날짜 선택 뷰
 struct SelectDateView: View {
     var body: some View {
         HStack {
@@ -93,6 +95,47 @@ struct WeatherMainView: View {
     }
 }
 
+// MARK: HourlyWeatherView
+/// WeatherFooterView에 들어가는 당일 날씨 뷰
+struct HourlyWeatherView: View {
+    
+    let hourlyWeather: [HourWeather] = [
+        .init(time: "오전 9시", weather: "SUNNY", temperature: 6, humidity: 0),
+        .init(time: "오전 10시", weather: "SUNNY", temperature: 6, humidity: 0),
+        .init(time: "오전 11시", weather: "SUNNY", temperature: 6, humidity: 0),
+        .init(time: "오후 12시", weather: "SUNNY", temperature: 6, humidity: 0),
+        .init(time: "오후 1시", weather: "SUNNY", temperature: 6, humidity: 0),
+        .init(time: "오후 2시", weather: "SUNNY", temperature: 6, humidity: 0),
+        .init(time: "오후 3시", weather: "SUNNY", temperature: 6, humidity: 0),
+        .init(time: "오후 4시", weather: "SUNNY", temperature: 6, humidity: 0),
+        .init(time: "오후 5시", weather: "SUNNY", temperature: 6, humidity: 0),
+        .init(time: "오후 6시", weather: "SUNNY", temperature: 6, humidity: 0),
+        .init(time: "오후 7시", weather: "SUNNY", temperature: 6, humidity: 0),
+        .init(time: "오후 8시", weather: "SUNNY", temperature: 6, humidity: 0),
+    ]
+    
+    var body: some View {
+        ScrollView(.horizontal) {
+            LazyHStack {
+                ForEach(hourlyWeather, id: \.self) { item in
+                    VStack {
+                        Text(item.time)
+                            .font(.pretendard(.medium, size: 10))
+                        Image(Weather.getType(from: item.weather)?.smallImage ?? .cloudyMain)
+                            .renderingMode(.template)
+                            .foregroundStyle(.black)
+                        Text("\(item.temperature)°C")
+                            .font(.pretendard(.bold, size: 13))
+                            .padding(1)
+                        Text("\(item.humidity)%")
+                            .font(.pretendard(.medium, size: 10))
+                    }
+                }
+            }
+        }
+    }
+}
+
 // MARK: WeatherFooterView
 struct WeatherFooterView: View {
     var body: some View {
@@ -128,5 +171,5 @@ struct WeatherFooterView: View {
 }
 
 #Preview {
-    WeatherFooterView()
+    HourlyWeatherView()
 }

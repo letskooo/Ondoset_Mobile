@@ -83,21 +83,42 @@ extension Weather {
 
 extension Weather {
     /// 메인 화면 날씨 표시화면에 사용되는 큰 이미지
-    var frontImage: Image {
+    var frontImage: ImageResource {
         switch self {
             
         case .SUNNY:
-            return Image(.weatherSunny)
+            return .weatherSunny
         case .PARTLY_CLOUDY:
-            return Image(.weatherPartlyCloudy)
+            return .weatherPartlyCloudy
         case .CLOUDY:
-            return Image(.weatherCloudy)
+            return .weatherCloudy
         case .RAINY:
-            return Image(.weatherRainy)
+            return .weatherRainy
         case .SLEET:
-            return Image(.weatherSleet)
+            return .weatherSleet
         case .SNOWY:
-            return Image(.weatherSnowy)
+            return .weatherSnowy
+        }
+    }
+}
+
+extension Weather {
+    /// 메인 화면 시간별 날씨 표시화면에 사용되는 작은 이미지
+    var smallImage: ImageResource {
+        switch self {
+            
+        case .SUNNY:
+            return .sunnyMain
+        case .PARTLY_CLOUDY:
+            return .partlyCloudyMain
+        case .CLOUDY:
+            return .cloudyMain
+        case .RAINY:
+            return .rainyMain
+        case .SLEET:
+            return .sleetMain
+        case .SNOWY:
+            return .snowyMain
         }
     }
 }
