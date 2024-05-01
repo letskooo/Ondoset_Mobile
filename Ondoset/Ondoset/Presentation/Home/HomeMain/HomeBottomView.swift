@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct HomeBottomView: View {
+    // State
+    @State var currentPage: Int = 0
+    
     var body: some View {
         VStack(spacing: 0) {
             HomeBottomHeaderView()
             TodaysSetUpView()
+            HomeBottomFooterView(currentPage: $currentPage)
         }
         .background(Color.ondosetBackground)
     }
@@ -85,6 +89,25 @@ struct TodaysSetUpView: View {
 // MARK: SetUpHistoryView
 // MARK: AIRecommendView
 // MARK: OthersOOTDView
+
+// MARK: HomeBottomFooterView
+struct HomeBottomFooterView: View {
+    @Binding var currentPage: Int
+    
+    var body: some View {
+        HStack {
+            ForEach(0..<4) { page in
+                Circle()
+                    .fill(page == currentPage ? Color.main : Color.gray)
+                    .frame(width: 5, height: 5)
+                    .onTapGesture {
+                        currentPage = page
+                    }
+            }
+        }
+        .padding()
+    }
+}
 
 #Preview {
     HomeBottomView()
