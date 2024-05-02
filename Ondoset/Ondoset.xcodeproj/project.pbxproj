@@ -101,12 +101,14 @@
 		47E7403F2BD90D46003A71D5 /* ClothesEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7403E2BD90D46003A71D5 /* ClothesEndPoint.swift */; };
 		47E740412BD90D5A003A71D5 /* CoordiEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E740402BD90D5A003A71D5 /* CoordiEndPoint.swift */; };
 		47E740432BD91509003A71D5 /* OOTDComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E740422BD91509003A71D5 /* OOTDComponent.swift */; };
+		8812BBDE2BE3A57800F6AB08 /* ClothUnSelectedComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8812BBDD2BE3A57800F6AB08 /* ClothUnSelectedComponent.swift */; };
 		882228F02BD98D8700CFF8B9 /* MyClothingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882228EF2BD98D8700CFF8B9 /* MyClothingView.swift */; };
 		882A51C02BD938990048EE1A /* SegmentControlComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */; };
 		882A51C22BD9471D0048EE1A /* SearchBarComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */; };
 		884E607F2BE2AC0F00682663 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884E607E2BE2AC0F00682663 /* WeatherModel.swift */; };
 		884E60822BE2B7D700682663 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884E60812BE2B7D700682663 /* WeatherView.swift */; };
 		884E60842BE2B84D00682663 /* HomeBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884E60832BE2B84D00682663 /* HomeBottomView.swift */; };
+		884E60872BE2D10D00682663 /* AICoordiRecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884E60862BE2D10D00682663 /* AICoordiRecommendView.swift */; };
 		8856A02B2BD9731F00FCBFB8 /* ClothesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */; };
 		8856A02D2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */; };
 /* End PBXBuildFile section */
@@ -224,12 +226,14 @@
 		47E7403E2BD90D46003A71D5 /* ClothesEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesEndPoint.swift; sourceTree = "<group>"; };
 		47E740402BD90D5A003A71D5 /* CoordiEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordiEndPoint.swift; sourceTree = "<group>"; };
 		47E740422BD91509003A71D5 /* OOTDComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDComponent.swift; sourceTree = "<group>"; };
+		8812BBDD2BE3A57800F6AB08 /* ClothUnSelectedComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothUnSelectedComponent.swift; sourceTree = "<group>"; };
 		882228EF2BD98D8700CFF8B9 /* MyClothingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyClothingView.swift; sourceTree = "<group>"; };
 		882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControlComponent.swift; sourceTree = "<group>"; };
 		882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarComponent.swift; sourceTree = "<group>"; };
 		884E607E2BE2AC0F00682663 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		884E60812BE2B7D700682663 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		884E60832BE2B84D00682663 /* HomeBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomView.swift; sourceTree = "<group>"; };
+		884E60862BE2D10D00682663 /* AICoordiRecommendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICoordiRecommendView.swift; sourceTree = "<group>"; };
 		8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesDTO.swift; sourceTree = "<group>"; };
 		8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankDataIndicateComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -288,6 +292,7 @@
 				882A51BF2BD938990048EE1A /* SegmentControlComponent.swift */,
 				882A51C12BD9471D0048EE1A /* SearchBarComponent.swift */,
 				8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */,
+				8812BBDD2BE3A57800F6AB08 /* ClothUnSelectedComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -574,6 +579,7 @@
 		47C29DEA2BC2462D00E3E2B9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				884E60852BE2D0F600682663 /* AICoordiRecommend */,
 				47C29DFC2BC2495C00E3E2B9 /* HomeMain */,
 			);
 			path = Home;
@@ -722,6 +728,14 @@
 				884E607E2BE2AC0F00682663 /* WeatherModel.swift */,
 			);
 			path = Weather;
+			sourceTree = "<group>";
+		};
+		884E60852BE2D0F600682663 /* AICoordiRecommend */ = {
+			isa = PBXGroup;
+			children = (
+				884E60862BE2D10D00682663 /* AICoordiRecommendView.swift */,
+			);
+			path = AICoordiRecommend;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -884,6 +898,7 @@
 				47C29DF72BC248D000E3E2B9 /* SignUpView.swift in Sources */,
 				47BE3A272BC388A700F27E38 /* KeyChainManager.swift in Sources */,
 				47E7403F2BD90D46003A71D5 /* ClothesEndPoint.swift in Sources */,
+				884E60872BE2D10D00682663 /* AICoordiRecommendView.swift in Sources */,
 				474E8A7B2BD6820C0060E081 /* ThicknessTagComponent.swift in Sources */,
 				47BE3A182BC3800E00F27E38 /* Coordi.swift in Sources */,
 				47DF6F9B2BC6CC7C00E64B12 /* ButtonComponent.swift in Sources */,
@@ -957,6 +972,7 @@
 				47BE3A132BC37FF900F27E38 /* Member.swift in Sources */,
 				479058362BC907A3008FAD8E /* SecureFieldComponent.swift in Sources */,
 				47BE3A3A2BC3C97300F27E38 /* TestEndPoint.swift in Sources */,
+				8812BBDE2BE3A57800F6AB08 /* ClothUnSelectedComponent.swift in Sources */,
 				47BE3A1A2BC3801300F27E38 /* OOTD.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
