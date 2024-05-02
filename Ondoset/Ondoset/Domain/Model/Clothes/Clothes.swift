@@ -13,3 +13,10 @@ struct Clothes {
     var tag: String
     var thickness: Thickness
 }
+
+struct ClothTemplate {
+    var category: Category?
+    var name: String
+    var searchMode: Bool = false
+    var cloth: Clothes?
+}
