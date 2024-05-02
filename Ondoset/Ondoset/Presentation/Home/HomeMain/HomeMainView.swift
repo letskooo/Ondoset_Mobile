@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeMainView: View {
+    @State var presentAIRecomm: Bool = false
     var body: some View {
         
         /// 각 탭의 메인 뷰마다 NavigationStack을 두는 것으로 설계합니다.
@@ -20,6 +21,9 @@ struct HomeMainView: View {
                     .frame(height: 44)
                     .foregroundStyle(.white)
             }
+        }
+        .sheet(isPresented: $presentAIRecomm) {
+            NavigationView { AICoordiRecommendView() }
         }
     }
 }

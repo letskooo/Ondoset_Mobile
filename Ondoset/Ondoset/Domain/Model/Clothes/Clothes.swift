@@ -20,3 +20,22 @@ struct ClothTemplate {
     var searchMode: Bool = false
     var cloth: Clothes?
 }
+
+extension ClothTemplate {
+    static private func convertData() -> [ClothTemplate] {
+        return ClothesDTO.mockData().map { cloth in
+            return ClothTemplate(
+                category: cloth.category,
+                name: cloth.name,
+                searchMode: false,
+                cloth: cloth
+            )
+        }
+    }
+    
+    static func mockData() -> [ClothTemplate] {
+        var mock = convertData()
+        mock.append(.init(name: ""))
+        return mock
+    }
+}
