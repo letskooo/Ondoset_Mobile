@@ -11,15 +11,19 @@ struct FollowingBtnComponent: View {
     
     @Binding var isFollowing: Bool 
     
+    let action: () -> Void
+    
     var body: some View {
     
         Button {
+            
+            action()
             
         } label: {
             Text("팔로잉")
                 .font(Font.pretendard(.semibold, size: 13))
                 .foregroundStyle(isFollowing ? .main : .white)
-                .padding(.horizontal, 35)
+                .padding(.horizontal, 30)
                 .padding(.vertical, 6)
                 .background(isFollowing ? Color(hex: 0xEDEEFA) : .main)
                 .cornerRadius(10)
@@ -28,10 +32,9 @@ struct FollowingBtnComponent: View {
                         .stroke(.main)
                 }
         }
-        
     }
 }
 
 #Preview {
-    FollowingBtnComponent(isFollowing: .constant(false))
+    FollowingBtnComponent(isFollowing: .constant(false), action: {})
 }

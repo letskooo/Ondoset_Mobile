@@ -16,8 +16,6 @@ struct OOTDComponent: View {
     
     let ootdImageURL: String
     
-    let action: () -> Void
-    
     var body: some View {
         
         KFImage(URL(string: ootdImageURL))
@@ -61,9 +59,6 @@ struct OOTDComponent: View {
                 .padding(.top, 20)
             }
             .edgesIgnoringSafeArea(.all)
-            .onTapGesture {
-                action()
-            }
             .onAppear {
 //                ImageCache.default.clearMemoryCache()
 //                ImageCache.default.clearDiskCache()
@@ -118,5 +113,5 @@ struct OOTDComponent: View {
 }
 
 #Preview {
-    OOTDComponent(date: "2024.3.16", minTemp: 4, maxTemp: 15, ootdImageURL: "Hello", action: {})
+    OOTDComponent(date: "2024.3.16", minTemp: 4, maxTemp: 15, ootdImageURL: "Hello")
 }
