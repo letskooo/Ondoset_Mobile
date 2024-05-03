@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum Weather: String, CaseIterable {
+enum Weather: String {
     
     case SUNNY = "SUNNY"          // 맑음
     case PARTLY_CLOUDY = "PARTLY_CLOUDY"  // 조금 흐림
@@ -78,5 +78,54 @@ extension Weather {
         case .SNOWY:
             return Image(.snowyWhite)
         }
+    }
+}
+
+extension Weather {
+    /// 메인 화면 날씨 표시화면에 사용되는 큰 이미지
+    var frontImage: ImageResource {
+        switch self {
+            
+        case .SUNNY:
+            return .weatherSunny
+        case .PARTLY_CLOUDY:
+            return .weatherPartlyCloudy
+        case .CLOUDY:
+            return .weatherCloudy
+        case .RAINY:
+            return .weatherRainy
+        case .SLEET:
+            return .weatherSleet
+        case .SNOWY:
+            return .weatherSnowy
+        }
+    }
+}
+
+extension Weather {
+    /// 메인 화면 시간별 날씨 표시화면에 사용되는 작은 이미지
+    var smallImage: ImageResource {
+        switch self {
+            
+        case .SUNNY:
+            return .sunnyMain
+        case .PARTLY_CLOUDY:
+            return .partlyCloudyMain
+        case .CLOUDY:
+            return .cloudyMain
+        case .RAINY:
+            return .rainyMain
+        case .SLEET:
+            return .sleetMain
+        case .SNOWY:
+            return .snowyMain
+        }
+    }
+}
+
+extension Weather: CaseIterable {
+    /// String에서 해당하는 enum 타입으로 변환합니다.
+    static func getType(from string: String) -> Weather? {
+        return self.allCases.first { "\($0)" == string }
     }
 }

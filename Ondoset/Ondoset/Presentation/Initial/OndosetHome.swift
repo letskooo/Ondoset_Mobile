@@ -41,7 +41,7 @@ struct OndosetHome: View {
             VStack {
                 Spacer()
                 
-                CustomTabView(selectedTab: $selectedTab)
+                AppTabView(selectedTab: $selectedTab)
                     .hidden(wholeVM.isTabBarHidden)
                     .overlay {
                         if wholeVM.isTabBarAlertStatus {
@@ -55,7 +55,7 @@ struct OndosetHome: View {
     }
 }
 
-struct CustomTabView: View {
+struct AppTabView: View {
     
     @Binding var selectedTab: Tab
     
