@@ -10,7 +10,7 @@ import Alamofire
 
 enum MemberEndPoint {
     
-    case checkIdDuplicate(memberId: String)                   // 아이디 중복 체크
+    case checkIdDuplicate(username: String)                   // 아이디 중복 체크
     case checkNicknameDuplicate(nickname: String)             // 닉네임 중복 체크
     case signUpMember(signUpDTO: SignUpRequestDTO)            // 회원가입
     case signInMember(signInDTO: SignInRequestDTO)            // 로그인
@@ -31,7 +31,7 @@ extension MemberEndPoint: EndPoint {
         
         switch self {
             
-        case.checkIdDuplicate(memberId: _):
+        case.checkIdDuplicate(username: _):
             return "/usable-id"
         case .checkNicknameDuplicate(nickname: _):
             return "/usable-nickname"
@@ -63,10 +63,10 @@ extension MemberEndPoint: EndPoint {
     var task: APITask {
         switch self {
             
-        case let .checkIdDuplicate(memberId):
+        case let .checkIdDuplicate(username):
             let param = [
                 
-                "memberId": memberId
+                "username": username
             ]
             
             return .requestQueryParamsWithoutToken(parameters: param, encoding: URLEncoding.default)

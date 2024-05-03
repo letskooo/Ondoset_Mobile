@@ -112,7 +112,7 @@ class SignUpViewModel: ObservableObject {
     // 아이디 중복 체크
     func checkDuplicateId() async {
         
-        if let isIdAvailable = await memberUseCase.checkDuplicateId(memberId: idInputText) {
+        if let isIdAvailable = await memberUseCase.checkDuplicateId(username: idInputText) {
             
             DispatchQueue.main.async {
                 if isIdAvailable {
@@ -148,6 +148,6 @@ class SignUpViewModel: ObservableObject {
     // 회원가입
     func signUpMember() async {
         
-        _ = await memberUseCase.signUpMember(signUpDTO: SignUpRequestDTO(memberId: idInputText, password: pwInputText, nickname: nicknameInputText))
+        _ = await memberUseCase.signUpMember(signUpDTO: SignUpRequestDTO(username: idInputText, password: pwInputText, nickname: nicknameInputText))
     }
 }

@@ -208,11 +208,11 @@ struct OthersOOTDView: View {
         VStack {
             Spacer()
             HStack(spacing: 3) {
-                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ", action: { print("OOTD Tapped")})
+                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ")
                     .background(.ondosetBackground)
-                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ", action: { print("OOTD Tapped")})
+                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ")
                     .background(.ondosetBackground)
-                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ", action: { print("OOTD Tapped")})
+                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ")
                     .background(.ondosetBackground)
             }
             .padding(3)

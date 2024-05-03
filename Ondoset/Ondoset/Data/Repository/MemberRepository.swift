@@ -13,9 +13,9 @@ final class MemberRepository {
     
     
     // 아이디 중복 체크
-    func checkDuplicateId(memberId: String) async -> DuplicateCheckResponseDTO? {
+    func checkDuplicateId(username: String) async -> DuplicateCheckResponseDTO? {
         
-        return await APIManager.shared.performRequest(endPoint: MemberEndPoint.checkIdDuplicate(memberId: memberId))
+        return await APIManager.shared.performRequest(endPoint: MemberEndPoint.checkIdDuplicate(username: username))
     }
     
     // 닉네임 중복 체크

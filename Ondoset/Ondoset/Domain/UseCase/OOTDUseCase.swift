@@ -23,4 +23,130 @@ class OOTDUseCase {
             return nil
         }
     }
+    
+    // 내 프로필 페이징
+    func pagingMyProfileOOTD(lastPage: Int) async -> PagingOOTD? {
+        
+        if let result = await ootdRepository.myProfilePaging(lastPage: lastPage) {
+            
+            return PagingOOTD(lastPage: result.lastPage, ootdList: result.toOOTD())
+        } else {
+            return nil
+        }
+    }
+    
+    
+    // 공감한 OOTD 조회
+    func readLikeOOTDList(lastPage: Int) async -> PagingOOTD? {
+     
+        if let result = await ootdRepository.readLikeOOTDList(lastPage: lastPage) {
+            
+            return PagingOOTD(lastPage: result.lastPage, ootdList: result.toOOTD())
+            
+        } else {
+            return nil
+        }
+    }
+    
+    // 팔로잉 목록 조회
+    func readFollowingList(lastPage: Int) async -> PagingFollowing? {
+        
+        if let result = await ootdRepository.readFollowingList(lastPage: lastPage) {
+            
+            return PagingFollowing(lastPage: result.lastPage, followingList: result.toFollowing())
+        } else {
+            return nil
+        }
+    }
+    
+    // 날씨뷰 OOTD 조회
+    func readWeatherOOTDList(data: ReadWeatherOOTDRequestDTO) async -> PagingOOTD? {
+        
+        if let result = await ootdRepository.readWeatherOOTDList(data: data) {
+            
+            return PagingOOTD(lastPage: result.lastPage, ootdList: result.toOOTD())
+        } else {
+            return nil
+        }
+    }
+    
+    // 개별 OOTD 조회
+    func getOOTD(ootdId: Int) async -> OOTDItem? {
+     
+        if let ootdItemDTO = await ootdRepository.getOOTD(ootdId: ootdId) {
+            
+            return ootdItemDTO.toOOTDItem()
+        } else {
+            return nil
+        }
+    }
+    
+    // 타인 계정 팔로우
+    func followOther(followOtherDTO: FollowOtherRequestDTO) async -> Bool {
+        
+        if let result = await ootdRepository.followOther(followOtherDTO: followOtherDTO) {
+            
+            return true
+            
+        } else {
+            return false
+        }
+    }
+    
+    // 타인 계정 팔로우 취소
+    func cancelFollowOther(memberId: Int) async -> Bool {
+        
+        if let result = await ootdRepository.cancelFollowOther(memberId: memberId) {
+            
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // OOTD 공감
+    func likeOOTD(likeOOTDDTO: LikeOOTDRequestDTO) async -> Bool {
+        
+        if let result = await ootdRepository.likeOOTD(likeOOTDDTO: likeOOTDDTO) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // 타인 계정 팔로우 취소
+    func cancelLikeOOTD(ootdId: Int) async -> Bool {
+        if let result = await ootdRepository.cancelLikeOOTD(ootdId: ootdId) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // OOTD 등록될 날씨 미리보기
+    func getOOTDWeather(data: GetOOTDWeatherRequestDTO) async -> GetOOTDWeatherResponseDTO? {
+        
+        if let result = await ootdRepository.getOOTDWeather(data: data) {
+            
+            print("====OOTDUseCase======")
+            print(result.weather)
+            print(result.lowestTemp)
+            print(result.highestTemp)
+            
+            return result
+        } else {
+            return nil
+        }
+    }
+    
+    // OOTD 등록
+    func registerOOTD(data: PostOOTDRequestDTO) async -> Bool {
+        
+        if let result = await ootdRepository.postOOTD(data: data) {
+            
+            return true
+        } else {
+            return false
+        }
+    }
 }

@@ -16,8 +16,6 @@ struct OOTDComponent: View {
     
     let ootdImageURL: String
     
-    let action: () -> Void
-    
     var body: some View {
         
         KFImage(URL(string: ootdImageURL))
@@ -39,14 +37,14 @@ struct OOTDComponent: View {
                             HStack {
                                 Text("\(minTemp)°C")
                                     .foregroundStyle(.blue)
-                                    .font(Font.pretendard(.semibold, size: 10))
+                                    .font(Font.pretendard(.bold, size: 11))
 
                                 Text("/")
-                                    .font(Font.pretendard(.semibold, size: 10))
+                                    .font(Font.pretendard(.bold, size: 11))
 
                                 Text("\(maxTemp)°C")
                                     .foregroundStyle(.red)
-                                    .font(Font.pretendard(.semibold, size: 10))
+                                    .font(Font.pretendard(.bold, size: 11))
                             }
                             .padding(.trailing, 20)
                         }
@@ -61,8 +59,9 @@ struct OOTDComponent: View {
                 .padding(.top, 20)
             }
             .edgesIgnoringSafeArea(.all)
-            .onTapGesture {
-                action()
+            .onAppear {
+//                ImageCache.default.clearMemoryCache()
+//                ImageCache.default.clearDiskCache()
             }
         
 //        Image("testImage3")
@@ -114,5 +113,5 @@ struct OOTDComponent: View {
 }
 
 #Preview {
-    OOTDComponent(date: "2024.3.16", minTemp: 4, maxTemp: 15, ootdImageURL: "Hello", action: {})
+    OOTDComponent(date: "2024.3.16", minTemp: 4, maxTemp: 15, ootdImageURL: "Hello")
 }

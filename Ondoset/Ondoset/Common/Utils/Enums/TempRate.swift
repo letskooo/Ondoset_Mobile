@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TempRate {
+enum TempRate: CaseIterable {
     
     case T28        // 28도 ~
     case T23        // 23 ~ 27도
@@ -17,6 +17,32 @@ enum TempRate {
     case T9         // 9 ~ 11도
     case T5         // 5 ~ 8도
     case TElse      // ~ 4도
+}
+
+extension TempRate {
+    
+    var stringValue: String {
+        
+        switch self {
+            
+        case .T28:
+            return "T28"
+        case .T23:
+            return "T23"
+        case .T20:
+            return "T20"
+        case .T17:
+            return "T17"
+        case .T12:
+            return "T12"
+        case .T9:
+            return "T9"
+        case .T5:
+            return "T5"
+        case .TElse:
+            return "TElse"
+        }
+    }
 }
 
 extension TempRate {

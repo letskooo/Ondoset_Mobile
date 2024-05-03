@@ -24,6 +24,8 @@ struct ClothUnSelectedComponent: View {
     
     let test: [Clothes] =  ClothesDTO.mockData()
     
+    @State var searchText: String
+    
     var body: some View {
         Rectangle()
             .frame(width: width, height: 80)
@@ -93,7 +95,7 @@ struct ClothUnSelectedComponent: View {
                             SegmentControlComponent(selectedTab: .constant(0), tabMenus: MyClosetTab.allCases.map{ $0.rawValue })
                                 
                             // 중간 서치바
-                            SearchBarComponent(placeHolder: "등록한 옷을 검색하세요", searchAction: { print($0) })
+                            SearchBarComponent(searchText: $searchText, placeHolder: "등록한 옷을 검색하세요", searchAction: { print($0) })
                                 .padding(.horizontal)
                             
                             // 아이템 목록
@@ -138,6 +140,6 @@ struct ClothUnSelectedComponent: View {
                     .foregroundStyle(.black)
             })
             .padding()
-        )
+        ), searchText: ""
     )
 }

@@ -15,9 +15,9 @@ class SignInViewModel: ObservableObject {
     let memberUseCase: MemberUseCase = MemberUseCase.shared
     
     // 로그인
-    func signInMember(memberId: String, password: String) async {
+    func signInMember(username: String, password: String) async {
         
-        if let result = await memberUseCase.signInMember(signInDTO: SignInRequestDTO(memberId: memberId, password: password)) {
+        if let result = await memberUseCase.signInMember(signInDTO: SignInRequestDTO(username: username, password: password)) {
             
             if !result {
                 

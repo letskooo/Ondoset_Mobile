@@ -24,7 +24,7 @@ struct DuplicateCheckResponseDTO: Decodable {
 // 회원가입 DTO
 struct SignUpRequestDTO: Codable {
     
-    let memberId: String
+    let username: String
     let password: String
     let nickname: String
 }
@@ -32,7 +32,7 @@ struct SignUpRequestDTO: Codable {
 // 로그인 요청 DTO
 struct SignInRequestDTO: Codable {
     
-    let memberId: String
+    let username: String
     let password: String
 }
 
@@ -42,6 +42,7 @@ struct SignInResponseDTO: Decodable {
     let isFirst: Bool
     let accessToken: String
     let refreshToken: String
+    let memberId: Int
 }
 
 // 온보딩 요청 DTO

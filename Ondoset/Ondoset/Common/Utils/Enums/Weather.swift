@@ -8,14 +8,14 @@
 import Foundation
 import SwiftUI
 
-enum Weather {
+enum Weather: String {
     
-    case SUNNY          // 맑음
-    case PARTLY_CLOUDY  // 조금 흐림
-    case CLOUDY         // 흐림
-    case RAINY          // 비
-    case SLEET          // 눈비
-    case SNOWY          // 눈
+    case SUNNY = "SUNNY"          // 맑음
+    case PARTLY_CLOUDY = "PARTLY_CLOUDY"  // 조금 흐림
+    case CLOUDY = "CLOUDY"         // 흐림
+    case RAINY = "RAINY"          // 비
+    case SLEET = "SLEET"          // 눈비
+    case SNOWY = "SNOWY"          // 눈
 }
 
 extension Weather {

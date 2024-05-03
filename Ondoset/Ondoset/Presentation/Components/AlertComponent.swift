@@ -79,9 +79,9 @@ struct AlertComponent: View {
                 .padding(.bottom, 16)
             }
             .background(Color.white)
-            .frame(width: screenWidth - 100)
-            .cornerRadius(10)
-            .shadow(color: .black.opacity(0.25), radius: 5, x: 0, y: 0)
+            .frame(width: screenWidth - 120)
+            .padding(.horizontal, 30)
+            .cornerRadius(12)
         }
         .onAppear {
             wholeVM.isTabBarAlertStatus = true

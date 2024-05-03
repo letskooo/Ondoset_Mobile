@@ -30,6 +30,8 @@ final class APIManager {
             
             result = try request.result.get()
             
+            print(String(data: result, encoding: .utf8))
+            
         } catch {
             print("네트워크 에러")
             return nil
@@ -53,7 +55,7 @@ final class APIManager {
             }
           
         } catch {
-            print("디코딩 에러")
+            print("디코딩 에러===")
             return nil
         }
     }
@@ -132,7 +134,7 @@ extension APIManager {
             return AF.upload(multipartFormData: { multipartFormData in
                 
                 multipartFormData.append(image, withName: "img", fileName: "\(image).jpeg", mimeType: "image/jpeg")
-            }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers)
+            }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
             
         // form 데이터 요청
         case let .uploadImagesWithData(image, body):
@@ -145,7 +147,8 @@ extension APIManager {
                         multipartFormData.append(data, withName: key)
                     }
                 }
-            }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers) // 나중에 AuthManager를 인터셉터로 해줘야 함
+            }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
+            
         }
     }
 }

@@ -15,6 +15,8 @@ struct ClosetMainView: View {
     // mock data
     @State var clothesData: [Clothes] = ClothesDTO.mockData()
     
+    @State var searchText: String = ""
+    
     var body: some View {
         /// 각 탭의 메인 뷰마다 NavigationStack을 두는 것으로 설계합니다.
         
@@ -24,7 +26,7 @@ struct ClosetMainView: View {
                 SegmentControlComponent(selectedTab: $selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue})
                     .padding(.bottom, 15)
                 
-                SearchBarComponent(placeHolder: "등록한 옷을 검색하세요", searchAction: {
+                SearchBarComponent(searchText: $searchText, placeHolder: "등록한 옷을 검색하세요", searchAction: {
                     text in
                     print(text)
                 })
