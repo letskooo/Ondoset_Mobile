@@ -65,7 +65,7 @@ struct SignInView: View {
                         
                         // 로그인 API 호출
                         Task {
-                            await signInVM.signInMember(memberId: idInputText, password: pwInputText)
+                            await signInVM.signInMember(username: idInputText, password: pwInputText)
                         }
                     }
                     .padding(.top, 10)
