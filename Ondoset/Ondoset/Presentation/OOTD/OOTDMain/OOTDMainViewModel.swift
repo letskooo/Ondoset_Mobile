@@ -28,7 +28,7 @@ class OOTDMainViewModel: ObservableObject {
         
         if weatherLastPage != -2 {
             
-            if let result = await ootdUseCase.readWeatherOOTDList(data: ReadWeatherOOTDRequestDTO(weather: selectedWeather.stringValue, tempRate: selectedTempRate.stringValue, lastPage: weatherLastPage)) {
+            if let result = await ootdUseCase.readWeatherOOTDList(data: ReadWeatherOOTDRequestDTO(weather: selectedWeather.rawValue, tempRate: selectedTempRate.stringValue, lastPage: weatherLastPage)) {
                 
                 DispatchQueue.main.async {
                     

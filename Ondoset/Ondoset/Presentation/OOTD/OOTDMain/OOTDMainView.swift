@@ -16,16 +16,12 @@ struct OOTDMainView: View {
     @State var openTempRateOptions: Bool = false
     
     let columns: [GridItem] = Array(repeating: .init(.fixed(screenWidth/2), spacing: 1), count: 2)
-    
-    private let dateFormatter = DateFormatter()
-    
+
     @Namespace private var viewsNamespace
     
     @StateObject var ootdMainVM: OOTDMainViewModel = .init()
-    
-    init() {
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-    }
+    @StateObject var ootdItemVM: OOTDItemViewModel = .init()
+    @EnvironmentObject var wholeVM: WholeViewModel
     
     var body: some View {
         
@@ -77,27 +73,20 @@ struct OOTDMainView: View {
                     
                     ZStack(alignment: .top) {
                         
-                        ScrollView {
+                        ScrollView(showsIndicators: false) {
                             
                             LazyVGrid(columns: columns, spacing: 1) {
                                 
                                 let ootdList = ootdMainVM.weatherOotdList
                                 
                                 ForEach(ootdList.indices, id: \.self) { index in
+
+                                    let dateString = DateFormatter.string(epoch: ootdList[index].date)
                                     
-                                    let epochTime = ootdList[index].date
-                                    
-                                    let date = Date(timeIntervalSince1970: TimeInterval(epochTime))
-                                    
-                                    let dateString = dateFormatter.string(from: date)
-                                    
-                                    OOTDComponent(date: dateString, minTemp: ootdList[index].lowestTemp, maxTemp: ootdList[index].highestTemp, ootdImageURL: ootdList[index].imageURL) {
-                                        
-                                        // OOTD 개별 조회 API
-                                        print("dateString: \(dateString)=====================")
-                                        
+                                    NavigationLink(destination: OOTDItemView(ootdId: ootdList[index].ootdId, ootdImageURL: ootdList[index].imageURL, dateString: dateString, lowestTemp: ootdList[index].lowestTemp, highestTemp: ootdList[index].highestTemp)) {
+                                        OOTDComponent(date: dateString, minTemp: ootdList[index].lowestTemp, maxTemp: ootdList[index].highestTemp, ootdImageURL: ootdList[index].imageURL)
+                                        .frame(width: screenWidth / 2)
                                     }
-                                    .frame(width: screenWidth / 2)
                                     .onAppear {
                                         
                                         if index == ootdList.count - 1 {
@@ -196,22 +185,22 @@ struct OOTDMainView: View {
                                     Image("addMainButton")
                                         .padding(.trailing, 10)
                                         .padding(.bottom, 30)
-                                    
                                 }
                             }
                         }
-
                     }
                     .tag("날씨")
-                    .padding(.bottom, 40)
+                    .padding(.bottom, screenHeight / 18)
                     
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
 
                 Spacer()
             }
+            .onAppear {
+                wholeVM.isTabBarHidden = false
+            }
         }
-
     }
     
     private var weatherListView: some View {
