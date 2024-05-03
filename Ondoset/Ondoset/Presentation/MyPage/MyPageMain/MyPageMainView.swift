@@ -11,14 +11,9 @@ import Kingfisher
 struct MyPageMainView: View {
     
     @StateObject var myPageVM: MyPageMainViewModel = .init()
-    
-    private let dateFormatter = DateFormatter()
+    @EnvironmentObject var wholeVM: WholeViewModel
     
     let columns: [GridItem] = Array(repeating: .init(.fixed(screenWidth/2), spacing: 1), count: 2)
-    
-    init() {
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-    }
     
     var body: some View {
         
@@ -39,7 +34,7 @@ struct MyPageMainView: View {
                 }
                 .frame(height: 30)
                 .overlay {
-                    Text(myPageVM.memberProfile?.memberId ?? "test1")
+                    Text(myPageVM.memberProfile?.username ?? "사용자 아이디")
                         .font(Font.pretendard(.bold, size: 18))
                 }
                 
@@ -62,7 +57,7 @@ struct MyPageMainView: View {
                                 
                             } else {
                                 
-                                Image("testImage3")
+                                Image("basicProfileIcon")
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 96, height: 96)
@@ -71,7 +66,6 @@ struct MyPageMainView: View {
                                         Circle().stroke(.darkGray, lineWidth: 1)
                                     }
                                     .padding(.leading, 35)
-            
                             }
                             
                             Spacer()
@@ -139,16 +133,13 @@ struct MyPageMainView: View {
                             LazyVGrid(columns: columns, spacing: 1) {
                                 
                                 ForEach(myOotdList.indices, id: \.self) { index in
-                                    
-                                    let epochTime = myOotdList[index].date
-                                    
-                                    let date = Date(timeIntervalSince1970: TimeInterval(epochTime))
-                                    
-                                    let dateString = dateFormatter.string(from: date)
-                                    
-                                    OOTDComponent(date: dateString, minTemp: myOotdList[index].lowestTemp, maxTemp: myOotdList[index].highestTemp, ootdImageURL: myOotdList[index].imageURL) {
+                                        
+                                    let dateString = DateFormatter.string(epoch: myOotdList[index].date)
+   
+                                    NavigationLink(destination: OOTDItemView(ootdId: myOotdList[index].ootdId, ootdImageURL: myOotdList[index].imageURL, dateString: dateString, lowestTemp: myOotdList[index].lowestTemp, highestTemp: myOotdList[index].highestTemp)) {
+                                        OOTDComponent(date: dateString, minTemp: myOotdList[index].lowestTemp, maxTemp: myOotdList[index].highestTemp, ootdImageURL: myOotdList[index].imageURL)
+                                        .frame(width: screenWidth/2)
                                     }
-                                    .frame(width: screenWidth/2)
                                     .onAppear {
                                         
                                         if index == myOotdList.count - 1 {
@@ -156,7 +147,6 @@ struct MyPageMainView: View {
                                                 await myPageVM.pagingMyProfileOOTD()
                                             }
                                         }
-                                        
                                     }
                                 }
                             }
@@ -179,9 +169,12 @@ struct MyPageMainView: View {
                         await myPageVM.readMyProfile()
                     }
                 }
-                .padding(.bottom, 50)
+                .padding(.bottom, screenHeight / 18)
                 
                 Spacer()
+            }
+            .onAppear {
+                wholeVM.isTabBarHidden = false
             }
         }
     }

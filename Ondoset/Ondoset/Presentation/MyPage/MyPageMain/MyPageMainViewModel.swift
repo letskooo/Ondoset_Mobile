@@ -29,7 +29,7 @@ class MyPageMainViewModel: ObservableObject {
         
         if let profile = await ootdUseCase.readMyProfile() {
             
-            print("======")
+            print("================")
             print(profile.profileImage)
             print("======")
             

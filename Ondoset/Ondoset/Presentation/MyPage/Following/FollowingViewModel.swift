@@ -37,4 +37,24 @@ class FollowingViewModel: ObservableObject {
             }
         }
     }
+    
+    // 타인 계정 팔로우
+    func followOther(index: Int) async {
+        
+        let result = await ootdUseCase.followOther(followOtherDTO: FollowOtherRequestDTO(memberId: followingList[index].memberId))
+        
+        if result {
+            self.followingList[index].isFollowing = true
+        }
+    }
+    
+    // 타인 계정 팔로우 취소
+    func cancelFollowOther(index: Int) async {
+        
+        let result = await ootdUseCase.cancelFollowOther(memberId: followingList[index].memberId)
+        
+        if result {
+            self.followingList[index].isFollowing = false
+        }
+    }
 }

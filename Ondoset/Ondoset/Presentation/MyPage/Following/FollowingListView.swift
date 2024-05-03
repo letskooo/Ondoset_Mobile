@@ -13,6 +13,7 @@ struct FollowingListView: View {
     @State var searchText: String = ""
     
     @StateObject var followingVM: FollowingViewModel = .init()
+    @EnvironmentObject var wholeVM: WholeViewModel
     
     @Environment(\.dismiss) private var dismiss
     
@@ -38,13 +39,13 @@ struct FollowingListView: View {
                         
                     } else {
                         
-                        let followingList = followingVM.followingList
+//                        let followingList = followingVM.followingList
                         
-                        ForEach(followingList.indices, id: \.self) { index in
+                        ForEach(followingVM.followingList.indices, id: \.self) { index in
                             
                             HStack(spacing: 0) {
                                 
-                                if let imageURL = followingList[index].imageURL, let url = URL(string: imageURL) {
+                                if let imageURL = followingVM.followingList[index].imageURL, let url = URL(string: imageURL) {
                                     
                                     KFImage(url)
                                         .resizable()
@@ -54,8 +55,6 @@ struct FollowingListView: View {
                                         .overlay {
                                             Circle().stroke(.main, lineWidth: 0.5)
                                         }
-                                        
-                                        
                                     
                                 } else {
                                     Image("basicProfileIcon")
@@ -69,20 +68,36 @@ struct FollowingListView: View {
                                         
                                 }
                                 
-                                Text(followingList[index].nickname)
+                                Text(followingVM.followingList[index].nickname)
                                     .font(Font.pretendard(.medium, size: 15))
                                     .padding(.leading ,16)
                                 
                                 Spacer()
                                 
-                                FollowingBtnComponent(isFollowing: $followingVM.followingList[index].isFollowing)
-                                
+                                FollowingBtnComponent(isFollowing: $followingVM.followingList[index].isFollowing) {
+                                    
+                                    if followingVM.followingList[index].isFollowing {
+                                        
+                                        Task {
+                                            print("팔로잉 여부: :\(followingVM.followingList[index].isFollowing)")
+                                            
+                                            await followingVM.cancelFollowOther(index: index)
+                                        }
+                                        
+                                    } else {
+                                        Task {
+
+                                            await followingVM.followOther(index: index)
+                                        }
+                                    }
+                                    
+                                }
                             }
                             .padding(.vertical, 13)
                             .padding(.horizontal, 24)
                             .onAppear {
                                 
-                                if index == followingList.count - 1{
+                                if index == followingVM.followingList.count - 1{
                                     Task {
                                         await followingVM.readFollowingList()
                                     }
@@ -93,12 +108,14 @@ struct FollowingListView: View {
                     }
                 }
             }
-            .padding(.bottom, 45)
             .refreshable {
                 Task {
                     await followingVM.readFollowingList()
                 }
             }
+        }
+        .onAppear {
+            wholeVM.isTabBarHidden = true
         }
         .navigationTitle("팔로잉한 계정")
         .navigationBarTitleDisplayMode(.inline)

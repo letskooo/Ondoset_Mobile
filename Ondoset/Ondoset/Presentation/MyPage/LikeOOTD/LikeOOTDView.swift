@@ -10,17 +10,11 @@ import SwiftUI
 struct LikeOOTDView: View {
     
     @StateObject var likeOOTDVM: LikeOOTDViewModel = .init()
+    @EnvironmentObject var wholeVM: WholeViewModel
     
     @Environment(\.dismiss) private var dismiss
     
     let columns: [GridItem] = Array(repeating: .init(.fixed(screenWidth/2), spacing: 1), count: 2)
-    
-    private let dateFormatter = DateFormatter()
-    
-    init() {
-        
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-    }
     
     var body: some View {
         
@@ -35,19 +29,12 @@ struct LikeOOTDView: View {
                     
                     ForEach(ootdList.indices, id: \.self) { index in
                         
-                        let epochTime = ootdList[index].date
+                        let dateString = DateFormatter.string(epoch: ootdList[index].date)
                         
-                        let date = Date(timeIntervalSince1970: TimeInterval(epochTime))
-                        
-                        let dateString = dateFormatter.string(from: date)
-                        
-                        OOTDComponent(date: dateString, minTemp: ootdList[index].lowestTemp, maxTemp: ootdList[index].highestTemp, ootdImageURL: ootdList[index].imageURL) {
-                            
-                            // OOTD 개별 조회 API
-                            print("dateString: \(dateString)=====================")
-                            
+                        NavigationLink(destination: OOTDItemView(ootdId: ootdList[index].ootdId, ootdImageURL: ootdList[index].imageURL, dateString: dateString, lowestTemp: ootdList[index].lowestTemp, highestTemp: ootdList[index].highestTemp)) {
+                            OOTDComponent(date: dateString, minTemp: ootdList[index].lowestTemp, maxTemp: ootdList[index].highestTemp, ootdImageURL: ootdList[index].imageURL)
+                            .frame(width: screenWidth / 2)
                         }
-                        .frame(width: screenWidth/2)
                         .onAppear {
                             
                             if index == ootdList.count - 1 {
@@ -55,18 +42,19 @@ struct LikeOOTDView: View {
                                     await likeOOTDVM.readLikeOOTDList()
                                 }
                             }
-                            
                         }
                     }
                 }
             }
+        }
+        .onAppear {
+            wholeVM.isTabBarHidden = true
         }
         .refreshable {
             Task {
                 await likeOOTDVM.readLikeOOTDList()
             }
         }
-        .padding(.bottom, 50)
         .navigationTitle("공감한 OOTD")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

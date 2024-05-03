@@ -66,11 +66,11 @@ struct SettingView: View {
                             }
                     }
                     
-                    Text(myPageVM.memberProfile?.memberId ?? "사용자 아이디")
+                    Text(myPageVM.memberProfile?.username ?? "사용자 아이디")
                         .font(Font.pretendard(.medium, size: 13))
                         .padding(.top, 16)
                     
-                    Text(myPageVM.memberProfile?.memberNickname ?? "사용자 닉네임")
+                    Text(myPageVM.memberProfile?.nickname ?? "사용자 닉네임")
                         .font(Font.pretendard(.medium, size: 15))
                         .padding(.top, 10)
                         .overlay {
