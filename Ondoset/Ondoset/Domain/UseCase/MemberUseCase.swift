@@ -15,9 +15,9 @@ class MemberUseCase {
     let memberRepository: MemberRepository = MemberRepository.shared
     
     // 아이디 중복 체크 요청
-    func checkDuplicateId(memberId: String) async -> Bool? {
+    func checkDuplicateId(username: String) async -> Bool? {
         
-        guard let result = await memberRepository.checkDuplicateId(memberId: memberId) else {
+        guard let result = await memberRepository.checkDuplicateId(username: username) else {
             return nil
         }
         
@@ -80,6 +80,10 @@ class MemberUseCase {
             
             // 신규 사용자 여부
             UserDefaults.standard.set(result.isFirst, forKey: "isFirst")
+            
+            UserDefaults.standard.set(result.memberId, forKey: "memberId")
+            
+            print("유저 디폴츠에 저장된 memberId PK :\(UserDefaults.standard.integer(forKey: "memberId"))")
         }
         
         return true

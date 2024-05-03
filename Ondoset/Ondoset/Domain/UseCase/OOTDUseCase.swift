@@ -69,4 +69,84 @@ class OOTDUseCase {
             return nil
         }
     }
+    
+    // 개별 OOTD 조회
+    func getOOTD(ootdId: Int) async -> OOTDItem? {
+     
+        if let ootdItemDTO = await ootdRepository.getOOTD(ootdId: ootdId) {
+            
+            return ootdItemDTO.toOOTDItem()
+        } else {
+            return nil
+        }
+    }
+    
+    // 타인 계정 팔로우
+    func followOther(followOtherDTO: FollowOtherRequestDTO) async -> Bool {
+        
+        if let result = await ootdRepository.followOther(followOtherDTO: followOtherDTO) {
+            
+            return true
+            
+        } else {
+            return false
+        }
+    }
+    
+    // 타인 계정 팔로우 취소
+    func cancelFollowOther(memberId: Int) async -> Bool {
+        
+        if let result = await ootdRepository.cancelFollowOther(memberId: memberId) {
+            
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // OOTD 공감
+    func likeOOTD(likeOOTDDTO: LikeOOTDRequestDTO) async -> Bool {
+        
+        if let result = await ootdRepository.likeOOTD(likeOOTDDTO: likeOOTDDTO) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // 타인 계정 팔로우 취소
+    func cancelLikeOOTD(ootdId: Int) async -> Bool {
+        if let result = await ootdRepository.cancelLikeOOTD(ootdId: ootdId) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // OOTD 등록될 날씨 미리보기
+    func getOOTDWeather(data: GetOOTDWeatherRequestDTO) async -> GetOOTDWeatherResponseDTO? {
+        
+        if let result = await ootdRepository.getOOTDWeather(data: data) {
+            
+            print("====OOTDUseCase======")
+            print(result.weather)
+            print(result.lowestTemp)
+            print(result.highestTemp)
+            
+            return result
+        } else {
+            return nil
+        }
+    }
+    
+    // OOTD 등록
+    func registerOOTD(data: PostOOTDRequestDTO) async -> Bool {
+        
+        if let result = await ootdRepository.postOOTD(data: data) {
+            
+            return true
+        } else {
+            return false
+        }
+    }
 }

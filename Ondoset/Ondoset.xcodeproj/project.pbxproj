@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		470479012BE28D4E002CFF82 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470479002BE28D4E002CFF82 /* DateFormatter.swift */; };
 		4705797C2BDBD0EF0009A2CF /* AddOOTDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4705797B2BDBD0EE0009A2CF /* AddOOTDViewModel.swift */; };
 		4705797E2BDBD1190009A2CF /* AddOOTDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4705797D2BDBD1190009A2CF /* AddOOTDView.swift */; };
 		470579812BDBD3450009A2CF /* GetCoordiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470579802BDBD3450009A2CF /* GetCoordiView.swift */; };
@@ -30,6 +31,8 @@
 		47A46ED52BD97D9A0096525F /* FollowingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A46ED42BD97D9A0096525F /* FollowingListView.swift */; };
 		47A46ED82BD986E60096525F /* LikeOOTDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A46ED72BD986E60096525F /* LikeOOTDViewModel.swift */; };
 		47A718FD2BCB769200AD66A3 /* MemberDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A718FC2BCB769200AD66A3 /* MemberDTO.swift */; };
+		47A922362BDF9465003234F9 /* OOTDItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A922352BDF9465003234F9 /* OOTDItemView.swift */; };
+		47A922382BDF9481003234F9 /* OOTDItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A922372BDF9481003234F9 /* OOTDItemViewModel.swift */; };
 		47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BAF23A2BC65882002474E7 /* OndosetHome.swift */; };
 		47BAF23D2BC658AD002474E7 /* WholeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BAF23C2BC658AD002474E7 /* WholeViewModel.swift */; };
 		47BE3A132BC37FF900F27E38 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE3A122BC37FF900F27E38 /* Member.swift */; };
@@ -132,6 +135,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		470479002BE28D4E002CFF82 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		4705797B2BDBD0EE0009A2CF /* AddOOTDViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOOTDViewModel.swift; sourceTree = "<group>"; };
 		4705797D2BDBD1190009A2CF /* AddOOTDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOOTDView.swift; sourceTree = "<group>"; };
 		470579802BDBD3450009A2CF /* GetCoordiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCoordiView.swift; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 		47A46ED42BD97D9A0096525F /* FollowingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingListView.swift; sourceTree = "<group>"; };
 		47A46ED72BD986E60096525F /* LikeOOTDViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeOOTDViewModel.swift; sourceTree = "<group>"; };
 		47A718FC2BCB769200AD66A3 /* MemberDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDTO.swift; sourceTree = "<group>"; };
+		47A922352BDF9465003234F9 /* OOTDItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDItemView.swift; sourceTree = "<group>"; };
+		47A922372BDF9481003234F9 /* OOTDItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDItemViewModel.swift; sourceTree = "<group>"; };
 		47BAF23A2BC65882002474E7 /* OndosetHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OndosetHome.swift; sourceTree = "<group>"; };
 		47BAF23C2BC658AD002474E7 /* WholeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WholeViewModel.swift; sourceTree = "<group>"; };
 		47BAF23E2BC6673D002474E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -359,6 +365,15 @@
 				47A46ED72BD986E60096525F /* LikeOOTDViewModel.swift */,
 			);
 			path = LikeOOTD;
+			sourceTree = "<group>";
+		};
+		47A922342BDF944B003234F9 /* OOTDItem */ = {
+			isa = PBXGroup;
+			children = (
+				47A922352BDF9465003234F9 /* OOTDItemView.swift */,
+				47A922372BDF9481003234F9 /* OOTDItemViewModel.swift */,
+			);
+			path = OOTDItem;
 			sourceTree = "<group>";
 		};
 		47BE3A0C2BC37F5700F27E38 /* UseCase */ = {
@@ -575,6 +590,7 @@
 		47C29DE62BC2461200E3E2B9 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				47A922342BDF944B003234F9 /* OOTDItem */,
 				4738B5C52BD9A8640025DAF6 /* Following */,
 				47A46ED62BD9868F0096525F /* LikeOOTD */,
 				47C29E122BC24A3F00E3E2B9 /* MyPageMain */,
@@ -709,6 +725,7 @@
 				47C29E242BC24DD600E3E2B9 /* Font+.swift */,
 				47C29E262BC24EA400E3E2B9 /* Color+.swift */,
 				47BE3A362BC3C16B00F27E38 /* Data+.swift */,
+				470479002BE28D4E002CFF82 /* DateFormatter.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -915,8 +932,10 @@
 				47BE3A302BC3938D00F27E38 /* APIManager.swift in Sources */,
 				47BE3A232BC380BA00F27E38 /* OOTDRepository.swift in Sources */,
 				47E7403D2BD8FB71003A71D5 /* OOTDEndPoint.swift in Sources */,
+				470479012BE28D4E002CFF82 /* DateFormatter.swift in Sources */,
 				47BE3A212BC380AD00F27E38 /* CoordiRepository.swift in Sources */,
 				47C29E142BC24A5500E3E2B9 /* MyPageMainView.swift in Sources */,
+				47A922362BDF9465003234F9 /* OOTDItemView.swift in Sources */,
 				47BE3A402BC3CE2B00F27E38 /* TestRepository.swift in Sources */,
 				47BE3A432BC4C99100F27E38 /* TestViewModel.swift in Sources */,
 				47C29E0F2BC24A2300E3E2B9 /* OOTDMainViewModel.swift in Sources */,
@@ -934,6 +953,7 @@
 				470579812BDBD3450009A2CF /* GetCoordiView.swift in Sources */,
 				474E8A692BD645AB0060E081 /* ClothSelectedComponent.swift in Sources */,
 				47E740322BD8DAF0003A71D5 /* SettingView.swift in Sources */,
+				47A922382BDF9481003234F9 /* OOTDItemViewModel.swift in Sources */,
 				47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */,
 				47E7403B2BD8F788003A71D5 /* OotdDTO.swift in Sources */,
 				47E740372BD8DE72003A71D5 /* ImagePicker.swift in Sources */,
