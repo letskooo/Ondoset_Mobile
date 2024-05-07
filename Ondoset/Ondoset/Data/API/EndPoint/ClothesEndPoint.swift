@@ -53,19 +53,19 @@ extension ClothesEndPoint: EndPoint {
         
         switch self {
  
-        case .getHomeInfo(dto: let dto):
+        case .getHomeInfo:
             return "/home"
-        case .searchClothByTag(dto: let dto):
+        case .searchClothByTag:
             return ""
-        case .getAllClothes(lastPage: let lastPage):
+        case .getAllClothes:
             return "/all"
-        case .getAllClothesByCategory(dto: let dto):
+        case .getAllClothesByCategory:
             return "/all"
-        case .searchClothByKeyword(dto: let dto):
+        case .searchClothByKeyword:
             return "/search"
         case .getTagList:
             return "/tag"
-        case .postCloth(dto: let dto):
+        case .postCloth:
             return "/"
         case .putCloth(dto: let dto):
             return "/\(dto.clothesId)"
@@ -112,13 +112,26 @@ extension ClothesEndPoint: EndPoint {
             
         case .searchClothByTag(dto: let dto):
             
-            let params = [
+            if let thickness = dto.thickness {
                 
-                "thickness": dto.thickness,
-                "tagId": dto.tagId
-            ] as [String : Any]
-            
-            return .requestQueryParams(parameters: params, encoding: URLEncoding.default)
+                let params = [
+                    
+                    "thickness": dto.thickness,
+                    "tagId": dto.tagId
+                ] as [String : Any]
+             
+                return .requestQueryParams(parameters: params, encoding: URLEncoding.default)
+                
+            } else {
+                
+                let param = [
+                    
+                    "tagId": dto.tagId
+                    
+                ]
+                
+                return .requestQueryParams(parameters: param, encoding: URLEncoding.default)
+            }
             
         case .getAllClothes(lastPage: let lastPage):
             
