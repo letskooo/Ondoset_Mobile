@@ -22,10 +22,15 @@
 		474E8A772BD672EC0060E081 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E8A762BD672EC0060E081 /* Weather.swift */; };
 		474E8A792BD67A430060E081 /* ClothTagComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E8A782BD67A430060E081 /* ClothTagComponent.swift */; };
 		474E8A7B2BD6820C0060E081 /* ThicknessTagComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E8A7A2BD6820C0060E081 /* ThicknessTagComponent.swift */; };
+		475E8A2F2BE5DC35002F5F26 /* CoordiMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E8A2E2BE5DC35002F5F26 /* CoordiMainView.swift */; };
 		476D051E2BD9AEB800EB2B34 /* FollowingBtnComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476D051D2BD9AEB800EB2B34 /* FollowingBtnComponent.swift */; };
 		476EAC3D2BD2B28D008B2E15 /* SignUpSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EAC3C2BD2B28D008B2E15 /* SignUpSecondView.swift */; };
 		476EAC3F2BD2B2A1008B2E15 /* SignUpFirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EAC3E2BD2B2A1008B2E15 /* SignUpFirstView.swift */; };
 		47705BF22BC770A2003B5D6E /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */; };
+		4789E7232BEA0280002CF53A /* CoordiImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E7222BEA0280002CF53A /* CoordiImageView.swift */; };
+		4789E7262BEA0ECA002CF53A /* AddCoordiRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E7252BEA0ECA002CF53A /* AddCoordiRecordView.swift */; };
+		4789E7282BEA0FC6002CF53A /* AddCoordiPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E7272BEA0FC6002CF53A /* AddCoordiPlanView.swift */; };
+		4789E72A2BEAB644002CF53A /* AddCoordiRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E7292BEAB644002CF53A /* AddCoordiRecordViewModel.swift */; };
 		479058362BC907A3008FAD8E /* SecureFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479058352BC907A2008FAD8E /* SecureFieldComponent.swift */; };
 		47A46ED22BD97B3E0096525F /* LikeOOTDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A46ED12BD97B3E0096525F /* LikeOOTDView.swift */; };
 		47A46ED52BD97D9A0096525F /* FollowingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A46ED42BD97D9A0096525F /* FollowingListView.swift */; };
@@ -89,6 +94,8 @@
 		47C29E332BC2515500E3E2B9 /* ClothesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C29E322BC2515500E3E2B9 /* ClothesUseCase.swift */; };
 		47C29E372BC2516F00E3E2B9 /* CoordiUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C29E362BC2516F00E3E2B9 /* CoordiUseCase.swift */; };
 		47C29E392BC2517E00E3E2B9 /* OOTDUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C29E382BC2517E00E3E2B9 /* OOTDUseCase.swift */; };
+		47C4C1802BE7667600B60DDE /* CoordiDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C4C17F2BE7667600B60DDE /* CoordiDTO.swift */; };
+		47C4C1822BE7731A00B60DDE /* CoordiMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C4C1812BE7731A00B60DDE /* CoordiMainViewModel.swift */; };
 		47DF6F792BC6B9D900E64B12 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F702BC6B9D900E64B12 /* Pretendard-Black.otf */; };
 		47DF6F7A2BC6B9D900E64B12 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F712BC6B9D900E64B12 /* Pretendard-Thin.otf */; };
 		47DF6F7B2BC6B9D900E64B12 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DF6F722BC6B9D900E64B12 /* Pretendard-Regular.otf */; };
@@ -155,10 +162,15 @@
 		474E8A762BD672EC0060E081 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		474E8A782BD67A430060E081 /* ClothTagComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothTagComponent.swift; sourceTree = "<group>"; };
 		474E8A7A2BD6820C0060E081 /* ThicknessTagComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThicknessTagComponent.swift; sourceTree = "<group>"; };
+		475E8A2E2BE5DC35002F5F26 /* CoordiMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordiMainView.swift; sourceTree = "<group>"; };
 		476D051D2BD9AEB800EB2B34 /* FollowingBtnComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingBtnComponent.swift; sourceTree = "<group>"; };
 		476EAC3C2BD2B28D008B2E15 /* SignUpSecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondView.swift; sourceTree = "<group>"; };
 		476EAC3E2BD2B2A1008B2E15 /* SignUpFirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFirstView.swift; sourceTree = "<group>"; };
 		47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		4789E7222BEA0280002CF53A /* CoordiImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordiImageView.swift; sourceTree = "<group>"; };
+		4789E7252BEA0ECA002CF53A /* AddCoordiRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoordiRecordView.swift; sourceTree = "<group>"; };
+		4789E7272BEA0FC6002CF53A /* AddCoordiPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoordiPlanView.swift; sourceTree = "<group>"; };
+		4789E7292BEAB644002CF53A /* AddCoordiRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoordiRecordViewModel.swift; sourceTree = "<group>"; };
 		479058352BC907A2008FAD8E /* SecureFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFieldComponent.swift; sourceTree = "<group>"; };
 		47A46ED12BD97B3E0096525F /* LikeOOTDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeOOTDView.swift; sourceTree = "<group>"; };
 		47A46ED42BD97D9A0096525F /* FollowingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingListView.swift; sourceTree = "<group>"; };
@@ -223,6 +235,8 @@
 		47C29E322BC2515500E3E2B9 /* ClothesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesUseCase.swift; sourceTree = "<group>"; };
 		47C29E362BC2516F00E3E2B9 /* CoordiUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordiUseCase.swift; sourceTree = "<group>"; };
 		47C29E382BC2517E00E3E2B9 /* OOTDUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDUseCase.swift; sourceTree = "<group>"; };
+		47C4C17F2BE7667600B60DDE /* CoordiDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordiDTO.swift; sourceTree = "<group>"; };
+		47C4C1812BE7731A00B60DDE /* CoordiMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordiMainViewModel.swift; sourceTree = "<group>"; };
 		47DF6F702BC6B9D900E64B12 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
 		47DF6F712BC6B9D900E64B12 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		47DF6F722BC6B9D900E64B12 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
@@ -369,6 +383,16 @@
 			path = EndPoint;
 			sourceTree = "<group>";
 		};
+		4789E7242BEA0EB3002CF53A /* AddCoordi */ = {
+			isa = PBXGroup;
+			children = (
+				4789E7252BEA0ECA002CF53A /* AddCoordiRecordView.swift */,
+				4789E7272BEA0FC6002CF53A /* AddCoordiPlanView.swift */,
+				4789E7292BEAB644002CF53A /* AddCoordiRecordViewModel.swift */,
+			);
+			path = AddCoordi;
+			sourceTree = "<group>";
+		};
 		47A46ED62BD9868F0096525F /* LikeOOTD */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,6 +511,7 @@
 				47A718FC2BCB769200AD66A3 /* MemberDTO.swift */,
 				47E7403A2BD8F788003A71D5 /* OotdDTO.swift */,
 				8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */,
+				47C4C17F2BE7667600B60DDE /* CoordiDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -571,7 +596,7 @@
 				47C29DEE2BC2481D00E3E2B9 /* Initial */,
 				47C29DEC2BC2480A00E3E2B9 /* Onboarding */,
 				47C29DEA2BC2462D00E3E2B9 /* Home */,
-				47C29DE92BC2462600E3E2B9 /* Record */,
+				47C29DE92BC2462600E3E2B9 /* Coordi */,
 				47C29DE82BC2462100E3E2B9 /* Closet */,
 				47C29DE72BC2461900E3E2B9 /* OOTD */,
 				47C29DE62BC2461200E3E2B9 /* MyPage */,
@@ -628,12 +653,13 @@
 			path = Closet;
 			sourceTree = "<group>";
 		};
-		47C29DE92BC2462600E3E2B9 /* Record */ = {
+		47C29DE92BC2462600E3E2B9 /* Coordi */ = {
 			isa = PBXGroup;
 			children = (
-				47C29E012BC249B100E3E2B9 /* RecordMain */,
+				4789E7242BEA0EB3002CF53A /* AddCoordi */,
+				47C29E012BC249B100E3E2B9 /* CoordiMain */,
 			);
-			path = Record;
+			path = Coordi;
 			sourceTree = "<group>";
 		};
 		47C29DEA2BC2462D00E3E2B9 /* Home */ = {
@@ -686,13 +712,16 @@
 			path = HomeMain;
 			sourceTree = "<group>";
 		};
-		47C29E012BC249B100E3E2B9 /* RecordMain */ = {
+		47C29E012BC249B100E3E2B9 /* CoordiMain */ = {
 			isa = PBXGroup;
 			children = (
 				47C29E022BC249C300E3E2B9 /* RecordMainView.swift */,
 				47C29E042BC249D000E3E2B9 /* RecordMainViewModel.swift */,
+				475E8A2E2BE5DC35002F5F26 /* CoordiMainView.swift */,
+				47C4C1812BE7731A00B60DDE /* CoordiMainViewModel.swift */,
+				4789E7222BEA0280002CF53A /* CoordiImageView.swift */,
 			);
-			path = RecordMain;
+			path = CoordiMain;
 			sourceTree = "<group>";
 		};
 		47C29E062BC249D800E3E2B9 /* ClosetMain */ = {
@@ -963,6 +992,7 @@
 				47DF6F9B2BC6CC7C00E64B12 /* ButtonComponent.swift in Sources */,
 				47BE3A302BC3938D00F27E38 /* APIManager.swift in Sources */,
 				47BE3A232BC380BA00F27E38 /* OOTDRepository.swift in Sources */,
+				4789E7232BEA0280002CF53A /* CoordiImageView.swift in Sources */,
 				47E7403D2BD8FB71003A71D5 /* OOTDEndPoint.swift in Sources */,
 				470479012BE28D4E002CFF82 /* DateFormatter.swift in Sources */,
 				47BE3A212BC380AD00F27E38 /* CoordiRepository.swift in Sources */,
@@ -989,6 +1019,7 @@
 				47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */,
 				47E7403B2BD8F788003A71D5 /* OotdDTO.swift in Sources */,
 				47E740372BD8DE72003A71D5 /* ImagePicker.swift in Sources */,
+				4789E7262BEA0ECA002CF53A /* AddCoordiRecordView.swift in Sources */,
 				47A718FD2BCB769200AD66A3 /* MemberDTO.swift in Sources */,
 				47E6BB6F2BC56D3600A72F3D /* AppError.swift in Sources */,
 				476EAC3D2BD2B28D008B2E15 /* SignUpSecondView.swift in Sources */,
@@ -1013,13 +1044,18 @@
 				47C29E2B2BC2504900E3E2B9 /* Constants.swift in Sources */,
 				882228F02BD98D8700CFF8B9 /* MyClothingView.swift in Sources */,
 				47BE3A372BC3C16B00F27E38 /* Data+.swift in Sources */,
+				4789E7282BEA0FC6002CF53A /* AddCoordiPlanView.swift in Sources */,
 				47C29E392BC2517E00E3E2B9 /* OOTDUseCase.swift in Sources */,
 				47BAF23D2BC658AD002474E7 /* WholeViewModel.swift in Sources */,
+				4789E72A2BEAB644002CF53A /* AddCoordiRecordViewModel.swift in Sources */,
 				47C29E052BC249D000E3E2B9 /* RecordMainViewModel.swift in Sources */,
 				47E740412BD90D5A003A71D5 /* CoordiEndPoint.swift in Sources */,
+				47C4C1802BE7667600B60DDE /* CoordiDTO.swift in Sources */,
 				47705BF22BC770A2003B5D6E /* SignUpViewModel.swift in Sources */,
+				47C4C1822BE7731A00B60DDE /* CoordiMainViewModel.swift in Sources */,
 				882A51C02BD938990048EE1A /* SegmentControlComponent.swift in Sources */,
 				47C29DFB2BC2491900E3E2B9 /* OnboardingViewModel.swift in Sources */,
+				475E8A2F2BE5DC35002F5F26 /* CoordiMainView.swift in Sources */,
 				47BE3A1D2BC3809C00F27E38 /* MemberRepository.swift in Sources */,
 				47DF6F992BC6BF6100E64B12 /* TextFieldComponent.swift in Sources */,
 				884E60842BE2B84D00682663 /* HomeBottomView.swift in Sources */,

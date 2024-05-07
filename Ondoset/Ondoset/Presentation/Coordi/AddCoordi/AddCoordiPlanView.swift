@@ -8,11 +8,44 @@
 import SwiftUI
 
 struct AddCoordiPlanView: View {
+    
+    @Binding var isAddCoordiPlanSheetPresented: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        navigationTopBar
+        
+        Spacer()
+    }
+    
+    private var navigationTopBar: some View {
+        HStack {
+            
+            Button {
+                
+                isAddCoordiPlanSheetPresented.toggle()
+                
+            } label: {
+                Text("닫기")
+                    .padding(.leading, 15)
+                    .font(Font.pretendard(.regular, size: 17))
+                    .foregroundStyle(.darkGray)
+            }
+            
+            Spacer()
+
+        }
+        .padding(.top, 15)
+        .overlay {
+            
+            Text("코디 계획하기")
+                .font(Font.pretendard(.semibold, size: 17))
+                .foregroundStyle(.black)
+                .padding(.top, 10)
+        }
     }
 }
 
 #Preview {
-    AddCoordiPlanView()
+    AddCoordiPlanView(isAddCoordiPlanSheetPresented: .constant(true))
 }

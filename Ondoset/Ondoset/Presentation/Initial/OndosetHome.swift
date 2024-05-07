@@ -29,7 +29,7 @@ struct OndosetHome: View {
             case .home:
                 HomeMainView()
             case .record:
-                RecordMainView()
+                CoordiMainView()
             case .closet:
                 ClosetMainView()
             case .ootd:

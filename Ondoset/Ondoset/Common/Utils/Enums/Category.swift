@@ -10,11 +10,11 @@ import SwiftUI
 
 enum Category: String, CaseIterable {
     
-    case TOP        // 상의
-    case BOTTOM     // 하의
-    case OUTER      // 아우터
-    case SHOE       // 신발
-    case ACC        // 악세서리
+    case TOP = "TOP"        // 상의
+    case BOTTOM = "BOTTOM"  // 하의
+    case OUTER = "OUTER"    // 아우터
+    case SHOE = "SHOE"      // 신발
+    case ACC = "ACC"        // 악세서리
 }
 
 extension Category {

@@ -18,9 +18,20 @@ extension DateFormatter {
         return formatter
     }()
     
+    static let timeOnly: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter
+    }()
+    
     static func string(epoch: Int) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(epoch))
         
         return DateFormatter.dateOnly.string(from: date)
+    }
+    
+    static func timeString(epoch: Int) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(epoch))
+        return DateFormatter.timeOnly.string(from: date)
     }
 }

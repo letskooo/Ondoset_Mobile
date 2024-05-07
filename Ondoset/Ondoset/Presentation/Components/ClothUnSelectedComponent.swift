@@ -106,7 +106,7 @@ struct ClothUnSelectedComponent: View {
                                             category: test[index].category,
                                             clothName: test[index].name,
                                             clothTag: test[index].tag,
-                                            clothThickness: test[index].thickness,
+                                            clothThickness: test[index].thickness ?? .NORMAL,
                                             width: 320
                                         )
                                     }

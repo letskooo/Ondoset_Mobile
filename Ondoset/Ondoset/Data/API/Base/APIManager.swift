@@ -30,6 +30,7 @@ final class APIManager {
             
             result = try request.result.get()
             
+            print("APIManager의 print. 데이터 서버로 부터 받기 성공")
             print(String(data: result, encoding: .utf8))
             
         } catch {
@@ -55,7 +56,7 @@ final class APIManager {
             }
           
         } catch {
-            print("디코딩 에러===")
+            print("디코딩 에러=== 데이터는 서버로부터 받아왔으나 디코딩 실패")
             return nil
         }
     }
@@ -133,22 +134,34 @@ extension APIManager {
         case let .uploadImage(image):
             return AF.upload(multipartFormData: { multipartFormData in
                 
-                multipartFormData.append(image, withName: "img", fileName: "\(image).jpeg", mimeType: "image/jpeg")
+                multipartFormData.append(image, withName: "image", fileName: "\(image).jpeg", mimeType: "image/jpeg")
             }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
             
         // form 데이터 요청
         case let .uploadImagesWithData(image, body):
-            return AF.upload(multipartFormData: { multipartFormData in
-                
-                multipartFormData.append(image, withName: "img", fileName: "\(image).jpeg", mimeType: "image/jpeg")
-                
-                for (key, value) in body {
-                    if let data = String(describing: value).data(using: .utf8) {
-                        multipartFormData.append(data, withName: key)
-                    }
-                }
-            }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
             
+            if let image = image {
+                return AF.upload(multipartFormData: { multipartFormData in
+                    
+                    multipartFormData.append(image, withName: "image", fileName: "\(image).jpeg", mimeType: "image/jpeg")
+                    
+                    for (key, value) in body {
+                        if let data = String(describing: value).data(using: .utf8) {
+                            multipartFormData.append(data, withName: key)
+                        }
+                    }
+                }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
+            } else {
+                
+                return AF.upload(multipartFormData: { multipartFormData in
+                    
+                    for (key, value) in body {
+                        if let data = String(describing: value).data(using: .utf8) {
+                            multipartFormData.append(data, withName: key)
+                        }
+                    }
+                }, to: URL(string: "\(endPoint.baseURL)\(endPoint.path)")!, method: endPoint.method, headers: endPoint.headers, interceptor: AuthManager())
+            }
         }
     }
 }

@@ -39,5 +39,5 @@ public enum APITask {
     case uploadImage(image: Data)
     
     /// form 데이터 요청
-    case uploadImagesWithData(image: Data, data: [String: Any])
+    case uploadImagesWithData(image: Data?, data: [String: Any])
 }

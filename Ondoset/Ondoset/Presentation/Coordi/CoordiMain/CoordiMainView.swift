@@ -10,6 +10,12 @@ import Kingfisher
 
 struct CoordiMainView: View {
     
+    // 코디 기록 추가하기 sheet 활성화 여부
+    @State var isAddCoordiRecordSheetPresented: Bool = false
+    
+    // 코디 계획 추가하기 sheet 활성화 여부
+    @State var isAddCoordiPlanSheetPresented: Bool = false
+    
     @State var showYearPicker: Bool = false
     
     @State var selectedYear: Int = 2024
@@ -19,7 +25,14 @@ struct CoordiMainView: View {
     @State private var selectedWeekday = "Mon"
     @State private var selectedSatisfaction: Satisfaction?
     
+    // 사진 보관함 활성화 여부
+    @State private var openPhoto: Bool = false
+    @State private var coordiImage: UIImage = UIImage()
+    
     @State private var showSelectedSatisfaction = false
+    
+    @State var showCoordiDeleteAlert: Bool = false
+    @State var willDeleteCoordiId: Int = 0
     
     let month = Array(1...12)
     let years = Array(1900...2100)
@@ -27,460 +40,499 @@ struct CoordiMainView: View {
     @State var days: [(day: Int, weekday: String)] = []
     
     @StateObject var coordiMainVM: CoordiMainViewModel = .init()
+    @EnvironmentObject var wholeVM: WholeViewModel
     
     var body: some View {
         
         NavigationStack {
             
-            GeometryReader { fullView in
+            ZStack {
                 
-                VStack(spacing: 0) {
+                GeometryReader { fullView in
                     
-                    coordiHeaderView
-                    
-                    coordiMonthView
-                    
-                    coordiDayView
-                    
-                    Rectangle()
-                        .frame(width: screenWidth, height: 3)
-                        .foregroundStyle(Color(hex: 0xEDEEFA))
-                        .padding(.vertical, 5)
-                        .padding(.bottom, 10)
-                    
-                    VStack {
+                    VStack(spacing: 0) {
                         
-                        ForEach(days, id: \.day) { day in
+                        coordiHeaderView
+                        
+                        coordiMonthView
+                        
+                        coordiDayView
+                        
+                        Rectangle()
+                            .frame(width: screenWidth, height: 3)
+                            .foregroundStyle(Color(hex: 0xEDEEFA))
+                            .padding(.vertical, 5)
+                            .padding(.bottom, 10)
+                        
+                        VStack {
+                            
+                            ForEach(days, id: \.day) { day in
 
-                                if self.selectedDays == day.day {
-                                    
-                                    HStack(spacing: 7) {
+                                    if self.selectedDays == day.day {
                                         
-                                        if let coordiRecord = coordiMainVM.coordiRecord.first(where: {$0.year == selectedYear && $0.month == selectedMonth && $0.day == day.day}) {
+                                        HStack(spacing: 7) {
                                             
-                                            if let satisfaction = coordiRecord.satisfaction {
+                                            if let coordiRecord = coordiMainVM.coordiRecord.first(where: {$0.year == selectedYear && $0.month == selectedMonth && $0.day == day.day}) {
+                                                
+                                                if let satisfaction = coordiRecord.satisfaction {
 
-                                                HStack {
-                                                    
-                                                    if showSelectedSatisfaction {
+                                                    HStack {
                                                         
-                                                        HStack(spacing: 7) {
+                                                        if showSelectedSatisfaction {
                                                             
-                                                            ForEach(Satisfaction.allCases, id: \.self) { satisfaction in
+                                                            HStack(spacing: 7) {
                                                                 
-                                                                satisfaction.image
-                                                                    .onTapGesture {
-                                                                        
-                                                                        // 만족도 수정 API
-                                                                        // 이거는 전체 코디 조회를 다시 할 필요 없음
-                                                                        // 만족도 저장 API가 성공하면 이 코드 실행
-                                                                        selectedSatisfaction = satisfaction
-                                                                        print(selectedSatisfaction)
-                                                                        showSelectedSatisfaction = false
-                                                                        // 만족도 저장 API
-                                                                    }
+                                                                ForEach(Satisfaction.allCases, id: \.self) { satisfaction in
+                                                                    
+                                                                    satisfaction.image
+                                                                        .onTapGesture {
+                                                                            
+                                                                            // 만족도 수정 API
+                                                                            Task {
+                                                                                
+                                                                                let result = await coordiMainVM.setSatisfaction(coordiId: coordiRecord.coordiId, satisfaction: satisfaction)
+                                                                                
+                                                                                if result {
+                                                                                    
+                                                                                    selectedSatisfaction = satisfaction
+                                                                                    
+                                                                                    await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
+                                                                                }
+                                                                            }
+                                                                            showSelectedSatisfaction = false
+                                                                            // 만족도 저장 API
+                                                                        }
+                                                                }
+                                                            }
+                                                            .cornerRadius(40)
+                                                            .shadow(color: Color(hex: 0xEDEEFA), radius: 4)
+                                                            
+                                                        } else {
+                                                            
+                                                            HStack {
+                                                                selectedSatisfaction?.image
+                                                                    .resizable()
+                                                                    .frame(width: 30, height: 30)
+                                                                    
+                                                                
+                                                                if let title = selectedSatisfaction?.title {
+                                                                    Text(title)
+                                                                        .font(Font.pretendard(.bold, size: 13))
+                                                                        .foregroundStyle(.main)
+                                                                }
+                                                            }
+                                                            .onTapGesture {
+                                                                
+                                                                showSelectedSatisfaction = true
                                                             }
                                                         }
-                                                        .cornerRadius(40)
-                                                        .shadow(color: Color(hex: 0xEDEEFA), radius: 4)
+
+                                                        Spacer()
                                                         
-                                                    } else {
-                                                        
-                                                        HStack {
-                                                            selectedSatisfaction?.image
-                                                                .resizable()
-                                                                .frame(width: 30, height: 30)
+                                                        CoordiImageView(openPhoto: $openPhoto, coordiRecord: coordiRecord)
+                                                            .onChange(of: coordiImage) { image in
                                                                 
+                                                                if let imageData = coordiImage.jpegData(compressionQuality: 0.1) {
+                                                                    
+                                                                    Task {
+                                                                        
+                                                                        let result = await coordiMainVM.setCoordiImage(coordiId: coordiRecord.coordiId, image: imageData)
+                                                                        
+                                                                        print("이미지 변경: \(result)")
+                                                                        
+                                                                        if result {
+                                                                            
+                                                                            await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
+                                                                        }
+                                                                        
+                                                                    }
+                                                                    
+                                                                }
+                                                            }
                                                             
-                                                            if let title = selectedSatisfaction?.title {
-                                                                Text(title)
+                                                    
+                                                        
+                                                        Menu(content: {
+
+                                                            Button {
+                                                                
+                                                            } label: {
+                                                                Text("코디 수정하기")
+                                                            }
+                                                            
+                                                            Button {
+                                                                
+                                                            } label: {
+                                                                Text("외출 시간 수정하기")
+                                                            }
+                                                            
+                                                            Button {
+                                                                
+                                                            } label: {
+                                                                Text("오늘 코디로 가져오기")
+                                                            }
+                                                            
+                                                            Button(role: .destructive) {
+                                                                
+                                                                showCoordiDeleteAlert = true
+                                                                willDeleteCoordiId = coordiRecord.coordiId
+                                                                
+                                                            } label: {
+                                                                Text("코디 삭제하기")
+                                                            }
+
+                                                        }, label: {
+                                                            Image(systemName: "ellipsis")
+                                                                .frame(width:24, height: 24)
+                                                                .rotationEffect(.degrees(90))
+                                                                .foregroundColor(.gray)
+                                                                .clipShape(Circle())
+                                                        })
+                                                    }
+                                                    .frame(width: screenWidth - 40, height: 50)
+                                                    .onAppear {
+                                                        selectedSatisfaction = satisfaction
+                                                        print(selectedSatisfaction)
+                                                    }
+                                                    .onDisappear {
+                                                        showSelectedSatisfaction = false
+                                                    }
+                                                } else if let departTime = coordiRecord.departTime, let arrivalTime = coordiRecord.arrivalTime {
+
+                                                    HStack  {
+                                                        if showSelectedSatisfaction {
+                                                            
+                                                            HStack(spacing: 7) {
+                                                                
+                                                                ForEach(Satisfaction.allCases, id: \.self) { satisfaction in
+                                                                    
+                                                                    satisfaction.image
+                                                                        .onTapGesture {
+                                                                            
+                                                                            // 만족도 등록
+                                                                            Task {
+
+                                                                                let result = await coordiMainVM.setSatisfaction(coordiId: coordiRecord.coordiId, satisfaction: satisfaction)
+                                                                                
+                                                                                if result {
+                                                                                    await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
+                                                                                }
+                                                                            }
+                                                                            showSelectedSatisfaction = false
+                                                                        }
+                                                                }
+                                                            }
+                                                            .cornerRadius(40)
+                                                            .shadow(color: Color(hex: 0xEDEEFA), radius: 4)
+                                                            
+                                                        } else {
+                                                            
+                                                            Group {
+                                                                Image("addBtnWhite")
+                                                                    .resizable()
+                                                                    .frame(width: 35, height: 35)
+                                                                    .shadow(color: Color(hex: 0x5E617B), radius: 1, y: 1)
+                                                                    
+                                                                
+                                                                Text("만족도를 선택해주세요")
                                                                     .font(Font.pretendard(.bold, size: 13))
                                                                     .foregroundStyle(.main)
                                                             }
-  
-                                                        }
-                                                        .onTapGesture {
-                                                            
-                                                            showSelectedSatisfaction = true
-                                                        }
-                                                        
-                                                    }
-
-                                                    Spacer()
-                                                    
-                                                    if let imageURL = coordiRecord.imageURL {
-
-                                                        KFImage(URL(string: imageURL))
-                                                            .resizable()
-                                                            .aspectRatio(1/1, contentMode: .fit)
-                                                            .frame(width: 35, height: 35)
-                                                            .onAppear {
-                                                                print("imageURL: \(imageURL)")
-                                                            }
-                                                            .cornerRadius(10)
-
-                                                    } else {
-
-                                                        Image("unselectedImage")
-                                                            .resizable()
-                                                            .aspectRatio(1/1, contentMode: .fit)
-                                                            .frame(width: 40, height: 40)
-                                                            .offset(x: 3, y: 3)
-                                                    }
-                                                    
-                                                    Menu(content: {
-
-                                                        Button {
-                                                            
-                                                        } label: {
-                                                            Text("코디 수정하기")
-                                                        }
-                                                        
-                                                        Button {
-                                                            
-                                                        } label: {
-                                                            Text("외출 시간 수정하기")
-                                                        }
-                                                        
-                                                        Button {
-                                                            
-                                                        } label: {
-                                                            Text("오늘 코디로 가져오기")
-                                                        }
-                                                        
-                                                        Button(role: .destructive) {
-                                                            
-                                                        } label: {
-                                                            Text("코디 삭제하기")
-                                                        }
-
-                                                    }, label: {
-                                                        Image(systemName: "ellipsis")
-                                                            .frame(width:24, height: 24)
-                                                            .rotationEffect(.degrees(90))
-                                                            .foregroundColor(.gray)
-                                                            .clipShape(Circle())
-                                                    })
-                                                }
-                                                .frame(width: screenWidth - 40, height: 50)
-                                                .onAppear {
-                                                    selectedSatisfaction = satisfaction
-                                                    print(selectedSatisfaction)
-                                                }
-                                                .onDisappear {
-                                                    showSelectedSatisfaction = false
-                                                }
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            } else if let departTime = coordiRecord.departTime, let arrivalTime = coordiRecord.arrivalTime {
-                                                
-                                                
-                                                
-                                                HStack  {
-                                                    
-                                                    
-                                                    if showSelectedSatisfaction {
-                                                        
-                                                        HStack(spacing: 7) {
-                                                            
-                                                            ForEach(Satisfaction.allCases, id: \.self) { satisfaction in
+                                                            .onTapGesture {
                                                                 
-                                                                satisfaction.image
-                                                                    .onTapGesture {
+                                                                showSelectedSatisfaction = true
+                                                                
+                                                            }
+                                                        }
+                                                        
+                                                        Spacer()
+                                                        
+                                                        CoordiImageView(openPhoto: $openPhoto, coordiRecord: coordiRecord)
+                                                            .onChange(of: coordiImage) { image in
+                                                                
+                                                                if let imageData = coordiImage.jpegData(compressionQuality: 0.1) {
+                                                                    
+                                                                    Task {
                                                                         
-                                                                        // 만족도 등록
-                                                                        // 이거는 코디 조회 한 번 해야함
+                                                                        let result = await coordiMainVM.setCoordiImage(coordiId: coordiRecord.coordiId, image: imageData)
                                                                         
-                                                                        // 이 코드가 가능한 건지는 모르겠음
-                                                                        //coordiRecord.satisfaction = satisfaction
-                                                                        // 만족도 저장 API가 성공하면 이 코드 실행
-                                                                        selectedSatisfaction = satisfaction
-                                                                        print(selectedSatisfaction)
-                                                                        showSelectedSatisfaction = false
-                                                                        // 만족도 저장 API
+                                                                        print("이미지 변경: \(result)")
+                                                                        
+                                                                        if result {
+                                                                            
+                                                                            await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
+                                                                        }
+                                                                        
                                                                     }
+                                                                    
+                                                                }
                                                             }
-                                                        }
-                                                        .cornerRadius(40)
-                                                        .shadow(color: Color(hex: 0xEDEEFA), radius: 4)
                                                         
-                                                    } else {
-                                                        
-                                                        Group {
-                                                            Image("addBtnWhite")
-                                                                .resizable()
-                                                                .frame(width: 35, height: 35)
-                                                                .shadow(color: Color(hex: 0x5E617B), radius: 1, y: 1)
+                                                        Menu(content: {
+
+                                                            Button {
                                                                 
+                                                            } label: {
+                                                                Text("코디 수정하기")
+                                                            }
                                                             
-                                                            Text("만족도를 선택해주세요")
+                                                            Button {
+                                                                
+                                                            } label: {
+                                                                Text("외출 시간 수정하기")
+                                                            }
+                                                            
+                                                            Button {
+                                                                
+                                                            } label: {
+                                                                Text("오늘 코디로 가져오기")
+                                                            }
+                                                            
+                                                            Button(role: .destructive) {
+                                                                
+                                                                showCoordiDeleteAlert = true
+                                                                willDeleteCoordiId = coordiRecord.coordiId
+                                                                
+                                                            } label: {
+                                                                Text("코디 삭제하기")
+                                                            }
+
+                                                        }, label: {
+                                                            Image(systemName: "ellipsis")
+                                                                .frame(width:24, height: 24)
+                                                                .rotationEffect(.degrees(90))
+                                                                .foregroundColor(.gray)
+                                                                .clipShape(Circle())
+                                                        })
+                                                    }
+                                                    .frame(width: screenWidth - 40, height: 50)
+                                                    .onDisappear {
+                                                        showSelectedSatisfaction = false
+                                                    }
+                                                    
+                                                } else if coordiRecord.clothesList != [] {
+                                                    
+                                                    if isDatePast(year: coordiRecord.year, month: coordiRecord.month, day: coordiRecord.day) {
+                                                        
+                                                        HStack {
+                                                            Circle()
+                                                                .frame(width: 25, height: 25)
+                                                                .foregroundStyle(.white)
+                                                                .shadow(color: Color(hex: 0x5E617B), radius: 1, y: 1)
+                                                            
+                                                            Text("외출 시간을 먼저 등록해주세요")
                                                                 .font(Font.pretendard(.bold, size: 13))
                                                                 .foregroundStyle(.main)
-                                                        }
-                                                        .onTapGesture {
+                                                                .frame(width: 175, alignment: .leading)
                                                             
-                                                            showSelectedSatisfaction = true
                                                             
+                                                            Spacer()
+                                                            
+                                                            CoordiImageView(openPhoto: $openPhoto, coordiRecord: coordiRecord)
+                                                                .onChange(of: coordiImage) { image in
+                                                                    
+                                                                    if let imageData = coordiImage.jpegData(compressionQuality: 0.1) {
+                                                                        
+                                                                        Task {
+                                                                            
+                                                                            let result = await coordiMainVM.setCoordiImage(coordiId: coordiRecord.coordiId, image: imageData)
+                                                                            
+                                                                            print("이미지 변경: \(result)")
+                                                                            
+                                                                            if result {
+                                                                                
+                                                                                await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
+                                                                            }
+                                                                            
+                                                                        }
+                                                                        
+                                                                    }
+                                                                }
+                                                            
+                                                            Menu(content: {
+
+                                                                Button {
+                                                                    
+                                                                } label: {
+                                                                    Text("코디 수정하기")
+                                                                }
+                                                                
+                                                                Button {
+                                                                    
+                                                                } label: {
+                                                                    Text("외출 시간 등록하기")
+                                                                }
+                                                                
+                                                                Button {
+                                                                    
+                                                                } label: {
+                                                                    Text("오늘 코디로 가져오기")
+                                                                }
+                                                                
+                                                                Button(role: .destructive) {
+                                                                    
+                                                                    showCoordiDeleteAlert = true
+                                                                    willDeleteCoordiId = coordiRecord.coordiId
+                                                                    
+                                                                } label: {
+                                                                    Text("코디 삭제하기")
+                                                                }
+
+                                                            }, label: {
+                                                                Image(systemName: "ellipsis")
+                                                                    .frame(width:24, height: 24)
+                                                                    .rotationEffect(.degrees(90))
+                                                                    .foregroundColor(.gray)
+                                                                    .clipShape(Circle())
+                                                            })
+                                                        } //Group
+    //                                                    .offset(y: -8)
+                                                        .frame(width: screenWidth - 40, height: 50)
+                                                    } else {
+                                                        
+                                                        HStack {
+                                                            Circle()
+                                                                .frame(width: 25, height: 25)
+                                                                .foregroundStyle(.white)
+                                                                .shadow(color: Color(hex: 0x5E617B), radius: 1, y: 1)
+                                                            
+                                                            Text("아직 만족도를 등록할 수 없어요")
+                                                                .font(Font.pretendard(.bold, size: 13))
+                                                                .foregroundStyle(.main)
+                                                                .frame(width: 175, alignment: .leading)
+                                                            
+                                                            
+                                                            Spacer()
+                                                            
+                                                            Menu(content: {
+
+                                                                Button {
+                                                                    
+                                                                } label: {
+                                                                    Text("코디 수정하기")
+                                                                }
+                                                                
+                                                                Button(role: .destructive) {
+                                                                    
+                                                                    showCoordiDeleteAlert = true
+                                                                    willDeleteCoordiId = coordiRecord.coordiId
+                                                                    
+                                                                } label: {
+                                                                    Text("코디 삭제하기")
+                                                                }
+
+                                                            }, label: {
+                                                                Image(systemName: "ellipsis")
+                                                                    .frame(width:24, height: 24)
+                                                                    .rotationEffect(.degrees(90))
+                                                                    .foregroundColor(.gray)
+                                                                    .clipShape(Circle())
+                                                            })
                                                         }
-                                                        
-                                                        
+
+                                                        .frame(width: screenWidth - 40, height: 50)
                                                     }
+                                                     
+                                                }
+                                            } else {
+                                                
+                                                HStack {
+                                                    Circle()
+                                                        .frame(width: 25, height: 25)
+                                                        .foregroundStyle(.white)
+                                                        .shadow(color: Color(hex: 0x5E617B), radius: 1, y: 1)
+
+                                                    Text("코디를 먼저 등록해주세요")
+                                                        .font(Font.pretendard(.bold, size: 13))
+                                                        .foregroundStyle(.main)
                                                     
                                                     Spacer()
-                                                    
-                                                    if let imageURL = coordiRecord.imageURL {
-
-                                                        KFImage(URL(string: imageURL))
-                                                            .resizable()
-                                                            .aspectRatio(1/1, contentMode: .fit)
-                                                            .frame(width: 35, height: 35)
-                                                            .onAppear {
-                                                                print("imageURL: \(imageURL)")
-                                                            }
-                                                            .cornerRadius(10)
-
-                                                    } else {
-
-                                                        Image("unselectedImage")
-                                                            .resizable()
-                                                            .aspectRatio(1/1, contentMode: .fit)
-                                                            .frame(width: 40, height: 40)
-                                                            .offset(x: 3, y: 3)
-                                                    }
-                                                    
-                                                    Menu(content: {
-
-                                                        Button {
-                                                            
-                                                        } label: {
-                                                            Text("코디 수정하기")
-                                                        }
-                                                        
-                                                        Button {
-                                                            
-                                                        } label: {
-                                                            Text("외출 시간 수정하기")
-                                                        }
-                                                        
-                                                        Button {
-                                                            
-                                                        } label: {
-                                                            Text("오늘 코디로 가져오기")
-                                                        }
-                                                        
-                                                        Button(role: .destructive) {
-                                                            
-                                                        } label: {
-                                                            Text("코디 삭제하기")
-                                                        }
-
-                                                    }, label: {
-                                                        Image(systemName: "ellipsis")
-                                                            .frame(width:24, height: 24)
-                                                            .rotationEffect(.degrees(90))
-                                                            .foregroundColor(.gray)
-                                                            .clipShape(Circle())
-                                                    })
                                                 }
                                                 .frame(width: screenWidth - 40, height: 50)
-                                                .onDisappear {
-                                                    showSelectedSatisfaction = false
-                                                }
                                                 
-                                            } else if coordiRecord.clothesList != [] {
                                                 
-                                                if isDatePast(year: coordiRecord.year, month: coordiRecord.month, day: coordiRecord.day) {
+                                            }
+                                            
+                                        } // HStack
+                                        .frame(width: screenWidth * 0.9)
+                                        
+                                        TabView(selection: $selectedDays) {
+                                            
+                                            if let coordiRecord = coordiMainVM.coordiRecord.first(where: {$0.year == selectedYear && $0.month == selectedMonth && $0.day == day.day}) {
+                                                
+                                                ScrollView(showsIndicators: false) {
                                                     
-                                                    HStack {
-                                                        Circle()
-                                                            .frame(width: 25, height: 25)
-                                                            .foregroundStyle(.white)
-                                                            .shadow(color: Color(hex: 0x5E617B), radius: 1, y: 1)
+                                                    ForEach(coordiRecord.clothesList, id: \.self) { cloth in
                                                         
-                                                        Text("외출 시간을 먼저 등록해주세요")
-                                                            .font(Font.pretendard(.bold, size: 13))
-                                                            .foregroundStyle(.main)
-                                                            .frame(width: 175, alignment: .leading)
-                                                        
-                                                        
-                                                        Spacer()
-                                                        
-                                                        if let imageURL = coordiRecord.imageURL {
-
-                                                            KFImage(URL(string: imageURL))
-                                                                .resizable()
-                                                                .aspectRatio(1/1, contentMode: .fit)
-                                                                .frame(width: 35, height: 35)
-                                                                .onAppear {
-                                                                    print("imageURL: \(imageURL)")
-                                                                }
-                                                                .cornerRadius(10)
-
-                                                        } else {
-
-                                                            Image("unselectedImage")
-                                                                .resizable()
-                                                                .aspectRatio(1/1, contentMode: .fit)
-                                                                .frame(width: 40, height: 40)
-                                                                .offset(x: 3, y: 3)
-                                                        }
-                                                        
-                                                        Menu(content: {
-
-                                                            Button {
-                                                                
-                                                            } label: {
-                                                                Text("코디 수정하기")
-                                                            }
-                                                            
-                                                            Button(role: .destructive) {
-                                                                
-                                                            } label: {
-                                                                Text("코디 삭제하기")
-                                                            }
-
-                                                        }, label: {
-                                                            Image(systemName: "ellipsis")
-                                                                .frame(width:24, height: 24)
-                                                                .rotationEffect(.degrees(90))
-                                                                .foregroundColor(.gray)
-                                                                .clipShape(Circle())
-                                                        })
-                                                    } //Group
-//                                                    .offset(y: -8)
-                                                    .frame(width: screenWidth - 40, height: 50)
-                                                    
-                                                    
-                                                    
-                                                    
-                                                } else {
-                                                    
-                                                    HStack {
-                                                        Circle()
-                                                            .frame(width: 25, height: 25)
-                                                            .foregroundStyle(.white)
-                                                            .shadow(color: Color(hex: 0x5E617B), radius: 1, y: 1)
-                                                        
-                                                        Text("아직 만족도를 등록할 수 없어요")
-                                                            .font(Font.pretendard(.bold, size: 13))
-                                                            .foregroundStyle(.main)
-                                                            .frame(width: 175, alignment: .leading)
-                                                        
-                                                        
-                                                        Spacer()
-                                                        
-                                                        Menu(content: {
-
-                                                            Button {
-                                                                
-                                                            } label: {
-                                                                Text("코디 수정하기")
-                                                            }
-                                                            
-                                                            Button(role: .destructive) {
-                                                                
-                                                            } label: {
-                                                                Text("코디 삭제하기")
-                                                            }
-
-                                                        }, label: {
-                                                            Image(systemName: "ellipsis")
-                                                                .frame(width:24, height: 24)
-                                                                .rotationEffect(.degrees(90))
-                                                                .foregroundColor(.gray)
-                                                                .clipShape(Circle())
-                                                        })
+                                                        ClothSelectedComponent(category: cloth.category, clothName: cloth.name, clothTag: cloth.tag, clothThickness: cloth.thickness ?? nil, width: screenWidth - 50)
+                                                
                                                     }
-//                                                    .padding(.top, 7)
-                                                    .frame(width: screenWidth - 40, height: 50)
-                                                    
-                                                    
-                                                    
                                                 }
-
+                                                .tag(coordiRecord.day)
+                                                .padding(.bottom, screenHeight / 10)
                                                 
-                                                                                                
-                                            }
-                                            
-                                            
-                                        } else {
-                                            
-                                            HStack {
-                                                Circle()
-                                                    .frame(width: 25, height: 25)
-                                                    .foregroundStyle(.white)
-                                                    .shadow(color: Color(hex: 0x5E617B), radius: 1, y: 1)
-
-                                                Text("코디를 먼저 등록해주세요")
-                                                    .font(Font.pretendard(.bold, size: 13))
-                                                    .foregroundStyle(.main)
+                                            } else {
                                                 
-                                                Spacer()
-                                            }
-                                            .frame(width: screenWidth - 40, height: 50)
-                                            
-                                            
-                                        }
-                                        
-                                    } // HStack
-                                    .frame(width: screenWidth * 0.9)
-                                    
-                                    TabView(selection: $selectedDays) {
-                                        
-                                        if let coordiRecord = coordiMainVM.coordiRecord.first(where: {$0.year == selectedYear && $0.month == selectedMonth && $0.day == day.day}) {
-                                            
-                                            ScrollView(showsIndicators: false) {
-                                                
-                                                ForEach(coordiRecord.clothesList, id: \.self) { cloth in
+                                                VStack {
                                                     
-                                                    ClothSelectedComponent(category: cloth.category, clothName: cloth.name, clothTag: cloth.tag, clothThickness: cloth.thickness ?? nil, width: screenWidth - 50)
+                                                    // 나의 코디 추가하기 버튼
+                                                    Image("addCoordiBtn")
+                                                        .onTapGesture {
+                                                            
+                                                            if isDatePast(year: selectedYear, month: selectedMonth, day: selectedDays) {
+                                                                
+                                                                isAddCoordiRecordSheetPresented = true
+                                                                
+                                                            } else {
+                                                                isAddCoordiPlanSheetPresented = true
+                                                            }
+                                                            
+                                                        }
                                                     
+                                                    Spacer()
                                                 }
-                                                
+                                                .tag(day.day)
                                                 
                                             }
-                                            .tag(coordiRecord.day)
-                                            
-                                        } else {
-                                            
-                                            VStack {
-                                                
-                                                // 나의 코디 추가하기 버튼
-                                                Image("addCoordiBtn")
-                                                
-                                                Spacer()
-                                            }
-                                            .tag(day.day)
-                                            
+      
                                         }
-  
+                                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                                        .animation(.default, value: selectedDays)
+                                        
                                     }
-                                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                                    .animation(.default, value: selectedDays)
-                                    
-                                }
-                            
-                            
-                            
-                        } // ForEach
-                        
-                        
-                        
-                        
-                        
-                    } // VStack
+                   
+                            } // ForEach
+           
+                        } // VStack
+     
+                    }
                     
-                    
-                    
+                } // GeometryReader
+
+                if showCoordiDeleteAlert {
+                    AlertComponent(wholeVM: _wholeVM, showAlert: $showCoordiDeleteAlert, alertTitle: "코디 삭제", alertContent: "삭제하면 취소할 수 없습니다. \n정말로 삭제하시겠습니까?", rightBtnTitle: "확인") {
+                        
+                        Task {
+                            let result = await coordiMainVM.deleteCoordi(coordi: willDeleteCoordiId)
+                            
+                            if result {
+                                await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
+                            }
+                        }
+                        
+                    }
                 }
-                
-            }
-            
-            
-            
+            } // ZStack
+
+        } // NavigationStack
+        .sheet(isPresented: $openPhoto, content: {
+            ImagePicker(sourceType: .photoLibrary, selectedImage: $coordiImage)
+        })
+        .sheet(isPresented: $isAddCoordiRecordSheetPresented) {
+            AddCoordiRecordView(isAddCoordiRecordSheetPresented: $isAddCoordiRecordSheetPresented)
+        }
+        .sheet(isPresented: $isAddCoordiPlanSheetPresented) {
+            AddCoordiPlanView(isAddCoordiPlanSheetPresented: $isAddCoordiPlanSheetPresented)
         }
         .onAppear {
             
@@ -608,11 +660,11 @@ struct CoordiMainView: View {
                     .content.offset(x: -CGFloat(currentIndex) * geometry.size.width / 5)
                     .gesture(
                         DragGesture().onEnded { value in
-                            let dragThreshold = geometry.size.width / 5 // Adjusting swipe sensitivity
+                            let dragThreshold = geometry.size.width / 5
                             if value.translation.width < -dragThreshold {
                                 
                                 withAnimation(.easeInOut(duration: 0.2)) {
-                                    if currentIndex < month.count - 3 { // Ensure we do not swipe beyond the available items
+                                    if currentIndex < month.count - 3 {
                                         currentIndex += 1
                                         selectedMonth += 1
                                     }
@@ -621,7 +673,7 @@ struct CoordiMainView: View {
                             } else if value.translation.width > dragThreshold {
                                 
                                 withAnimation(.easeInOut(duration: 0.2)) {
-                                    if currentIndex > 0 { // Ensure we do not swipe before the first item
+                                    if currentIndex > 0 {
                                         currentIndex -= 1
                                         selectedMonth -= 1
                                     }
@@ -650,14 +702,24 @@ struct CoordiMainView: View {
                                 
                                 if let coordiRecord = coordiMainVM.coordiRecord.first(where: {$0.year == selectedYear && $0.month == selectedMonth && $0.day == day.day}) {
                                     
-                                    if let satisfaction = coordiRecord.satisfaction {
+                                    if isDatePast(year: coordiRecord.year, month: coordiRecord.month, day: coordiRecord.day) {
                                         
-                                        Image("doneSatisfaction")
+                                        if let satisfaction = coordiRecord.satisfaction {
+                            
+                                            Image("doneSatisfaction")
+                                        } else {
+                                            
+                                            Image("notDoneSatisfaction")
+                                        }
                                         
                                     } else {
                                         
-                                        Image("notDoneSatisfaction")
+                                        if coordiRecord.clothesList != [] {
+                                            Image("doneSatisfaction")
+                                        }
                                     }
+                                    
+                                    
                                 }
                                 
                             }
@@ -737,13 +799,9 @@ struct CoordiMainView: View {
                                     }
                                     
                                 }
-                                
-                                
-                                
+   
                             }
-                            
-                            
-                            
+      
                         }
                         
                     }
@@ -806,7 +864,7 @@ struct CoordiMainView: View {
             case 7:
                 return "Sat"
             default:
-                return "N/A"  // In case of an error
+                return "N/A"
             }
         }
     

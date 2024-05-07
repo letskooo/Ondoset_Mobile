@@ -8,7 +8,7 @@
 import SwiftUI
 import Kingfisher
 
-struct CooriImageView: View {
+struct CoordiImageView: View {
     
     @Binding var openPhoto: Bool
     var coordiRecord: CoordiRecord
