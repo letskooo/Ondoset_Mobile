@@ -18,9 +18,9 @@ final class CoordiRepository {
     }
     
     // 만족도 등록/수정
-    func setSatisfaction(coordiId: Int) async -> SetSatisfactionResponseDTO? {
+    func setSatisfaction(coordiId: Int, setSatisfactionDTO: SetSatisfactionRequestDTO) async -> SetSatisfactionResponseDTO? {
         
-        return await APIManager.shared.performRequest(endPoint: CoordiEndPoint.setSatisfaction(coordiId: coordiId))
+        return await APIManager.shared.performRequest(endPoint: CoordiEndPoint.setSatisfaction(coordiId: coordiId, data: setSatisfactionDTO))
     }
     
     // 외출시간 등록/수정
@@ -48,9 +48,9 @@ final class CoordiRepository {
     }
     
     // 코디 계획 등록
-    func setCoordiPlan(setCoordiPlanDTO: SetCoordiPlanRequestDTO) async -> SetCoordiPlanResponseDTO? {
+    func setCoordiPlan(addType: String, setCoordiPlanDTO: SetCoordiPlanRequestDTO) async -> SetCoordiPlanResponseDTO? {
         
-        return await APIManager.shared.performRequest(endPoint: CoordiEndPoint.setCoordiPlan(data: setCoordiPlanDTO))
+        return await APIManager.shared.performRequest(endPoint: CoordiEndPoint.setCoordiPlan(addType: addType, data: setCoordiPlanDTO))
     }
     
     // 과거 코디 기록 등록

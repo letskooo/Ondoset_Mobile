@@ -11,12 +11,12 @@ import Alamofire
 enum CoordiEndPoint {
     
     case getCoordiRecord(data: GetCoordiRecordRequestDTO)               // 코디 기록/계획 조회
-    case setSatisfaction(coordiId: Int)                                 // 만족도 등록/수정
+    case setSatisfaction(coordiId: Int, data: SetSatisfactionRequestDTO)                                 // 만족도 등록/수정
     case setCoordiTime(coordiId: Int, data: SetCoordiTimeRequestDTO)    // 외출시간 등록/수정
     case putCoordi(coordiId: Int, data: PutCoordiRequestDTO)            // 코디 수정
     case deleteCoordi(coordiId: Int)                                    // 코디 삭제
     case setCoordiImage(coordiId: Int, image: Data)                     // 코디 이미지 등록/수정
-    case setCoordiPlan(data: SetCoordiPlanRequestDTO)                   // 코디 계획 등록
+    case setCoordiPlan(addType: String, data: SetCoordiPlanRequestDTO)                   // 코디 계획 등록
     case setCoordiRecord(data: SetCoordiRecordRequestDTO)               // 과거 코디 기록 등록
     case getSatisfactionPred(data: GetSatisfactionPredRequestDTO)       // 만족도 예측
 }
@@ -35,7 +35,7 @@ extension CoordiEndPoint: EndPoint {
         case .getCoordiRecord:
             return ""
             
-        case .setSatisfaction(coordiId: let coordiId):
+        case .setSatisfaction(coordiId: let coordiId, data: let data):
             return "/satisfaction/\(coordiId)"
         case .setCoordiTime(coordiId: let coordiId, data: let data):
             return "/out-time/\(coordiId)"
@@ -45,12 +45,13 @@ extension CoordiEndPoint: EndPoint {
             return "/\(coordiId)"
         case .setCoordiImage(coordiId: let coordiId, image: let image):
             return "/image/\(coordiId)"
-        case .setCoordiPlan(data: let data):
-            return "/plan"
+        case .setCoordiPlan(let addType, data: let data):
+            return "/plan/\(addType)"
         case .setCoordiRecord(data: let data):
             return "/"
         case .getSatisfactionPred(data: let data):
             return "/satisfaction-pred"
+            
         }
         
     }
@@ -83,8 +84,9 @@ extension CoordiEndPoint: EndPoint {
             ]
             return .requestQueryParams(parameters: params, encoding: URLEncoding.default)
             
-        case .setSatisfaction:
-            return .requestPathVariable
+        case .setSatisfaction(coordiId: let coordiId, data: let data):
+            
+            return .requestJson(parameters: data)
             
         case .setCoordiTime(coordiId: let coordiId, data: let data):
             return .requestJson(parameters: data)
@@ -98,7 +100,7 @@ extension CoordiEndPoint: EndPoint {
         case .setCoordiImage(coordiId: let coordiId, image: let image):
             return .uploadImage(image: image)
             
-        case .setCoordiPlan(data: let data):
+        case .setCoordiPlan(addType: let addType, data: let data):
             return .requestJson(parameters: data)
             
         case .setCoordiRecord(data: let data):
@@ -106,6 +108,7 @@ extension CoordiEndPoint: EndPoint {
             
         case .getSatisfactionPred(data: let data):
             return .requestJson(parameters: data)
+            
         }
     }
     
@@ -113,7 +116,7 @@ extension CoordiEndPoint: EndPoint {
         
         switch self {
             
-        case .setCoordiTime, .putCoordi, .setCoordiPlan, .setCoordiRecord, .getSatisfactionPred:
+        case .setCoordiTime, .putCoordi, .setCoordiPlan, .setCoordiRecord, .getSatisfactionPred, .setSatisfaction:
             return ["Content-Type": "application/json"]
             
         case .setCoordiImage:
