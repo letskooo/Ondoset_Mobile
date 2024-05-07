@@ -10,9 +10,9 @@ import SwiftUI
 
 enum Thickness: String, CaseIterable {
     
-    case THIN       // 얇은
-    case NORMAL     // 적당한
-    case THICK      // 두꺼운
+    case THIN = "THIN"       // 얇은
+    case NORMAL = "NORMAL"     // 적당한
+    case THICK = "THICK"      // 두꺼운
 }
 
 extension Thickness {

@@ -25,7 +25,7 @@ struct ClothSelectedComponent: View {
     let clothTag: String
     
     // 옷 두께
-    let clothThickness: Thickness
+    let clothThickness: Thickness?
     
     // 너비
     let width: CGFloat
@@ -74,8 +74,9 @@ struct ClothSelectedComponent: View {
                             
                             ClothTagComponent(isSelected: $tagSelected, tagTitle: clothTag, category: category)
                             
-                            ThicknessTagComponent(isSelected: $tagSelected, thickness: clothThickness)
-                            
+                            if let thickness = clothThickness {
+                                ThicknessTagComponent(isSelected: $tagSelected, thickness: thickness)
+                            }
                         }
                     }
                     .padding(.leading, 5)

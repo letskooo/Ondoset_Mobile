@@ -6,14 +6,15 @@
 //
 
 import Foundation
+import SwiftUI
 
-enum Satisfaction {
+enum Satisfaction: String, CaseIterable {
     
-    case VERY_COLD  // 매우 추웠어요
-    case COLD       // 추웠어요
-    case GOOD       // 적당했어요
-    case HOT        // 더웠어요
-    case VERY_HOT   // 매우 더웠어요
+    case VERY_COLD = "VERY_COLD"  // 매우 추웠어요
+    case COLD = "COLD"       // 추웠어요
+    case GOOD = "GOOD"       // 적당했어요
+    case HOT = "HOT"        // 더웠어요
+    case VERY_HOT = "VERY_HOT"   // 매우 더웠어요
 }
 
 extension Satisfaction {
@@ -32,6 +33,30 @@ extension Satisfaction {
             return "더웠어요"
         case .VERY_HOT:
             return "매우 더웠어요"
+        }
+    }
+}
+
+extension Satisfaction {
+    
+    var image: Image {
+        
+        switch self {
+            
+        case .VERY_COLD:
+            return Image(.VERY_COLD)
+            
+        case .COLD:
+            return Image(.COLD)
+            
+        case .GOOD:
+            return Image(.GOOD)
+            
+        case .HOT:
+            return Image(.HOT)
+            
+        case .VERY_HOT:
+            return Image(.VERY_HOT)
         }
     }
 }

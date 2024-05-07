@@ -47,7 +47,7 @@ struct ClosetMainView: View {
                                     category: item.category,
                                     clothName: item.name,
                                     clothTag: item.tag,
-                                    clothThickness: item.thickness,
+                                    clothThickness: item.thickness ?? .NORMAL,
                                     width: screenWidth - 40,
                                     additionBtn: AnyView(ClothOptionButton(clothesId: item.clothesId))
                                 )

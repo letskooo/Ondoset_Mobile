@@ -54,7 +54,8 @@ struct AddOOTDView: View {
                             
                             print(ootdImage)
                             
-                            if let imageData = ootdImage.jpegData(compressionQuality: 0.7) {
+                            // MARK: 나중에 화질 구리면 0.1 -> 0.7로 수정
+                            if let imageData = ootdImage.jpegData(compressionQuality: 0.1) {
                                 addOOTDVM.ootdImage = imageData
                             }
                             
@@ -63,7 +64,8 @@ struct AddOOTDView: View {
                             
                             print(image)
 
-                            if let imageData = image.jpegData(compressionQuality: 0.7) {
+                            // MARK: 나중에 화질 구리면 0.1 -> 0.7로 수정
+                            if let imageData = image.jpegData(compressionQuality: 0.1) {
                                 addOOTDVM.ootdImage = imageData
                             }
                         }

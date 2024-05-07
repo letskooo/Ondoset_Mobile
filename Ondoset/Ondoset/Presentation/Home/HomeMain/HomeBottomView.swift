@@ -73,15 +73,15 @@ struct TodaysSetUpView: View {
     
     // property
     let setUp: [Clothes] = [
-        .init(clothesId: 0, name: "asdf", category: .ACC, tag: "asdf", thickness: .NORMAL),
-        .init(clothesId: 1, name: "zvxc", category: .OUTER, tag: "asdf", thickness: .THIN),
-        .init(clothesId: 2, name: "aㅁㄴf", category: .BOTTOM, tag: "asdf", thickness: .NORMAL),
-        .init(clothesId: 3, name: "zvxㅁ", category: .OUTER, tag: "asdf", thickness: .THIN),
-        .init(clothesId: 4, name: "asdf", category: .TOP, tag: "asdf", thickness: .THICK),
-        .init(clothesId: 5, name: "zvㅇc", category: .SHOE, tag: "asdf", thickness: .THIN),
-        .init(clothesId: 6, name: "zvxㅁㄴ", category: .OUTER, tag: "asdf", thickness: .THIN),
-        .init(clothesId: 7, name: "asdfasdfasdff", category: .TOP, tag: "asdf", thickness: .THICK),
-        .init(clothesId: 8, name: "zvㅇㄴㄹㄴㅁㅇㄹxc", category: .SHOE, tag: "asdf", thickness: .THIN),
+        .init(clothesId: 0, name: "asdf", category: .ACC, tag: "asdf", tagId: 1, thickness: .NORMAL),
+        .init(clothesId: 1, name: "zvxc", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
+        .init(clothesId: 2, name: "aㅁㄴf", category: .BOTTOM, tag: "asdf", tagId: 1, thickness: .NORMAL),
+        .init(clothesId: 3, name: "zvxㅁ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
+        .init(clothesId: 4, name: "asdf", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK),
+        .init(clothesId: 5, name: "zvㅇc", category: .SHOE, tag: "asdf", tagId: 1, thickness: .THIN),
+        .init(clothesId: 6, name: "zvxㅁㄴ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
+        .init(clothesId: 7, name: "asdfasdfasdff", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK),
+        .init(clothesId: 8, name: "zvㅇㄴㄹㄴㅁㅇㄹxc", category: .SHOE, tag: "asdf", tagId: 1, thickness: .THIN),
     ]
     
     var body: some View {
@@ -121,13 +121,13 @@ struct SetUpHistoryView: View {
         "2024.03.02"
     ]
     let setUp: [Clothes] = [
-        .init(clothesId: 0, name: "asdfadsf", category: .ACC, tag: "asdf", thickness: .NORMAL),
-        .init(clothesId: 1, name: "zvxc", category: .OUTER, tag: "asdf", thickness: .THIN),
-        .init(clothesId: 2, name: "aㅁㄴf", category: .BOTTOM, tag: "asdf", thickness: .NORMAL),
-        .init(clothesId: 3, name: "zvxㅁ", category: .OUTER, tag: "asdf", thickness: .THIN),
-        .init(clothesId: 4, name: "asdf", category: .TOP, tag: "asdf", thickness: .THICK),
-        .init(clothesId: 5, name: "zvxㅁ", category: .OUTER, tag: "asdf", thickness: .THIN),
-        .init(clothesId: 6, name: "asdf", category: .TOP, tag: "asdf", thickness: .THICK)
+        .init(clothesId: 0, name: "asdfadsf", category: .ACC, tag: "asdf", tagId: 1, thickness: .NORMAL),
+        .init(clothesId: 1, name: "zvxc", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
+        .init(clothesId: 2, name: "aㅁㄴf", category: .BOTTOM, tag: "asdf", tagId: 1, thickness: .NORMAL),
+        .init(clothesId: 3, name: "zvxㅁ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
+        .init(clothesId: 4, name: "asdf", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK),
+        .init(clothesId: 5, name: "zvxㅁ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
+        .init(clothesId: 6, name: "asdf", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK)
     ]
     
     var body: some View {
@@ -165,13 +165,13 @@ struct AIRecommendView: View {
     
     // property
     let setUp: [Clothes] = [
-        .init(clothesId: 0, name: "asdfadsf", category: .ACC, tag: "asdf", thickness: .NORMAL),
-        .init(clothesId: 1, name: "zvxc", category: .OUTER, tag: "asdf", thickness: .THIN),
-        .init(clothesId: 2, name: "aㅁㄴf", category: .BOTTOM, tag: "asdf", thickness: .NORMAL),
-        .init(clothesId: 3, name: "zvxㅁ", category: .OUTER, tag: "asdf", thickness: .THIN),
-        .init(clothesId: 4, name: "asdf", category: .TOP, tag: "asdf", thickness: .THICK),
-        .init(clothesId: 5, name: "zvxㅁ", category: .OUTER, tag: "asdf", thickness: .THIN),
-        .init(clothesId: 6, name: "asdf", category: .TOP, tag: "asdf", thickness: .THICK)
+        .init(clothesId: 0, name: "asdfadsf", category: .ACC, tag: "asdf", tagId: 1, thickness: .NORMAL),
+        .init(clothesId: 1, name: "zvxc", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
+        .init(clothesId: 2, name: "aㅁㄴf", category: .BOTTOM, tag: "asdf", tagId: 1, thickness: .NORMAL),
+        .init(clothesId: 3, name: "zvxㅁ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
+        .init(clothesId: 4, name: "asdf", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK),
+        .init(clothesId: 5, name: "zvxㅁ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
+        .init(clothesId: 6, name: "asdf", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK)
     ]
     
     var body: some View {
