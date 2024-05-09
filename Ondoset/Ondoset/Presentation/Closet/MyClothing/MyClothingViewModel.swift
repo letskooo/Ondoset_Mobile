@@ -32,13 +32,31 @@ final class MyClothingViewModel: ObservableObject {
     @Published var saveAvailable: Bool = true
     
     init(myClothing: Clothes?) {
-        self.myClothing = myClothing
+        if let myClothing = myClothing {
+            self.myClothing = myClothing
+            self.myClothigName = myClothing.name
+            self.myClothingCategory = myClothing.category
+//            self.myClothingImageData = myClothing. // TODO: 이미지 URL에서 data 페칭 필요
+            self.myClothingDetailedTag = (myClothing.tagId, myClothing.tag)
+            self.myClothingThickness = myClothing.thickness
+            // TODO: 정해진 카테고리와 태그대로 API 호출 필요
+        }
     }
     
 }
 
 // MARK: Interface Functions
 extension MyClothingViewModel {
+    func saveMyClothing() async {
+        print("저장 : 내 옷 \(PostClothRequestDTO(name: myClothigName,tagId: myClothingDetailedTag.0,thickness: myClothingThickness?.rawValue,image: myClothingImageData))")
+        let res = await clothesUseCase.postCloth(postClothDTO: .init(
+            name: myClothigName,
+            tagId: myClothingDetailedTag.0,
+            thickness: myClothingThickness?.rawValue,
+            image: myClothingImageData)
+        )
+        if let res = res, res == true { print("저장완료") }
+    }
 }
 
 // MARK: Internal Functions

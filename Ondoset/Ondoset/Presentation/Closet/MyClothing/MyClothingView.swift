@@ -70,7 +70,7 @@ struct MyClothingView: View {
                                 LazyHGrid(rows: [GridItem(.flexible()), GridItem(.flexible())], alignment: .top, spacing: 10,
                                           content: {
                                     ForEach(myClothingVM.detailedTagList, id: \.0) { tag in
-                                                  ClothTagComponent(isSelected: .constant(tag == myClothingVM.myClothingDetailedTag), tagTitle: tag.1, category: myClothingVM.myClothingCategory!)
+                                        ClothTagComponent(isSelected: .constant(tag.0 == myClothingVM.myClothingDetailedTag.0), tagTitle: tag.1, category: myClothingVM.myClothingCategory!)
                                                       .onTapGesture {
                                                           myClothingVM.myClothingDetailedTag = tag
                                                       }
@@ -105,8 +105,14 @@ struct MyClothingView: View {
                 )
                 Divider()
                 Spacer()
-                ButtonComponent(isBtnAvailable: $myClothingVM.saveAvailable, width: screenWidth-40, btnText: "저장하기", radius: 15, action: { print("저장하기")
-                    dismiss()
+                ButtonComponent(isBtnAvailable: $myClothingVM.saveAvailable, width: screenWidth-40, btnText: "저장하기", radius: 15, action: { 
+//                    print("저장하기")
+                    Task {
+                        await myClothingVM.saveMyClothing()
+                        DispatchQueue.main.async {
+                            dismiss()
+                        }
+                    }
                 })
                     .padding(.bottom, 30)
             }
