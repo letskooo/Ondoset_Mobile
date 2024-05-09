@@ -40,7 +40,7 @@ struct MyClothingView: View {
                             ),
                             inputText: $myClothingVM.myClothigName
                         )
-                    )
+                    ), myClothingVM: self.myClothingVM
                 )
                 Divider()
                 ClothingRowItemView(
@@ -59,7 +59,7 @@ struct MyClothingView: View {
                             .padding(4)
                         }
                             .scrollIndicators(.hidden)
-                ))
+                    ), myClothingVM: self.myClothingVM)
                 Divider()
                 ClothingRowItemView(
                     rowTitle: "세부 태그",
@@ -84,7 +84,7 @@ struct MyClothingView: View {
                         Text("먼저 카테고리를 선택해주세요")
                             .font(.pretendard(.medium, size: 15))
                             .foregroundStyle(.gray)
-                    )
+                    ), myClothingVM: self.myClothingVM
                 )
                 Divider()
                 ClothingRowItemView(
@@ -100,7 +100,7 @@ struct MyClothingView: View {
                         }
                             .frame(width: screenWidth-40, height: 24)
                             .padding(4)
-                    )
+                    ), myClothingVM: self.myClothingVM
                 )
                 Divider()
                 Spacer()
@@ -124,47 +124,52 @@ struct MyClothingView: View {
         }
         
     }
-}
-
-
-struct ClothingRowItemView: View {
     
-    let rowTitle: String
-    var rowSubTitle: String? = nil
-    var isAddImage: Bool = false
-    var content: AnyView
-    
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text(rowTitle)
-                        .font(.pretendard(.semibold, size: 17))
-                        .foregroundStyle(.black)
-                    if let rowSubTitle = rowSubTitle {
-                        Text(rowSubTitle)
-                            .font(.pretendard(.regular, size: 10))
-                            .foregroundStyle(.gray)
+    private struct ClothingRowItemView: View {
+        
+        
+        let rowTitle: String
+        var rowSubTitle: String? = nil
+        var isAddImage: Bool = false
+        var content: AnyView
+        let myClothingVM: MyClothingViewModel
+        
+        var body: some View {
+            HStack {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(rowTitle)
+                            .font(.pretendard(.semibold, size: 17))
+                            .foregroundStyle(.black)
+                        if let rowSubTitle = rowSubTitle {
+                            Text(rowSubTitle)
+                                .font(.pretendard(.regular, size: 10))
+                                .foregroundStyle(.gray)
+                        }
+                        Spacer()
                     }
-                    Spacer()
+                    .padding(.bottom, 4)
+                    
+                    content
                 }
-                .padding(.bottom, 4)
-                
-                content
+                if isAddImage {
+                    Spacer()
+                    Button(action: {
+                        myClothingVM
+                    }, label: {
+                        Image(.addStrokeButton)
+                            .frame(width: 72, height: 72)
+                    })
+                }
             }
-            if isAddImage {
-                Spacer()
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    Image(.addStrokeButton)
-                        .frame(width: 72, height: 72)
-                })
-            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
     }
 }
+
+
+
 #Preview {
     MyClothingView(myClothingVM: .init(myClothing: nil))
 }
