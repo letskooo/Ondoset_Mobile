@@ -127,6 +127,7 @@
 		884E60872BE2D10D00682663 /* AICoordiRecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884E60862BE2D10D00682663 /* AICoordiRecommendView.swift */; };
 		8856A02B2BD9731F00FCBFB8 /* ClothesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */; };
 		8856A02D2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */; };
+		88759D982BECEE44000E4B83 /* MyClothingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88759D972BECEE44000E4B83 /* MyClothingViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -268,6 +269,7 @@
 		884E60862BE2D10D00682663 /* AICoordiRecommendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICoordiRecommendView.swift; sourceTree = "<group>"; };
 		8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesDTO.swift; sourceTree = "<group>"; };
 		8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankDataIndicateComponent.swift; sourceTree = "<group>"; };
+		88759D972BECEE44000E4B83 /* MyClothingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyClothingViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -806,6 +808,7 @@
 			isa = PBXGroup;
 			children = (
 				882228EF2BD98D8700CFF8B9 /* MyClothingView.swift */,
+				88759D972BECEE44000E4B83 /* MyClothingViewModel.swift */,
 			);
 			path = MyClothing;
 			sourceTree = "<group>";
@@ -1013,6 +1016,7 @@
 				476EAC3F2BD2B2A1008B2E15 /* SignUpFirstView.swift in Sources */,
 				47C29DF92BC2490600E3E2B9 /* OnboardingView.swift in Sources */,
 				470579812BDBD3450009A2CF /* GetCoordiView.swift in Sources */,
+				88759D982BECEE44000E4B83 /* MyClothingViewModel.swift in Sources */,
 				474E8A692BD645AB0060E081 /* ClothSelectedComponent.swift in Sources */,
 				47E740322BD8DAF0003A71D5 /* SettingView.swift in Sources */,
 				47A922382BDF9481003234F9 /* OOTDItemViewModel.swift in Sources */,

@@ -9,13 +9,14 @@ import SwiftUI
 
 struct ClosetMainView: View {
     // MARK: States
-    @State var selectedTab: Int = 1
-    @State var presentMyClothing: Bool = false
+//    @State var selectedTab: Int = 1
+
     
     // mock data
-    @State var clothesData: [Clothes] = ClothesDTO.mockData()
+//    @State var clothesData: [Clothes] = ClothesDTO.mockData()
     
-    @State var searchText: String = ""
+//    @State var searchText: String = ""
+    @StateObject var closetMainVM: ClosetMainViewModel = .init()
     
     var body: some View {
         /// 각 탭의 메인 뷰마다 NavigationStack을 두는 것으로 설계합니다.
@@ -23,16 +24,16 @@ struct ClosetMainView: View {
         // MARK: Main View
         NavigationStack {
             VStack(alignment: .center, spacing: 0) {
-                SegmentControlComponent(selectedTab: $selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue})
+                SegmentControlComponent(selectedTab: $closetMainVM.selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue})
                     .padding(.bottom, 15)
                 
-                SearchBarComponent(searchText: $searchText, placeHolder: "등록한 옷을 검색하세요", searchAction: {
+                SearchBarComponent(searchText: $closetMainVM.searchText, placeHolder: "등록한 옷을 검색하세요", searchAction: {
                     text in
                     print(text)
                 })
                 .padding(.horizontal, 18)
                 
-                if clothesData.isEmpty {
+                if closetMainVM.presentingClothesData.isEmpty {
                     VStack(alignment: .center) {
                         Spacer()
                         BlankDataIndicateComponent(explainText: "아직 등록된 옷이 없어요\n오른쪽 아래의 옷 추가 버튼을 눌러 옷을 추가해주세요")
@@ -42,7 +43,7 @@ struct ClosetMainView: View {
                 else {
                     ScrollView {
                         LazyVStack(spacing: 16, content: {
-                            ForEach(clothesData, id: \.clothesId) { item in
+                            ForEach(closetMainVM.presentingClothesData, id: \.clothesId) { item in
                                 ClothSelectedComponent(
                                     category: item.category,
                                     clothName: item.name,
@@ -60,8 +61,7 @@ struct ClosetMainView: View {
         }
         .overlay{
             Button(action: {
-                print("add!")
-                self.presentMyClothing = true
+                self.closetMainVM.presentMyClothing = true
             }, label: {
                 ZStack {
                     Circle()
@@ -79,8 +79,8 @@ struct ClosetMainView: View {
             })
             .offset(x: 145, y: 290)
         }
-        .sheet(isPresented: $presentMyClothing) {
-            NavigationView { MyClothingView() }
+        .sheet(isPresented: $closetMainVM.presentMyClothing) {
+            NavigationView { MyClothingView(myClothingVM: .init(myClothing: closetMainVM.myClothing)) }
         }
 
     }
