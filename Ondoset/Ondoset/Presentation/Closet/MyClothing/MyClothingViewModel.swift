@@ -48,14 +48,30 @@ final class MyClothingViewModel: ObservableObject {
 // MARK: Interface Functions
 extension MyClothingViewModel {
     func saveMyClothing() async {
-        print("저장 : 내 옷 \(PostClothRequestDTO(name: myClothigName,tagId: myClothingDetailedTag.0,thickness: myClothingThickness?.rawValue,image: myClothingImageData))")
-        let res = await clothesUseCase.postCloth(postClothDTO: .init(
-            name: myClothigName,
-            tagId: myClothingDetailedTag.0,
-            thickness: myClothingThickness?.rawValue,
-            image: myClothingImageData)
-        )
-        if let res = res, res == true { print("저장완료") }
+        // 수정 케이스
+        if let myClothing = self.myClothing {
+            print("수정 : 내 옷 \(PatchClothRequestDTO(clothesId: myClothing.clothesId, name: myClothigName, tagId: myClothingDetailedTag.0, thickness: myClothingThickness?.rawValue))")
+            let res = await clothesUseCase.patchCloth(
+                patchClothDTO: .init(
+                    clothesId: myClothing.clothesId,
+                    name: myClothigName,
+                    tagId: myClothingDetailedTag.0,
+                    thickness: myClothingThickness?.rawValue
+                )
+            )
+            if let res = res, res == true { print("수정완료") }
+        } 
+        // 저장 케이스
+        else {
+            print("저장 : 내 옷 \(PostClothRequestDTO(name: myClothigName,tagId: myClothingDetailedTag.0,thickness: myClothingThickness?.rawValue,image: myClothingImageData))")
+            let res = await clothesUseCase.postCloth(postClothDTO: .init(
+                name: myClothigName,
+                tagId: myClothingDetailedTag.0,
+                thickness: myClothingThickness?.rawValue,
+                image: myClothingImageData)
+            )
+            if let res = res, res == true { print("저장완료") }
+        }
     }
 }
 
