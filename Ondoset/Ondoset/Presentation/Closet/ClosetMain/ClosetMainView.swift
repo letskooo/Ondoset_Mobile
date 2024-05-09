@@ -10,7 +10,7 @@ import SwiftUI
 struct ClosetMainView: View {
     // MARK: States
 //    @State var selectedTab: Int = 1
-    @State var presentMyClothing: Bool = false
+
     
     // mock data
 //    @State var clothesData: [Clothes] = ClothesDTO.mockData()
@@ -61,8 +61,7 @@ struct ClosetMainView: View {
         }
         .overlay{
             Button(action: {
-                print("add!")
-                self.presentMyClothing = true
+                self.closetMainVM.presentMyClothing = true
             }, label: {
                 ZStack {
                     Circle()
@@ -80,8 +79,8 @@ struct ClosetMainView: View {
             })
             .offset(x: 145, y: 290)
         }
-        .sheet(isPresented: $presentMyClothing) {
-            NavigationView { MyClothingView(myClothingVM: .init(myClothing: nil)) }
+        .sheet(isPresented: $closetMainVM.presentMyClothing) {
+            NavigationView { MyClothingView(myClothingVM: .init(myClothing: closetMainVM.myClothing)) }
         }
 
     }
