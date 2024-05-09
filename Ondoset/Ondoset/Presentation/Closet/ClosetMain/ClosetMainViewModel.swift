@@ -16,30 +16,39 @@ final class ClosetMainViewModel: ObservableObject {
     @Published var clothesData: [Clothes] = []
     
     private var clothesLastPage: Int = -1
-    
-
-    
+        
     init() {
         Task {
             await getMyAllClothes()
         }
     }
     
-    private func getMyAllClothes() async {
+    func getMyAllClothes() async {
         guard clothesLastPage != -2 else { return }
         
         if let result = await clothesUseCase.getAllClothes(lastPage: clothesLastPage) {
-            
-            self.clothesLastPage = result.lastPage
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.clothesData = result.ClothesList
-            }
-            
+            setReceivedData(clothesList: result.ClothesList, lastPage: result.lastPage)
         }
     }
     
-    private func getMyClothes(by category: Category) async {
+    func getMyClothes(by category: Category) async {
+        guard selectedTab != 0, clothesLastPage != -2 else { return }
         
+        let categoryName = Category.allCases[self.selectedTab-1].rawValue
+        
+        if let result = await clothesUseCase.getAllClothesByCategory(getAllClothesByCategoryDTO: .init(category: categoryName, lastPage: clothesLastPage)) {
+            setReceivedData(clothesList: result.clothesList, lastPage: result.lastPage)
+        }
+    }
+}
+
+// MARK: Private Only Function
+extension ClosetMainViewModel {
+    private func setReceivedData(clothesList: [Clothes], lastPage: Int) {
+        self.clothesLastPage = lastPage
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.clothesData = clothesList
+        }
     }
 }
