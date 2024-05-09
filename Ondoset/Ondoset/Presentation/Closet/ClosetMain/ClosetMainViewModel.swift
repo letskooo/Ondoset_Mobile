@@ -14,6 +14,7 @@ final class ClosetMainViewModel: ObservableObject {
     @Published var selectedTab: Int = 0 {
         // 값이 변경됨에 따라 해당 함수가 호출됩니다.
         didSet {
+            self.clothesLastPage = -1
             Task {
                 if selectedTab != 0 {
                     await getMyClothes(by: Category.allCases[selectedTab - 1])
@@ -24,8 +25,15 @@ final class ClosetMainViewModel: ObservableObject {
             }
         }
     }
-    @Published var searchText: String = ""
-    @Published var clothesData: [Clothes] = []
+    @Published var searchText: String = "" {
+        didSet { searchClothes(by: self.searchText) }
+    }
+    /// 화면에 표시되는 Data
+    @Published var presentingClothesData: [Clothes] = []
+    /// 뒤(뷰모델)에서 관리되는 Data
+    private var clothesData: [Clothes] = [] {
+        didSet { setNewPresenting() }
+    }
     
     private var clothesLastPage: Int = -1
         
@@ -38,7 +46,6 @@ final class ClosetMainViewModel: ObservableObject {
 
 // MARK: Interface Functions
 extension ClosetMainViewModel {
-    
 }
 
 // MARK: Internal Functions
@@ -66,5 +73,18 @@ extension ClosetMainViewModel {
             guard let self = self else { return }
             self.clothesData = clothesList
         }
+    }
+    
+    private func setNewPresenting() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.searchText = ""
+            self.presentingClothesData = self.clothesData
+        }
+    }
+    
+    private func searchClothes(by text: String) {
+        guard !text.isEmpty else { return }
+        self.presentingClothesData = self.clothesData.filter({ $0.name.contains(text) })
     }
 }

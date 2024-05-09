@@ -33,7 +33,7 @@ struct ClosetMainView: View {
                 })
                 .padding(.horizontal, 18)
                 
-                if closetMainVM.clothesData.isEmpty {
+                if closetMainVM.presentingClothesData.isEmpty {
                     VStack(alignment: .center) {
                         Spacer()
                         BlankDataIndicateComponent(explainText: "아직 등록된 옷이 없어요\n오른쪽 아래의 옷 추가 버튼을 눌러 옷을 추가해주세요")
@@ -43,7 +43,7 @@ struct ClosetMainView: View {
                 else {
                     ScrollView {
                         LazyVStack(spacing: 16, content: {
-                            ForEach(closetMainVM.clothesData, id: \.clothesId) { item in
+                            ForEach(closetMainVM.presentingClothesData, id: \.clothesId) { item in
                                 ClothSelectedComponent(
                                     category: item.category,
                                     clothName: item.name,
