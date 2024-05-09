@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import PhotosUI
+import _PhotosUI_SwiftUI
 
 final class MyClothingViewModel: ObservableObject {
     
@@ -14,6 +16,16 @@ final class MyClothingViewModel: ObservableObject {
     @Published var myClothing: Clothes? = nil
     @Published var myClothigName: String = ""
     @Published var myClothingCategory: Category? = nil
+    @Published var myClothingImage: PhotosPickerItem? = nil {
+        didSet {
+            Task {
+                if let data = try? await myClothingImage?.loadTransferable(type: Data.self) {
+                    self.setImageData(with: data)
+                }
+            }
+        }
+    }
+    @Published var myClothingImageData: Data? = nil
     @Published var detailedTagList: [(Int, String)] = []
     @Published var myClothingDetailedTag: (Int, String) = (-1, "")
     @Published var myClothingThickness: Thickness? = nil
@@ -31,4 +43,10 @@ extension MyClothingViewModel {
 
 // MARK: Internal Functions
 extension MyClothingViewModel {
+    /// 선택한 이미지 데이터를 세팅합니다
+    private func setImageData(with data: Data) {
+        DispatchQueue.main.async {
+            self.myClothingImageData = data
+        }
+    }
 }

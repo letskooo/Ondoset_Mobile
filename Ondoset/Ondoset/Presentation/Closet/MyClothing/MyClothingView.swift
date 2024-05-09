@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import _PhotosUI_SwiftUI
 
 struct MyClothingView: View {
     // MARK: States
@@ -132,7 +133,7 @@ struct MyClothingView: View {
         var rowSubTitle: String? = nil
         var isAddImage: Bool = false
         var content: AnyView
-        let myClothingVM: MyClothingViewModel
+        @State var myClothingVM: MyClothingViewModel
         
         var body: some View {
             HStack {
@@ -154,11 +155,24 @@ struct MyClothingView: View {
                 }
                 if isAddImage {
                     Spacer()
-                    Button(action: {
-                        myClothingVM
-                    }, label: {
-                        Image(.addStrokeButton)
-                            .frame(width: 72, height: 72)
+                    PhotosPicker(
+                        selection: $myClothingVM.myClothingImage,
+                        matching: .images,
+                        photoLibrary: .shared(),
+                        label: {
+                            if let data = myClothingVM.myClothingImageData {
+                                Image(uiImage: .init(data: data) ?? .addStrokeButton)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 72, height: 72)
+                                    .clipShape(.rect(cornerRadii: .init(topLeading: 10, bottomLeading: 10, bottomTrailing: 10, topTrailing: 10)))
+                            }
+                            else {
+                                Image(.addStrokeButton)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 72, height: 72)
+                            }
                     })
                 }
             }
