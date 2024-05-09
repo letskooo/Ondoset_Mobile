@@ -15,7 +15,9 @@ final class MyClothingViewModel: ObservableObject {
     
     @Published var myClothing: Clothes? = nil
     @Published var myClothigName: String = ""
-    @Published var myClothingCategory: Category? = nil
+    @Published var myClothingCategory: Category? = nil {
+        didSet { self.updateTagList() }
+    }
     @Published var myClothingImage: PhotosPickerItem? = nil {
         didSet {
             Task {
@@ -42,8 +44,8 @@ final class MyClothingViewModel: ObservableObject {
             self.myClothingDetailedTag = Tag(tag: myClothing.tag, tagId: myClothing.tagId)
             self.myClothingThickness = myClothing.thickness
             // TODO: 정해진 카테고리와 태그대로 API 호출 필요
-            Task { await self.getTagList() } // 태그 가져오기
         }
+        Task { await self.getTagList() } // 태그 가져오기
     }
     
 }
@@ -84,6 +86,27 @@ extension MyClothingViewModel {
     private func setImageData(with data: Data) {
         DispatchQueue.main.async {
             self.myClothingImageData = data
+        }
+    }
+    
+    /// 선택한 카테고리에 해당하는 태그 리스트로 업데이트합니다
+    private func updateTagList() {
+        DispatchQueue.main.async {
+            switch self.myClothingCategory {
+                
+            case .TOP:
+                self.detailedTagList = self.tagList?.top ?? []
+            case .BOTTOM:
+                self.detailedTagList = self.tagList?.bottom ?? []
+            case .OUTER:
+                self.detailedTagList = self.tagList?.outer ?? []
+            case .SHOE:
+                self.detailedTagList = self.tagList?.shoe ?? []
+            case .ACC:
+                self.detailedTagList = self.tagList?.acc ?? []
+            case .none:
+                self.detailedTagList = []
+            }
         }
     }
     
