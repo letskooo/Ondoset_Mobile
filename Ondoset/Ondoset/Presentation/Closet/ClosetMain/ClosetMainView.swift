@@ -81,7 +81,7 @@ struct ClosetMainView: View {
             .offset(x: 145, y: 290)
         }
         .sheet(isPresented: $presentMyClothing) {
-            NavigationView { MyClothingView() }
+            NavigationView { MyClothingView(myClothingVM: .init(myClothing: nil)) }
         }
 
     }

@@ -19,6 +19,10 @@ final class MyClothingViewModel: ObservableObject {
     @Published var myClothingThickness: Thickness? = nil
     @Published var saveAvailable: Bool = true
     
+    init(myClothing: Clothes?) {
+        self.myClothing = myClothing
+    }
+    
 }
 
 // MARK: Interface Functions

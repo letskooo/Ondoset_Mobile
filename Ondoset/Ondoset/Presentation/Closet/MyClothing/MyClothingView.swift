@@ -9,15 +9,16 @@ import SwiftUI
 
 struct MyClothingView: View {
     // MARK: States
-    @State var myClothing:Clothes? = nil
-    @State var myClothingName: String = ""
-    @State var myClothingCategory: Category? = nil
-    @State var DetailedTagList: [(Int, String)] = [
-        (0, "asdf"), (1, "qwer"), (2, "zxcv"), (3, "cvbn"), (4, "cvbnm"), (5, "cvbnm"), (6, "cvbnm")
-    ]
-    @State var myClothingDetailedTag: (Int, String) = (-1, "")
-    @State var myClothingThickness: Thickness? = nil
-    @State var saveAvailable: Bool = true
+//    @State var myClothing:Clothes? = nil
+//    @State var myClothingName: String = ""
+//    @State var myClothingCategory: Category? = nil
+//    @State var DetailedTagList: [(Int, String)] = [
+//        (0, "asdf"), (1, "qwer"), (2, "zxcv"), (3, "cvbn"), (4, "cvbnm"), (5, "cvbnm"), (6, "cvbnm")
+//    ]
+//    @State var myClothingDetailedTag: (Int, String) = (-1, "")
+//    @State var myClothingThickness: Thickness? = nil
+//    @State var saveAvailable: Bool = true
+    @StateObject var myClothingVM: MyClothingViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -37,7 +38,7 @@ struct MyClothingView: View {
                                 .semibold,
                                 size: 10
                             ),
-                            inputText: $myClothingName
+                            inputText: $myClothingVM.myClothigName
                         )
                     )
                 )
@@ -48,9 +49,9 @@ struct MyClothingView: View {
                         ScrollView(.horizontal) {
                             LazyHStack(content: {
                                 ForEach(Category.allCases, id: \.self) { item in
-                                    ClothTagComponent(isSelected: .constant(item == myClothingCategory), tagTitle: item.title, category: item)
+                                    ClothTagComponent(isSelected: .constant(item == myClothingVM.myClothingCategory), tagTitle: item.title, category: item)
                                         .onTapGesture {
-                                            myClothingCategory = item
+                                            myClothingVM.myClothingCategory = item
                                         }
                                 }
                             })
@@ -62,15 +63,15 @@ struct MyClothingView: View {
                 Divider()
                 ClothingRowItemView(
                     rowTitle: "세부 태그",
-                    content: myClothingCategory != nil
+                    content: myClothingVM.myClothingCategory != nil
                         ? AnyView(
                             ScrollView(.horizontal) {
                                 LazyHGrid(rows: [GridItem(.flexible()), GridItem(.flexible())], alignment: .top, spacing: 10,
                                           content: {
-                                              ForEach(DetailedTagList, id: \.0) { tag in
-                                                  ClothTagComponent(isSelected: .constant(tag == myClothingDetailedTag), tagTitle: tag.1, category: myClothingCategory!)
+                                    ForEach(myClothingVM.detailedTagList, id: \.0) { tag in
+                                                  ClothTagComponent(isSelected: .constant(tag == myClothingVM.myClothingDetailedTag), tagTitle: tag.1, category: myClothingVM.myClothingCategory!)
                                                       .onTapGesture {
-                                                          myClothingDetailedTag = tag
+                                                          myClothingVM.myClothingDetailedTag = tag
                                                       }
                                               }
                                 })
@@ -91,9 +92,9 @@ struct MyClothingView: View {
                     content: AnyView(
                         LazyHStack(alignment: .center, spacing: 40) {
                             ForEach(Thickness.allCases, id: \.self) { item in
-                                ThicknessTagComponent(isSelected: .constant(item == myClothingThickness), thickness: item)
+                                ThicknessTagComponent(isSelected: .constant(item == myClothingVM.myClothingThickness), thickness: item)
                                     .onTapGesture {
-                                        myClothingThickness = item
+                                        myClothingVM.myClothingThickness = item
                                     }
                             }
                         }
@@ -103,13 +104,13 @@ struct MyClothingView: View {
                 )
                 Divider()
                 Spacer()
-                ButtonComponent(isBtnAvailable: $saveAvailable, width: screenWidth-40, btnText: "저장하기", radius: 15, action: { print("저장하기")
+                ButtonComponent(isBtnAvailable: $myClothingVM.saveAvailable, width: screenWidth-40, btnText: "저장하기", radius: 15, action: { print("저장하기")
                     dismiss()
                 })
                     .padding(.bottom, 30)
             }
         }
-        .navigationTitle("나의 아이템 \(myClothing != nil ? "수정하기" : "추가하기")")
+        .navigationTitle("나의 아이템 \(myClothingVM.myClothing != nil ? "수정하기" : "추가하기")")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -165,5 +166,5 @@ struct ClothingRowItemView: View {
     }
 }
 #Preview {
-    MyClothingView()
+    MyClothingView(myClothingVM: .init(myClothing: nil))
 }
