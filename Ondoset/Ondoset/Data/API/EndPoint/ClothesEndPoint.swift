@@ -181,19 +181,18 @@ extension ClothesEndPoint: EndPoint {
             
         case .postCloth(dto: let dto):
             
-            let body = ["name": dto.name, "tagId": dto.tagId, "thickness": dto.thickness ?? nil] as [String : Any]
-            
+            let body = ["name": dto.name, "tagId": dto.tagId, "thickness": dto.thickness ?? ""] as [String : Any]
             return .uploadImagesWithData(image: dto.image ?? nil, data: body)
             
         case .putCloth(dto: let dto):
             
-            let body = ["name": dto.name, "tagId": dto.tagId, "thickness": dto.thickness ?? nil] as [String : Any]
+            let body = ["name": dto.name, "tagId": dto.tagId, "thickness": dto.thickness ?? ""] as [String : Any]
             
             return .uploadImagesWithData(image: dto.image, data: body)
             
         case .patchCloth(dto: let dto):
             
-            let body = ["name": dto.name, "tagId": dto.tagId, "thickness": dto.thickness ?? nil] as [String : Any]
+            let body = ["name": dto.name, "tagId": dto.tagId, "thickness": dto.thickness ?? ""] as [String : Any]
             
             return .uploadImagesWithData(image: nil, data: body)
             
