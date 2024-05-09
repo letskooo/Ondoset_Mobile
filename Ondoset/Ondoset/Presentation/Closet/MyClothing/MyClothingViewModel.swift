@@ -26,10 +26,12 @@ final class MyClothingViewModel: ObservableObject {
         }
     }
     @Published var myClothingImageData: Data? = nil
-    @Published var detailedTagList: [(Int, String)] = []
-    @Published var myClothingDetailedTag: (Int, String) = (-1, "")
+    @Published var detailedTagList: [Tag] = []
+    @Published var myClothingDetailedTag: Tag = Tag(tag: "", tagId: -1) // (-1, "")
     @Published var myClothingThickness: Thickness? = nil
     @Published var saveAvailable: Bool = true
+    
+    private var tagList: AllTags?
     
     init(myClothing: Clothes?) {
         if let myClothing = myClothing {
@@ -37,9 +39,10 @@ final class MyClothingViewModel: ObservableObject {
             self.myClothigName = myClothing.name
             self.myClothingCategory = myClothing.category
 //            self.myClothingImageData = myClothing. // TODO: 이미지 URL에서 data 페칭 필요
-            self.myClothingDetailedTag = (myClothing.tagId, myClothing.tag)
+            self.myClothingDetailedTag = Tag(tag: myClothing.tag, tagId: myClothing.tagId)
             self.myClothingThickness = myClothing.thickness
             // TODO: 정해진 카테고리와 태그대로 API 호출 필요
+            Task { await self.getTagList() } // 태그 가져오기
         }
     }
     
@@ -50,12 +53,12 @@ extension MyClothingViewModel {
     func saveMyClothing() async {
         // 수정 케이스
         if let myClothing = self.myClothing {
-            print("수정 : 내 옷 \(PatchClothRequestDTO(clothesId: myClothing.clothesId, name: myClothigName, tagId: myClothingDetailedTag.0, thickness: myClothingThickness?.rawValue))")
+            print("수정 : 내 옷 \(PatchClothRequestDTO(clothesId: myClothing.clothesId, name: myClothigName, tagId: myClothingDetailedTag.tagId, thickness: myClothingThickness?.rawValue))")
             let res = await clothesUseCase.patchCloth(
                 patchClothDTO: .init(
                     clothesId: myClothing.clothesId,
                     name: myClothigName,
-                    tagId: myClothingDetailedTag.0,
+                    tagId: myClothingDetailedTag.tagId,
                     thickness: myClothingThickness?.rawValue
                 )
             )
@@ -63,10 +66,10 @@ extension MyClothingViewModel {
         } 
         // 저장 케이스
         else {
-            print("저장 : 내 옷 \(PostClothRequestDTO(name: myClothigName,tagId: myClothingDetailedTag.0,thickness: myClothingThickness?.rawValue,image: myClothingImageData))")
+            print("저장 : 내 옷 \(PostClothRequestDTO(name: myClothigName,tagId: myClothingDetailedTag.tagId,thickness: myClothingThickness?.rawValue,image: myClothingImageData))")
             let res = await clothesUseCase.postCloth(postClothDTO: .init(
                 name: myClothigName,
-                tagId: myClothingDetailedTag.0,
+                tagId: myClothingDetailedTag.tagId,
                 thickness: myClothingThickness?.rawValue,
                 image: myClothingImageData)
             )
@@ -81,6 +84,13 @@ extension MyClothingViewModel {
     private func setImageData(with data: Data) {
         DispatchQueue.main.async {
             self.myClothingImageData = data
+        }
+    }
+    
+    /// 세부 태그를 전부 가져옵니다 from API
+    private func getTagList() async {
+        if let result = await clothesUseCase.getTagList() {
+            self.tagList = result
         }
     }
 }

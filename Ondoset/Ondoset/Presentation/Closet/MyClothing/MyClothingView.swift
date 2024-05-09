@@ -69,12 +69,16 @@ struct MyClothingView: View {
                             ScrollView(.horizontal) {
                                 LazyHGrid(rows: [GridItem(.flexible()), GridItem(.flexible())], alignment: .top, spacing: 10,
                                           content: {
-                                    ForEach(myClothingVM.detailedTagList, id: \.0) { tag in
-                                        ClothTagComponent(isSelected: .constant(tag.0 == myClothingVM.myClothingDetailedTag.0), tagTitle: tag.1, category: myClothingVM.myClothingCategory!)
-                                                      .onTapGesture {
-                                                          myClothingVM.myClothingDetailedTag = tag
-                                                      }
-                                              }
+                                    ForEach(myClothingVM.detailedTagList, 
+                                            id: \.tagId) { tag in
+                                        ClothTagComponent(
+                                            isSelected: .constant(tag.tagId == myClothingVM.myClothingDetailedTag.tagId),
+                                            tagTitle: tag.tag,
+                                            category: myClothingVM.myClothingCategory!)
+                                            .onTapGesture {
+                                                myClothingVM.myClothingDetailedTag = tag
+                                            }
+                                    }
                                 })
                                 .frame(height: 60)
                                 .padding(4)
