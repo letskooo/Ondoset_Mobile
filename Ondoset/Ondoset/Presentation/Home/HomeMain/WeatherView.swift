@@ -113,36 +113,24 @@ struct WeatherView: View {
     // MARK: HourlyWeatherView
     /// WeatherFooterView에 들어가는 당일 날씨 뷰
     struct HourlyWeatherView: View {
-        
-        let hourlyWeather: [HourWeather] = [
-            .init(time: "오전 9시", weather: "SUNNY", temperature: 6, humidity: 0),
-            .init(time: "오전 10시", weather: "SUNNY", temperature: 6, humidity: 0),
-            .init(time: "오전 11시", weather: "SUNNY", temperature: 6, humidity: 0),
-            .init(time: "오후 12시", weather: "SUNNY", temperature: 6, humidity: 0),
-            .init(time: "오후 1시", weather: "SUNNY", temperature: 6, humidity: 0),
-            .init(time: "오후 2시", weather: "SUNNY", temperature: 6, humidity: 0),
-            .init(time: "오후 3시", weather: "SUNNY", temperature: 6, humidity: 0),
-            .init(time: "오후 4시", weather: "SUNNY", temperature: 6, humidity: 0),
-            .init(time: "오후 5시", weather: "SUNNY", temperature: 6, humidity: 0),
-            .init(time: "오후 6시", weather: "SUNNY", temperature: 6, humidity: 0),
-            .init(time: "오후 7시", weather: "SUNNY", temperature: 6, humidity: 0),
-            .init(time: "오후 8시", weather: "SUNNY", temperature: 6, humidity: 0),
-        ]
+                
+        @EnvironmentObject var homeMainVM: HomeMainViewModel
         
         var body: some View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(hourlyWeather, id: \.self) { item in
+                    ForEach(homeMainVM.weahterForecasts.indices, id: \.self) { index in
                         VStack {
-                            Text(item.time)
+                            Text(homeMainVM.weahterForecasts[index].time)
                                 .font(.pretendard(.medium, size: 10))
-                            Image(Weather.getType(from: item.weather)?.smallImage ?? .cloudyMain)
-                                .renderingMode(.template)
-                                .foregroundStyle(.black)
-                            Text("\(item.temperature)°C")
+                            Image(Weather.getType(from: homeMainVM.weahterForecasts[index].weather)?.smallImage ?? .cloudyMain)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                            Text("\(homeMainVM.weahterForecasts[index].temperature)°C")
                                 .font(.pretendard(.bold, size: 13))
                                 .padding(1)
-                            Text("\(item.humidity)%")
+                            Text("\(homeMainVM.weahterForecasts[index].humidity)%")
                                 .font(.pretendard(.medium, size: 10))
                         }
                     }
