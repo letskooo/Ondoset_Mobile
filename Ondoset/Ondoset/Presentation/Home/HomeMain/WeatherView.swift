@@ -48,6 +48,7 @@ struct WeatherView: View {
         var body: some View {
             VStack(spacing: 0) {
                 HStack {
+                    // TODO: 지도 관련 로직 추가 된 후 비즈니스 로직 작성
                     Image(systemName: "scope")
                         .padding()
                     Spacer()
@@ -62,28 +63,36 @@ struct WeatherView: View {
     
     // MARK: WeatherMainView
     struct WeatherMainView: View {
+        
+        @EnvironmentObject var homeMainVM: HomeMainViewModel
+        
         var body: some View {
             HStack(alignment: .center) {
                 Spacer()
                 VStack(spacing: 15) {
                     // 상단 전날 온도 차이 표시
-                    HStack(spacing: 0) {
-                        Text("어제보다 ")
-                            .font(.pretendard(.medium, size: 15))
-                        Text("-4°C")
-                            .font(.pretendard(.bold, size: 15))
-                            .foregroundStyle(.min)
+                    if let diff = homeMainVM.weatherTempDiff {
+                        HStack(spacing: 0) {
+                            Text("어제보다 ")
+                                .font(.pretendard(.medium, size: 15))
+                            Text("\(diff)°C")
+                                .font(.pretendard(.bold, size: 15))
+                                .foregroundStyle(diff > 0 ? .max : .min)
+                        }
+                    } else {
+                        Spacer(minLength: 10)
                     }
                     // 중간 큰 온도 표시
                     HStack(alignment: .top, spacing: 0) {
-                        Text("4")
+                        Text("\(String(format: "%.0f", round(homeMainVM.weatherNowTemp)))")
                             .font(.pretendard(.bold, size: 50))
                         Text("°C")
                             .font(.pretendard(.medium, size: 25))
                             .padding(.top, 5)
                     }
                     // 하단 체감 온도 표시
-                    Text("체감온도 3°C")
+                    
+                    Text("체감온도 \(String(format: "%.0f", round(homeMainVM.weatherFeelingTemp)))°C")
                         .font(.pretendard(.medium, size: 15))
                     
                 }
