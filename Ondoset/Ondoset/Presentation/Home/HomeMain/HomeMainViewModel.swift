@@ -19,7 +19,7 @@ final class HomeMainViewModel: ObservableObject {
 // MARK: Interface Functions
 extension HomeMainViewModel {
     func changeDate(with num: Int) {
-        self.homeViewDate.
+        self.homeViewDate = self.homeViewDate.changeNDay(with: num)
     }
 }
 

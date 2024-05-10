@@ -10,16 +10,11 @@ import SwiftUI
 // MARK: WeatherView
 struct WeatherView: View {
     
-    @EnvironmentObject var homeMainVM: HomeMainViewModel
-    
     var body: some View {
         VStack(spacing: 0){
             WeatherHeaderView()
-                .environmentObject(homeMainVM)
             WeatherMainView()
-                .environmentObject(homeMainVM)
             WeatherFooterView()
-                .environmentObject(homeMainVM)
         }
     }
     
@@ -29,20 +24,18 @@ struct WeatherView: View {
         
         @EnvironmentObject var homeMainVM: HomeMainViewModel
         
-        var dateFormatter: DateFormatter {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy.MM.dd"
-            return formatter
-        }
-        
         var body: some View {
             HStack {
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Button(action: {
+                    homeMainVM.changeDate(with: -1)
+                }, label: {
                     Image(systemName: "chevron.backward")
                         .foregroundStyle(.darkGray)
                 })
-                Text("\(dateFormatter.string(from: homeMainVM.homeViewDate))")
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Text("\(DateFormatter.dateOnly.string(from: homeMainVM.homeViewDate))")
+                Button(action: {
+                    homeMainVM.changeDate(with: 1)
+                }, label: {
                     Image(systemName: "chevron.forward")
                         .foregroundStyle(.darkGray)
                 })
