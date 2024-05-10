@@ -53,6 +53,27 @@ struct Fcst {
     let weather: Weather
 }
 
+extension Fcst {
+    func toHourWeather() -> HourWeather {
+        var inputTime = ""
+        
+        if self.time > 12 {
+            inputTime = "오후 \(self.time - 12)시"
+        } else if self.time == 12 {
+            inputTime = "오후 12시"
+        } else {
+            inputTime = "오전 \(self.time)시"
+        }
+        
+        return .init(
+            time: inputTime,
+            weather: weather.rawValue,
+            temperature: temp,
+            humidity: rainP
+        )
+    }
+}
+
 struct Forecast {
     
     let now: Double

@@ -28,7 +28,7 @@ final class HomeMainViewModel: ObservableObject {
     /// 현재기온
     @Published var weatherNowTemp: Double = 0.0
     /// 예보목록
-    @Published var weahterForecasts: [Fcst] = []
+    @Published var weahterForecasts: [HourWeather] = []
     
     // BottomView Datas
     
@@ -68,7 +68,21 @@ extension HomeMainViewModel {
         // 현재기온
         weatherNowTemp = 10.0
         // 예보목록
-        weahterForecasts = []
+        weahterForecasts = [
+            Fcst.init(time: 1, temp: 11, rainP: 15, weather: .CLOUDY),
+            Fcst.init(time: 2, temp: 11, rainP: 15, weather: .CLOUDY),
+            Fcst.init(time: 3, temp: 10, rainP: 15, weather: .SUNNY),
+            Fcst.init(time: 4, temp: 11, rainP: 15, weather: .SUNNY),
+            Fcst.init(time: 5, temp: 13, rainP: 15, weather: .SUNNY),
+            Fcst.init(time: 6, temp: 11, rainP: 15, weather: .SUNNY),
+            Fcst.init(time: 7, temp: 15, rainP: 15, weather: .PARTLY_CLOUDY),
+            Fcst.init(time: 8, temp: 16, rainP: 15, weather: .PARTLY_CLOUDY),
+            Fcst.init(time: 9, temp: 18, rainP: 15, weather: .PARTLY_CLOUDY),
+            Fcst.init(time: 10, temp: 19, rainP: 15, weather: .SUNNY),
+            Fcst.init(time: 11, temp: 21, rainP: 15, weather: .SUNNY),
+            Fcst.init(time: 12, temp: 23, rainP: 15, weather: .SUNNY),
+            Fcst.init(time: 13, temp: 25, rainP: 15, weather: .CLOUDY)
+        ].map { $0.toHourWeather()}
     }
     
     private func getWeatherInfo() async {
@@ -93,7 +107,7 @@ extension HomeMainViewModel {
             // 현재기온
             weatherNowTemp = result.forecast.now
             // 예보목록
-            weahterForecasts = result.forecast.fcst
+            weahterForecasts = result.forecast.fcst.map {$0.toHourWeather()}
         }
     }
 }
