@@ -91,7 +91,6 @@ struct WeatherView: View {
                             .padding(.top, 5)
                     }
                     // 하단 체감 온도 표시
-                    
                     Text("체감온도 \(String(format: "%.0f", round(homeMainVM.weatherFeelingTemp)))°C")
                         .font(.pretendard(.medium, size: 15))
                     
@@ -156,29 +155,33 @@ struct WeatherView: View {
     // MARK: WeatherFooterView
     struct WeatherFooterView: View {
         // state
-        @State var isFold: Bool = false
+        @State var isFold: Bool = true
+        @EnvironmentObject var homeMainVM: HomeMainViewModel
         
         var body: some View {
             VStack(spacing: 0) {
                 // lev1 - 일교차 + 폴드 버튼
                 HStack {
                     // 일교차
-                    HStack(spacing: 0) {
-                        Text("4°C")
-                            .font(.pretendard(.bold, size: 13))
-                            .foregroundStyle(.min)
-                        Text("/")
-                            .font(.pretendard(.medium, size: 13))
-                        Text("15°C")
-                            .font(.pretendard(.bold, size: 13))
-                            .foregroundStyle(.max)
+                    if let minTemp = homeMainVM.weatherMinTemp, let maxTemp = homeMainVM.weatherMaxTemp {
+                        HStack(spacing: 0) {
+                            Text("\(minTemp)°C")
+                                .font(.pretendard(.bold, size: 13))
+                                .foregroundStyle(.min)
+                            Text(" / ")
+                                .font(.pretendard(.medium, size: 13))
+                            Text("\(maxTemp)°C")
+                                .font(.pretendard(.bold, size: 13))
+                                .foregroundStyle(.max)
+                        }
+                        .padding()
                     }
-                    .padding()
+                    
                     Spacer()
                     Button(action: {
                         isFold.toggle()
                     }, label: {
-                        Image(systemName: isFold ? "chevron.up" : "chevron.down")
+                        Image(systemName: isFold ? "chevron.down" : "chevron.up")
                             .foregroundStyle(.main)
                     })
                     .padding()
