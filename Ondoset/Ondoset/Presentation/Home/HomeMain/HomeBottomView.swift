@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeBottomView: View {
     // State
+    @EnvironmentObject var homeMainVM: HomeMainViewModel
     @State var currentPage: Int = 0
     
     var body: some View {

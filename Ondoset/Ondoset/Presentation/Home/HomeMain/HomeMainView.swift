@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeMainView: View {
+    
+    @StateObject var homeMainVM: HomeMainViewModel = .init()
     @State var presentAIRecomm: Bool = false
     var body: some View {
         
@@ -16,7 +18,9 @@ struct HomeMainView: View {
         NavigationStack {
             VStack(spacing: 0) {
                 WeatherView()
+                    .environmentObject(homeMainVM)
                 HomeBottomView()
+                    .environmentObject(homeMainVM)
                 Rectangle()
                     .frame(height: 44)
                     .foregroundStyle(.white)

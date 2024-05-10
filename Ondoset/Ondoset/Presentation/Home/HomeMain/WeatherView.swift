@@ -9,24 +9,39 @@ import SwiftUI
 
 // MARK: WeatherView
 struct WeatherView: View {
+    
+    @EnvironmentObject var homeMainVM: HomeMainViewModel
+    
     var body: some View {
         VStack(spacing: 0){
             WeatherHeaderView()
+                .environmentObject(homeMainVM)
             WeatherMainView()
+                .environmentObject(homeMainVM)
             WeatherFooterView()
+                .environmentObject(homeMainVM)
         }
     }
     
     // MARK:  SelectDateView
     /// WeatherHeaderView에 들어가는 날짜 선택 뷰
     struct SelectDateView: View {
+        
+        @EnvironmentObject var homeMainVM: HomeMainViewModel
+        
+        var dateFormatter: DateFormatter {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy.MM.dd"
+            return formatter
+        }
+        
         var body: some View {
             HStack {
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     Image(systemName: "chevron.backward")
                         .foregroundStyle(.darkGray)
                 })
-                Text("2024.03.15")
+                Text("\(dateFormatter.string(from: homeMainVM.weatherViewDate))")
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     Image(systemName: "chevron.forward")
                         .foregroundStyle(.darkGray)
