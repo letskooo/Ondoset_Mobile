@@ -127,6 +127,7 @@
 		884E60872BE2D10D00682663 /* AICoordiRecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884E60862BE2D10D00682663 /* AICoordiRecommendView.swift */; };
 		8856A02B2BD9731F00FCBFB8 /* ClothesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */; };
 		8856A02D2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */; };
+		885CC2582BEEB3DB00BAE02C /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885CC2572BEEB3DB00BAE02C /* Date+.swift */; };
 		88759D982BECEE44000E4B83 /* MyClothingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88759D972BECEE44000E4B83 /* MyClothingViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -269,6 +270,7 @@
 		884E60862BE2D10D00682663 /* AICoordiRecommendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICoordiRecommendView.swift; sourceTree = "<group>"; };
 		8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesDTO.swift; sourceTree = "<group>"; };
 		8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankDataIndicateComponent.swift; sourceTree = "<group>"; };
+		885CC2572BEEB3DB00BAE02C /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		88759D972BECEE44000E4B83 /* MyClothingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyClothingViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -772,6 +774,7 @@
 				47C29E262BC24EA400E3E2B9 /* Color+.swift */,
 				47BE3A362BC3C16B00F27E38 /* Data+.swift */,
 				470479002BE28D4E002CFF82 /* DateFormatter.swift */,
+				885CC2572BEEB3DB00BAE02C /* Date+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1020,6 +1023,7 @@
 				474E8A692BD645AB0060E081 /* ClothSelectedComponent.swift in Sources */,
 				47E740322BD8DAF0003A71D5 /* SettingView.swift in Sources */,
 				47A922382BDF9481003234F9 /* OOTDItemViewModel.swift in Sources */,
+				885CC2582BEEB3DB00BAE02C /* Date+.swift in Sources */,
 				47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */,
 				47E7403B2BD8F788003A71D5 /* OotdDTO.swift in Sources */,
 				47E740372BD8DE72003A71D5 /* ImagePicker.swift in Sources */,

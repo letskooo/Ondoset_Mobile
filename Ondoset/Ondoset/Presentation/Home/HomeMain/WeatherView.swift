@@ -41,7 +41,7 @@ struct WeatherView: View {
                     Image(systemName: "chevron.backward")
                         .foregroundStyle(.darkGray)
                 })
-                Text("\(dateFormatter.string(from: homeMainVM.weatherViewDate))")
+                Text("\(dateFormatter.string(from: homeMainVM.homeViewDate))")
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     Image(systemName: "chevron.forward")
                         .foregroundStyle(.darkGray)

@@ -12,6 +12,17 @@ final class HomeMainViewModel: ObservableObject {
     private let clothesUseCase: ClothesUseCase = ClothesUseCase.shared
     // WeatherView Datas
         // WeatherView Current Date
-    @Published var weatherViewDate: Date = .now
+    @Published var homeViewDate: Date = .now
     // BottomView Datas
+}
+
+// MARK: Interface Functions
+extension HomeMainViewModel {
+    func changeDate(with num: Int) {
+        self.homeViewDate.
+    }
+}
+
+// MARK: Internal Functions
+extension HomeMainViewModel {
 }
