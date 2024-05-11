@@ -75,12 +75,10 @@ struct WeatherView: View {
                         HStack(spacing: 0) {
                             Text("어제보다 ")
                                 .font(.pretendard(.medium, size: 15))
-                            Text("\(diff)°C")
+                            Text("\(String(format: "%.0f", round(diff)))°C")
                                 .font(.pretendard(.bold, size: 15))
                                 .foregroundStyle(diff > 0 ? .max : .min)
                         }
-                    } else {
-                        Spacer(minLength: 10)
                     }
                     // 중간 큰 온도 표시
                     HStack(alignment: .top, spacing: 0) {
