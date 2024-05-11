@@ -7,16 +7,36 @@
 
 import SwiftUI
 
+enum HomeBottomViewType: CaseIterable {
+    case TodaysSetUpView
+    case SetUpHistoryView
+    case AIRecommendView
+    case OthersOOTDView
+    
+    var title: String {
+        switch self {
+            
+        case .TodaysSetUpView:
+            return "오늘은 이렇게 입기로 했어요"
+        case .SetUpHistoryView:
+            return "전엔 이렇게 입었어요"
+        case .AIRecommendView:
+            return "AI가 추천하는 오늘의 코디"
+        case .OthersOOTDView:
+            return "다른 사람들은 이렇게 입었어요"
+        }
+    }
+}
+
 struct HomeBottomView: View {
     // State
-    @EnvironmentObject var homeMainVM: HomeMainViewModel
     @State var currentPage: Int = 0
     
     var body: some View {
         TabView(selection: $currentPage) {
             ForEach(0..<4) { index in
                 VStack(spacing: 0) {
-                    HomeBottomHeaderView()
+                    HomeBottomHeaderView(viewType: HomeBottomViewType.allCases[index])
                     switch index {
                     case 0:
                         TodaysSetUpView()
@@ -39,16 +59,18 @@ struct HomeBottomView: View {
 }
 
 struct HomeBottomHeaderView: View {
+    
+    @EnvironmentObject var homeMainVM: HomeMainViewModel
     // properties
-    var isOOTD: Bool = false
+    var viewType: HomeBottomViewType
     
     var body: some View {
         VStack {
             HStack {
-                Text("오늘은 이렇게 입기로 했어요!")
+                Text(viewType.title)
                     .font(.pretendard(.semibold, size: 17))
                 Spacer()
-                if isOOTD {
+                if viewType == .OthersOOTDView {
                     Button(action: {}, label: {
                         HStack(spacing: 0) {
                             Text("OOTD")
