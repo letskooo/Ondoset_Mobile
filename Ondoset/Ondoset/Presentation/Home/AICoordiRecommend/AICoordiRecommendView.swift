@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct AICoordiRecommendView: View {
-    
-    @State var clothesData: [ClothTemplate] = ClothTemplate.mockData()
+    @StateObject var AICoordiRecommendVM: AICoordiRecommendViewModel = .init()
 //    @State var saveAvailable: Bool = true
 //    @Environment(\.dismiss) var dismiss
     
@@ -19,17 +18,19 @@ struct AICoordiRecommendView: View {
             // 코디 선택 스크롤 뷰
             ScrollView {
                 LazyVStack(spacing: 16) {
-                    ForEach(clothesData.indices, id: \.self) { index in
+                    ForEach(AICoordiRecommendVM.clothesData.indices, id: \.self) { index in
                         ClothUnSelectedComponent(
                             clothTemplate: .init(
-                                category: clothesData[index].category,
-                                name: clothesData[index].name,
+                                category: AICoordiRecommendVM.clothesData[index].category,
+                                name: AICoordiRecommendVM.clothesData[index].name,
                                 searchMode: false,
-                                cloth: clothesData[index].cloth
+                                cloth: AICoordiRecommendVM.clothesData[index].cloth
                             ),
                             width: 340,
                             additionBtn: AnyView(
-                                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                                Button(action: {
+                                    AICoordiRecommendVM.deleteClothes(with: index)
+                                }, label: {
                                     Image(systemName: "xmark")
                                         .fontWeight(.semibold)
                                         .foregroundStyle(.black)
