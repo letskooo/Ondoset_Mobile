@@ -13,6 +13,9 @@ struct ClothUnSelectedComponent: View {
     /// 옷 템플릿
     let clothTemplate: ClothTemplate
     
+    /// 서치모드
+    @Binding var searchMode: Bool
+    
     // 옷 카테고리
 //    let category: Category
     // 옷 이름
@@ -28,60 +31,99 @@ struct ClothUnSelectedComponent: View {
     
     var body: some View {
         Rectangle()
-            .frame(width: width, height: 80)
+            .frame(width: width, height: searchMode ? 360 : 80)
             .foregroundStyle(.white)
             .cornerRadius(10)
-            .overlay {
+            .overlay(alignment: .top) {
                 
                 // 카테고리 존재하는 경우
                 if let category = clothTemplate.category {
                     RoundedRectangle(cornerRadius: 10)
                         .fill(category.lightColor)
                     
-                    HStack(spacing: 10) {
-                        
-                        // 카테고리 이미지
-                        category.categoryImage
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 48, height: 48)
-                        
-                        Rectangle()
-                            .foregroundStyle(category.color)
-                            .frame(width: 2, height: 36)
-                        
-                        HStack(alignment: .center) {
+                    VStack {
+                        HStack(spacing: 10) {
                             
-                            Text(clothTemplate.name)
-                                .font(Font.pretendard(.semibold, size: 17))
-                            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                                Image(systemName: "magnifyingglass")
-                                    .foregroundStyle(.black)
-                            })
+                            // 카테고리 이미지
+                            category.categoryImage
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 48, height: 48)
+                            
+                            Rectangle()
+                                .foregroundStyle(category.color)
+                                .frame(width: 2, height: 36)
+                            
+                            HStack(alignment: .center) {
+                                
+                                Text(clothTemplate.name)
+                                    .font(Font.pretendard(.semibold, size: 17))
+                                Button(action: {
+                                    searchMode.toggle()
+                                }, label: {
+                                    Image(systemName: "magnifyingglass")
+                                        .foregroundStyle(.black)
+                                })
+                            }
+                            .padding(.leading, 5)
+                            
+                            Spacer()
+                            
+                            if let additionalButton = self.additionBtn {
+                                additionalButton
+                            }
+                            
                         }
-                        .padding(.leading, 5)
+                        .padding(.leading, 18)
                         
-                        Spacer()
-                        
-                        if let additionalButton = self.additionBtn {
-                            additionalButton
+                        if searchMode {
+                            // 아이템 목록
+                            ScrollView(.vertical) {
+                                VStack(spacing: 10) {
+                                    ForEach(test.indices, id: \.self) { index in
+                                        ClothSelectedComponent(
+                                            category: test[index].category,
+                                            clothName: test[index].name,
+                                            clothTag: test[index].tag,
+                                            clothThickness: test[index].thickness ?? .NORMAL,
+                                            width: 320
+                                        )
+                                    }
+                                }
+                            }
+                            .frame(height: 240)
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    
+                                }, label: {
+                                    HStack(spacing: 0) {
+                                        Text("이 키워드로 쇼핑몰에서 찾아보기")
+                                            .font(.pretendard(.semibold, size: 13))
+                                        Image(systemName: "chevron.forward")
+                                    }
+                                    .foregroundStyle(.main)
+                                })
+                            }
+                            .padding(.horizontal)
+                            
                         }
-                        
                     }
-                    .padding(.leading, 18)
                 }
                 // 직접 추가하여 검색하는 경우
                 else {
                     RoundedRectangle(cornerRadius: 10)
                         .strokeBorder(Color.gray, style: .init(lineWidth: 2, lineCap: .round, lineJoin: .round, miterLimit: 8, dash: [8], dashPhase: 10))
-                    if clothTemplate.searchMode {
+                    if searchMode {
                         VStack {
                             // 상단 타이틀 + x 버튼
                             HStack {
                                 Text("직접 검색하여 추가하기")
                                     .font(.pretendard(.semibold, size: 17))
                                 Spacer()
-                                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                                Button(action: {
+                                    self.searchMode.toggle()
+                                }, label: {
                                     Image(systemName: "xmark")
                                         .renderingMode(.template)
                                         .foregroundStyle(.black)
@@ -113,12 +155,16 @@ struct ClothUnSelectedComponent: View {
                                 }
                                 .padding()
                             }
-                            .frame(height: 240)
+                            .frame(height: 180)
                             .padding(.bottom)
                             
                         }
                     } else {
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Button(action: {
+                            DispatchQueue.main.async{
+                                searchMode.toggle()
+                            }
+                        }, label: {
                             Text("직접 검색하여 추가하기")
                                 .font(.pretendard(.semibold, size: 17))
                                 .foregroundStyle(.gray)
@@ -131,7 +177,7 @@ struct ClothUnSelectedComponent: View {
 
 #Preview {
     ClothUnSelectedComponent(
-        clothTemplate: .init(name: "바지"),
+        clothTemplate: .init(name: "바지"), searchMode: .constant(true),
         width: 340,
         additionBtn: AnyView(
             Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {

@@ -23,9 +23,9 @@ struct AICoordiRecommendView: View {
                             clothTemplate: .init(
                                 category: AICoordiRecommendVM.clothesData[index].category,
                                 name: AICoordiRecommendVM.clothesData[index].name,
-                                searchMode: false,
+                                searchMode: AICoordiRecommendVM.clothesData[index].searchMode,
                                 cloth: AICoordiRecommendVM.clothesData[index].cloth
-                            ),
+                            ), searchMode: $AICoordiRecommendVM.clothesData[index].searchMode,
                             width: 340,
                             additionBtn: AnyView(
                                 Button(action: {
