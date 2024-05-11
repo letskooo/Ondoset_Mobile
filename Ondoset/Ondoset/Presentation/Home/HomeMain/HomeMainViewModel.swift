@@ -13,7 +13,13 @@ final class HomeMainViewModel: ObservableObject {
     private let clothesUseCase: ClothesUseCase = ClothesUseCase.shared
     
     // Common Datas
-    @Published var homeViewDate: Date = .now
+    @Published var homeViewDate: Date = .now {
+        didSet {
+            Task {
+                await self.getHomeInfo()
+            }
+        }
+    }
     @Published var homeViewLocate: CLLocationCoordinate2D = .init(latitude: 37.4551254, longitude: 127.1334847) // 걍 서울
     
     // WeatherView Datas
