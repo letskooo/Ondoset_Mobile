@@ -18,7 +18,7 @@ final class HomeMainViewModel: ObservableObject {
     
     // WeatherView Datas
     /// 전날 같은 시각 대비 기온 변화
-    @Published var weatherTempDiff: Int? = nil
+    @Published var weatherTempDiff: Double? = nil
     /// 체감온도
     @Published var weatherFeelingTemp: Double = 0.0
     /// 최저기온
@@ -34,8 +34,8 @@ final class HomeMainViewModel: ObservableObject {
     
     init() {
         Task {
-//            await self.getWeatherInfo()
-            self.mockFetchWeatherInfo()
+            await self.getWeatherInfo()
+//            self.mockFetchWeatherInfo()
         }
     }
 }
@@ -96,18 +96,21 @@ extension HomeMainViewModel {
             )
         ) {
 //            print(result.forecast)
-            // 전날 같은 시각 대비 기온 변화
-            weatherTempDiff = result.forecast.diff
-            // 체감온도
-            weatherFeelingTemp = result.forecast.feel
-            // 최저기온
-            weatherMinTemp = result.forecast.min
-            // 최고기온
-            weatherMaxTemp = result.forecast.max
-            // 현재기온
-            weatherNowTemp = result.forecast.now
-            // 예보목록
-            weahterForecasts = result.forecast.fcst.map {$0.toHourWeather()}
+            DispatchQueue.main.async {
+                // 전날 같은 시각 대비 기온 변화
+                self.weatherTempDiff = result.forecast.diff
+                // 체감온도
+                self.weatherFeelingTemp = result.forecast.feel
+                // 최저기온
+                self.weatherMinTemp = result.forecast.min
+                // 최고기온
+                self.weatherMaxTemp = result.forecast.max
+                // 현재기온
+                self.weatherNowTemp = result.forecast.now
+                // 예보목록
+                self.weahterForecasts = result.forecast.fcst.map {$0.toHourWeather()}
+            }
+            
         }
     }
 }

@@ -57,6 +57,7 @@ final class APIManager {
           
         } catch {
             print("디코딩 에러=== 데이터는 서버로부터 받아왔으나 디코딩 실패")
+            print(error)
             return nil
         }
     }

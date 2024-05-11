@@ -77,7 +77,7 @@ extension Fcst {
 struct Forecast {
     
     let now: Double
-    let diff: Int?
+    let diff: Double?
     let feel: Double
     let min: Int?
     let max: Int?
@@ -123,7 +123,7 @@ struct HomeInfo {
     let forecast: Forecast
     let plan: [Plan]?
     let record: [Record]
-    let recommend: [Recommend]
+    let recommend: [[Recommend]]
     let ootd: [OOTDShort]
 }
 
