@@ -53,6 +53,12 @@ extension HomeMainViewModel {
     func changeDate(with num: Int) {
         self.homeViewDate = self.homeViewDate.changeNDay(with: num)
     }
+    
+    func getDate(from intValue: Int) -> Date? {
+        let seconds = TimeInterval(intValue)
+        let date = Date(timeIntervalSince1970: seconds)
+        return date
+    }
 }
 
 // MARK: Internal Functions

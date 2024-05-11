@@ -130,7 +130,7 @@ struct SetUpHistoryView: View {
                         GridItem(.flexible(),spacing: 10, alignment: .leading),
                         GridItem(.flexible(), spacing: 10, alignment: .leading)
                     ]) {
-                        Text("\(homeMainVM.similRecord[index].date)")
+                        Text(DateFormatter.dateOnly.string(from: homeMainVM.getDate(from: homeMainVM.similRecord[index].date)!))
                             .font(Font.pretendard(.semibold, size: 13))
                             .padding(.horizontal, 20)
                             .padding(.vertical, 4)
@@ -190,7 +190,7 @@ struct OthersOOTDView: View {
             Spacer()
             HStack(spacing: 3) {
                 ForEach(homeMainVM.othersOOTD.indices, id: \.self) { index in
-                    OOTDComponent(date: "\(homeMainVM.othersOOTD[index].date)", minTemp: nil, maxTemp: nil, ootdImageURL: homeMainVM.othersOOTD[index].imageURL)
+                    OOTDComponent(date: DateFormatter.dateOnly.string(from: homeMainVM.getDate(from: homeMainVM.othersOOTD[index].date)!), minTemp: nil, maxTemp: nil, ootdImageURL: homeMainVM.othersOOTD[index].imageURL)
                         .background(.ondosetBackground)
                 }
             }
