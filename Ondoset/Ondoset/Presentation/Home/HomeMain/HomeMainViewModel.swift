@@ -31,10 +31,18 @@ final class HomeMainViewModel: ObservableObject {
     @Published var weahterForecasts: [HourWeather] = []
     
     // BottomView Datas
+    /// 오늘 등록된 코디 계획
+    @Published var coordiPlan: [Plan]? = nil
+    /// 오늘과 비슷한 과거의 코디 기록
+    @Published var similRecord: [Record] = []
+    /// AI 추천 오늘 코디
+    @Published var recommendAI: [[Recommend]] = []
+    /// 오늘과 비슷한 날씨의 타인 OOTD
+    @Published var othersOOTD: [OOTDShort] = []
     
     init() {
         Task {
-            await self.getWeatherInfo()
+            await self.getHomeInfo()
 //            self.mockFetchWeatherInfo()
         }
     }
@@ -85,7 +93,7 @@ extension HomeMainViewModel {
         ].map { $0.toHourWeather()}
     }
     
-    private func getWeatherInfo() async {
+    private func getHomeInfo() async {
 //        print(GetHomeInfoRequestDTO(date: getDateIntVal(from: homeViewDate), lat: homeViewLocate.latitude, lon: homeViewLocate.longitude))
         
         if let result = await clothesUseCase.getHomeInfo(
@@ -109,6 +117,12 @@ extension HomeMainViewModel {
                 self.weatherNowTemp = result.forecast.now
                 // 예보목록
                 self.weahterForecasts = result.forecast.fcst.map {$0.toHourWeather()}
+                
+                // BottomData
+                self.coordiPlan = result.plan
+                self.similRecord = result.record
+                self.recommendAI = result.recommend
+                self.othersOOTD = result.ootd
             }
             
         }

@@ -91,21 +91,7 @@ struct HomeBottomHeaderView: View {
 
 // MARK: TodaysSetUpView
 struct TodaysSetUpView: View {
-    // states
-    @State var test: Bool = true
-    
-    // property
-    let setUp: [Clothes] = [
-        .init(clothesId: 0, name: "asdf", category: .ACC, tag: "asdf", tagId: 1, thickness: .NORMAL),
-        .init(clothesId: 1, name: "zvxc", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
-        .init(clothesId: 2, name: "aㅁㄴf", category: .BOTTOM, tag: "asdf", tagId: 1, thickness: .NORMAL),
-        .init(clothesId: 3, name: "zvxㅁ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
-        .init(clothesId: 4, name: "asdf", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK),
-        .init(clothesId: 5, name: "zvㅇc", category: .SHOE, tag: "asdf", tagId: 1, thickness: .THIN),
-        .init(clothesId: 6, name: "zvxㅁㄴ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
-        .init(clothesId: 7, name: "asdfasdfasdff", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK),
-        .init(clothesId: 8, name: "zvㅇㄴㄹㄴㅁㅇㄹxc", category: .SHOE, tag: "asdf", tagId: 1, thickness: .THIN),
-    ]
+    @EnvironmentObject var homeMainVM: HomeMainViewModel
     
     var body: some View {
         VStack {
@@ -116,8 +102,8 @@ struct TodaysSetUpView: View {
                     GridItem(.flexible(), spacing: 10, alignment: .leading),
                     GridItem(.flexible(), spacing: 10, alignment: .leading)
                 ], content: {
-                    ForEach(setUp, id: \.clothesId) { cloth in
-                        ClothTagComponent(isSelected: $test, tagTitle: cloth.name, category: cloth.category)
+                    ForEach(homeMainVM.coordiPlan ?? [], id: \.clothesId) { cloth in
+                        ClothTagComponent(isSelected: .constant(true), tagTitle: cloth.name, category: cloth.category)
                     }
                 })
                 .frame(height: 100)
@@ -127,49 +113,32 @@ struct TodaysSetUpView: View {
             Spacer()
             // 추위미터기 버튼
             // TODO: 해당 버튼 컴포넌트에 색 지정 부분도 추가해야 합니다
-            ButtonComponent(isBtnAvailable: $test, width: 340, btnText: "추위 미터기 확인하기", radius: 15, action: { print("날 죽여라")})
+            ButtonComponent(isBtnAvailable: .constant(true), width: 340, btnText: "추위 미터기 확인하기", radius: 15, action: { print("날 죽여라")})
                 .padding()
         }
     }
 }
 // MARK: SetUpHistoryView
 struct SetUpHistoryView: View {
-    // states
-    @State var test: Bool = true
-    
-    // property
-    let dates: [String] = [
-        "2024.03.11",
-        "2023.11.02",
-        "2024.03.02"
-    ]
-    let setUp: [Clothes] = [
-        .init(clothesId: 0, name: "asdfadsf", category: .ACC, tag: "asdf", tagId: 1, thickness: .NORMAL),
-        .init(clothesId: 1, name: "zvxc", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
-        .init(clothesId: 2, name: "aㅁㄴf", category: .BOTTOM, tag: "asdf", tagId: 1, thickness: .NORMAL),
-        .init(clothesId: 3, name: "zvxㅁ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
-        .init(clothesId: 4, name: "asdf", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK),
-        .init(clothesId: 5, name: "zvxㅁ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
-        .init(clothesId: 6, name: "asdf", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK)
-    ]
-    
+    @EnvironmentObject var homeMainVM: HomeMainViewModel
+
     var body: some View {
         ScrollView(.vertical) {
-            ForEach(dates.indices, id: \.self) { index in
+            ForEach(homeMainVM.similRecord.indices, id: \.self) { index in
                 ScrollView(.horizontal) {
                     LazyHGrid(rows: [
                         GridItem(.flexible(),spacing: 10, alignment: .leading),
                         GridItem(.flexible(), spacing: 10, alignment: .leading)
                     ]) {
-                        Text(dates[index])
+                        Text("\(homeMainVM.similRecord[index].date)")
                             .font(Font.pretendard(.semibold, size: 13))
                             .padding(.horizontal, 20)
                             .padding(.vertical, 4)
                             .background(index % 2 == 0 ? .white : .ondosetBackground)
                             .foregroundColor(.black)
                             .cornerRadius(30)
-                        ForEach(setUp, id: \.clothesId) { cloth in
-                            ClothTagComponent(isSelected: $test, tagTitle: cloth.name, category: cloth.category)
+                        ForEach(homeMainVM.similRecord[index].clothesList, id: \.clothesId) { cloth in
+                            ClothTagComponent(isSelected: .constant(true), tagTitle: cloth.name, category: cloth.category)
                         }
                     }
                     .padding(.vertical, 10)
@@ -183,37 +152,25 @@ struct SetUpHistoryView: View {
 }
 // MARK: AIRecommendView
 struct AIRecommendView: View {
-    // states
-    @State var test: Bool = true
-    
-    // property
-    let setUp: [Clothes] = [
-        .init(clothesId: 0, name: "asdfadsf", category: .ACC, tag: "asdf", tagId: 1, thickness: .NORMAL),
-        .init(clothesId: 1, name: "zvxc", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
-        .init(clothesId: 2, name: "aㅁㄴf", category: .BOTTOM, tag: "asdf", tagId: 1, thickness: .NORMAL),
-        .init(clothesId: 3, name: "zvxㅁ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
-        .init(clothesId: 4, name: "asdf", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK),
-        .init(clothesId: 5, name: "zvxㅁ", category: .OUTER, tag: "asdf", tagId: 1, thickness: .THIN),
-        .init(clothesId: 6, name: "asdf", category: .TOP, tag: "asdf", tagId: 1, thickness: .THICK)
-    ]
+    @EnvironmentObject var homeMainVM: HomeMainViewModel
     
     var body: some View {
         ScrollView(.vertical) {
-            ForEach(1...3, id: \.self) { index in
+            ForEach(homeMainVM.recommendAI.indices, id: \.self) { index in
                 ScrollView(.horizontal) {
                     LazyHGrid(rows: [
                         GridItem(.flexible(),spacing: 10, alignment: .leading),
                         GridItem(.flexible(), spacing: 10, alignment: .leading)
                     ]) {
-                        Text("#\(index)")
+                        Text("#\(index+1)")
                             .font(Font.pretendard(.semibold, size: 13))
                             .padding(.horizontal, 10)
                             .padding(.vertical, 4)
                             .background(index % 2 == 0 ? .ondosetBackground : .white )
                             .foregroundColor(.black)
                             .cornerRadius(30)
-                        ForEach(setUp, id: \.clothesId) { cloth in
-                            ClothTagComponent(isSelected: $test, tagTitle: cloth.name, category: cloth.category)
+                        ForEach(homeMainVM.recommendAI[index].indices, id: \.self) { idx in
+                            ClothTagComponent(isSelected: .constant(true), tagTitle: homeMainVM.recommendAI[index][idx].fullTag, category: homeMainVM.recommendAI[index][idx].category)
                         }
                     }
                     .padding(.vertical, 10)
@@ -227,16 +184,15 @@ struct AIRecommendView: View {
 }
 // MARK: OthersOOTDView
 struct OthersOOTDView: View {
+    @EnvironmentObject var homeMainVM: HomeMainViewModel
     var body: some View {
         VStack {
             Spacer()
             HStack(spacing: 3) {
-                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ")
-                    .background(.ondosetBackground)
-                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ")
-                    .background(.ondosetBackground)
-                OOTDComponent(date: "2024.03.08", minTemp: nil, maxTemp: nil, ootdImageURL: "ㅎㅇ")
-                    .background(.ondosetBackground)
+                ForEach(homeMainVM.othersOOTD.indices, id: \.self) { index in
+                    OOTDComponent(date: "\(homeMainVM.othersOOTD[index].date)", minTemp: nil, maxTemp: nil, ootdImageURL: homeMainVM.othersOOTD[index].imageURL)
+                        .background(.ondosetBackground)
+                }
             }
             .padding(3)
             .background(.white)
