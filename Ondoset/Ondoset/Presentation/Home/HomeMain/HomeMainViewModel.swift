@@ -84,6 +84,14 @@ extension HomeMainViewModel {
         self.selectedClothTemplates = tempList
         self.presentAIRecomm = true
     }
+    
+    func selectPlan(_ plan: [Plan]) {
+        var tempList = plan.map { $0.toClothTemplate() }
+        tempList.append(.init(name: ""))
+        
+        self.selectedClothTemplates = tempList
+        self.presentAIRecomm = true
+    }
 }
 
 // MARK: Internal Functions

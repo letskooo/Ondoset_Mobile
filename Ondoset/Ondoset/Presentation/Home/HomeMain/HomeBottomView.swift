@@ -112,9 +112,9 @@ struct TodaysSetUpView: View {
             }
             Spacer()
             // 추위미터기 버튼
-            // TODO: 해당 버튼 컴포넌트에 색 지정 부분도 추가해야 합니다
+//            ButtonComponent(isBtnAvailable: .constant(homeMainVM.coordiPlan != nil), width: 340,
             ButtonComponent(isBtnAvailable: .constant(true), width: 340, btnText: "추위 미터기 확인하기", radius: 15, action: {
-                // TODO: 버튼 누를 때 PLAN 구조체 ClothTemplate 구조체로 매핑해서 VM으로 전달
+                homeMainVM.selectPlan(homeMainVM.coordiPlan ?? [])
             })
                 .padding()
         }

@@ -95,6 +95,25 @@ struct Plan {
     let thickness: Thickness?
 }
 
+extension Plan {
+    func toClothTemplate() -> ClothTemplate {
+        return .init(
+            category: self.category,
+            name: self.name,
+            searchMode: false,
+            cloth: .init(
+                clothesId: self.clothesId,
+                name: self.name,
+                imageURL: self.imageURL,
+                category: self.category,
+                tag: self.tag,
+                tagId: self.tagId,
+                thickness: self.thickness
+            )
+        )
+    }
+}
+
 struct Record {
     
     let date: Int
