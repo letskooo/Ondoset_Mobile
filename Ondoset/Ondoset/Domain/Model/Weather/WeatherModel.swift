@@ -12,4 +12,5 @@ struct HourWeather: Hashable {
     let weather: String
     let temperature: Int
     let humidity: Int
+    let isNow: Bool
 }

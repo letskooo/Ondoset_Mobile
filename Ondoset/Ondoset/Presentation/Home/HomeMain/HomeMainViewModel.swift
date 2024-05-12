@@ -42,7 +42,9 @@ final class HomeMainViewModel: ObservableObject {
     /// 현재기온
     @Published var weatherNowTemp: Double = 0.0
     /// 예보목록
-    @Published var weahterForecasts: [HourWeather] = []
+    @Published var weatherForecasts: [HourWeather] = []
+    /// 메인 날씨 이미지
+    @Published var weatherMainImage: ImageResource = .weatherSunny
     
     // BottomView Datas
     /// 오늘 등록된 코디 계획
@@ -114,7 +116,7 @@ extension HomeMainViewModel {
         // 현재기온
         weatherNowTemp = 10.0
         // 예보목록
-        weahterForecasts = [
+        weatherForecasts = [
             Fcst.init(time: 1, temp: 11, rainP: 15, weather: .CLOUDY),
             Fcst.init(time: 2, temp: 11, rainP: 15, weather: .CLOUDY),
             Fcst.init(time: 3, temp: 10, rainP: 15, weather: .SUNNY),
@@ -132,8 +134,11 @@ extension HomeMainViewModel {
     }
     
     private func getHomeInfo() async {
-//        print(GetHomeInfoRequestDTO(date: getDateIntVal(from: homeViewDate), lat: homeViewLocate.latitude, lon: homeViewLocate.longitude))
-        self.isHomeInfoFetching = true
+        
+        DispatchQueue.main.async {
+            self.isHomeInfoFetching = true
+        }
+        
         if let result = await clothesUseCase.getHomeInfo(
             getHomeInfoDTO: .init(
                 date: homeViewDate.toInt(),
@@ -154,7 +159,9 @@ extension HomeMainViewModel {
                 // 현재기온
                 self.weatherNowTemp = result.forecast.now
                 // 예보목록
-                self.weahterForecasts = result.forecast.fcst.map {$0.toHourWeather()}
+                self.weatherForecasts = result.forecast.fcst.map {$0.toHourWeather()}
+                // 메인날씨이미지
+                self.weatherMainImage = Weather.getType(from: self.weatherForecasts.first(where: { $0.isNow == true })?.weather ?? "")?.frontImage ?? .cloudyMain
                 
                 // BottomData
                 self.coordiPlan = result.plan

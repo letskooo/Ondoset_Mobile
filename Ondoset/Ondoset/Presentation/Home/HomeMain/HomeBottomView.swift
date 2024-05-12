@@ -95,27 +95,37 @@ struct TodaysSetUpView: View {
     
     var body: some View {
         VStack {
-            // 옷 표시 스크롤뷰
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHGrid(rows: [
-                    GridItem(.flexible(), spacing: 10, alignment: .leading),
-                    GridItem(.flexible(), spacing: 10, alignment: .leading),
-                    GridItem(.flexible(), spacing: 10, alignment: .leading)
-                ], content: {
-                    ForEach(homeMainVM.coordiPlan ?? [], id: \.clothesId) { cloth in
-                        ClothTagComponent(isSelected: .constant(true), tagTitle: cloth.name, category: cloth.category)
-                    }
+            // Plan 내용 존재할 때
+            if let coordiPlan = homeMainVM.coordiPlan {
+                // 옷 표시 스크롤뷰
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHGrid(rows: [
+                        GridItem(.flexible(), spacing: 10, alignment: .leading),
+                        GridItem(.flexible(), spacing: 10, alignment: .leading),
+                        GridItem(.flexible(), spacing: 10, alignment: .leading)
+                    ], content: {
+                        ForEach(homeMainVM.coordiPlan ?? [], id: \.clothesId) { cloth in
+                            ClothTagComponent(isSelected: .constant(true), tagTitle: cloth.name, category: cloth.category)
+                        }
+                    })
+                    .frame(height: 100)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 20)
+                }
+                Spacer()
+                // 추위미터기 버튼
+                ButtonComponent(isBtnAvailable: .constant(homeMainVM.coordiPlan != nil), width: 340, btnText: "추위 미터기 확인하기", radius: 15, action: {
+                    homeMainVM.selectPlan(homeMainVM.coordiPlan ?? [])
                 })
-                .frame(height: 100)
-                .padding(.horizontal, 20)
-                .padding(.bottom, 20)
+                    .padding()
             }
-            Spacer()
-            // 추위미터기 버튼
-            ButtonComponent(isBtnAvailable: .constant(homeMainVM.coordiPlan != nil), width: 340, btnText: "추위 미터기 확인하기", radius: 15, action: {
-                homeMainVM.selectPlan(homeMainVM.coordiPlan ?? [])
-            })
-                .padding()
+            // Plan 내용 없을 때
+            else {
+                Spacer()
+                BlankDataIndicateComponent(explainText: "오늘 입기로 한 코디가 없어요\n코디를 등록해주세요")
+                Spacer()
+            }
+            
         }
     }
 }
@@ -124,31 +134,41 @@ struct SetUpHistoryView: View {
     @EnvironmentObject var homeMainVM: HomeMainViewModel
 
     var body: some View {
-        ScrollView(.vertical) {
-            ForEach(homeMainVM.similRecord.indices, id: \.self) { index in
-                ScrollView(.horizontal) {
-                    LazyHGrid(rows: [
-                        GridItem(.flexible(),spacing: 10, alignment: .leading),
-                        GridItem(.flexible(), spacing: 10, alignment: .leading)
-                    ]) {
-                        Text(DateFormatter.dateOnly.string(from: homeMainVM.getDate(from: homeMainVM.similRecord[index].date)!))
-                            .font(Font.pretendard(.semibold, size: 13))
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 4)
-                            .background(index % 2 == 0 ? .white : .ondosetBackground)
-                            .foregroundColor(.black)
-                            .cornerRadius(30)
-                        ForEach(homeMainVM.similRecord[index].clothesList, id: \.clothesId) { cloth in
-                            ClothTagComponent(isSelected: .constant(true), tagTitle: cloth.name, category: cloth.category)
+        // 전에 입은 코디 기록 존재할 때
+        if !homeMainVM.similRecord.isEmpty {
+            ScrollView(.vertical) {
+                ForEach(homeMainVM.similRecord.indices, id: \.self) { index in
+                    ScrollView(.horizontal) {
+                        LazyHGrid(rows: [
+                            GridItem(.flexible(),spacing: 10, alignment: .leading),
+                            GridItem(.flexible(), spacing: 10, alignment: .leading)
+                        ]) {
+                            Text(DateFormatter.dateOnly.string(from: homeMainVM.getDate(from: homeMainVM.similRecord[index].date)!))
+                                .font(Font.pretendard(.semibold, size: 13))
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 4)
+                                .background(index % 2 == 0 ? .white : .ondosetBackground)
+                                .foregroundColor(.black)
+                                .cornerRadius(30)
+                            ForEach(homeMainVM.similRecord[index].clothesList, id: \.clothesId) { cloth in
+                                ClothTagComponent(isSelected: .constant(true), tagTitle: cloth.name, category: cloth.category)
+                            }
                         }
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 20)
+                        
                     }
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 20)
-                    
+                    .background(index % 2 == 0 ? .ondosetBackground : .white )
                 }
-                .background(index % 2 == 0 ? .ondosetBackground : .white )
             }
         }
+        // 전에 입은 코디 기록 존재하지 않을 때
+        else {
+            Spacer()
+            BlankDataIndicateComponent(explainText: "아직 충분한 데이터가 쌓이지 않았어요\n코디를 더 등록해주세요")
+            Spacer()
+        }
+        
     }
 }
 // MARK: AIRecommendView
@@ -156,34 +176,44 @@ struct AIRecommendView: View {
     @EnvironmentObject var homeMainVM: HomeMainViewModel
     
     var body: some View {
-        ScrollView(.vertical) {
-            ForEach(homeMainVM.recommendAI.indices, id: \.self) { index in
-                ScrollView(.horizontal) {
-                    LazyHGrid(rows: [
-                        GridItem(.flexible(),spacing: 10, alignment: .leading),
-                        GridItem(.flexible(), spacing: 10, alignment: .leading)
-                    ]) {
-                        Text("#\(index+1)")
-                            .font(Font.pretendard(.semibold, size: 13))
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 4)
-                            .background(index % 2 == 0 ? .ondosetBackground : .white )
-                            .foregroundColor(.black)
-                            .cornerRadius(30)
-                        ForEach(homeMainVM.recommendAI[index].indices, id: \.self) { idx in
-                            ClothTagComponent(isSelected: .constant(true), tagTitle: homeMainVM.recommendAI[index][idx].fullTag, category: homeMainVM.recommendAI[index][idx].category)
+        // AI 추천 코디 존재할 때
+        if !homeMainVM.recommendAI.isEmpty {
+            ScrollView(.vertical) {
+                ForEach(homeMainVM.recommendAI.indices, id: \.self) { index in
+                    ScrollView(.horizontal) {
+                        LazyHGrid(rows: [
+                            GridItem(.flexible(),spacing: 10, alignment: .leading),
+                            GridItem(.flexible(), spacing: 10, alignment: .leading)
+                        ]) {
+                            Text("#\(index+1)")
+                                .font(Font.pretendard(.semibold, size: 13))
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 4)
+                                .background(index % 2 == 0 ? .ondosetBackground : .white )
+                                .foregroundColor(.black)
+                                .cornerRadius(30)
+                            ForEach(homeMainVM.recommendAI[index].indices, id: \.self) { idx in
+                                ClothTagComponent(isSelected: .constant(true), tagTitle: homeMainVM.recommendAI[index][idx].fullTag, category: homeMainVM.recommendAI[index][idx].category)
+                            }
                         }
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 20)
+                        
                     }
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 20)
-                    
-                }
-                .background(index % 2 == 0 ? .white : .ondosetBackground)
-                .onTapGesture {
-                    homeMainVM.selectRecommendation(homeMainVM.recommendAI[index])
+                    .background(index % 2 == 0 ? .white : .ondosetBackground)
+                    .onTapGesture {
+                        homeMainVM.selectRecommendation(homeMainVM.recommendAI[index])
+                    }
                 }
             }
+        } 
+        // AI 추천 코디 존재하지 않을 때
+        else {
+            Spacer()
+            BlankDataIndicateComponent(explainText: "아직 충분한 데이터가 쌓이지 않았어요\n코디를 더 등록해주세요")
+            Spacer()
         }
+        
     }
 }
 // MARK: OthersOOTDView

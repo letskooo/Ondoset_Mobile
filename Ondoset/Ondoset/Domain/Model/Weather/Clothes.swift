@@ -5,6 +5,8 @@
 //  Created by KoSungmin on 4/8/24.
 //
 
+import Foundation
+
 struct Clothes: Equatable, Hashable {
     var clothesId: Int
     var name: String
@@ -65,11 +67,15 @@ extension Fcst {
             inputTime = "오전 \(self.time)시"
         }
         
+        let currentHour = Calendar.current.component(.hour, from: Date())
+        let isNow = currentHour == self.time
+        
         return .init(
             time: inputTime,
             weather: weather.rawValue,
             temperature: temp,
-            humidity: rainP
+            humidity: rainP,
+            isNow: isNow
         )
     }
 }

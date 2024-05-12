@@ -94,7 +94,7 @@ struct WeatherView: View {
                     
                 }
                 Spacer()
-                Image(uiImage: .weatherSunny)
+                Image(homeMainVM.weatherMainImage)
                 Spacer()
             }
             .overlay {
@@ -117,18 +117,18 @@ struct WeatherView: View {
         var body: some View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(homeMainVM.weahterForecasts.indices, id: \.self) { index in
+                    ForEach(homeMainVM.weatherForecasts.indices, id: \.self) { index in
                         VStack {
-                            Text(homeMainVM.weahterForecasts[index].time)
+                            Text(homeMainVM.weatherForecasts[index].time)
                                 .font(.pretendard(.medium, size: 10))
-                            Image(Weather.getType(from: homeMainVM.weahterForecasts[index].weather)?.smallImage ?? .cloudyMain)
+                            Image(Weather.getType(from: homeMainVM.weatherForecasts[index].weather)?.smallImage ?? .cloudyMain)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 24, height: 24)
-                            Text("\(homeMainVM.weahterForecasts[index].temperature)°C")
+                            Text("\(homeMainVM.weatherForecasts[index].temperature)°C")
                                 .font(.pretendard(.bold, size: 13))
                                 .padding(1)
-                            Text("\(homeMainVM.weahterForecasts[index].humidity)%")
+                            Text("\(homeMainVM.weatherForecasts[index].humidity)%")
                                 .font(.pretendard(.medium, size: 10))
                         }
                     }
