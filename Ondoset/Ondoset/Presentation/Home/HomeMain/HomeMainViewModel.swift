@@ -27,6 +27,8 @@ final class HomeMainViewModel: ObservableObject {
     @Published var presentSheetViewType: SheetViewType = .AICoordi
     /// 선택된 옷 템플릿 -> AICoordi 바텀시트에 사용
     @Published var selectedClothTemplates: [ClothTemplate]? = nil
+    /// HOME INFO  로딩 중
+    @Published var isHomeInfoFetching: Bool = false
     
     // WeatherView Datas
     /// 전날 같은 시각 대비 기온 변화
@@ -131,7 +133,7 @@ extension HomeMainViewModel {
     
     private func getHomeInfo() async {
 //        print(GetHomeInfoRequestDTO(date: getDateIntVal(from: homeViewDate), lat: homeViewLocate.latitude, lon: homeViewLocate.longitude))
-        
+        self.isHomeInfoFetching = true
         if let result = await clothesUseCase.getHomeInfo(
             getHomeInfoDTO: .init(
                 date: homeViewDate.toInt(),
@@ -159,6 +161,9 @@ extension HomeMainViewModel {
                 self.similRecord = result.record
                 self.recommendAI = result.recommend
                 self.othersOOTD = result.ootd
+                
+                // 인디케이터 표시 해제
+                self.isHomeInfoFetching = false
             }
             
         }

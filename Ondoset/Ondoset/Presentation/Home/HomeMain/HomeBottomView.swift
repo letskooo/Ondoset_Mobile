@@ -112,8 +112,7 @@ struct TodaysSetUpView: View {
             }
             Spacer()
             // 추위미터기 버튼
-//            ButtonComponent(isBtnAvailable: .constant(homeMainVM.coordiPlan != nil), width: 340,
-            ButtonComponent(isBtnAvailable: .constant(true), width: 340, btnText: "추위 미터기 확인하기", radius: 15, action: {
+            ButtonComponent(isBtnAvailable: .constant(homeMainVM.coordiPlan != nil), width: 340, btnText: "추위 미터기 확인하기", radius: 15, action: {
                 homeMainVM.selectPlan(homeMainVM.coordiPlan ?? [])
             })
                 .padding()

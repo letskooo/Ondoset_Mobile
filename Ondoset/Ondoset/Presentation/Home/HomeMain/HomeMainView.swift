@@ -16,14 +16,24 @@ struct HomeMainView: View {
         /// 각 탭의 메인 뷰마다 NavigationStack을 두는 것으로 설계합니다.
         
         NavigationStack {
-            VStack(spacing: 0) {
-                WeatherView()
-                    .environmentObject(homeMainVM)
-                HomeBottomView()
-                    .environmentObject(homeMainVM)
-                Rectangle()
-                    .frame(height: 44)
-                    .foregroundStyle(.white)
+            ZStack {
+                VStack(spacing: 0) {
+                    WeatherView()
+                        .environmentObject(homeMainVM)
+                    HomeBottomView()
+                        .environmentObject(homeMainVM)
+                    Rectangle()
+                        .frame(height: 44)
+                        .foregroundStyle(.white)
+                }
+                
+                if homeMainVM.isHomeInfoFetching {
+                    Color.white.opacity(0.3)
+                    
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .mainLight))
+                        .scaleEffect(2.0, anchor: .center)
+                }
             }
         }
         .onAppear(perform: {
