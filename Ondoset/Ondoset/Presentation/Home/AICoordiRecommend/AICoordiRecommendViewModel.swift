@@ -12,6 +12,10 @@ final class AICoordiRecommendViewModel: ObservableObject {
     @Published var tempIndicator: TempIndicatorType? = nil
     @Published var currentDate: Date  = .now
     @Published var isSaveAvailable: Bool = false
+    
+    init(clothesData: [ClothTemplate]) {
+        self.clothesData = clothesData
+    }
 }
 
 // MARK: Interface Functions

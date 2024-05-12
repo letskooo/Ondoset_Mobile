@@ -38,9 +38,8 @@ enum TempIndicatorType {
 }
 
 struct AICoordiRecommendView: View {
-    @StateObject var AICoordiRecommendVM: AICoordiRecommendViewModel = .init()
-//    @State var saveAvailable: Bool = true
-//    @Environment(\.dismiss) var dismiss
+    @StateObject var AICoordiRecommendVM: AICoordiRecommendViewModel
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack {
@@ -100,7 +99,9 @@ struct AICoordiRecommendView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {}, label: {
+                Button(action: {
+                    self.dismiss()
+                }, label: {
                     Text("닫기")
                         .font(.pretendard(.semibold, size: 15))
                         .foregroundStyle(.gray)
@@ -111,7 +112,7 @@ struct AICoordiRecommendView: View {
 }
 
 #Preview {
-    AICoordiRecommendView()
+    AICoordiRecommendView(AICoordiRecommendVM: .init(clothesData: ClothTemplate.mockData()))
 }
 
 
