@@ -73,21 +73,24 @@ struct AICoordiRecommendView: View {
             }
             // 바텀 뷰
             VStack {
-                HStack {
-                    Image(.hotCloudie)
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                    
-                    Text("추울 것 같아요!\n등록하려면 태그별 옷을 지정해주세요")
-                        .multilineTextAlignment(.center)
-                        .font(.pretendard(.regular, size: 15))
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.ondosetBackground)
-                        )
+                if let tempIndicator = AICoordiRecommendVM.tempIndicator {
+                    HStack {
+                        Image(tempIndicator.image)
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                        
+                        Text(tempIndicator.description)
+                            .multilineTextAlignment(.center)
+                            .font(.pretendard(.regular, size: 15))
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(.ondosetBackground)
+                            )
+                    }
+                    .padding()
                 }
-                .padding()
+                
                 ButtonComponent(isBtnAvailable: .constant(false), width: 340, btnText: "3/17 코디로 등록하기", radius: 15, action: {})
             }
             .clipShape(.rect(cornerRadii: .init(topLeading: 10, bottomLeading: 0, bottomTrailing: 0, topTrailing: 10)))

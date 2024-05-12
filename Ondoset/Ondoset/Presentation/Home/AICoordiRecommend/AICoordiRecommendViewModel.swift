@@ -9,6 +9,7 @@ import Foundation
 
 final class AICoordiRecommendViewModel: ObservableObject {
     @Published var clothesData: [ClothTemplate] = ClothTemplate.mockData()
+    @Published var tempIndicator: TempIndicatorType? = nil
 }
 
 // MARK: Interface Functions
