@@ -101,13 +101,6 @@ extension HomeMainViewModel {
 // MARK: Internal Functions
 extension HomeMainViewModel {
     
-    private func getDateIntVal(from date: Date) -> Int {
-        let now = date.timeIntervalSince1970 // 현재 시간을 초 단위로 가져옴
-        let date = ((now + 32400) / 86400) * 86400 - 32400 // 식 계산
-        let intDate = Int(date)
-        return intDate
-    }
-    
     private func mockFetchWeatherInfo() {
         weatherTempDiff = 2
         // 체감온도
@@ -141,7 +134,7 @@ extension HomeMainViewModel {
         
         if let result = await clothesUseCase.getHomeInfo(
             getHomeInfoDTO: .init(
-                date: getDateIntVal(from: homeViewDate),
+                date: homeViewDate.toInt(),
                 lat: homeViewLocate.latitude,
                 lon: homeViewLocate.longitude
             )

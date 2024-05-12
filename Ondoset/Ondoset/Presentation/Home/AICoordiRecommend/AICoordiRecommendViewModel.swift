@@ -86,6 +86,10 @@ extension AICoordiRecommendViewModel {
     func deleteClothes(with idx: Int) {
         self.clothesData.remove(at: idx)
     }
+    
+//    func postClothesCombination(addType: String) async {
+//        await coordiUseCase.setCoordiPlan(addType: addType, setCoordiPlanDTO: .init(date: <#T##Int#>, clothesList: <#T##[Int]#>))
+//    }
 }
 
 // MARK: Private Functions
