@@ -26,6 +26,9 @@ struct HomeMainView: View {
                     .foregroundStyle(.white)
             }
         }
+        .onAppear(perform: {
+            homeMainVM.homeViewDate = .now
+        })
         .sheet(isPresented: $homeMainVM.presentAIRecomm) {
             NavigationView { AICoordiRecommendView(viewType: homeMainVM.presentSheetViewType, AICoordiRecommendVM: .init(clothesData: homeMainVM.selectedClothTemplates ?? [.init(name: "")])) }
         }
