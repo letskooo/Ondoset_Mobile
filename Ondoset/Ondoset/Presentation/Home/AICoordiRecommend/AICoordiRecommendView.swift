@@ -7,6 +7,36 @@
 
 import SwiftUI
 
+enum TempIndicatorType {
+    case cold
+    case hot
+    case good
+    
+    var description: String {
+        switch self {
+            
+        case .cold:
+            return "추울 것 같아요!\n등록하려면 태그별 옷을 지정해주세요"
+        case .hot:
+            return "더울 것 같아요!\n등록하려면 태그별 옷을 지정해주세요"
+        case .good:
+            return "이대로 나가도 좋아요!"
+        }
+    }
+    
+    var image: ImageResource {
+        switch self {
+            
+        case .cold:
+            return .coldCloudie
+        case .hot:
+            return .hotCloudie
+        case .good:
+            return .happyCloudie
+        }
+    }
+}
+
 struct AICoordiRecommendView: View {
     @StateObject var AICoordiRecommendVM: AICoordiRecommendViewModel = .init()
 //    @State var saveAvailable: Bool = true
@@ -44,7 +74,7 @@ struct AICoordiRecommendView: View {
             // 바텀 뷰
             VStack {
                 HStack {
-                    Image(.noOOTDList)
+                    Image(.hotCloudie)
                         .resizable()
                         .frame(width: 80, height: 80)
                     
