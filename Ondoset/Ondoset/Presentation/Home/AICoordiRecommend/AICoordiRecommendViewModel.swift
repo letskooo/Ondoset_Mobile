@@ -87,9 +87,13 @@ extension AICoordiRecommendViewModel {
         self.clothesData.remove(at: idx)
     }
     
-//    func postClothesCombination(addType: String) async {
-//        await coordiUseCase.setCoordiPlan(addType: addType, setCoordiPlanDTO: .init(date: <#T##Int#>, clothesList: <#T##[Int]#>))
-//    }
+    func postClothesCombination(addType: String) async {
+        let _ = await coordiUseCase.setCoordiPlan(
+            addType: addType,
+            setCoordiPlanDTO: .init(date: self.currentDate.toInt(),
+                                    clothesList: self.clothesData.compactMap { $0.cloth }.map { $0.clothesId })
+        )
+    }
 }
 
 // MARK: Private Functions
@@ -104,6 +108,7 @@ extension AICoordiRecommendViewModel {
             switch result {
             case .GOOD:
                 self.tempIndicator = .good
+                self.isSaveAvailable = true
             case .COLD, .VERY_COLD:
                 self.tempIndicator = .cold
             case .HOT, .VERY_HOT:
