@@ -167,7 +167,7 @@ extension HomeMainViewModel {
                 self.coordiPlan = result.plan
                 self.similRecord = result.record
                 self.recommendAI = result.recommend
-                self.othersOOTD = result.ootd
+                self.othersOOTD = result.ootd.map { .init(imageURL: Constants.serverURL+"/images"+$0.imageURL, date: $0.date) }
                 
                 // 인디케이터 표시 해제
                 self.isHomeInfoFetching = false
