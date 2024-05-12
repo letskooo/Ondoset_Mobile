@@ -91,7 +91,7 @@ struct ClothUnSelectedComponent: View {
                                     }
                                 }
                             }
-                            .frame(height: 240)
+                            .frame(height: 250)
                             HStack {
                                 Spacer()
                                 Button(action: {
@@ -134,7 +134,7 @@ struct ClothUnSelectedComponent: View {
                             .padding(.horizontal)
                             
                             // 중간 세그먼트 컨트롤
-                            SegmentControlComponent(selectedTab: .constant(0), tabMenus: MyClosetTab.allCases.map{ $0.rawValue })
+                            SegmentControlComponent(selectedTab: .constant(0), tabMenus: MyClosetTab.allCases.map{ $0.rawValue }, isMain: false)
                                 
                             // 중간 서치바
                             SearchBarComponent(searchText: $searchText, placeHolder: "등록한 옷을 검색하세요", searchAction: { print($0) })
@@ -149,7 +149,7 @@ struct ClothUnSelectedComponent: View {
                                             clothName: test[index].name,
                                             clothTag: test[index].tag,
                                             clothThickness: test[index].thickness ?? .NORMAL,
-                                            width: 320
+                                            width: 300
                                         )
                                     }
                                 }

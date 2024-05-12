@@ -16,4 +16,6 @@ extension AICoordiRecommendViewModel {
     func deleteClothes(with idx: Int) {
         self.clothesData.remove(at: idx)
     }
+    
+//    func addClothes(with )
 }

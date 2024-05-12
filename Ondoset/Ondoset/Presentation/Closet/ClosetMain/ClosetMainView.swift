@@ -24,7 +24,7 @@ struct ClosetMainView: View {
         // MARK: Main View
         NavigationStack {
             VStack(alignment: .center, spacing: 0) {
-                SegmentControlComponent(selectedTab: $closetMainVM.selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue})
+                SegmentControlComponent(selectedTab: $closetMainVM.selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue}, isMain: true)
                     .padding(.bottom, 15)
                 
                 SearchBarComponent(searchText: $closetMainVM.searchText, placeHolder: "등록한 옷을 검색하세요", searchAction: {
