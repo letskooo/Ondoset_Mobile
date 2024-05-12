@@ -8,7 +8,17 @@
 import SwiftUI
 
 final class AICoordiRecommendViewModel: ObservableObject {
-    @Published var clothesData: [ClothTemplate] = ClothTemplate.mockData()
+    
+    private let clothesUseCase: ClothesUseCase = ClothesUseCase.shared
+    private let coordiUseCase: CoordiUseCase = CoordiUseCase.shared
+    
+    @Published var clothesData: [ClothTemplate] = ClothTemplate.mockData() {
+        didSet {
+            Task {
+                await self.fetchSatisfactionPrediction()
+            }
+        }
+    }
     @Published var tempIndicator: TempIndicatorType? = nil
     @Published var currentDate: Date  = .now
     @Published var isSaveAvailable: Bool = false
@@ -72,23 +82,31 @@ final class AICoordiRecommendViewModel: ObservableObject {
 
 // MARK: Interface Functions
 extension AICoordiRecommendViewModel {
-    func addClothes(with cloth: Clothes) {
-        DispatchQueue.main.async {
-            self.clothesData.removeLast()
-            self.clothesData.append(
-                .init(
-                    category: cloth.category,
-                    name: cloth.name,
-                    searchMode: false,
-                    cloth: cloth
-                )
-            )
-            self.clothesData.append(.init(name: ""))
-        }
-        
-    }
     
     func deleteClothes(with idx: Int) {
         self.clothesData.remove(at: idx)
+    }
+}
+
+// MARK: Private Functions
+extension AICoordiRecommendViewModel {
+    private func fetchSatisfactionPrediction() async {
+        let tagCombination = self.clothesData
+            .compactMap { $0.cloth }
+            .map { TagCombination.init(tagId: $0.tagId, thickness: $0.thickness?.rawValue)}
+    
+        let result = await coordiUseCase.getSatisfactionPred(getSatisfactionPredDTO: .init(tagComb: tagCombination))
+        DispatchQueue.main.async {
+            switch result {
+            case .GOOD:
+                self.tempIndicator = .good
+            case .COLD, .VERY_COLD:
+                self.tempIndicator = .cold
+            case .HOT, .VERY_HOT:
+                self.tempIndicator = .hot
+            default:
+                return
+            }
+        }
     }
 }

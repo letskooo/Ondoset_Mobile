@@ -459,7 +459,6 @@
 		47BE3A102BC37FDC00F27E38 /* Clothes */ = {
 			isa = PBXGroup;
 			children = (
-				47BE3A142BC37FFF00F27E38 /* Clothes.swift */,
 			);
 			path = Clothes;
 			sourceTree = "<group>";
@@ -821,6 +820,7 @@
 		884E607D2BE2AC0400682663 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				47BE3A142BC37FFF00F27E38 /* Clothes.swift */,
 				884E607E2BE2AC0F00682663 /* WeatherModel.swift */,
 			);
 			path = Weather;
