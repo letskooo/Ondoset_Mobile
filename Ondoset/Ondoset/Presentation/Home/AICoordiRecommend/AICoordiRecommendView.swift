@@ -91,7 +91,7 @@ struct AICoordiRecommendView: View {
                     .padding()
                 }
                 
-                ButtonComponent(isBtnAvailable: .constant(false), width: 340, btnText: "3/17 코디로 등록하기", radius: 15, action: {})
+                ButtonComponent(isBtnAvailable: $AICoordiRecommendVM.isSaveAvailable, width: 340, btnText: "\(DateFormatter.dateOnly.string(from: AICoordiRecommendVM.currentDate)) 코디로 등록하기", radius: 15, action: {})
             }
             .clipShape(.rect(cornerRadii: .init(topLeading: 10, bottomLeading: 0, bottomTrailing: 0, topTrailing: 10)))
         }

@@ -10,6 +10,8 @@ import Foundation
 final class AICoordiRecommendViewModel: ObservableObject {
     @Published var clothesData: [ClothTemplate] = ClothTemplate.mockData()
     @Published var tempIndicator: TempIndicatorType? = nil
+    @Published var currentDate: Date  = .now
+    @Published var isSaveAvailable: Bool = false
 }
 
 // MARK: Interface Functions
