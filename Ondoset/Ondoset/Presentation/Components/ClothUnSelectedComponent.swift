@@ -15,6 +15,12 @@ struct ClothUnSelectedComponent: View {
     
     /// 서치모드
     @Binding var searchMode: Bool
+    /// 선택 검색 탭
+    @State var selectedTab: Int = 0
+    /// 검색 텍스트
+    @State var searchText: String = ""
+    /// 검색 옷 목록
+    @State var clothesList: [Clothes] = []
     
     // 옷 카테고리
 //    let category: Category
@@ -26,8 +32,6 @@ struct ClothUnSelectedComponent: View {
     var additionBtn: AnyView? = nil
     
     let test: [Clothes] =  ClothesDTO.mockData()
-    
-    @State var searchText: String
     
     var body: some View {
         Rectangle()
@@ -59,7 +63,9 @@ struct ClothUnSelectedComponent: View {
                                 Text(clothTemplate.name)
                                     .font(Font.pretendard(.semibold, size: 17))
                                 Button(action: {
-                                    searchMode.toggle()
+                                    withAnimation {
+                                        self.searchMode.toggle()
+                                    }
                                 }, label: {
                                     Image(systemName: "magnifyingglass")
                                         .foregroundStyle(.black)
@@ -122,7 +128,9 @@ struct ClothUnSelectedComponent: View {
                                     .font(.pretendard(.semibold, size: 17))
                                 Spacer()
                                 Button(action: {
-                                    self.searchMode.toggle()
+                                    withAnimation {
+                                        self.searchMode.toggle()
+                                    }
                                 }, label: {
                                     Image(systemName: "xmark")
                                         .renderingMode(.template)
@@ -134,7 +142,7 @@ struct ClothUnSelectedComponent: View {
                             .padding(.horizontal)
                             
                             // 중간 세그먼트 컨트롤
-                            SegmentControlComponent(selectedTab: .constant(0), tabMenus: MyClosetTab.allCases.map{ $0.rawValue }, isMain: false)
+                            SegmentControlComponent(selectedTab: $selectedTab, tabMenus: MyClosetTab.allCases.map{ $0.rawValue }, isMain: false)
                                 
                             // 중간 서치바
                             SearchBarComponent(searchText: $searchText, placeHolder: "등록한 옷을 검색하세요", searchAction: { print($0) })
@@ -151,6 +159,9 @@ struct ClothUnSelectedComponent: View {
                                             clothThickness: test[index].thickness ?? .NORMAL,
                                             width: 300
                                         )
+                                        .onTapGesture {
+                                            print(test[index])
+                                        }
                                     }
                                 }
                                 .padding()
@@ -161,8 +172,8 @@ struct ClothUnSelectedComponent: View {
                         }
                     } else {
                         Button(action: {
-                            DispatchQueue.main.async{
-                                searchMode.toggle()
+                            withAnimation {
+                                self.searchMode.toggle()
                             }
                         }, label: {
                             Text("직접 검색하여 추가하기")
@@ -186,6 +197,6 @@ struct ClothUnSelectedComponent: View {
                     .foregroundStyle(.black)
             })
             .padding()
-        ), searchText: ""
+        )
     )
 }

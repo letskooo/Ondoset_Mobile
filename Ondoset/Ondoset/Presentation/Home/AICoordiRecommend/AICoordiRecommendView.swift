@@ -66,7 +66,7 @@ struct AICoordiRecommendView: View {
                                         .foregroundStyle(.black)
                                 })
                                 .padding()
-                            ), searchText: ""
+                            )
                         )
                     }
                 }
