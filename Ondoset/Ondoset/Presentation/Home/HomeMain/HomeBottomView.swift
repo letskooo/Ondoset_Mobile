@@ -59,7 +59,7 @@ struct HomeBottomView: View {
 }
 
 struct HomeBottomHeaderView: View {
-    
+    @EnvironmentObject var wholeVM: WholeViewModel
     @EnvironmentObject var homeMainVM: HomeMainViewModel
     // properties
     var viewType: HomeBottomViewType
@@ -71,7 +71,9 @@ struct HomeBottomHeaderView: View {
                     .font(.pretendard(.semibold, size: 17))
                 Spacer()
                 if viewType == .OthersOOTDView {
-                    Button(action: {}, label: {
+                    Button(action: {
+                        wholeVM.selectedTab = .ootd
+                    }, label: {
                         HStack(spacing: 0) {
                             Text("OOTD")
                                 .font(.pretendard(.semibold, size: 13))
