@@ -22,6 +22,7 @@ struct GetCoordiRecordResponseDTO: Decodable {
     let month: Int
     let day: Int
     let satisfaction: String?
+    let region: String?
     let departTime: Int?
     let arrivalTime: Int?
     let weather: String?
@@ -39,10 +40,10 @@ extension GetCoordiRecordResponseDTO {
             
             let coordiImageURL: String? = "\(Constants.serverURL)/images\(image)"
 
-            return CoordiRecord(coordiId: self.coordiId, year: self.year, month: self.month, day: self.day, satisfaction: Satisfaction(rawValue: self.satisfaction ?? ""), departTime: self.departTime, arrivalTime: self.arrivalTime, weather: Weather(rawValue: self.weather ?? ""), lowestTemp: self.lowestTemp, highestTemp: self.highestTemp, imageURL: coordiImageURL, clothesList: self.clothesList.compactMap { $0.toClothes()})
+            return CoordiRecord(coordiId: self.coordiId, year: self.year, month: self.month, day: self.day, satisfaction: Satisfaction(rawValue: self.satisfaction ?? ""), region: self.region, departTime: self.departTime, arrivalTime: self.arrivalTime, weather: Weather(rawValue: self.weather ?? ""), lowestTemp: self.lowestTemp, highestTemp: self.highestTemp, imageURL: coordiImageURL, clothesList: self.clothesList.compactMap { $0.toClothes()})
         } else {
-            return CoordiRecord(coordiId: self.coordiId, year: self.year, month: self.month, day: self.day, satisfaction: Satisfaction(rawValue: self.satisfaction ?? ""), departTime: self.departTime, arrivalTime: self.arrivalTime, weather: Weather(rawValue: self.weather ?? ""), lowestTemp: self.lowestTemp, highestTemp: self.highestTemp, imageURL: nil, clothesList: self.clothesList.compactMap { $0.toClothes()})
-        }   
+            return CoordiRecord(coordiId: self.coordiId, year: self.year, month: self.month, day: self.day, satisfaction: Satisfaction(rawValue: self.satisfaction ?? ""), region: self.region, departTime: self.departTime, arrivalTime: self.arrivalTime, weather: Weather(rawValue: self.weather ?? ""), lowestTemp: self.lowestTemp, highestTemp: self.highestTemp, imageURL: nil, clothesList: self.clothesList.compactMap { $0.toClothes()})
+        }
     }
 }
 
@@ -63,6 +64,7 @@ struct SetCoordiTimeRequestDTO: Encodable {
     
     let lat: Double
     let lon: Double
+    let region: String
     let departTime: Int
     let arrivalTime: Int
 }
@@ -105,20 +107,20 @@ struct SetCoordiPlanResponseDTO: Decodable {
     let date: Int
 }
 
-// 과거 코디 기록 요청 DTO
+// 과거 코디 기록 등록 요청 DTO
 struct SetCoordiRecordRequestDTO: Encodable {
     
     let lat: Double
     let lon: Double
+    let region: String
     let departTime: Int
     let arrivalTime: Int
     let clothesList: [Int]
 }
 
-// 과거 코디 기록 응답 DTO
+// 과거 코디 기록 등록 응답 DTO
 struct SetCoordiRecordResponseDTO: Decodable {
     
-    let saved: Bool // 등록하는 시점이 아직 오늘이 안 지났는지의 여부. true면 외출 시간이 잘 등록된 것. false면 등록 안 되어서 나중에 등록해달라고 안내가 나가야 함.
     let date: Int
 }
 
@@ -138,4 +140,30 @@ struct GetSatisfactionPredRequestDTO: Encodable {
 struct GetSatisfactionPredResponseDTO: Decodable {
     
     let pred: String
+}
+
+// 코디 하루 조회 요청 DTO
+struct GetDailyCoordiRequestDTO {
+    
+    let year: Int
+    let month: Int
+    let day: Int
+}
+
+// 코디 하루 조회 응답 DTO
+struct GetDailyCoordiResponseDTO {
+    
+    let coordiId: Int
+    let year: Int
+    let month: Int
+    let day: Int
+    let satisfaction: String?
+    let region: String?
+    let departTime: Int?
+    let arrivalTime: Int?
+    let weather: String?
+    let lowestTemp: Int?
+    let highestTemp: Int?
+    let imageURL: String?
+    let clothesList: [Clothes]
 }

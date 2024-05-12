@@ -137,6 +137,7 @@ extension ReadWeatherOOTDListResponseDTO {
 // OOTD 등록 DTO
 struct AddOOTDDTO: Encodable {
     
+    let region: String
     let departTime: Int
     let arrivalTime: Int
     let weather: String
@@ -242,6 +243,7 @@ struct GetOOTDWeatherResponseDTO: Decodable {
 // OOTD 등록 요청 DTO
 struct PostOOTDRequestDTO: Encodable {
     
+    let region: String
     let departTime: Int
     let arrivalTime: Int
     let weather: String
@@ -254,4 +256,37 @@ struct PostOOTDRequestDTO: Encodable {
 // OOTD 등록 응답 DTO
 struct PostOOTDResponseDTO: Decodable {
     let ootdId: Int
+}
+
+// OOTD 수정 요청 DTO
+struct PutOOTDRequestDTO: Encodable {
+    
+    let region: String
+    let departTime: Int
+    let arrivalTime: Int
+    let weather: String
+    let lowestTemp: Int
+    let highestTemp: Int
+    let image: Data
+    let wearingList: [String]
+}
+
+// OOTD 수정 응답 DTO
+struct PutOOTDResponseDTO: Decodable {
+    
+    let ootdId: Int
+}
+
+// OOTD 수정용 조회 응답 DTO
+struct GetOOTDforPutRequestDTO: Decodable {
+    
+    let ootdId: Int
+    let region: String
+    let departTime: Int
+    let arrivalTime: Int
+    let weather: String
+    let lowestTemp: Int
+    let highestTemp: Int
+    let imageURL: String
+    let wearing: [String]
 }
