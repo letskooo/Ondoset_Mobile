@@ -29,6 +29,26 @@ final class AICoordiRecommendViewModel: ObservableObject {
             }
         }
         
+        // 커스텀 템플릿에서 옷 추가하기
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("AddCloth"), object: nil, queue: .main) { notification in
+            if let clothes = notification.userInfo?["clothes"] as? Clothes {
+                print("Received notification with SelectCloth: \(clothes)")
+                DispatchQueue.main.async {
+                    withAnimation {
+                        self.clothesData.insert(
+                            .init(
+                                category: clothes.category,
+                                name: clothes.name,
+                                searchMode: false,
+                                cloth: clothes
+                            ),
+                            at: 0
+                        )
+                    }
+                }
+            }
+        }
+        
         // 템플릿 삭제하기
         NotificationCenter.default.addObserver(forName: NSNotification.Name("DeleteCloth"), object: nil, queue: .main) { notification in
             if let index = notification.userInfo?["index"] as? Range<Array<ClothTemplate>.Index>.Element {
@@ -46,14 +66,29 @@ final class AICoordiRecommendViewModel: ObservableObject {
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("SelectCloth"), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("DeleteCloth"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("AppCloth"), object: nil)
     }
 }
 
 // MARK: Interface Functions
 extension AICoordiRecommendViewModel {
+    func addClothes(with cloth: Clothes) {
+        DispatchQueue.main.async {
+            self.clothesData.removeLast()
+            self.clothesData.append(
+                .init(
+                    category: cloth.category,
+                    name: cloth.name,
+                    searchMode: false,
+                    cloth: cloth
+                )
+            )
+            self.clothesData.append(.init(name: ""))
+        }
+        
+    }
+    
     func deleteClothes(with idx: Int) {
         self.clothesData.remove(at: idx)
     }
-    
-//    func addClothes(with )
 }

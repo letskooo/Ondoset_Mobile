@@ -180,8 +180,7 @@ struct ClothUnSelectedComponent: View {
                                                 width: 300
                                             )
                                             .onTapGesture {
-                                                print(clothSearchVM.presentingClothesData[index])
-                                                NotificationCenter.default.post(name: NSNotification.Name("SelectCloth"), object: nil, userInfo: ["clothes": clothSearchVM.presentingClothesData[index], "index": cellIndex])
+                                                NotificationCenter.default.post(name: NSNotification.Name("AddCloth"), object: nil, userInfo: ["clothes": clothSearchVM.presentingClothesData[index]])
                                             }
                                         }
                                     }
