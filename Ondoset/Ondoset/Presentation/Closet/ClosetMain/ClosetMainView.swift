@@ -24,7 +24,7 @@ struct ClosetMainView: View {
         // MARK: Main View
         NavigationStack {
             VStack(alignment: .center, spacing: 0) {
-                SegmentControlComponent(selectedTab: $closetMainVM.selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue})
+                SegmentControlComponent(selectedTab: $closetMainVM.selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue}, isMain: true)
                     .padding(.bottom, 15)
                 
                 SearchBarComponent(searchText: $closetMainVM.searchText, placeHolder: "등록한 옷을 검색하세요", searchAction: {
@@ -78,6 +78,19 @@ struct ClosetMainView: View {
                     
             })
             .offset(x: 145, y: 290)
+        }
+        .overlay {
+            if closetMainVM.presentAlert {
+                AlertComponent(
+                    showAlert: $closetMainVM.presentAlert,
+                    alertTitle: "\(closetMainVM.getClothesName(by: closetMainVM.clothesIdWillDeleted)) 삭제",
+                    alertContent: "삭제하면 취소할 수 없습니다.\n정말로 삭제하시겠습니까?",
+                    rightBtnTitle: "삭제",
+                    rightBtnAction: {
+                        closetMainVM.deleteClothes(by: closetMainVM.clothesIdWillDeleted)
+                    }
+                )
+            }
         }
         .sheet(isPresented: $closetMainVM.presentMyClothing) {
             NavigationView { MyClothingView(myClothingVM: .init(myClothing: closetMainVM.myClothing)) }

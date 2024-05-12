@@ -13,4 +13,6 @@ class WholeViewModel: ObservableObject {
     // false면 숨기지 않음. true면 숨김.
     @Published var isTabBarHidden: Bool = false
     @Published var isTabBarAlertStatus: Bool = false
+    // 선택된 탭
+    @Published var selectedTab: Tab = .home
 }

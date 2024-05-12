@@ -90,8 +90,9 @@ extension FcstDTO {
 struct ForecastDTO: Decodable {
     
     let now: Double         // 현재 기온
-    let diff: Int?          // 전날 같은 시각 대비 온도차
+    let diff: Double?          // 전날 같은 시각 대비 온도차
     let feel: Double        // 체감 온도
+    let weather: String     // 날씨 enum
     let min: Int?           // 최저 기온
     let max: Int?           // 최고 기온
     let fcst: [FcstDTO]
@@ -135,7 +136,7 @@ struct GetHomeInfoResponseDTO: Decodable {
     let forecast: ForecastDTO
     let plan: [PlanDTO]?
     let record: [RecordDTO]
-    let recommend: [RecommendDTO]
+    let recommend: [[RecommendDTO]]
     let ootd: [OOTDShortDTO]
 }
 
@@ -171,14 +172,15 @@ extension GetHomeInfoResponseDTO {
             return Record(date: record.date, clothesList: clothesList)
         }
         
-        let recommends = recommend.compactMap { recommend -> Recommend in
-            
-            if let thickness = recommend.thickness {
-                
-                return Recommend(category: Category(rawValue: recommend.category)!, tag: recommend.tag, tagId: recommend.tagId, thickness: Thickness(rawValue: thickness), fullTag: recommend.fullTag)
-            } else {
-                
-                return Recommend(category: Category(rawValue: recommend.category)!, tag: recommend.tag, tagId: recommend.tagId, thickness: nil, fullTag: recommend.fullTag)
+        let recommends = recommend.compactMap { recommend -> [Recommend] in
+            recommend.map { recom in
+                if let thickness = recom.thickness {
+                    
+                    return Recommend(category: Category(rawValue: recom.category)!, tag: recom.tag, tagId: recom.tagId, thickness: Thickness(rawValue: thickness), fullTag: recom.fullTag)
+                } else {
+                    
+                    return Recommend(category: Category(rawValue: recom.category)!, tag: recom.tag, tagId: recom.tagId, thickness: nil, fullTag: recom.fullTag)
+                }
             }
         }
         

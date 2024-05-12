@@ -13,6 +13,8 @@ final class ClosetMainViewModel: ObservableObject {
     
     /// MyClothingView 표시
     @Published var presentMyClothing: Bool = false
+    /// 삭제 alert 표시
+    @Published var presentAlert: Bool = false
     /// 선택한 옷
     @Published var myClothing: Clothes? = nil
     /// 선택된 탭 넘버
@@ -37,6 +39,8 @@ final class ClosetMainViewModel: ObservableObject {
     private var clothesData: [Clothes] = [] {
         didSet { setPresentingData() }
     }
+    /// 삭제할 옷 데이터
+    @Published var clothesIdWillDeleted: Int = -1
     /// clothes Data last page
     private var clothesLastPage: Int = -1
     
@@ -52,25 +56,43 @@ final class ClosetMainViewModel: ObservableObject {
                 self.presentMyClothing = true
             }
         }
-        // 옷 삭제하기
-        NotificationCenter.default.addObserver(forName: NSNotification.Name("DeleteClothes"), object: nil, queue: .main) { notification in
+        // 옷 삭제 경고 표시하기
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("PresentDeleteAlert"), object: nil, queue: .main) { notification in
             if let clothesId = notification.userInfo?["clothesId"] as? Int {
-                print("Received notification with DELETE: \(clothesId)")
-                Task {
-                    await self.deleteMyClothes(with: clothesId)
-                }
+                print("Received notification with DELETE_ALERT: \(clothesId)")
+                self.presentAlert = true
+                self.clothesIdWillDeleted = clothesId
             }
         }
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name("EditClothes"), object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("DeleteClothes"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("PresentDeleteAlert"), object: nil)
     }
 }
 
 // MARK: Interface Functions
 extension ClosetMainViewModel {
+    
+    func getClothesName(by clothesId: Int) -> String {
+        return self.clothesData.first(where: { $0.clothesId == clothesId })?.name ?? ""
+    }
+    
+    func deleteClothes(by clothesId: Int) {
+        Task {
+            await self.deleteMyClothes(with: clothesId)
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                clothesLastPage = -1 // 탭 변경 시엔 항상 -1로 시작
+                Task {
+                    self.selectedTab != 0
+                    ? await self.getMyClothes(by: Category.allCases[self.selectedTab - 1])
+                    : await self.getMyAllClothes()
+                }
+            }
+        }
+    }
 }
 
 // MARK: Internal Functions
@@ -98,6 +120,7 @@ extension ClosetMainViewModel {
     private func deleteMyClothes(with id: Int) async {
         if let result = await clothesUseCase.deleteCloth(clothesId: id) {
             print("삭제 완료")
+            self.presentAlert = false
         }
     }
     

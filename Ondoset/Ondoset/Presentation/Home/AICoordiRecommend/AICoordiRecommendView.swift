@@ -7,11 +7,50 @@
 
 import SwiftUI
 
+enum SheetViewType {
+    case AICoordi
+    case MyCoordi
+}
+
+enum TempIndicatorType {
+    case cold
+    case hot
+    case good
+    
+    var description: String {
+        switch self {
+            
+        case .cold:
+            return "추울 것 같아요!\n등록하려면 태그별 옷을 지정해주세요"
+        case .hot:
+            return "더울 것 같아요!\n등록하려면 태그별 옷을 지정해주세요"
+        case .good:
+            return "이대로 나가도 좋아요!"
+        }
+    }
+    
+    var image: ImageResource {
+        switch self {
+            
+        case .cold:
+            return .coldCloudie
+        case .hot:
+            return .hotCloudie
+        case .good:
+            return .happyCloudie
+        }
+    }
+}
+
 struct AICoordiRecommendView: View {
     
-    @State var clothesData: [ClothTemplate] = ClothTemplate.mockData()
-//    @State var saveAvailable: Bool = true
-//    @Environment(\.dismiss) var dismiss
+    var viewType: SheetViewType
+    @StateObject var AICoordiRecommendVM: AICoordiRecommendViewModel
+    @Environment(\.dismiss) var dismiss {
+        didSet {
+            NotificationCenter.default.post(name: NSNotification.Name("DeleteSelectedRecommendation"), object: nil)
+        }
+    }
     
     var body: some View {
         VStack {
@@ -19,54 +58,66 @@ struct AICoordiRecommendView: View {
             // 코디 선택 스크롤 뷰
             ScrollView {
                 LazyVStack(spacing: 16) {
-                    ForEach(clothesData.indices, id: \.self) { index in
+                    ForEach(AICoordiRecommendVM.clothesData.indices, id: \.self) { index in
                         ClothUnSelectedComponent(
                             clothTemplate: .init(
-                                category: clothesData[index].category,
-                                name: clothesData[index].name,
-                                searchMode: false,
-                                cloth: clothesData[index].cloth
-                            ),
+                                category: AICoordiRecommendVM.clothesData[index].category,
+                                name: AICoordiRecommendVM.clothesData[index].name,
+                                searchMode: AICoordiRecommendVM.clothesData[index].searchMode,
+                                cloth: AICoordiRecommendVM.clothesData[index].cloth
+                            ), cellIndex: index, searchMode: $AICoordiRecommendVM.clothesData[index].searchMode,
                             width: 340,
                             additionBtn: AnyView(
-                                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                                Button(action: {
+                                    AICoordiRecommendVM.deleteClothes(with: index)
+                                }, label: {
                                     Image(systemName: "xmark")
                                         .fontWeight(.semibold)
                                         .foregroundStyle(.black)
                                 })
                                 .padding()
-                            ), searchText: ""
+                            )
                         )
                     }
                 }
             }
             // 바텀 뷰
             VStack {
-                HStack {
-                    Image(.noOOTDList)
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                    
-                    Text("추울 것 같아요!\n등록하려면 태그별 옷을 지정해주세요")
-                        .multilineTextAlignment(.center)
-                        .font(.pretendard(.regular, size: 15))
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(.ondosetBackground)
-                        )
+                if let tempIndicator = AICoordiRecommendVM.tempIndicator {
+                    HStack {
+                        Image(tempIndicator.image)
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                        
+                        Text(tempIndicator.description)
+                            .multilineTextAlignment(.center)
+                            .font(.pretendard(.regular, size: 15))
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(.ondosetBackground)
+                            )
+                    }
+                    .padding()
                 }
-                .padding()
-                ButtonComponent(isBtnAvailable: .constant(false), width: 340, btnText: "3/17 코디로 등록하기", radius: 15, action: {})
+                
+                ButtonComponent(isBtnAvailable: $AICoordiRecommendVM.isSaveAvailable, width: 340, btnText: "\(DateFormatter.dateOnly.string(from: AICoordiRecommendVM.currentDate)) 코디로 등록하기", radius: 15, action: {
+                    Task {
+                        await AICoordiRecommendVM.postClothesCombination(addType: self.viewType == .AICoordi ? "ai" : "plan")
+                        self.dismiss()
+                    }
+                })
             }
             .clipShape(.rect(cornerRadii: .init(topLeading: 10, bottomLeading: 0, bottomTrailing: 0, topTrailing: 10)))
         }
-        .navigationTitle("AI 코디 추천")
+        .navigationTitle(self.viewType == .AICoordi ? "AI 코디 추천" : "나의 코디 추가하기")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {}, label: {
+                Button(action: {
+                    self.dismiss()
+                }, label: {
                     Text("닫기")
                         .font(.pretendard(.semibold, size: 15))
                         .foregroundStyle(.gray)
@@ -77,7 +128,7 @@ struct AICoordiRecommendView: View {
 }
 
 #Preview {
-    AICoordiRecommendView()
+    AICoordiRecommendView(viewType: .MyCoordi, AICoordiRecommendVM: .init(clothesData: ClothTemplate.mockData()))
 }
 
 
