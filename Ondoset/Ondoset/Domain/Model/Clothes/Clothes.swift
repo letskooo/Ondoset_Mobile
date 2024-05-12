@@ -130,7 +130,7 @@ struct SearchedClothByTag {
 struct AllClothes {
     
     let lastPage: Int
-    let ClothesList: [Clothes]
+    let clothesList: [Clothes]
 }
 
 

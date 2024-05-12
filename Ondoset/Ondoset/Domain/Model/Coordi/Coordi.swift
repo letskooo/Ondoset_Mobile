@@ -14,6 +14,7 @@ struct CoordiRecord: Hashable {
     let month: Int
     let day: Int
     let satisfaction: Satisfaction?
+    let region: String?
     let departTime: Int?
     let arrivalTime: Int?
     let weather: Weather?
