@@ -65,7 +65,7 @@ struct AICoordiRecommendView: View {
                                 name: AICoordiRecommendVM.clothesData[index].name,
                                 searchMode: AICoordiRecommendVM.clothesData[index].searchMode,
                                 cloth: AICoordiRecommendVM.clothesData[index].cloth
-                            ), searchMode: $AICoordiRecommendVM.clothesData[index].searchMode,
+                            ), cellIndex: index, searchMode: $AICoordiRecommendVM.clothesData[index].searchMode,
                             width: 340,
                             additionBtn: AnyView(
                                 Button(action: {

@@ -12,6 +12,8 @@ struct ClothUnSelectedComponent: View {
     
     /// 옷 템플릿
     let clothTemplate: ClothTemplate
+    /// ClothTemplate 인덱스
+    let cellIndex: Range<Array<ClothTemplate>.Index>.Element
     
     /// 서치모드
     @Binding var searchMode: Bool
@@ -23,7 +25,7 @@ struct ClothUnSelectedComponent: View {
     // 우측에 들어가는 내용
     var additionBtn: AnyView? = nil
     
-    let test: [Clothes] =  ClothesDTO.mockData()
+//    let test: [Clothes] =  ClothesDTO.mockData()
     
     var body: some View {
         Rectangle()
@@ -31,149 +33,178 @@ struct ClothUnSelectedComponent: View {
             .foregroundStyle(.white)
             .cornerRadius(10)
             .overlay(alignment: .top) {
-                
-                // 카테고리 존재하는 경우
-                if let category = clothTemplate.category {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(category.lightColor)
-                    
-                    VStack {
-                        HStack(spacing: 10) {
+                ZStack {
+                    // 카테고리 존재하는 경우
+                    if let category = clothTemplate.category {
+                        // clothes 선택한 경우
+                        if let clothes = clothTemplate.cloth {
+                            ClothSelectedComponent(
+                                category: clothes.category,
+                                clothName: clothes.name,
+                                clothTag: clothes.tag,
+                                clothThickness: clothes.thickness,
+                                width: 340,
+                                additionBtn: AnyView(
+                                    Button(action: {
+                                        NotificationCenter.default.post(name: NSNotification.Name("DeleteCloth"), object: nil, userInfo: ["index": cellIndex])
+                                    }, label: {
+                                        Image(systemName: "xmark")
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(.black)
+                                    })
+                                    .padding()
+                                )
+                            )
+                        } else {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(category.lightColor)
                             
-                            // 카테고리 이미지
-                            category.categoryImage
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 48, height: 48)
-                            
-                            Rectangle()
-                                .foregroundStyle(category.color)
-                                .frame(width: 2, height: 36)
-                            
-                            HStack(alignment: .center) {
-                                
-                                Text(clothTemplate.name)
-                                    .font(Font.pretendard(.semibold, size: 17))
-                                Button(action: {
-                                    withAnimation {
-                                        self.searchMode.toggle()
-                                    }
-                                }, label: {
-                                    Image(systemName: "magnifyingglass")
-                                        .foregroundStyle(.black)
-                                })
-                            }
-                            .padding(.leading, 5)
-                            
-                            Spacer()
-                            
-                            if let additionalButton = self.additionBtn {
-                                additionalButton
-                            }
-                            
-                        }
-                        .padding(.leading, 18)
-                        
-                        if searchMode {
-                            // 아이템 목록
-                            ScrollView(.vertical) {
-                                VStack(spacing: 10) {
-                                    ForEach(test.indices, id: \.self) { index in
-                                        ClothSelectedComponent(
-                                            category: test[index].category,
-                                            clothName: test[index].name,
-                                            clothTag: test[index].tag,
-                                            clothThickness: test[index].thickness ?? .NORMAL,
-                                            width: 320
-                                        )
-                                    }
-                                }
-                            }
-                            .frame(height: 250)
-                            HStack {
-                                Spacer()
-                                Button(action: {
+                            VStack {
+                                HStack(spacing: 10) {
                                     
-                                }, label: {
-                                    HStack(spacing: 0) {
-                                        Text("이 키워드로 쇼핑몰에서 찾아보기")
-                                            .font(.pretendard(.semibold, size: 13))
-                                        Image(systemName: "chevron.forward")
+                                    // 카테고리 이미지
+                                    category.categoryImage
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 48, height: 48)
+                                    
+                                    Rectangle()
+                                        .foregroundStyle(category.color)
+                                        .frame(width: 2, height: 36)
+                                    
+                                    HStack(alignment: .center) {
+                                        
+                                        Text(clothTemplate.name)
+                                            .font(Font.pretendard(.semibold, size: 17))
+                                        Button(action: {
+                                            withAnimation {
+                                                self.searchMode.toggle()
+                                            }
+                                        }, label: {
+                                            Image(systemName: "magnifyingglass")
+                                                .foregroundStyle(.black)
+                                        })
                                     }
-                                    .foregroundStyle(.main)
-                                })
-                            }
-                            .padding(.horizontal)
-                            
-                        }
-                    }
-                }
-                // 직접 추가하여 검색하는 경우
-                else {
-                    RoundedRectangle(cornerRadius: 10)
-                        .strokeBorder(Color.gray, style: .init(lineWidth: 2, lineCap: .round, lineJoin: .round, miterLimit: 8, dash: [8], dashPhase: 10))
-                    if searchMode {
-                        VStack {
-                            // 상단 타이틀 + x 버튼
-                            HStack {
-                                Text("직접 검색하여 추가하기")
-                                    .font(.pretendard(.semibold, size: 17))
-                                Spacer()
-                                Button(action: {
-                                    withAnimation {
-                                        self.searchMode.toggle()
+                                    .padding(.leading, 5)
+                                    
+                                    Spacer()
+                                    
+                                    if let additionalButton = self.additionBtn {
+                                        additionalButton
                                     }
-                                }, label: {
-                                    Image(systemName: "xmark")
-                                        .renderingMode(.template)
-                                        .foregroundStyle(.black)
-                                        .fontWeight(.semibold)
-                                })
-                            }
-                            .padding(.top)
-                            .padding(.horizontal)
-                            
-                            // 중간 세그먼트 컨트롤
-                            SegmentControlComponent(selectedTab: $clothSearchVM.selectedTab, tabMenus: MyClosetTab.allCases.map{ $0.rawValue }, isMain: false)
+                                    
+                                }
+                                .padding(.leading, 18)
                                 
-                            // 중간 서치바
-                            SearchBarComponent(searchText: $clothSearchVM.searchText, placeHolder: "등록한 옷을 검색하세요", searchAction: { print($0) })
-                                .padding(.horizontal)
-                            
-                            // 아이템 목록
-                            ScrollView(.vertical) {
-                                VStack(spacing: 10) {
-                                    ForEach(clothSearchVM.presentingClothesData.indices, id: \.self) { index in
-                                        ClothSelectedComponent(
-                                            category: clothSearchVM.presentingClothesData[index].category,
-                                            clothName: clothSearchVM.presentingClothesData[index].name,
-                                            clothTag: clothSearchVM.presentingClothesData[index].tag,
-                                            clothThickness: clothSearchVM.presentingClothesData[index].thickness ?? .NORMAL,
-                                            width: 300
-                                        )
-                                        .onTapGesture {
-                                            print(test[index])
+                                if searchMode {
+                                    // 아이템 목록
+                                    ScrollView(.vertical) {
+                                        VStack(spacing: 10) {
+                                            ForEach(clothSearchVM.presentingClothesData.indices, id: \.self) { index in
+                                                ClothSelectedComponent(
+                                                    category: clothSearchVM.presentingClothesData[index].category,
+                                                    clothName: clothSearchVM.presentingClothesData[index].name,
+                                                    clothTag: clothSearchVM.presentingClothesData[index].tag,
+                                                    clothThickness: clothSearchVM.presentingClothesData[index].thickness ?? .NORMAL,
+                                                    width: 300
+                                                )
+                                                .onTapGesture {
+        //                                            print(clothSearchVM.presentingClothesData[index])
+                                                    NotificationCenter.default.post(name: NSNotification.Name("SelectCloth"), object: nil, userInfo: ["clothes": clothSearchVM.presentingClothesData[index], "index": cellIndex])
+                                                }
+                                            }
                                         }
                                     }
+                                    .frame(height: 250)
+                                    HStack {
+                                        Spacer()
+                                        Button(action: {
+                                            
+                                        }, label: {
+                                            HStack(spacing: 0) {
+                                                Text("이 키워드로 쇼핑몰에서 찾아보기")
+                                                    .font(.pretendard(.semibold, size: 13))
+                                                Image(systemName: "chevron.forward")
+                                            }
+                                            .foregroundStyle(.main)
+                                        })
+                                    }
+                                    .padding(.horizontal)
+                                    
                                 }
-                                .padding()
                             }
-                            .frame(height: 180)
-                            .padding(.bottom)
-                            
                         }
-                    } else {
-                        Button(action: {
-                            withAnimation {
-                                self.searchMode.toggle()
+                        
+                    }
+                    // 직접 추가하여 검색하는 경우
+                    else {
+                        RoundedRectangle(cornerRadius: 10)
+                            .strokeBorder(Color.gray, style: .init(lineWidth: 2, lineCap: .round, lineJoin: .round, miterLimit: 8, dash: [8], dashPhase: 10))
+                        if searchMode {
+                            VStack {
+                                // 상단 타이틀 + x 버튼
+                                HStack {
+                                    Text("직접 검색하여 추가하기")
+                                        .font(.pretendard(.semibold, size: 17))
+                                    Spacer()
+                                    Button(action: {
+                                        withAnimation {
+                                            self.searchMode.toggle()
+                                        }
+                                    }, label: {
+                                        Image(systemName: "xmark")
+                                            .renderingMode(.template)
+                                            .foregroundStyle(.black)
+                                            .fontWeight(.semibold)
+                                    })
+                                }
+                                .padding(.top)
+                                .padding(.horizontal)
+                                
+                                // 중간 세그먼트 컨트롤
+                                SegmentControlComponent(selectedTab: $clothSearchVM.selectedTab, tabMenus: MyClosetTab.allCases.map{ $0.rawValue }, isMain: false)
+                                    
+                                // 중간 서치바
+                                SearchBarComponent(searchText: $clothSearchVM.searchText, placeHolder: "등록한 옷을 검색하세요", searchAction: { print($0) })
+                                    .padding(.horizontal)
+                                
+                                // 아이템 목록
+                                ScrollView(.vertical) {
+                                    VStack(spacing: 10) {
+                                        ForEach(clothSearchVM.presentingClothesData.indices, id: \.self) { index in
+                                            ClothSelectedComponent(
+                                                category: clothSearchVM.presentingClothesData[index].category,
+                                                clothName: clothSearchVM.presentingClothesData[index].name,
+                                                clothTag: clothSearchVM.presentingClothesData[index].tag,
+                                                clothThickness: clothSearchVM.presentingClothesData[index].thickness ?? .NORMAL,
+                                                width: 300
+                                            )
+                                            .onTapGesture {
+                                                print(clothSearchVM.presentingClothesData[index])
+                                                NotificationCenter.default.post(name: NSNotification.Name("SelectCloth"), object: nil, userInfo: ["clothes": clothSearchVM.presentingClothesData[index], "index": cellIndex])
+                                            }
+                                        }
+                                    }
+                                    .padding()
+                                }
+                                .frame(height: 180)
+                                .padding(.bottom)
+                                
                             }
-                        }, label: {
-                            Text("직접 검색하여 추가하기")
-                                .font(.pretendard(.semibold, size: 17))
-                                .foregroundStyle(.gray)
-                        })
+                        } else {
+                            Button(action: {
+                                withAnimation {
+                                    self.searchMode.toggle()
+                                }
+                            }, label: {
+                                Text("직접 검색하여 추가하기")
+                                    .font(.pretendard(.semibold, size: 17))
+                                    .foregroundStyle(.gray)
+                            })
+                        }
                     }
                 }
+                
             }
     }
 }
@@ -182,10 +213,6 @@ final class ClothSearchViewModel: ObservableObject {
     
     private let clothesUseCase: ClothesUseCase = ClothesUseCase.shared
     
-    /// MyClothingView 표시
-    @Published var presentMyClothing: Bool = false
-    /// 선택한 옷
-    @Published var myClothing: Clothes? = nil
     /// 선택된 탭 넘버
     @Published var selectedTab: Int = 0 {
         // 값이 변경됨에 따라 해당 함수가 호출됩니다.
@@ -272,7 +299,7 @@ extension ClothSearchViewModel {
 
 #Preview {
     ClothUnSelectedComponent(
-        clothTemplate: .init(name: "바지"), searchMode: .constant(true),
+        clothTemplate: .init(name: "바지"), cellIndex: 0, searchMode: .constant(true),
         width: 340,
         additionBtn: AnyView(
             Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
