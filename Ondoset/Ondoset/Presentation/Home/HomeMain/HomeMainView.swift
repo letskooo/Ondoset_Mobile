@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeMainView: View {
     
     @StateObject var homeMainVM: HomeMainViewModel = .init()
-    @State var presentAIRecomm: Bool = false
+    
     var body: some View {
         
         /// 각 탭의 메인 뷰마다 NavigationStack을 두는 것으로 설계합니다.
@@ -26,8 +26,8 @@ struct HomeMainView: View {
                     .foregroundStyle(.white)
             }
         }
-        .sheet(isPresented: $presentAIRecomm) {
-            NavigationView { AICoordiRecommendView() }
+        .sheet(isPresented: $homeMainVM.presentAIRecomm) {
+            NavigationView { AICoordiRecommendView(AICoordiRecommendVM: .init(clothesData: homeMainVM.selectedClothTemplates ?? [.init(name: "")])) }
         }
     }
 }

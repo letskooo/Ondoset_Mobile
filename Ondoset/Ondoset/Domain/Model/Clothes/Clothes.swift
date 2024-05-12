@@ -110,6 +110,17 @@ struct Recommend {
     let fullTag: String
 }
 
+extension Recommend {
+    func toClothTemplate() -> ClothTemplate {
+        return .init(
+            category: self.category,
+            name: self.fullTag,
+            searchMode: false,
+            cloth: nil
+        )
+    }
+}
+
 struct OOTDShort {
     
     let imageURL: String

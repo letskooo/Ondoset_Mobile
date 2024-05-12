@@ -39,7 +39,11 @@ enum TempIndicatorType {
 
 struct AICoordiRecommendView: View {
     @StateObject var AICoordiRecommendVM: AICoordiRecommendViewModel
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) var dismiss {
+        didSet {
+            NotificationCenter.default.post(name: NSNotification.Name("DeleteSelectedRecommendation"), object: nil)
+        }
+    }
     
     var body: some View {
         VStack {

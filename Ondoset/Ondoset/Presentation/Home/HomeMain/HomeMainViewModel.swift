@@ -21,6 +21,10 @@ final class HomeMainViewModel: ObservableObject {
         }
     }
     @Published var homeViewLocate: CLLocationCoordinate2D = .init(latitude: 37.4551254, longitude: 127.1334847) // 걍 서울
+    /// 코디 작성화면 presenting
+    @Published var presentAIRecomm: Bool = false
+    /// 선택된 옷 템플릿 -> AICoordi 바텀시트에 사용
+    @Published var selectedClothTemplates: [ClothTemplate]? = nil
     
     // WeatherView Datas
     /// 전날 같은 시각 대비 기온 변화
@@ -49,8 +53,15 @@ final class HomeMainViewModel: ObservableObject {
     init() {
         Task {
             await self.getHomeInfo()
-//            self.mockFetchWeatherInfo()
         }
+        // 선택된 추천 삭제하기
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("DeleteSelectedRecommendation"), object: nil, queue: .main) { notification in
+            self.selectedClothTemplates = nil
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("DeleteSelectedRecommendation"), object: nil)
     }
 }
 
@@ -64,6 +75,14 @@ extension HomeMainViewModel {
         let seconds = TimeInterval(intValue)
         let date = Date(timeIntervalSince1970: seconds)
         return date
+    }
+    
+    func selectRecommendation(_ recom: [Recommend]) {
+        var tempList = recom.map { $0.toClothTemplate() }
+        tempList.append(.init(name: ""))
+        
+        self.selectedClothTemplates = tempList
+        self.presentAIRecomm = true
     }
 }
 
