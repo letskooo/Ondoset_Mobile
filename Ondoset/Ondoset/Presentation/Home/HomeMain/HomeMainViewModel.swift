@@ -23,6 +23,8 @@ final class HomeMainViewModel: ObservableObject {
     @Published var homeViewLocate: CLLocationCoordinate2D = .init(latitude: 37.4551254, longitude: 127.1334847) // 걍 서울
     /// 코디 작성화면 presenting
     @Published var presentAIRecomm: Bool = false
+    /// 코디 작성화면 viewType
+    @Published var presentSheetViewType: SheetViewType = .AICoordi
     /// 선택된 옷 템플릿 -> AICoordi 바텀시트에 사용
     @Published var selectedClothTemplates: [ClothTemplate]? = nil
     
@@ -82,6 +84,7 @@ extension HomeMainViewModel {
         tempList.append(.init(name: ""))
         
         self.selectedClothTemplates = tempList
+        self.presentSheetViewType = .AICoordi
         self.presentAIRecomm = true
     }
     
@@ -90,6 +93,7 @@ extension HomeMainViewModel {
         tempList.append(.init(name: ""))
         
         self.selectedClothTemplates = tempList
+        self.presentSheetViewType = .MyCoordi
         self.presentAIRecomm = true
     }
 }

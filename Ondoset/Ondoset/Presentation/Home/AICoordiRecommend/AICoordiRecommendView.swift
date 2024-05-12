@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum SheetViewType {
+    case AICoordi
+    case MyCoordi
+}
+
 enum TempIndicatorType {
     case cold
     case hot
@@ -38,6 +43,8 @@ enum TempIndicatorType {
 }
 
 struct AICoordiRecommendView: View {
+    
+    var viewType: SheetViewType
     @StateObject var AICoordiRecommendVM: AICoordiRecommendViewModel
     @Environment(\.dismiss) var dismiss {
         didSet {
@@ -98,7 +105,7 @@ struct AICoordiRecommendView: View {
             }
             .clipShape(.rect(cornerRadii: .init(topLeading: 10, bottomLeading: 0, bottomTrailing: 0, topTrailing: 10)))
         }
-        .navigationTitle("AI 코디 추천")
+        .navigationTitle(self.viewType == .AICoordi ? "AI 코디 추천" : "나의 코디 추가하기")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -116,7 +123,7 @@ struct AICoordiRecommendView: View {
 }
 
 #Preview {
-    AICoordiRecommendView(AICoordiRecommendVM: .init(clothesData: ClothTemplate.mockData()))
+    AICoordiRecommendView(viewType: .MyCoordi, AICoordiRecommendVM: .init(clothesData: ClothTemplate.mockData()))
 }
 
 

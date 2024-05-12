@@ -27,7 +27,7 @@ struct HomeMainView: View {
             }
         }
         .sheet(isPresented: $homeMainVM.presentAIRecomm) {
-            NavigationView { AICoordiRecommendView(AICoordiRecommendVM: .init(clothesData: homeMainVM.selectedClothTemplates ?? [.init(name: "")])) }
+            NavigationView { AICoordiRecommendView(viewType: homeMainVM.presentSheetViewType, AICoordiRecommendVM: .init(clothesData: homeMainVM.selectedClothTemplates ?? [.init(name: "")])) }
         }
     }
 }
