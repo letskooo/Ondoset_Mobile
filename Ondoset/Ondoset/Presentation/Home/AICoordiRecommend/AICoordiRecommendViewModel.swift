@@ -90,7 +90,7 @@ extension AICoordiRecommendViewModel {
     func postClothesCombination(addType: String) async {
         let _ = await coordiUseCase.setCoordiPlan(
             addType: addType,
-            setCoordiPlanDTO: .init(date: self.currentDate.toInt(),
+            setCoordiPlanDTO: .init(date: self.currentDate.dateWithoutTime()!.toInt(),
                                     clothesList: self.clothesData.compactMap { $0.cloth }.map { $0.clothesId })
         )
     }

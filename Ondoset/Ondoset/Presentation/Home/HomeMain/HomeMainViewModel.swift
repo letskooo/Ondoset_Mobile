@@ -141,7 +141,7 @@ extension HomeMainViewModel {
         
         if let result = await clothesUseCase.getHomeInfo(
             getHomeInfoDTO: .init(
-                date: homeViewDate.toInt(),
+                date: homeViewDate.dateWithoutTime()!.toInt(),
                 lat: homeViewLocate.latitude,
                 lon: homeViewLocate.longitude
             )
