@@ -13,6 +13,14 @@ extension Date {
         return Calendar.current.date(byAdding: .day, value: n, to: self)!
     }
     
+    /// 현재 Date를 오전 12:00으로 세팅
+    func dateWithoutTime() -> Date? {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day], from: self)
+        let date = calendar.date(from: components)
+        return date
+    }
+    
     /// 현재 Date를 Int 값으로 반환
     func toInt() -> Int {
         let now = self.timeIntervalSince1970 // 현재 시간을 초 단위로 가져옴
