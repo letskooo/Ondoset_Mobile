@@ -16,17 +16,16 @@ struct ClothTagComponent: View {
     
     var body: some View {
         
-        Text(tagTitle)
-            .font(Font.pretendard(.semibold, size: 13))  // 글꼴 설정
-            .padding(.horizontal, 20)  // 수평 패딩 추가
-            .padding(.vertical, 4)     // 수직 패딩 추가
-            .background(isSelected ? category.color : category.lightColor)  // 배경색
-            .foregroundColor(isSelected ? .white : category.color)  // 텍스트 색상
-            .cornerRadius(30)  // 모서리 둥글게
-            .overlay(
-                RoundedRectangle(cornerRadius: 30)
-                    .stroke(category.color, lineWidth: 1)  // 테두리 추가
-            )
+        VStack {
+            
+            Text(tagTitle)
+                .font(Font.pretendard(.semibold, size: 13))
+                .padding(.horizontal, 10)
+                .padding(.vertical, 4)
+                .foregroundStyle(isSelected ? .white : category.color)
+        }
+        .background(isSelected ? category.color : category.lightColor)
+        .cornerRadius(30)
     }
 }
 

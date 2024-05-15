@@ -13,17 +13,15 @@ struct ExtendedAlertComponent: View {
     
     @Binding var showAlert: Bool
     
-    let alertTitle: String
+    let isTabBarExist: Bool
     
+    let alertTitle: String
     let content: AnyView
     
-    let leftBtnAction: (() -> Void)?
+    let leftBtnTitle: String? = "취소"
     
-    var rightBtnTitle: String
-    
-    var rightBtnAction: () -> Void
-    
-    var isTabBarExists: Bool
+    let rightBtnTitle: String
+    let rightBtnAction: () -> Void
     
     var body: some View {
         
@@ -34,94 +32,67 @@ struct ExtendedAlertComponent: View {
                 .onTapGesture {
                     showAlert = false
                     
-                    if isTabBarExists {
-                        
+                    // 탭바가 존재하지 않으면
+                    if !isTabBarExist {
                         wholeVM.isTabBarAlertStatus = false
-                    } else {
-                        wholeVM.isTabBarAlertStatus = true
                     }
                 }
-            
+
             VStack(spacing: 0) {
-                
                 
                 Text(alertTitle)
                     .padding(.top, 16)
                     .font(Font.pretendard(.bold, size: 17))
                 
                 content
-                    .padding(.top, 8)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                
+                HStack(spacing: 16) {
                     
-                if let leftBtnAction = leftBtnAction {
-                    
-                    HStack(spacing: 16) {
+                    if let leftBtnTitle = leftBtnTitle {
                         
                         Button {
                             
                             showAlert = false
                             
-                            wholeVM.isTabBarAlertStatus = false
-                            
+                            // 탭바가 존재하면
+                            if !isTabBarExist {
+                                wholeVM.isTabBarAlertStatus = false
+                            }
                             
                         } label: {
                             
-                            Text("취소")
+                            Text(leftBtnTitle)
                                 .font(Font.pretendard(.bold, size: 17))
                                 .foregroundStyle(.darkGray)
                                 .frame(width: 125, height: 50)
                         }
                         .background(.lightGray)
                         .cornerRadius(10)
-                        
-                        Button {
-                            
-                            rightBtnAction()
-                            wholeVM.isTabBarAlertStatus = false
-                            
-                        } label: {
-                            
-                            Text(rightBtnTitle)
-                                .font(Font.pretendard(.bold, size: 17))
-                                .foregroundStyle(.white)
-                                .frame(width: 125, height: 50)
-                        }
-                        .background(.main)
-                        .cornerRadius(10)
-                        
                     }
-                    .padding(.horizontal, 25)
-                    .padding(.top, 20)
-                    .padding(.bottom, 16)
                     
-                } else {
-                    
-                    HStack {
+                    Button {
                         
-                        Button {
-                            
-                            rightBtnAction()
+                        rightBtnAction()
+                        
+                        // 탭바가 존재하면
+                        if !isTabBarExist {
                             wholeVM.isTabBarAlertStatus = false
-                            
-                        } label: {
-                            Text(rightBtnTitle)
-                                .font(Font.pretendard(.bold, size: 17))
-                                .foregroundStyle(.white)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 50)
                         }
-                        .background(.main)
-                        .cornerRadius(10)
                         
+                    } label: {
+                        Text(rightBtnTitle)
+                            .font(Font.pretendard(.bold, size: 17))
+                            .foregroundStyle(.white)
+                            .frame(width: 125, height: 50)
                     }
-                    .padding(.horizontal, 25)
-                    .padding(.top, 20)
-                    .padding(.bottom, 16)
-                    
-                    
+                    .background(.main)
+                    .cornerRadius(10)
                 }
-                
-                
-                
+                .padding(.horizontal, 25)
+                .padding(.top, 20)
+                .padding(.bottom, 16)
             }
             .background(Color.white)
             .frame(width: screenWidth - 120)
@@ -130,17 +101,13 @@ struct ExtendedAlertComponent: View {
         }
         .onAppear {
             
-            if isTabBarExists {
-                
-                wholeVM.isTabBarAlertStatus = false
-            } else {
+            if isTabBarExist {
                 wholeVM.isTabBarAlertStatus = true
             }
         }
-        
     }
 }
 
 //#Preview {
-//    ExtendedAlertComponent()
+//    ExtendedAlertComponent(showAlert: .constant(true), alertTitle: "로그아웃", content: AnyView, alertContent: "삭제하면 취소할 수 없습니다. \n정말로 삭제하시겠습니까?",  rightBtnTitle: "확인", rightBtnAction: {})
 //}
