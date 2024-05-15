@@ -51,7 +51,7 @@ struct AddCoordiRecordView: View {
             VStack {
                 navigationTopBar
                 
-                SegmentControlComponent(selectedTab: $selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue})
+                SegmentControlComponent(selectedTab: $selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue}, isMain: true)
                     .onChange(of: selectedTab) { _ in
                         
                         Task {
