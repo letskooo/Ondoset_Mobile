@@ -20,11 +20,22 @@ enum OOTDEndPoint {
     case likeOOTD(likeOOTDDTO: LikeOOTDRequestDTO)             // OOTD 공감
     case cancelLikeOOTD(ootdId: Int)                           // OOTD 공감 취소
     
+    case getRecommendOOTDList(lastPage: Int)                  // OOTD 추천뷰 조회
     case readWeatherOOTDList(data: ReadWeatherOOTDRequestDTO)  // OOTD 날씨뷰 조회
     
     case getOOTDWeather(data: GetOOTDWeatherRequestDTO)        // OOTD 등록될 날씨 미리보기
 
     case postOOTD(data: PostOOTDRequestDTO)                    // OOTD 등록
+    
+    case getBanPeriod                                          // OOTD 기능 제한 확인
+    
+    case getOOTDforPut(ootdId: Int)                         // OOTD 수정용 조회
+    
+    case putOOTD(ootdId: Int, data: PutOOTDRequestDTO)         // OOTD 수정
+    
+    case deleteOOTD(ootdId: Int)                               // OOTD 삭제
+    
+    case getOtherProfile(memberId: Int, lastPage: Int)         // 타인 프로필 및 ootd 목록 조회
 }
 
 extension OOTDEndPoint: EndPoint {
@@ -59,8 +70,20 @@ extension OOTDEndPoint: EndPoint {
             return "/like/\(ootdId)"
         case .getOOTDWeather:
             return "/weather-preview"
-        case .postOOTD(data: let data):
+        case .postOOTD:
             return "/"
+        case .getRecommendOOTDList(lastPage: let lastPage):
+            return "/latest"
+        case .getBanPeriod:
+            return "/ban-period"
+        case .getOOTDforPut(ootdId: let ootdId):
+            return "/modify-page/\(ootdId)"
+        case .putOOTD(ootdId: let ootdId, data: let data):
+            return "/\(ootdId)"
+        case .deleteOOTD(ootdId: let ootdId):
+            return "/\(ootdId)"
+        case .getOtherProfile:
+            return "/profile"
         }
     }
     
@@ -68,12 +91,14 @@ extension OOTDEndPoint: EndPoint {
         
         switch self {
             
-        case .readMyProfile, .myProfilePaging, .readLikeOOTDList, .readFollowingList,  .readWeatherOOTDList, .getOOTD, .getOOTDWeather:
+        case .readMyProfile, .myProfilePaging, .readLikeOOTDList, .readFollowingList,  .readWeatherOOTDList, .getOOTD, .getOOTDWeather, .getRecommendOOTDList, .getBanPeriod, .getOOTDforPut, .getOtherProfile:
             return .get
         case .followOther, .likeOOTD, .postOOTD:
             return .post
-        case .cancelFollowOther, .cancelLikeOOTD:
+        case .cancelFollowOther, .cancelLikeOOTD, .putOOTD:
             return .put
+        case .deleteOOTD:
+            return .delete
         }
     }
     
@@ -151,9 +176,55 @@ extension OOTDEndPoint: EndPoint {
             
         case let .postOOTD(data):
             
-            let body = ["departTime": data.departTime, "arrivalTime": data.arrivalTime, "weather": data.weather, "lowestTemp": data.lowestTemp, "highestTemp": data.highestTemp, "wearingList": data.wearingList] as [String : Any]
+            let body = [
+                "region": data.region, "departTime": data.departTime, "arrivalTime": data.arrivalTime, "weather": data.weather, "lowestTemp": data.lowestTemp, "highestTemp": data.highestTemp, "wearingList": data.wearingList] as [String : Any]
             
             return .uploadImagesWithData(image: data.image, data: body)
+            
+        case let .getRecommendOOTDList(lastPage):
+            
+            let param = [
+                
+                "lastPage": lastPage
+            ]
+            
+            return .requestQueryParams(parameters: param, encoding: URLEncoding.default)
+            
+        case .getBanPeriod:
+            
+            return .requestPlain
+            
+        case .getOOTDforPut(ootdId: let ootdId):
+            
+            return .requestPathVariable
+            
+        case .putOOTD(ootdId: let ootdId, data: let data):
+            
+            let body = [
+                "region": data.region, "departTime": data.departTime, "arrivalTime": data.arrivalTime, "weather": data.weather, "lowestTemp": data.lowestTemp, "highestTemp": data.highestTemp, "wearingList": data.wearingList] as [String : Any]
+            
+            if let image = data.image {
+                
+                return .uploadImagesWithData(image: data.image, data: body)
+                
+            } else {
+                
+                return .uploadImagesWithData(image: nil, data: body)
+            }
+            
+        case .deleteOOTD(ootdId: let ootdId):
+            
+            return .requestPlain
+            
+        case .getOtherProfile(memberId: let memberId, lastPage: let lastPage):
+            
+            let params = [
+                
+                "memberId": memberId,
+                "lastPage": lastPage
+            ]
+            
+            return .requestQueryParams(parameters: params, encoding: URLEncoding.default)
         }
     }
     
@@ -164,7 +235,7 @@ extension OOTDEndPoint: EndPoint {
         case .followOther, .likeOOTD:
             return ["Content-Type": "application/json"]
             
-        case .postOOTD:
+        case .postOOTD, .putOOTD:
             return ["Content-Type": "multipart/form-data"]
             
         default:

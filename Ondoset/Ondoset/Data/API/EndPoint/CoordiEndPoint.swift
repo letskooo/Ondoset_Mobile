@@ -19,6 +19,8 @@ enum CoordiEndPoint {
     case setCoordiPlan(addType: String, data: SetCoordiPlanRequestDTO)                   // 코디 계획 등록
     case setCoordiRecord(data: SetCoordiRecordRequestDTO)               // 과거 코디 기록 등록
     case getSatisfactionPred(data: GetSatisfactionPredRequestDTO)       // 만족도 예측
+    
+    case getDailyCoordi(data: GetDailyCoordiRequestDTO)                 // 코디 하루 조회
 }
 
 extension CoordiEndPoint: EndPoint {
@@ -52,6 +54,8 @@ extension CoordiEndPoint: EndPoint {
         case .getSatisfactionPred(data: let data):
             return "/satisfaction-pred"
             
+        case .getDailyCoordi(data: let data):
+            return ""
         }
         
     }
@@ -60,7 +64,7 @@ extension CoordiEndPoint: EndPoint {
         
         switch self {
             
-        case .getCoordiRecord:
+        case .getCoordiRecord, .getDailyCoordi:
             return .get
         case .setSatisfaction, .setCoordiImage, .putCoordi, .setCoordiTime:
             return .put
@@ -81,6 +85,16 @@ extension CoordiEndPoint: EndPoint {
                 
                 "year": data.year,
                 "month": data.month
+            ]
+            return .requestQueryParams(parameters: params, encoding: URLEncoding.default)
+            
+        case let .getDailyCoordi(data):
+            
+            let params = [
+                
+                "year": data.year,
+                "month": data.month,
+                "day": data.day
             ]
             return .requestQueryParams(parameters: params, encoding: URLEncoding.default)
             
