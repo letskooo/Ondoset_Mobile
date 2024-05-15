@@ -151,7 +151,7 @@ struct GetDailyCoordiRequestDTO {
 }
 
 // 코디 하루 조회 응답 DTO
-struct GetDailyCoordiResponseDTO {
+struct GetDailyCoordiResponseDTO: Decodable {
     
     let coordiId: Int
     let year: Int
@@ -165,5 +165,20 @@ struct GetDailyCoordiResponseDTO {
     let lowestTemp: Int?
     let highestTemp: Int?
     let imageURL: String?
-    let clothesList: [Clothes]
+    let clothesList: [ClothesDTO]
+}
+
+extension GetDailyCoordiResponseDTO {
+    
+    func todailyCoordi() -> CoordiRecord {
+        
+        if let image = self.imageURL {
+            
+            let coordiImageURL: String? = "\(Constants.serverURL)/images\(image)"
+
+            return CoordiRecord(coordiId: self.coordiId, year: self.year, month: self.month, day: self.day, satisfaction: Satisfaction(rawValue: self.satisfaction ?? ""), region: self.region, departTime: self.departTime, arrivalTime: self.arrivalTime, weather: Weather(rawValue: self.weather ?? ""), lowestTemp: self.lowestTemp, highestTemp: self.highestTemp, imageURL: coordiImageURL, clothesList: self.clothesList.compactMap { $0.toClothes()})
+        } else {
+            return CoordiRecord(coordiId: self.coordiId, year: self.year, month: self.month, day: self.day, satisfaction: Satisfaction(rawValue: self.satisfaction ?? ""), region: self.region, departTime: self.departTime, arrivalTime: self.arrivalTime, weather: Weather(rawValue: self.weather ?? ""), lowestTemp: self.lowestTemp, highestTemp: self.highestTemp, imageURL: nil, clothesList: self.clothesList.compactMap { $0.toClothes()})
+        }
+    }
 }

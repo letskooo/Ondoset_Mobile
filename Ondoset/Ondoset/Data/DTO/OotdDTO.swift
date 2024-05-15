@@ -111,6 +111,23 @@ extension ReadFollowingListResponseDTO {
     }
 }
 
+// 추천뷰 조회 응답 DTO
+struct GetRecommendOOTDResponseDTO: Decodable {
+    
+    let lastPage: Int
+    let ootdList: [OOTDDTO]
+}
+
+extension GetRecommendOOTDResponseDTO {
+    
+    func toOOTD() -> [OOTD] {
+        let ootds = self.ootdList.map { $0.toOOTD() }
+        
+        return ootds
+    }
+}
+
+
 // 날씨뷰 조회 요청 DTO
 struct ReadWeatherOOTDRequestDTO: Codable {
     
@@ -267,7 +284,7 @@ struct PutOOTDRequestDTO: Encodable {
     let weather: String
     let lowestTemp: Int
     let highestTemp: Int
-    let image: Data
+    let image: Data?
     let wearingList: [String]
 }
 
@@ -278,7 +295,7 @@ struct PutOOTDResponseDTO: Decodable {
 }
 
 // OOTD 수정용 조회 응답 DTO
-struct GetOOTDforPutRequestDTO: Decodable {
+struct GetOOTDforPutResponseDTO: Decodable {
     
     let ootdId: Int
     let region: String
@@ -288,5 +305,35 @@ struct GetOOTDforPutRequestDTO: Decodable {
     let lowestTemp: Int
     let highestTemp: Int
     let imageURL: String
-    let wearing: [String]
+    let wearingList: [String]
+}
+
+extension GetOOTDforPutResponseDTO {
+    
+    func toGetOOTDforPut() -> GetOOTDforPut {
+        
+        return GetOOTDforPut(ootdId: self.ootdId, region: self.region, departTime: self.departTime, arrivalTime: self.arrivalTime, weather: Weather(rawValue: weather) ?? .SUNNY, lowestTemp: self.lowestTemp, highestTemp: self.highestTemp, imageURL: "\(Constants.serverURL)/images\(self.imageURL)", wearingList: self.wearingList)
+    }
+}
+
+// OOTD 기능 제한 확인 응답 DTO
+struct GetBanPeriodResponseDTO: Decodable {
+    
+    let banPeriod: Int
+}
+
+
+// 타인 프로필 및 OOTD 목록 조회 응답 DTO
+struct GetOtherProfileResponseDTO: Decodable {
+    
+    let lastPage: Int
+    let ootdList: [OOTDDTO]
+}
+
+extension GetOtherProfileResponseDTO {
+    
+    func toOtherProfile() -> OtherProfile {
+        
+        return OtherProfile(lastPage: self.lastPage, ootdList: self.ootdList.compactMap { $0.toOOTD()} )
+    }
 }
