@@ -49,9 +49,9 @@ final class MemberRepository {
     }
     
     // 닉네임 수정
-    func updateNickname(nickname: String) async -> String? {
+    func updateNickname(updateNicknameDTO: UpdateNicknameRequestDTO) async -> String? {
         
-        return await APIManager.shared.performRequest(endPoint: MemberEndPoint.updateNickname(nickname: nickname))
+        return await APIManager.shared.performRequest(endPoint: MemberEndPoint.updateNickname(nickname: updateNicknameDTO))
     }
     
     // 프로필 이미지 수정
