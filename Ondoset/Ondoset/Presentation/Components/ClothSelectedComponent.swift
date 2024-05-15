@@ -102,6 +102,7 @@ struct ClothOptionButton: View {
             Menu(content: {
                 Button(action: {
                     print("옷 정보 수정: \(clothesId)")
+                    NotificationCenter.default.post(name: NSNotification.Name("EditClothes"), object: nil, userInfo: ["clothesId": clothesId])
                 }) {
                     Text("옷 정보 수정")
                     Image(systemName: "pencil")
@@ -110,6 +111,7 @@ struct ClothOptionButton: View {
                 Button(role: .destructive,
                        action: {
                     print("옷 삭제: \(clothesId)")
+                    NotificationCenter.default.post(name: NSNotification.Name("PresentDeleteAlert"), object: nil, userInfo: ["clothesId": clothesId])
                 }) {
                     Text("옷 삭제")
                     Image(systemName: "trash")

@@ -5,6 +5,8 @@
 //  Created by KoSungmin on 4/8/24.
 //
 
+import Foundation
+
 struct Clothes: Equatable, Hashable {
     var clothesId: Int
     var name: String
@@ -53,10 +55,35 @@ struct Fcst {
     let weather: Weather
 }
 
+extension Fcst {
+    func toHourWeather() -> HourWeather {
+        var inputTime = ""
+        
+        if self.time > 12 {
+            inputTime = "오후 \(self.time - 12)시"
+        } else if self.time == 12 {
+            inputTime = "오후 12시"
+        } else {
+            inputTime = "오전 \(self.time)시"
+        }
+        
+        let currentHour = Calendar.current.component(.hour, from: Date())
+        let isNow = currentHour == self.time
+        
+        return .init(
+            time: inputTime,
+            weather: weather.rawValue,
+            temperature: temp,
+            humidity: rainP,
+            isNow: isNow
+        )
+    }
+}
+
 struct Forecast {
     
     let now: Double
-    let diff: Int?
+    let diff: Double?
     let feel: Double
     let min: Int?
     let max: Int?
@@ -74,6 +101,25 @@ struct Plan {
     let thickness: Thickness?
 }
 
+extension Plan {
+    func toClothTemplate() -> ClothTemplate {
+        return .init(
+            category: self.category,
+            name: self.name,
+            searchMode: false,
+            cloth: .init(
+                clothesId: self.clothesId,
+                name: self.name,
+                imageURL: self.imageURL,
+                category: self.category,
+                tag: self.tag,
+                tagId: self.tagId,
+                thickness: self.thickness
+            )
+        )
+    }
+}
+
 struct Record {
     
     let date: Int
@@ -89,6 +135,17 @@ struct Recommend {
     let fullTag: String
 }
 
+extension Recommend {
+    func toClothTemplate() -> ClothTemplate {
+        return .init(
+            category: self.category,
+            name: self.fullTag,
+            searchMode: false,
+            cloth: nil
+        )
+    }
+}
+
 struct OOTDShort {
     
     let imageURL: String
@@ -102,7 +159,7 @@ struct HomeInfo {
     let forecast: Forecast
     let plan: [Plan]?
     let record: [Record]
-    let recommend: [Recommend]
+    let recommend: [[Recommend]]
     let ootd: [OOTDShort]
 }
 

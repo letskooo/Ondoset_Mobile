@@ -127,7 +127,7 @@ struct SetCoordiRecordResponseDTO: Decodable {
 struct TagCombination: Encodable {
     
     let tagId: Int
-    let thickness: String
+    let thickness: String?
 }
 
 // 만족도 예측 요청 DTO

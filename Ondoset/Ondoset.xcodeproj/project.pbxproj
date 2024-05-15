@@ -144,6 +144,9 @@
 		884E60872BE2D10D00682663 /* AICoordiRecommendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884E60862BE2D10D00682663 /* AICoordiRecommendView.swift */; };
 		8856A02B2BD9731F00FCBFB8 /* ClothesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */; };
 		8856A02D2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */; };
+		885CC2582BEEB3DB00BAE02C /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885CC2572BEEB3DB00BAE02C /* Date+.swift */; };
+		88759D982BECEE44000E4B83 /* MyClothingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88759D972BECEE44000E4B83 /* MyClothingViewModel.swift */; };
+		88B077552BEFEFF0002142BC /* AICoordiRecommendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B077542BEFEFF0002142BC /* AICoordiRecommendViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -302,6 +305,9 @@
 		884E60862BE2D10D00682663 /* AICoordiRecommendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICoordiRecommendView.swift; sourceTree = "<group>"; };
 		8856A02A2BD9731F00FCBFB8 /* ClothesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesDTO.swift; sourceTree = "<group>"; };
 		8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankDataIndicateComponent.swift; sourceTree = "<group>"; };
+		885CC2572BEEB3DB00BAE02C /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		88759D972BECEE44000E4B83 /* MyClothingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyClothingViewModel.swift; sourceTree = "<group>"; };
+		88B077542BEFEFF0002142BC /* AICoordiRecommendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICoordiRecommendViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -522,7 +528,6 @@
 		47BE3A102BC37FDC00F27E38 /* Clothes */ = {
 			isa = PBXGroup;
 			children = (
-				47BE3A142BC37FFF00F27E38 /* Clothes.swift */,
 			);
 			path = Clothes;
 			sourceTree = "<group>";
@@ -843,6 +848,7 @@
 				47C29E262BC24EA400E3E2B9 /* Color+.swift */,
 				47BE3A362BC3C16B00F27E38 /* Data+.swift */,
 				470479002BE28D4E002CFF82 /* DateFormatter.swift */,
+				885CC2572BEEB3DB00BAE02C /* Date+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -889,6 +895,7 @@
 			isa = PBXGroup;
 			children = (
 				882228EF2BD98D8700CFF8B9 /* MyClothingView.swift */,
+				88759D972BECEE44000E4B83 /* MyClothingViewModel.swift */,
 			);
 			path = MyClothing;
 			sourceTree = "<group>";
@@ -896,6 +903,7 @@
 		884E607D2BE2AC0400682663 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				47BE3A142BC37FFF00F27E38 /* Clothes.swift */,
 				884E607E2BE2AC0F00682663 /* WeatherModel.swift */,
 			);
 			path = Weather;
@@ -905,6 +913,7 @@
 			isa = PBXGroup;
 			children = (
 				884E60862BE2D10D00682663 /* AICoordiRecommendView.swift */,
+				88B077542BEFEFF0002142BC /* AICoordiRecommendViewModel.swift */,
 			);
 			path = AICoordiRecommend;
 			sourceTree = "<group>";
@@ -1106,9 +1115,11 @@
 				47C29DF92BC2490600E3E2B9 /* OnboardingView.swift in Sources */,
 				470579812BDBD3450009A2CF /* GetCoordiView.swift in Sources */,
 				474656E32BF482E700F001BF /* OtherProfileView.swift in Sources */,
+				88759D982BECEE44000E4B83 /* MyClothingViewModel.swift in Sources */,
 				474E8A692BD645AB0060E081 /* ClothSelectedComponent.swift in Sources */,
 				47E740322BD8DAF0003A71D5 /* SettingView.swift in Sources */,
 				47A922382BDF9481003234F9 /* OOTDItemViewModel.swift in Sources */,
+				885CC2582BEEB3DB00BAE02C /* Date+.swift in Sources */,
 				47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */,
 				474656D52BF3D38400F001BF /* PutOOTDView.swift in Sources */,
 				474656DF2BF46E2700F001BF /* OtherProfileViewModel.swift in Sources */,
@@ -1177,6 +1188,7 @@
 				479058362BC907A3008FAD8E /* SecureFieldComponent.swift in Sources */,
 				47BE3A3A2BC3C97300F27E38 /* TestEndPoint.swift in Sources */,
 				8812BBDE2BE3A57800F6AB08 /* ClothUnSelectedComponent.swift in Sources */,
+				88B077552BEFEFF0002142BC /* AICoordiRecommendViewModel.swift in Sources */,
 				47BE3A1A2BC3801300F27E38 /* OOTD.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

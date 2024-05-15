@@ -20,6 +20,7 @@ struct SegmentControlComponent: View {
     
     @Binding var selectedTab: Int
     let tabMenus: [String]
+    let isMain: Bool
     
     var body: some View {
         ZStack() {
@@ -34,11 +35,11 @@ struct SegmentControlComponent: View {
                         print(index)
                     }){
                         Text(tabMenus[index])
-                            .font(Font.pretendard(.bold, size: 17))
+                            .font(Font.pretendard(isMain ? .bold : .medium, size: isMain ? 17 : 15))
                             .foregroundStyle(selectedTab == index ? .main : .darkGray)
                             .underline(selectedTab == index, color: .main)
                             .baselineOffset(10)
-                            .padding(.horizontal, 10)
+                            .padding(.horizontal, isMain ? 10 : 5)
                             .padding(.top, 10)
                     }
                 }
@@ -50,5 +51,5 @@ struct SegmentControlComponent: View {
 }
 
 #Preview {
-    SegmentControlComponent(selectedTab: .constant(0), tabMenus: MyClosetTab.allCases.map{$0.rawValue})
+    SegmentControlComponent(selectedTab: .constant(0), tabMenus: MyClosetTab.allCases.map{$0.rawValue}, isMain: false)
 }

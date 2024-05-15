@@ -18,14 +18,14 @@ enum Tab {
 
 struct OndosetHome: View {
     
-    @State var selectedTab: Tab = .home
+    
     @EnvironmentObject var wholeVM: WholeViewModel
     
     var body: some View {
         
         ZStack() {
             
-            switch selectedTab {
+            switch wholeVM.selectedTab {
             case .home:
                 HomeMainView()
             case .record:
@@ -41,7 +41,7 @@ struct OndosetHome: View {
             VStack {
                 Spacer()
                 
-                AppTabView(selectedTab: $selectedTab)
+                AppTabView(selectedTab: $wholeVM.selectedTab)
                     .hidden(wholeVM.isTabBarHidden)
                     .overlay {
                         if wholeVM.isTabBarAlertStatus {
