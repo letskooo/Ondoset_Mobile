@@ -12,6 +12,20 @@ final class HomeMainViewModel: ObservableObject {
     
     private let clothesUseCase: ClothesUseCase = ClothesUseCase.shared
     
+//    /// 위도
+//    @Published var lat: Double = 91.0 {
+//        didSet {
+//            print("위도: \(lat)")
+//        }
+//    }
+//    
+//    /// 경도
+//    @Published var lon: Double = 91.0 {
+//        didSet {
+//            print("경도: \(lon)")
+//        }
+//    }
+    
     // Common Datas
     @Published var homeViewDate: Date = .now {
         didSet {
@@ -20,7 +34,13 @@ final class HomeMainViewModel: ObservableObject {
             }
         }
     }
-    @Published var homeViewLocate: CLLocationCoordinate2D = .init(latitude: 37.4551254, longitude: 127.1334847) // 걍 서울
+    @Published var homeViewLocate: CLLocationCoordinate2D = .init(latitude: 37.4551254, longitude: 127.1334847) {
+        didSet {
+            Task {
+                await self.getHomeInfo()
+            }
+        }
+    }
     /// 코디 작성화면 presenting
     @Published var presentAIRecomm: Bool = false
     /// 코디 작성화면 viewType
@@ -161,7 +181,7 @@ extension HomeMainViewModel {
                 // 예보목록
                 self.weatherForecasts = result.forecast.fcst.map {$0.toHourWeather()}
                 // 메인날씨이미지
-                self.weatherMainImage = Weather.getType(from: self.weatherForecasts.first(where: { $0.isNow == true })?.weather ?? "")?.frontImage ?? .cloudyMain
+                self.weatherMainImage = Weather.getType(from: self.weatherForecasts.first?.weather ?? "")?.frontImage ?? .cloudyMain
                 
                 // BottomData
                 self.coordiPlan = result.plan
