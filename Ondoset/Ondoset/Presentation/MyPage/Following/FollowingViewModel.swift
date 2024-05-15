@@ -15,6 +15,8 @@ class FollowingViewModel: ObservableObject {
     
     var lastPage: Int = -1
     
+    var searchLastPage: Int = -1
+    
     init() {
         Task {
             await readFollowingList()
@@ -33,6 +35,30 @@ class FollowingViewModel: ObservableObject {
                     self.followingList.append(contentsOf: result.followingList)
                     
                     self.lastPage = result.lastPage
+                }
+            }
+        }
+    }
+    
+    // 팔로잉 목록 검색
+    func searchFollowingList(search: String) async {
+        
+        if searchLastPage != -2 {
+            
+            if let result = await ootdUseCase.searchFollowingList(search: search, lastPage: searchLastPage) {
+                
+                DispatchQueue.main.async {
+                    
+                    if self.searchLastPage == -1 {
+                        
+                        self.followingList = []
+                        
+                    }
+                    
+                    self.followingList.append(contentsOf: result.followingList)
+                    
+                    self.lastPage = result.lastPage
+                    
                 }
             }
         }

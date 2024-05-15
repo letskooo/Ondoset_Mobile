@@ -223,4 +223,30 @@ class OOTDUseCase {
             return nil
         }
     }
+    
+    // OOTD 신고
+    func reportOOTD(reportOOTDDTO: ReportOOTDRequestDTO) async -> Bool? {
+        
+        if let result = await ootdRepository.reportOOTD(reportOOTDDTO: reportOOTDDTO) {
+            
+            return true
+            
+        } else {
+            
+            return nil
+        }
+    }
+    
+    // 팔로잉 목록 검색
+    func searchFollowingList(search: String, lastPage: Int) async -> PagingFollowing? {
+        
+        if let result = await ootdRepository.searchFollowingList(search: search, lastPage: lastPage) {
+            
+            return PagingFollowing(lastPage: result.lastPage, followingList: result.toFollowing())
+            
+        } else {
+            
+            return nil
+        }
+    }
 }

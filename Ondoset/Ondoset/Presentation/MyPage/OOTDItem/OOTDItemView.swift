@@ -28,8 +28,6 @@ struct OOTDItemView: View {
     
     @State var reportReason: String = ""
     
-    
-    
     @StateObject var ootdItemVM: OOTDItemViewModel = .init()
     @EnvironmentObject var wholeVM: WholeViewModel
     
@@ -66,13 +64,6 @@ struct OOTDItemView: View {
                                     Circle().stroke(.main, lineWidth: 0.5)
                                 }
                         }
-                        
-//                        NavigationLink(destination: OtherProfileView(memberId: ootdItemVM.ootdItem?.memberId ?? 0, nickname: ootdItemVM.ootdItem?.nickname ?? "사용자 닉네임")) {
-//                            
-//                            Text(ootdItemVM.ootdItem?.nickname ?? "사용자 닉네임")
-//                                .padding(.leading, 16)
-//                                .foregroundStyle(.black)
-//                        }
                         
                         NavigationLink(destination: OtherProfileView(nickname: ootdItemVM.ootdItem?.nickname ?? "테스트 타인 닉네임", profileImage: ootdItemVM.ootdItem?.imageURL, memberId: ootdItemVM.ootdItem?.memberId ?? 0, isFollowing: ootdItemVM.ootdItem?.isFollowing ?? false, ootdCount: ootdItemVM.ootdItem?.ootdCount ?? 0)) {
                             Text(ootdItemVM.ootdItem?.nickname ?? "사용자 닉네임")
@@ -112,13 +103,8 @@ struct OOTDItemView: View {
                                 Button(role: .destructive,
                                        action: {
                                     
-                                    // OOTD 삭제하기 Alert 띄운 뒤 삭제 API 호출
-//                                    ExtendedAlertComponent(showAlert: $showDeleteOOTDAlertView, alertTitle: "OOTD 삭제", content: AnyView(
-//                                        
-//                                        Text("삭제하면 취소할 수 없습니다. \n정말로 삭제하시겠습니까?")
-//                                        
-//                                    ), leftBtnAction: nil, rightBtnTitle: "확인", rightBtnAction: {}, isTabBarExists: false)
-                                    
+                                    showDeleteOOTDAlertView = true
+
                                 }) {
                                     Text("OOTD 삭제하기")
                                 }
@@ -218,20 +204,43 @@ struct OOTDItemView: View {
                 
             if showReportAlertView {
                 
-                AlertComponent(showAlert: $showReportAlertView, alertTitle: "OOTD 신고", alertContent: "아래 사유로 신고하시겠습니까? \n사유: 코디 사진이 아니에요", rightBtnTitle: "확인", rightBtnAction: {
+                ExtendedAlertComponent(showAlert: $showReportAlertView, isTabBarExist: false, alertTitle: "OOTD 신고", content: AnyView(Text("아래 사유로 신고하시겠습니까? \n사유: 코디 사진이 아니에요")), rightBtnTitle: "확인", rightBtnAction: {
                     
                     Task {
                         
-                        // OOTD 신고 API
+                        let result = await ootdItemVM.reportOOTD(ootdId: ootdId, reason: "코디 사진이 아니에요")
                         
+                        showReportAlertView = false
                     }
                     
                 })
                 
+                
             } else if showWritingReportReassonAlertView {
                 
-                
-                
+                ExtendedAlertComponent(showAlert: $showWritingReportReassonAlertView, isTabBarExist: false, alertTitle: "OOTD 신고", content: AnyView(
+                    
+                    VStack(spacing: 15) {
+                        
+                        Text("신고 사유를 입력해주세요")
+                        
+                        TextField("불건전한 컨텐츠", text: $reportReason)
+                            .font(.pretendard(.semibold, size: 15))
+                            .padding(.leading, 10)
+                        
+                    }
+                    
+                ), rightBtnTitle: "확인", rightBtnAction: {
+                    
+                    Task {
+                        
+                        let result = await ootdItemVM.reportOOTD(ootdId: ootdId, reason: reportReason)
+                        
+                        showWritingReportReassonAlertView = false
+                        
+                        reportReason = ""
+                    }
+                })
             }
             
             if showCantReportAlert {
@@ -242,6 +251,22 @@ struct OOTDItemView: View {
                 
             }
             
+            if showDeleteOOTDAlertView {
+                
+                ExtendedAlertComponent(showAlert: $showDeleteOOTDAlertView, isTabBarExist: false, alertTitle: "OOTD 삭제", content: AnyView(Text("삭제하면 취소할 수 없습니다. \n정말로 삭제하시겠습니까?")), rightBtnTitle: "확인", rightBtnAction: {
+                    
+                    Task {
+                     
+                        // OOTD삭제 API 호출
+                        let result = await ootdItemVM.deleteOOTD(ootdId: ootdId)
+                        
+                        if result {
+                            dismiss()
+                        }
+                    }
+                })
+
+            }
             
         } // ZStack
         .onAppear {
@@ -302,7 +327,8 @@ struct OOTDItemView: View {
     
                             Button {
     
-    
+                                showWritingReportReassonAlertView = true
+                                
                             } label: {
                                 Text("직접 작성")
                             }

@@ -20,7 +20,7 @@ enum OOTDEndPoint {
     case likeOOTD(likeOOTDDTO: LikeOOTDRequestDTO)             // OOTD 공감
     case cancelLikeOOTD(ootdId: Int)                           // OOTD 공감 취소
     
-    case getRecommendOOTDList(lastPage: Int)                  // OOTD 추천뷰 조회
+    case getRecommendOOTDList(lastPage: Int)                   // OOTD 추천뷰 조회
     case readWeatherOOTDList(data: ReadWeatherOOTDRequestDTO)  // OOTD 날씨뷰 조회
     
     case getOOTDWeather(data: GetOOTDWeatherRequestDTO)        // OOTD 등록될 날씨 미리보기
@@ -36,6 +36,10 @@ enum OOTDEndPoint {
     case deleteOOTD(ootdId: Int)                               // OOTD 삭제
     
     case getOtherProfile(memberId: Int, lastPage: Int)         // 타인 프로필 및 ootd 목록 조회
+    
+    case reportOOTD(reportOOTDDTO: ReportOOTDRequestDTO)       // OOTD 신고
+    
+    case searchFollowingList(search: String, lastPage: Int)    // 팔로잉 목록 검색
 }
 
 extension OOTDEndPoint: EndPoint {
@@ -84,6 +88,10 @@ extension OOTDEndPoint: EndPoint {
             return "/\(ootdId)"
         case .getOtherProfile:
             return "/profile"
+        case .reportOOTD:
+            return "/report"
+        case .searchFollowingList:
+            return "/follow-list"
         }
     }
     
@@ -91,9 +99,9 @@ extension OOTDEndPoint: EndPoint {
         
         switch self {
             
-        case .readMyProfile, .myProfilePaging, .readLikeOOTDList, .readFollowingList,  .readWeatherOOTDList, .getOOTD, .getOOTDWeather, .getRecommendOOTDList, .getBanPeriod, .getOOTDforPut, .getOtherProfile:
+        case .readMyProfile, .myProfilePaging, .readLikeOOTDList, .readFollowingList,  .readWeatherOOTDList, .getOOTD, .getOOTDWeather, .getRecommendOOTDList, .getBanPeriod, .getOOTDforPut, .getOtherProfile, .searchFollowingList:
             return .get
-        case .followOther, .likeOOTD, .postOOTD:
+        case .followOther, .likeOOTD, .postOOTD, .reportOOTD:
             return .post
         case .cancelFollowOther, .cancelLikeOOTD, .putOOTD:
             return .put
@@ -225,6 +233,20 @@ extension OOTDEndPoint: EndPoint {
             ]
             
             return .requestQueryParams(parameters: params, encoding: URLEncoding.default)
+            
+        case let .reportOOTD(reportOOTDDTO):
+            
+            return .requestJson(parameters: reportOOTDDTO)
+            
+        case .searchFollowingList(search: let search, lastPage: let lastPage):
+            
+            let params = [
+            
+                "search": search,
+                "lastPage": lastPage
+            ] as [String : Any]
+            
+            return .requestQueryParams(parameters: params, encoding: URLEncoding.default)
         }
     }
     
@@ -232,7 +254,7 @@ extension OOTDEndPoint: EndPoint {
         
         switch self {
             
-        case .followOther, .likeOOTD:
+        case .followOther, .likeOOTD, .reportOOTD:
             return ["Content-Type": "application/json"]
             
         case .postOOTD, .putOOTD:

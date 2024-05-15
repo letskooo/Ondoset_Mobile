@@ -107,6 +107,11 @@ struct OOTDMainView: View {
                                         
                                     }
                                 } // ScrollView
+                                .refreshable {
+                                    Task {
+                                        await ootdMainVM.getRecommendOOTDList()
+                                    }
+                                }
                             }
                             
                             VStack {
@@ -179,7 +184,11 @@ struct OOTDMainView: View {
                                 Task {
                                     await ootdMainVM.readWeatherOOTDList()
                                 }
-                                
+                            }
+                            .refreshable {
+                                Task {
+                                    await ootdMainVM.readWeatherOOTDList()
+                                }
                             }
                             
                             VStack {

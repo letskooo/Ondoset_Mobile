@@ -95,6 +95,7 @@ extension FollowingDTO {
     }
 }
 
+// 팔로잉 목록 조회 응답 DTO
 struct ReadFollowingListResponseDTO: Decodable {
     
     let lastPage: Int
@@ -336,4 +337,18 @@ extension GetOtherProfileResponseDTO {
         
         return OtherProfile(lastPage: self.lastPage, ootdList: self.ootdList.compactMap { $0.toOOTD()} )
     }
+}
+
+// OOTD 신고 요청 DTO
+struct ReportOOTDRequestDTO: Encodable {
+    
+    let ootdId: Int
+    let reason: String
+}
+
+// 팔로잉 목록 검색 응답 DTO
+struct SearchFollowingListResponseDTO: Decodable {
+    
+    let lastPage: Int
+    let followingList: [FollowingDTO]
 }

@@ -185,37 +185,36 @@ struct PutOOTDView: View {
                 }
             
             ScrollView(showsIndicators: false) {
-                
-                VStack {
+ 
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]) {
                     
-                    VStack {
-                        ForEach(ootdClothes.indices, id: \.self) { index in
-                            
-                            HStack {
-                                
-                                Text(ootdClothes[index])
-                                    .font(Font.pretendard(.semibold, size: 13))
-                                
-                                Button {
-                                    
-                                    // 선택한 옷 아이템을 화면상 옷 리스트에서 삭제
-                                    ootdClothes.remove(at: index)
-                                    
-                                    // 선택한 옷 아이템을 뷰모델의 옷 리스트에서 삭제
-                                    putOOTDVM.ootdWearingList.remove(at: index)
-                                    
-                                } label: {
-                                    Image("xBtn")
-                                }
+                    ForEach(ootdClothes.indices, id: \.self) { index in
+                        
+                        HStack {
+                            Text(ootdClothes[index])
+                                .font(Font.pretendard(.semibold, size: 13))
+
+                            Button {
+
+                                // 선택한 옷 아이템을 화면상 옷 리스트에서 삭제
+                                ootdClothes.remove(at: index)
+
+                                // 선택한 옷 아이템을 뷰모델의 옷 리스트에서 삭제
+                                putOOTDVM.ootdWearingList.remove(at: index)
+
+                            } label: {
+                                Image("xBtn")
                             }
                         }
+                        
                     }
+                    
                 }
+                
             }
             .padding(.top, 20)
             .padding(.horizontal, 10)
             .frame(width: screenWidth - 36)
-//            .background(.red)
             
             ButtonComponent(isBtnAvailable: $putOOTDVM.isRegisterBtnAvailable, width: screenWidth - 50, btnText: "수정하기", radius: 15) {
                 

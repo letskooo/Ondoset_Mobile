@@ -21,10 +21,24 @@ struct FollowingListView: View {
         
         VStack(spacing: 0) {
             
-            SearchBarComponent(searchText: $searchText, placeHolder: "닉네임을 검색하세요") { _ in
-            }
+            
+            SearchBarComponent(searchText: $searchText, placeHolder: "닉네임을 검색하세요", searchAction: { text in
+                
+                print("잘 도ㅙ야함")
+                
+                Task {
+                    
+                    
+                    await followingVM.searchFollowingList(search: text)
+                }
+            })
             .padding(.horizontal, 18)
             .padding(.top, 5)
+            .onChange(of: searchText) { _ in
+                
+                followingVM.searchLastPage = -1
+                
+            }
             
             Rectangle()
                 .frame(width: screenWidth, height: 1)

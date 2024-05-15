@@ -116,4 +116,16 @@ final class OOTDRepository {
         
         return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.getOtherProfile(memberId: memberId, lastPage: lastPage))
     }
+    
+    // OOTD 신고
+    func reportOOTD(reportOOTDDTO: ReportOOTDRequestDTO) async -> String? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.reportOOTD(reportOOTDDTO: reportOOTDDTO))
+    }
+    
+    // 팔로잉 목록 검색
+    func searchFollowingList(search: String, lastPage: Int) async -> ReadFollowingListResponseDTO? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.searchFollowingList(search: search, lastPage: lastPage))
+    }
 }

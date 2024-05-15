@@ -103,7 +103,7 @@ extension ClosetMainViewModel {
          guard clothesLastPage != -2 else { return }
          
          if let result = await clothesUseCase.getAllClothes(lastPage: clothesLastPage) {
-             setReceivedData(clothesList: result.ClothesList, lastPage: result.lastPage)
+             setReceivedData(clothesList: result.clothesList, lastPage: result.lastPage)
          }
 //        setReceivedData(clothesList: ClothesDTO.mockData(), lastPage: -1) // 테스트용
      }

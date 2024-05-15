@@ -101,8 +101,6 @@ struct AddOOTDView: View {
                             Text("외출 출발 시간")
                             DatePicker("외출 출발 시간", selection: $selectedDepartDate)
                                 .labelsHidden()
-//                                .frame(maxWidth: screenWidth / 2)  // 최대 너비 설정
-//                                .fixedSize()
                                 .onAppear {
                                     
                                     var dateEpoch = dateToEpoch(selectedDate: selectedDepartDate)
@@ -220,31 +218,32 @@ struct AddOOTDView: View {
             
             ScrollView(showsIndicators: false) {
                 
-                VStack {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]) {
                     
-                    VStack {
-                        ForEach(ootdClothes.indices, id: \.self) { index in
+                    ForEach(ootdClothes.indices, id: \.self) { index in
+                        
+                        HStack {
                             
-                            HStack {
-                                
-                                Text(ootdClothes[index])
-                                    .font(Font.pretendard(.semibold, size: 13))
-                                
-                                Button {
-                                    
-                                    ootdClothes.remove(at: index)
+                            Text(ootdClothes[index])
+                                .font(Font.pretendard(.semibold, size: 13))
+
+                            Button {
+
+                                ootdClothes.remove(at: index)
 //                                    addOOTDVM.addOOTD?.wearingList.remove(at: index)
-                                    //addOOTDVM.ootdWearingList?.remove(at: index)
-                                    
-                                    addOOTDVM.ootdWearingList.remove(at: index)
-                                    
-                                    
-                                } label: {
-                                    Image("xBtn")
-                                }
+                                //addOOTDVM.ootdWearingList?.remove(at: index)
+
+                                addOOTDVM.ootdWearingList.remove(at: index)
+
+
+                            } label: {
+                                Image("xBtn")
                             }
+                            
                         }
+                        
                     }
+                    
                 }
             }
             .padding(.top, 20)

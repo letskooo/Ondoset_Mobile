@@ -11,20 +11,26 @@ import CoreLocation
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     private let locationManager = CLLocationManager()
-    @Published var authorizationStatus: CLAuthorizationStatus
-    
-    override init() {
-        
-        self.authorizationStatus = locationManager.authorizationStatus
-        super.init()
-        locationManager.delegate = self
-    }
-    
-    func requestPermission() {
-        locationManager.requestWhenInUseAuthorization()
-    }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        self.authorizationStatus = manager.authorizationStatus
-    }
+        @Published var currentLocation: CLLocationCoordinate2D?
+
+        override init() {
+            super.init()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+        }
+
+        func requestLocation() {
+            locationManager.requestLocation() // 단일 위치 요청
+        }
+
+        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            if let location = locations.last {
+                currentLocation = location.coordinate
+            }
+        }
+
+        func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+            print("Failed to find user's location: \(error.localizedDescription)")
+        }
 }

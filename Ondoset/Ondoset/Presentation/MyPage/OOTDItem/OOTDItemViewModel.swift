@@ -92,4 +92,26 @@ class OOTDItemViewModel: ObservableObject {
             return -3
         }
     }
+    
+    // OOTD 삭제
+    func deleteOOTD(ootdId: Int) async -> Bool {
+        
+        if let result = await ootdUseCase.deleteOOTD(ootdId: ootdId) {
+            
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // OOTD 신고
+    func reportOOTD(ootdId: Int, reason: String) async -> Bool {
+        
+        if let result = await ootdUseCase.reportOOTD(reportOOTDDTO: ReportOOTDRequestDTO(ootdId: ootdId, reason: reason)) {
+            
+            return true
+        } else {
+            return false
+        }
+    }
 }
