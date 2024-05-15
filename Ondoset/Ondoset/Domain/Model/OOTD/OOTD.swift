@@ -81,3 +81,24 @@ struct AddOOTD: Hashable {
     var image: Data
     var wearingList: [String]
 }
+
+// OOTD 수정용 조회할 때 쓰이는 구조체
+struct GetOOTDforPut: Hashable {
+    
+    let ootdId: Int
+    var region: String
+    var departTime: Int
+    var arrivalTime: Int
+    var weather: Weather
+    var lowestTemp: Int
+    var highestTemp: Int
+    var imageURL: String
+    var wearingList: [String]
+}
+
+// 타인 프로필 조회 및 OOTD 목록 조회 구조체
+struct OtherProfile: Hashable {
+    
+    let lastPage: Int
+    let ootdList: [OOTD]
+}

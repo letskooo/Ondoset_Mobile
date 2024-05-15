@@ -11,9 +11,20 @@
 		4705797C2BDBD0EF0009A2CF /* AddOOTDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4705797B2BDBD0EE0009A2CF /* AddOOTDViewModel.swift */; };
 		4705797E2BDBD1190009A2CF /* AddOOTDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4705797D2BDBD1190009A2CF /* AddOOTDView.swift */; };
 		470579812BDBD3450009A2CF /* GetCoordiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470579802BDBD3450009A2CF /* GetCoordiView.swift */; };
+		47200E2D2BF0F237004B29FA /* ExtendedAlertComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47200E2C2BF0F237004B29FA /* ExtendedAlertComponent.swift */; };
+		472FF0FE2BEBF43E001418AE /* ClothDetailComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472FF0FD2BEBF43E001418AE /* ClothDetailComponent.swift */; };
+		472FF1002BEC21B0001418AE /* AddCoordiRecordSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472FF0FF2BEC21B0001418AE /* AddCoordiRecordSecondView.swift */; };
 		4738B5C92BD9A88D0025DAF6 /* FollowingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4738B5C82BD9A88D0025DAF6 /* FollowingViewModel.swift */; };
+		4738C8BE2BEDEEDC00AED673 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4738C8BD2BEDEEDC00AED673 /* MapView.swift */; };
+		4738C8C22BEE031600AED673 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4738C8C12BEE031600AED673 /* LocationManager.swift */; };
 		473BC8F92BD4F4B500E6D197 /* AlertComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473BC8F82BD4F4B500E6D197 /* AlertComponent.swift */; };
 		473EC52F2BD0FC6300AB59D2 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473EC52E2BD0FC6300AB59D2 /* SignInViewModel.swift */; };
+		4743B7D02BEE701900F25C7E /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4743B7CF2BEE701900F25C7E /* LocationView.swift */; };
+		474656D52BF3D38400F001BF /* PutOOTDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474656D42BF3D38400F001BF /* PutOOTDView.swift */; };
+		474656D82BF3DF2700F001BF /* PutOOTDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474656D72BF3DF2700F001BF /* PutOOTDViewModel.swift */; };
+		474656DA2BF469DA00F001BF /* GetCoordiforPutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474656D92BF469DA00F001BF /* GetCoordiforPutView.swift */; };
+		474656DF2BF46E2700F001BF /* OtherProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474656DE2BF46E2700F001BF /* OtherProfileViewModel.swift */; };
+		474656E32BF482E700F001BF /* OtherProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474656E22BF482E700F001BF /* OtherProfileView.swift */; };
 		474E8A692BD645AB0060E081 /* ClothSelectedComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E8A682BD645AB0060E081 /* ClothSelectedComponent.swift */; };
 		474E8A6F2BD6707E0060E081 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E8A6E2BD6707E0060E081 /* Category.swift */; };
 		474E8A712BD672680060E081 /* Satisfaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E8A702BD672680060E081 /* Satisfaction.swift */; };
@@ -22,11 +33,15 @@
 		474E8A772BD672EC0060E081 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E8A762BD672EC0060E081 /* Weather.swift */; };
 		474E8A792BD67A430060E081 /* ClothTagComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E8A782BD67A430060E081 /* ClothTagComponent.swift */; };
 		474E8A7B2BD6820C0060E081 /* ThicknessTagComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474E8A7A2BD6820C0060E081 /* ThicknessTagComponent.swift */; };
+		4754B86D2BEB3D750048C5C3 /* ClothSearchComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754B86C2BEB3D750048C5C3 /* ClothSearchComponent.swift */; };
 		475E8A2F2BE5DC35002F5F26 /* CoordiMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E8A2E2BE5DC35002F5F26 /* CoordiMainView.swift */; };
 		476D051E2BD9AEB800EB2B34 /* FollowingBtnComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476D051D2BD9AEB800EB2B34 /* FollowingBtnComponent.swift */; };
 		476EAC3D2BD2B28D008B2E15 /* SignUpSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EAC3C2BD2B28D008B2E15 /* SignUpSecondView.swift */; };
 		476EAC3F2BD2B2A1008B2E15 /* SignUpFirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476EAC3E2BD2B2A1008B2E15 /* SignUpFirstView.swift */; };
 		47705BF22BC770A2003B5D6E /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */; };
+		477166652BEF941600D9AC41 /* PutGoOutTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477166642BEF941600D9AC41 /* PutGoOutTimeView.swift */; };
+		477166692BEF944800D9AC41 /* PutGoOutTimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477166682BEF944800D9AC41 /* PutGoOutTimeViewModel.swift */; };
+		4771666B2BEFCEDE00D9AC41 /* RegisterGoOutTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4771666A2BEFCEDE00D9AC41 /* RegisterGoOutTimeView.swift */; };
 		4789E7232BEA0280002CF53A /* CoordiImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E7222BEA0280002CF53A /* CoordiImageView.swift */; };
 		4789E7262BEA0ECA002CF53A /* AddCoordiRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E7252BEA0ECA002CF53A /* AddCoordiRecordView.swift */; };
 		4789E7282BEA0FC6002CF53A /* AddCoordiPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4789E7272BEA0FC6002CF53A /* AddCoordiPlanView.swift */; };
@@ -108,6 +123,8 @@
 		47DF6F992BC6BF6100E64B12 /* TextFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F982BC6BF6100E64B12 /* TextFieldComponent.swift */; };
 		47DF6F9B2BC6CC7C00E64B12 /* ButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F9A2BC6CC7C00E64B12 /* ButtonComponent.swift */; };
 		47DF6F9F2BC7010100E64B12 /* RegisterNickNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DF6F9E2BC7010100E64B12 /* RegisterNickNameView.swift */; };
+		47E560C92BEF3939003114CC /* PutCoordiRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E560C82BEF3939003114CC /* PutCoordiRecordView.swift */; };
+		47E560CB2BEF3973003114CC /* PutCoordiRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E560CA2BEF3973003114CC /* PutCoordiRecordViewModel.swift */; };
 		47E6BB6F2BC56D3600A72F3D /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6BB6E2BC56D3600A72F3D /* AppError.swift */; };
 		47E6BB712BC56FD800A72F3D /* MemberEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6BB702BC56FD800A72F3D /* MemberEndPoint.swift */; };
 		47E740322BD8DAF0003A71D5 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E740312BD8DAF0003A71D5 /* SettingView.swift */; };
@@ -151,9 +168,20 @@
 		4705797B2BDBD0EE0009A2CF /* AddOOTDViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOOTDViewModel.swift; sourceTree = "<group>"; };
 		4705797D2BDBD1190009A2CF /* AddOOTDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOOTDView.swift; sourceTree = "<group>"; };
 		470579802BDBD3450009A2CF /* GetCoordiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCoordiView.swift; sourceTree = "<group>"; };
+		47200E2C2BF0F237004B29FA /* ExtendedAlertComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedAlertComponent.swift; sourceTree = "<group>"; };
+		472FF0FD2BEBF43E001418AE /* ClothDetailComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothDetailComponent.swift; sourceTree = "<group>"; };
+		472FF0FF2BEC21B0001418AE /* AddCoordiRecordSecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoordiRecordSecondView.swift; sourceTree = "<group>"; };
 		4738B5C82BD9A88D0025DAF6 /* FollowingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingViewModel.swift; sourceTree = "<group>"; };
+		4738C8BD2BEDEEDC00AED673 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		4738C8C12BEE031600AED673 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		473BC8F82BD4F4B500E6D197 /* AlertComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertComponent.swift; sourceTree = "<group>"; };
 		473EC52E2BD0FC6300AB59D2 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		4743B7CF2BEE701900F25C7E /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
+		474656D42BF3D38400F001BF /* PutOOTDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutOOTDView.swift; sourceTree = "<group>"; };
+		474656D72BF3DF2700F001BF /* PutOOTDViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutOOTDViewModel.swift; sourceTree = "<group>"; };
+		474656D92BF469DA00F001BF /* GetCoordiforPutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCoordiforPutView.swift; sourceTree = "<group>"; };
+		474656DE2BF46E2700F001BF /* OtherProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileViewModel.swift; sourceTree = "<group>"; };
+		474656E22BF482E700F001BF /* OtherProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileView.swift; sourceTree = "<group>"; };
 		474E8A682BD645AB0060E081 /* ClothSelectedComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothSelectedComponent.swift; sourceTree = "<group>"; };
 		474E8A6E2BD6707E0060E081 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		474E8A702BD672680060E081 /* Satisfaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Satisfaction.swift; sourceTree = "<group>"; };
@@ -162,11 +190,15 @@
 		474E8A762BD672EC0060E081 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		474E8A782BD67A430060E081 /* ClothTagComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothTagComponent.swift; sourceTree = "<group>"; };
 		474E8A7A2BD6820C0060E081 /* ThicknessTagComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThicknessTagComponent.swift; sourceTree = "<group>"; };
+		4754B86C2BEB3D750048C5C3 /* ClothSearchComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothSearchComponent.swift; sourceTree = "<group>"; };
 		475E8A2E2BE5DC35002F5F26 /* CoordiMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordiMainView.swift; sourceTree = "<group>"; };
 		476D051D2BD9AEB800EB2B34 /* FollowingBtnComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingBtnComponent.swift; sourceTree = "<group>"; };
 		476EAC3C2BD2B28D008B2E15 /* SignUpSecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondView.swift; sourceTree = "<group>"; };
 		476EAC3E2BD2B2A1008B2E15 /* SignUpFirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFirstView.swift; sourceTree = "<group>"; };
 		47705BF12BC770A2003B5D6E /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		477166642BEF941600D9AC41 /* PutGoOutTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutGoOutTimeView.swift; sourceTree = "<group>"; };
+		477166682BEF944800D9AC41 /* PutGoOutTimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutGoOutTimeViewModel.swift; sourceTree = "<group>"; };
+		4771666A2BEFCEDE00D9AC41 /* RegisterGoOutTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterGoOutTimeView.swift; sourceTree = "<group>"; };
 		4789E7222BEA0280002CF53A /* CoordiImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordiImageView.swift; sourceTree = "<group>"; };
 		4789E7252BEA0ECA002CF53A /* AddCoordiRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoordiRecordView.swift; sourceTree = "<group>"; };
 		4789E7272BEA0FC6002CF53A /* AddCoordiPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCoordiPlanView.swift; sourceTree = "<group>"; };
@@ -249,6 +281,8 @@
 		47DF6F982BC6BF6100E64B12 /* TextFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponent.swift; sourceTree = "<group>"; };
 		47DF6F9A2BC6CC7C00E64B12 /* ButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComponent.swift; sourceTree = "<group>"; };
 		47DF6F9E2BC7010100E64B12 /* RegisterNickNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterNickNameView.swift; sourceTree = "<group>"; };
+		47E560C82BEF3939003114CC /* PutCoordiRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutCoordiRecordView.swift; sourceTree = "<group>"; };
+		47E560CA2BEF3973003114CC /* PutCoordiRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutCoordiRecordViewModel.swift; sourceTree = "<group>"; };
 		47E6BB6E2BC56D3600A72F3D /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		47E6BB702BC56FD800A72F3D /* MemberEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberEndPoint.swift; sourceTree = "<group>"; };
 		47E740312BD8DAF0003A71D5 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -329,6 +363,25 @@
 			path = Following;
 			sourceTree = "<group>";
 		};
+		474656D62BF3DEFC00F001BF /* PutOOTD */ = {
+			isa = PBXGroup;
+			children = (
+				474656D42BF3D38400F001BF /* PutOOTDView.swift */,
+				474656D72BF3DF2700F001BF /* PutOOTDViewModel.swift */,
+				474656D92BF469DA00F001BF /* GetCoordiforPutView.swift */,
+			);
+			path = PutOOTD;
+			sourceTree = "<group>";
+		};
+		474656DB2BF46D5800F001BF /* OtherProfile */ = {
+			isa = PBXGroup;
+			children = (
+				474656DE2BF46E2700F001BF /* OtherProfileViewModel.swift */,
+				474656E22BF482E700F001BF /* OtherProfileView.swift */,
+			);
+			path = OtherProfile;
+			sourceTree = "<group>";
+		};
 		474E58172BC633CD005B4225 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,6 +398,11 @@
 				476D051D2BD9AEB800EB2B34 /* FollowingBtnComponent.swift */,
 				8856A02C2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift */,
 				8812BBDD2BE3A57800F6AB08 /* ClothUnSelectedComponent.swift */,
+				4754B86C2BEB3D750048C5C3 /* ClothSearchComponent.swift */,
+				472FF0FD2BEBF43E001418AE /* ClothDetailComponent.swift */,
+				4738C8BD2BEDEEDC00AED673 /* MapView.swift */,
+				4743B7CF2BEE701900F25C7E /* LocationView.swift */,
+				47200E2C2BF0F237004B29FA /* ExtendedAlertComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -383,12 +441,23 @@
 			path = EndPoint;
 			sourceTree = "<group>";
 		};
+		477166672BEF943100D9AC41 /* PutGoOutTime */ = {
+			isa = PBXGroup;
+			children = (
+				477166642BEF941600D9AC41 /* PutGoOutTimeView.swift */,
+				477166682BEF944800D9AC41 /* PutGoOutTimeViewModel.swift */,
+				4771666A2BEFCEDE00D9AC41 /* RegisterGoOutTimeView.swift */,
+			);
+			path = PutGoOutTime;
+			sourceTree = "<group>";
+		};
 		4789E7242BEA0EB3002CF53A /* AddCoordi */ = {
 			isa = PBXGroup;
 			children = (
 				4789E7252BEA0ECA002CF53A /* AddCoordiRecordView.swift */,
 				4789E7272BEA0FC6002CF53A /* AddCoordiPlanView.swift */,
 				4789E7292BEAB644002CF53A /* AddCoordiRecordViewModel.swift */,
+				472FF0FF2BEC21B0001418AE /* AddCoordiRecordSecondView.swift */,
 			);
 			path = AddCoordi;
 			sourceTree = "<group>";
@@ -627,6 +696,7 @@
 		47C29DE62BC2461200E3E2B9 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				474656DB2BF46D5800F001BF /* OtherProfile */,
 				47A922342BDF944B003234F9 /* OOTDItem */,
 				4738B5C52BD9A8640025DAF6 /* Following */,
 				47A46ED62BD9868F0096525F /* LikeOOTD */,
@@ -638,6 +708,7 @@
 		47C29DE72BC2461900E3E2B9 /* OOTD */ = {
 			isa = PBXGroup;
 			children = (
+				474656D62BF3DEFC00F001BF /* PutOOTD */,
 				4705797A2BDBD0A50009A2CF /* AddOOTD */,
 				47C29E0B2BC24A0A00E3E2B9 /* OOTDMain */,
 			);
@@ -656,6 +727,8 @@
 		47C29DE92BC2462600E3E2B9 /* Coordi */ = {
 			isa = PBXGroup;
 			children = (
+				477166672BEF943100D9AC41 /* PutGoOutTime */,
+				47E560C72BEF3914003114CC /* PutCoordi */,
 				4789E7242BEA0EB3002CF53A /* AddCoordi */,
 				47C29E012BC249B100E3E2B9 /* CoordiMain */,
 			);
@@ -781,6 +854,7 @@
 				47BE3A282BC3897B00F27E38 /* ErrorHandling */,
 				47C29E2A2BC2504900E3E2B9 /* Constants.swift */,
 				47E740362BD8DE72003A71D5 /* ImagePicker.swift */,
+				4738C8C12BEE031600AED673 /* LocationManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -800,6 +874,15 @@
 			);
 			name = Fonts;
 			path = ../Fonts;
+			sourceTree = "<group>";
+		};
+		47E560C72BEF3914003114CC /* PutCoordi */ = {
+			isa = PBXGroup;
+			children = (
+				47E560C82BEF3939003114CC /* PutCoordiRecordView.swift */,
+				47E560CA2BEF3973003114CC /* PutCoordiRecordViewModel.swift */,
+			);
+			path = PutCoordi;
 			sourceTree = "<group>";
 		};
 		882228EE2BD98D3200CFF8B9 /* MyClothing */ = {
@@ -975,21 +1058,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				477166692BEF944800D9AC41 /* PutGoOutTimeViewModel.swift in Sources */,
 				47A46ED52BD97D9A0096525F /* FollowingListView.swift in Sources */,
 				47C29E252BC24DD600E3E2B9 /* Font+.swift in Sources */,
+				477166652BEF941600D9AC41 /* PutGoOutTimeView.swift in Sources */,
+				472FF0FE2BEBF43E001418AE /* ClothDetailComponent.swift in Sources */,
 				47C29E272BC24EA400E3E2B9 /* Color+.swift in Sources */,
 				47C29E292BC2500200E3E2B9 /* ViewHiddenModifier.swift in Sources */,
 				474E8A752BD672CC0060E081 /* TempRate.swift in Sources */,
+				4738C8BE2BEDEEDC00AED673 /* MapView.swift in Sources */,
 				8856A02B2BD9731F00FCBFB8 /* ClothesDTO.swift in Sources */,
 				47BE3A3E2BC3CE1600F27E38 /* TestUseCase.swift in Sources */,
 				8856A02D2BD988B700FCBFB8 /* BlankDataIndicateComponent.swift in Sources */,
 				47C29DF72BC248D000E3E2B9 /* SignUpView.swift in Sources */,
+				47200E2D2BF0F237004B29FA /* ExtendedAlertComponent.swift in Sources */,
 				47BE3A272BC388A700F27E38 /* KeyChainManager.swift in Sources */,
 				47E7403F2BD90D46003A71D5 /* ClothesEndPoint.swift in Sources */,
 				884E60872BE2D10D00682663 /* AICoordiRecommendView.swift in Sources */,
+				474656D82BF3DF2700F001BF /* PutOOTDViewModel.swift in Sources */,
 				474E8A7B2BD6820C0060E081 /* ThicknessTagComponent.swift in Sources */,
 				47BE3A182BC3800E00F27E38 /* Coordi.swift in Sources */,
 				47DF6F9B2BC6CC7C00E64B12 /* ButtonComponent.swift in Sources */,
+				4743B7D02BEE701900F25C7E /* LocationView.swift in Sources */,
 				47BE3A302BC3938D00F27E38 /* APIManager.swift in Sources */,
 				47BE3A232BC380BA00F27E38 /* OOTDRepository.swift in Sources */,
 				4789E7232BEA0280002CF53A /* CoordiImageView.swift in Sources */,
@@ -999,7 +1089,9 @@
 				47C29E142BC24A5500E3E2B9 /* MyPageMainView.swift in Sources */,
 				47A922362BDF9465003234F9 /* OOTDItemView.swift in Sources */,
 				47BE3A402BC3CE2B00F27E38 /* TestRepository.swift in Sources */,
+				472FF1002BEC21B0001418AE /* AddCoordiRecordSecondView.swift in Sources */,
 				47BE3A432BC4C99100F27E38 /* TestViewModel.swift in Sources */,
+				47E560C92BEF3939003114CC /* PutCoordiRecordView.swift in Sources */,
 				47C29E0F2BC24A2300E3E2B9 /* OOTDMainViewModel.swift in Sources */,
 				47C29E312BC2514B00E3E2B9 /* MemberUseCase.swift in Sources */,
 				47BE3A352BC3BAF500F27E38 /* BaseResponse.swift in Sources */,
@@ -1013,17 +1105,23 @@
 				476EAC3F2BD2B2A1008B2E15 /* SignUpFirstView.swift in Sources */,
 				47C29DF92BC2490600E3E2B9 /* OnboardingView.swift in Sources */,
 				470579812BDBD3450009A2CF /* GetCoordiView.swift in Sources */,
+				474656E32BF482E700F001BF /* OtherProfileView.swift in Sources */,
 				474E8A692BD645AB0060E081 /* ClothSelectedComponent.swift in Sources */,
 				47E740322BD8DAF0003A71D5 /* SettingView.swift in Sources */,
 				47A922382BDF9481003234F9 /* OOTDItemViewModel.swift in Sources */,
 				47BAF23B2BC65882002474E7 /* OndosetHome.swift in Sources */,
+				474656D52BF3D38400F001BF /* PutOOTDView.swift in Sources */,
+				474656DF2BF46E2700F001BF /* OtherProfileViewModel.swift in Sources */,
 				47E7403B2BD8F788003A71D5 /* OotdDTO.swift in Sources */,
 				47E740372BD8DE72003A71D5 /* ImagePicker.swift in Sources */,
 				4789E7262BEA0ECA002CF53A /* AddCoordiRecordView.swift in Sources */,
 				47A718FD2BCB769200AD66A3 /* MemberDTO.swift in Sources */,
 				47E6BB6F2BC56D3600A72F3D /* AppError.swift in Sources */,
+				47E560CB2BEF3973003114CC /* PutCoordiRecordViewModel.swift in Sources */,
 				476EAC3D2BD2B28D008B2E15 /* SignUpSecondView.swift in Sources */,
+				474656DA2BF469DA00F001BF /* GetCoordiforPutView.swift in Sources */,
 				47BE3A3C2BC3CBBD00F27E38 /* Test.swift in Sources */,
+				4771666B2BEFCEDE00D9AC41 /* RegisterGoOutTimeView.swift in Sources */,
 				4705797C2BDBD0EF0009A2CF /* AddOOTDViewModel.swift in Sources */,
 				47DF6F9F2BC7010100E64B12 /* RegisterNickNameView.swift in Sources */,
 				47BE3A1F2BC380A400F27E38 /* ClothesRepository.swift in Sources */,
@@ -1037,8 +1135,10 @@
 				474E8A732BD672BA0060E081 /* Thickness.swift in Sources */,
 				47C29E332BC2515500E3E2B9 /* ClothesUseCase.swift in Sources */,
 				47C29DF52BC248C300E3E2B9 /* SignInView.swift in Sources */,
+				4738C8C22BEE031600AED673 /* LocationManager.swift in Sources */,
 				47E740432BD91509003A71D5 /* OOTDComponent.swift in Sources */,
 				47C29E002BC249A400E3E2B9 /* HomeMainView.swift in Sources */,
+				4754B86D2BEB3D750048C5C3 /* ClothSearchComponent.swift in Sources */,
 				474E8A6F2BD6707E0060E081 /* Category.swift in Sources */,
 				47BE3A2A2BC3898E00F27E38 /* ErrorHandler.swift in Sources */,
 				47C29E2B2BC2504900E3E2B9 /* Constants.swift in Sources */,

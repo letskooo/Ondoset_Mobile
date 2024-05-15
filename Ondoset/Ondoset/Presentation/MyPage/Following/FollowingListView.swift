@@ -31,11 +31,16 @@ struct FollowingListView: View {
                 .foregroundStyle(Color(hex: 0xEDEEFA))
                 .padding(.top, 15)
             
+            
+            
             ScrollView(showsIndicators: false) {
                 
                 VStack(spacing: 0) {
             
                     if followingVM.followingList == [] {
+                        
+                        BlankDataIndicateComponent(explainText: "아직 팔로우한 계정이 없어요 \n다른 계정을 팔로우하고 언제든 다시 찾아보세요")
+                            .offset(y: 200)
                         
                     } else {
                         

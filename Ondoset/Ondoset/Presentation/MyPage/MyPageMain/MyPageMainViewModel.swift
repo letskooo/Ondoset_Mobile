@@ -12,6 +12,7 @@ class MyPageMainViewModel: ObservableObject {
     let memberUseCase: MemberUseCase = MemberUseCase.shared
     let ootdUseCase: OOTDUseCase = OOTDUseCase.shared
     
+    
     @Published var memberProfile: MemberProfile?
     
     var lastPage: Int = -1
@@ -54,13 +55,37 @@ class MyPageMainViewModel: ObservableObject {
     }
     
     // 프로필 이미지 변경
-    func changeProfileImage() {
+    func changeProfileImage(profileImage: Data) async -> Bool {
+        
+        if let result = await memberUseCase.updateProfileImage(profileImage: profileImage) {
+            return true
+        } else {
+            return false
+        }
         
     }
     
-    // 닉네임 수정
-    func changeNickname() {
+    // 닉네임 중복 확인
+    func checkNicknameDuplicate(nickname: String) async -> Bool {
         
+        if let result = await memberUseCase.checkDuplicateNickname(nickname: nickname) {
+            
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // 닉네임 수정
+    func changeNickname(newNickname: String) async -> Bool {
+        
+        if let result = await memberUseCase.updateNickname(updateNicknameDTO: UpdateNicknameRequestDTO(nickname: newNickname)) {
+            
+            return true
+            
+        } else {
+            return false
+        }
     }
     
     // 로그아웃

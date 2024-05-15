@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import Kingfisher
+import MapKit
 
 /// OOTD 수정하기 화면
 
 struct PutOOTDView: View {
+    
+    // 수정하고자 하는 OOTD 아이디
+    let ootdId: Int
     
     // 불러오기 sheet 활성화 여부
     @State private var isSheetPresented = false
@@ -38,11 +43,10 @@ struct PutOOTDView: View {
     @State var ootdLat: Double = 91.0
     @State var ootdLon: Double = 91.0
     
-    
-    @StateObject var addOOTDVM: AddOOTDViewModel = .init()
-    @EnvironmentObject var wholeVM: WholeViewModel
-    
     @Environment(\.dismiss) private var dismiss
+    
+    @StateObject var putOOTDVM: PutOOTDViewModel = .init()
+    @EnvironmentObject var wholeVM: WholeViewModel
     
     var body: some View {
         
@@ -50,6 +54,7 @@ struct PutOOTDView: View {
             
             HStack(alignment: .top) {
                 
+                // 새로운 OOTD 이미지를 선택한 경우
                 if isOOTDImageSelected {
                     
                     Image(uiImage: ootdImage)
@@ -60,28 +65,28 @@ struct PutOOTDView: View {
                             openPhoto = true
                         }
                         .onAppear {
-                            
+
                             print(ootdImage)
-                            
+
                             // MARK: 나중에 화질 구리면 0.1 -> 0.7로 수정
                             if let imageData = ootdImage.jpegData(compressionQuality: 0.1) {
-                                addOOTDVM.ootdImage = imageData
+                                putOOTDVM.ootdImage = imageData
                             }
-                            
+
                         }
                         .onChange(of: ootdImage) { image in
-                            
+
                             print(image)
 
                             // MARK: 나중에 화질 구리면 0.1 -> 0.7로 수정
                             if let imageData = image.jpegData(compressionQuality: 0.1) {
-                                addOOTDVM.ootdImage = imageData
+                                putOOTDVM.ootdImage = imageData
                             }
                         }
-                        
-                } else {
                     
-                    Image("addOOTDPhoto")
+                } else {
+                    // 기존 이미지
+                    KFImage(URL(string: putOOTDVM.getOOTDforPut.imageURL))
                         .resizable()
                         .aspectRatio(9/16, contentMode: .fill)
                         .frame(width: screenWidth / 2.5)
@@ -103,29 +108,9 @@ struct PutOOTDView: View {
                             Text("외출 출발 시간")
                             DatePicker("외출 출발 시간", selection: $selectedDepartDate)
                                 .labelsHidden()
-//                                .frame(maxWidth: screenWidth / 2)  // 최대 너비 설정
-//                                .fixedSize()
-                                .onAppear {
-                                    
-                                    var dateEpoch = dateToEpoch(selectedDate: selectedDepartDate)
-                                    addOOTDVM.ootdDepartTime = dateEpoch
-
-                                    print(selectedDepartDate)
-                                    print(dateToString(selectedDate: selectedDepartDate))
-                                    print(dateToEpoch(selectedDate: selectedDepartDate))
-                                    
-                                }
+                                
                         }
                         .padding(.top, 5)
-                    }
-                    .onChange(of: selectedDepartDate) { date in
-                        
-                        var dateEpoch = dateToEpoch(selectedDate: date)
-                        addOOTDVM.ootdDepartTime = dateEpoch
-
-                        print(date)
-                        print(dateToString(selectedDate: date))
-                        print(dateToEpoch(selectedDate: date))
                     }
                     
                     Spacer()
@@ -135,26 +120,9 @@ struct PutOOTDView: View {
                         Text("외출 도착 시간")
                         DatePicker("외출 도착 시간", selection: $selectedArrivalDate).labelsHidden()
                             .frame(width: screenWidth / 4, height: 60)
-                            .onAppear {
-                                
-                                var dateEpoch = dateToEpoch(selectedDate: selectedArrivalDate)
-                                
-                                addOOTDVM.ootdArrivalTime = dateEpoch
-                                print(selectedArrivalDate)
-                                print(dateToString(selectedDate: selectedArrivalDate))
-                                print(dateToEpoch(selectedDate: selectedArrivalDate))
-                            }
-                        
-
                     }
                     .onChange(of: selectedArrivalDate) { date in
                         
-                        var dateEpoch = dateToEpoch(selectedDate: date)
-                        
-                        addOOTDVM.ootdArrivalTime = dateEpoch
-                        print(date)
-                        print(dateToString(selectedDate: date))
-                        print(dateToEpoch(selectedDate: date))
             
                     }
                 }
@@ -175,11 +143,7 @@ struct PutOOTDView: View {
                 
                 Button {
                     
-                    // 나중에 지역 검색 시트 화면 올라오고 지역 확정되면 아래 메소드가 나가는 걸로 해야함
-                    Task {
-//                        await addOOTDVM.getOOTDWeather()
-                        isLocationSearchSheetPresented = true
-                    }
+                    isLocationSearchSheetPresented = true
                     
                 } label: {
                     
@@ -202,13 +166,13 @@ struct PutOOTDView: View {
                     
                     HStack {
                         
-                        TextField("추가할 옷 이름을 입력해주세요", text: $addOOTDVM.addClothInputText)
+                        TextField("추가할 옷 이름을 입력해주세요", text: $putOOTDVM.addClothInputText)
             
                         Button {
-                            
-                            ootdClothes.append(addOOTDVM.addClothInputText)
-                            addOOTDVM.ootdWearingList.append(addOOTDVM.addClothInputText)
-                            addOOTDVM.addClothInputText = ""
+                           
+                            ootdClothes.append(putOOTDVM.addClothInputText)
+                            putOOTDVM.ootdWearingList.append(putOOTDVM.addClothInputText)
+                            putOOTDVM.addClothInputText = ""
                             
                         } label: {
                             Text("추가")
@@ -234,12 +198,11 @@ struct PutOOTDView: View {
                                 
                                 Button {
                                     
+                                    // 선택한 옷 아이템을 화면상 옷 리스트에서 삭제
                                     ootdClothes.remove(at: index)
-//                                    addOOTDVM.addOOTD?.wearingList.remove(at: index)
-                                    //addOOTDVM.ootdWearingList?.remove(at: index)
                                     
-                                    addOOTDVM.ootdWearingList.remove(at: index)
-                                    
+                                    // 선택한 옷 아이템을 뷰모델의 옷 리스트에서 삭제
+                                    putOOTDVM.ootdWearingList.remove(at: index)
                                     
                                 } label: {
                                     Image("xBtn")
@@ -254,12 +217,14 @@ struct PutOOTDView: View {
             .frame(width: screenWidth - 36)
 //            .background(.red)
             
-            ButtonComponent(isBtnAvailable: $addOOTDVM.isRegisterBtnAvailable, width: screenWidth - 50, btnText: "등록하기", radius: 15) {
+            ButtonComponent(isBtnAvailable: $putOOTDVM.isRegisterBtnAvailable, width: screenWidth - 50, btnText: "수정하기", radius: 15) {
                 
                 Task {
                     
-                    let result = await addOOTDVM.registerOOTD()
+                    // OOTD 수정하기 API 호출
+                    let result = await putOOTDVM.putOOTD(ootdId: ootdId, isOOTDImageSelected: isOOTDImageSelected)
                     
+                    // 성공했다면 뒤로가기
                     if result {
                         dismiss()
                     }
@@ -268,28 +233,6 @@ struct PutOOTDView: View {
             .padding(.bottom, 20)
             
             Spacer()
-        }
-        .onChange(of: addOOTDVM.ootdDepartTime) { _ in
-            
-            Task {
-                
-                await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
-            }
-        }
-        .onChange(of: addOOTDVM.ootdArrivalTime) { _ in
-            
-            Task {
-                
-                await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
-            }
-        }
-        .onChange(of: ootdLat) { _ in
-            
-            Task {
-                
-                await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
-            }
-            
         }
         .padding(.horizontal, 20)
         .navigationTitle("내 OOTD 수정하기")
@@ -322,38 +265,104 @@ struct PutOOTDView: View {
                 }
             }
         }
-        .padding(.top, 10)
-        .sheet(isPresented: $isSheetPresented) {
-            GetCoordiView(ootdClothes: $ootdClothes, addOOTDVM: addOOTDVM, isSheetPresented: $isSheetPresented)
+        // 화면이 나타날 때 처리
+        .onAppear {
+            
+            // 화면이 나타날 때 OOTD 수정용 조회 API 호출
+            Task {
+                await putOOTDVM.getOOTDforPut(ootdId: ootdId)
+                
+                // 기존 OOTD의 시간을 DatePicker의 Date 타입으로 변환
+                selectedDepartDate = Date(timeIntervalSince1970: TimeInterval(putOOTDVM.getOOTDforPut.departTime))
+                
+                selectedArrivalDate = Date(timeIntervalSince1970: TimeInterval(putOOTDVM.getOOTDforPut.arrivalTime))
+                
+                // 뷰모델의 OOTD 값을 기존 OOTD 값으로 지정
+                putOOTDVM.ootdRegion = putOOTDVM.getOOTDforPut.region
+                putOOTDVM.ootdDepartTime = putOOTDVM.getOOTDforPut.departTime
+                putOOTDVM.ootdArrivalTime = putOOTDVM.getOOTDforPut.arrivalTime
+                putOOTDVM.ootdWeather = putOOTDVM.getOOTDforPut.weather.rawValue
+                putOOTDVM.ootdLowestTemp = putOOTDVM.getOOTDforPut.lowestTemp
+                putOOTDVM.ootdHighestTemp = putOOTDVM.getOOTDforPut.highestTemp
+                // 이미지는 생략
+                putOOTDVM.ootdWearingList = putOOTDVM.getOOTDforPut.wearingList
+                
+                // 기존 OOTD의 지역을 화면에 나타냄
+                locationSearchText = putOOTDVM.getOOTDforPut.region
+                
+                // 기존 OOTD의 옷 목록을 화면에 나타냄
+                ootdClothes = putOOTDVM.getOOTDforPut.wearingList
+                
+                // 수정하기 버튼 활성화
+                updateIsRegisterBtnAvailable()
+                
+                // 기존 OOTD 지역 좌표 정보 업데이트
+                fetchCoordinates(completion: {
+                    print("초기 위도: \(ootdLat)")
+                    print("초기 경도: \(ootdLon)")
+                })
+            }
         }
+        // 지역 정보 검색 화면 활성화
         .sheet(isPresented: $isLocationSearchSheetPresented) {
             
             LocationView(locationSearchText: $locationSearchText, lat: $ootdLat, lon: $ootdLon, isLocationViewSheetPresented: $isLocationSearchSheetPresented)
         }
-        .sheet(isPresented: $openPhoto, content: {
+        // 코디에서 불러오기 sheet 활성화
+        .sheet(isPresented: $isSheetPresented) {
+            GetCoordiforPutView(ootdClothes: $ootdClothes, putOOTDVM: putOOTDVM, isSheetPresented: $isSheetPresented)
+        }
+        // 사진을 선택했을 경우 이미지 피커 sheet 활성화
+        .sheet(isPresented: $openPhoto) {
+
             ImagePicker(sourceType: .photoLibrary, selectedImage: $ootdImage)
-        })
+        }
+        // 사진이 선택되고 화면상 이미지 변경
         .onChange(of: ootdImage) { image in
+            
+            // 이미지 선택 상태 여부 -> true
             isOOTDImageSelected = true
             
-            if let imageData = image.jpegData(compressionQuality: 1.0) {
-                addOOTDVM.ootdImage = imageData
+            // 뷰모델의 ootdImage를 선택한 이미지로 설정
+            if let imageData = image.jpegData(compressionQuality: 0.1) {
+                putOOTDVM.ootdImage = imageData
             }
         }
-        .onAppear {
-            wholeVM.isTabBarHidden = true
-        }
-        .onChange(of: isOOTDImageSelected) { _ in
+        // DatePicker에서 시간을 바꿀 때
+        .onChange(of: selectedDepartDate) { date in
             
-            updateIsRegisterBtnAvailable()
+            putOOTDVM.ootdDepartTime = dateToEpoch(selectedDate: date)
+            
+            // 시간이 바뀔 때마다 날씨 미리보기 API 호출
+            Task {
+                await putOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: putOOTDVM.ootdDepartTime, arrivalTime: putOOTDVM.ootdArrivalTime, location: locationSearchText)
+            }
+
         }
+        .onChange(of: selectedArrivalDate) { date in
+            
+            putOOTDVM.ootdArrivalTime = dateToEpoch(selectedDate: date)
+            
+            Task {
+                await putOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: putOOTDVM.ootdDepartTime, arrivalTime: putOOTDVM.ootdArrivalTime, location: locationSearchText)
+            }
+        }
+        // 위치 정보가 바뀔 때마다 날씨 미리보기 API 호출
+        .onChange(of: ootdLat) { _ in
+            
+            Task {
+                await putOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: putOOTDVM.ootdDepartTime, arrivalTime: putOOTDVM.ootdArrivalTime, location: locationSearchText)
+            }
+        }
+        // 옷 리스트 목록에 옷이 없을 때 수정하기 버튼 비활성화
         .onChange(of: ootdClothes) { _ in
+            
             updateIsRegisterBtnAvailable()
         }
     }
     
     func updateIsRegisterBtnAvailable() {
-        addOOTDVM.isRegisterBtnAvailable = isOOTDImageSelected && !ootdClothes.isEmpty
+        putOOTDVM.isRegisterBtnAvailable = !ootdClothes.isEmpty
     }
     
     // MARK: 나중에 32400 뺄 필요 없다고 하면 지우기
@@ -377,8 +386,29 @@ struct PutOOTDView: View {
         
         return formatter.string(from: selectedDate)
     }
+    
+    // 위치 정보 불러오기
+    func fetchCoordinates(completion: @escaping () -> Void) {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = putOOTDVM.getOOTDforPut.region
+
+        let search = MKLocalSearch(request: request)
+        search.start { response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            if let firstItem = response?.mapItems.first, let location = firstItem.placemark.location {
+                DispatchQueue.main.async {
+                    self.ootdLat = location.coordinate.latitude
+                    self.ootdLon = location.coordinate.longitude
+                    completion() // 완료 핸들러 호출
+                }
+            }
+        }
+    }
 }
 
 #Preview {
-    PutOOTDView()
+    PutOOTDView(ootdId: 0)
 }

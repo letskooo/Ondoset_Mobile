@@ -22,6 +22,9 @@ struct LikeOOTDView: View {
             
             if likeOOTDVM.ootdList == [] {
                 
+                BlankDataIndicateComponent(explainText: "공감한 OOTD가 없어요 \n다른 사용자의 OOTD에 공감하기를 눌러보세요")
+                    .offset(y: 250)
+                
             } else {
                 LazyVGrid(columns: columns, spacing: 1) {
                     

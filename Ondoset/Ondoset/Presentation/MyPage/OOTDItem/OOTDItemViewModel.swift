@@ -77,4 +77,19 @@ class OOTDItemViewModel: ObservableObject {
             }
         }
     }
+    
+    // OOTD 기능 제한 확인
+    func getBanPeriod() async -> Int {
+        
+        if let result = await ootdUseCase.getBanPeriod() {
+            
+            print("금지 기간: \(result)")
+            
+            return result
+            
+        } else {
+            
+            return -3
+        }
+    }
 }

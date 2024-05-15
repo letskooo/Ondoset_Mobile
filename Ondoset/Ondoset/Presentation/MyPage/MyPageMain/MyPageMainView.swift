@@ -119,7 +119,7 @@ struct MyPageMainView: View {
                             
                             Spacer()
                         
-                        }
+                        } // HStack
                         .frame(width: screenWidth, height: 120)
                         .overlay(alignment: .bottom) {
                             Rectangle()

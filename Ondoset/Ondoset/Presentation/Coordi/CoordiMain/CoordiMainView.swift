@@ -16,12 +16,13 @@ struct CoordiMainView: View {
     // 코디 계획 추가하기 sheet 활성화 여부
     @State var isAddCoordiPlanSheetPresented: Bool = false
     
+    // 상단 연도 피커 보이기 여부
     @State var showYearPicker: Bool = false
     
     @State var selectedYear: Int = 2024
     @State var selectedMonth: Int = 8
     @State private var currentIndex: Int = 0
-    @State private var selectedDays = 1
+    @State var selectedDays = 1
     @State private var selectedWeekday = "Mon"
     @State private var selectedSatisfaction: Satisfaction?
     
@@ -33,6 +34,26 @@ struct CoordiMainView: View {
     
     @State var showCoordiDeleteAlert: Bool = false
     @State var willDeleteCoordiId: Int = 0
+    
+    // MARK: 코디 수정하기
+    // 코디 수정하기 옷 리스트
+    @State var coordiClothesList: [Clothes] = []
+    // 코디 수정하기 코디 번호
+    @State var selectedCoordiId: Int = 0
+    // 코디 기록 수정하기 sheet 활성화 여부
+    @State var isPutCoordiRecordSheetPresented: Bool = false
+    
+    
+    // MARK: 외출 시간 등록/수정하기
+    @State var isRegisterGoOutTimeSheetPresented: Bool = false
+    @State var isPutGoOutTimeSheetPresented: Bool = false
+    
+    // 외출 출발 시간
+    @State var goOutDepartTime: Int = -1
+    @State var goOutArrivalTime: Int = -1
+    @State var goOutRegion: String = "지역 검색"
+    @State var toSetTimeCoordiId: Int = 0
+    
     
     let month = Array(1...12)
     let years = Array(1900...2100)
@@ -156,17 +177,34 @@ struct CoordiMainView: View {
 
                                                             Button {
                                                                 
+                                                                isPutCoordiRecordSheetPresented = true
+                                                                
+                                                                selectedCoordiId = coordiRecord.coordiId
+                                                                
+                                                                coordiClothesList = coordiRecord.clothesList
+                                                                
                                                             } label: {
                                                                 Text("코디 수정하기")
                                                             }
                                                             
                                                             Button {
                                                                 
+                                                                isPutGoOutTimeSheetPresented = true
+                                                                goOutRegion = coordiRecord.region ?? "지역 검색"
+                                                                goOutDepartTime = coordiRecord.departTime ?? 0
+                                                                goOutArrivalTime = coordiRecord.arrivalTime ?? 0
+                                                                
+                                                                toSetTimeCoordiId = coordiRecord.coordiId
+                                                                
                                                             } label: {
                                                                 Text("외출 시간 수정하기")
                                                             }
                                                             
                                                             Button {
+                                                                
+                                                                isAddCoordiPlanSheetPresented = true
+                                                                
+                                                                coordiClothesList = coordiRecord.clothesList
                                                                 
                                                             } label: {
                                                                 Text("오늘 코디로 가져오기")
@@ -272,17 +310,37 @@ struct CoordiMainView: View {
 
                                                             Button {
                                                                 
+                                                                isPutCoordiRecordSheetPresented = true
+                                                                
+                                                                selectedCoordiId = coordiRecord.coordiId
+                                                                
+                                                                coordiClothesList = coordiRecord.clothesList
+                                                                
                                                             } label: {
                                                                 Text("코디 수정하기")
                                                             }
                                                             
                                                             Button {
                                                                 
+                                                                isPutGoOutTimeSheetPresented = true
+                                                                
+                                                                goOutRegion = coordiRecord.region ?? "지역 검색"
+                                                                goOutDepartTime = coordiRecord.departTime ?? 0
+                                                                goOutArrivalTime = coordiRecord.arrivalTime ?? 0
+                                                                
+                                                                toSetTimeCoordiId = coordiRecord.coordiId
+                                                                
                                                             } label: {
                                                                 Text("외출 시간 수정하기")
                                                             }
                                                             
                                                             Button {
+                                                                
+                                                                isAddCoordiPlanSheetPresented = true
+                                                                
+                                                                
+                                                                coordiClothesList = coordiRecord.clothesList
+                                                                
                                                                 
                                                             } label: {
                                                                 Text("오늘 코디로 가져오기")
@@ -353,17 +411,33 @@ struct CoordiMainView: View {
 
                                                                 Button {
                                                                     
+                                                                    isPutCoordiRecordSheetPresented = true
+                                                                    
+                                                                    selectedCoordiId = coordiRecord.coordiId
+                                                                    
+                                                                    coordiClothesList = coordiRecord.clothesList
+                                                                    
                                                                 } label: {
                                                                     Text("코디 수정하기")
                                                                 }
                                                                 
                                                                 Button {
                                                                     
+                                                                    isRegisterGoOutTimeSheetPresented = true
+                                                                    
+                                                                    goOutRegion = coordiRecord.region ?? "지역 검색"
+                                                                    
+                                                                    toSetTimeCoordiId = coordiRecord.coordiId
+                                                                    
                                                                 } label: {
                                                                     Text("외출 시간 등록하기")
                                                                 }
                                                                 
                                                                 Button {
+                                                                    
+                                                                    isAddCoordiPlanSheetPresented = true
+                                                                    
+                                                                    coordiClothesList = coordiRecord.clothesList
                                                                     
                                                                 } label: {
                                                                     Text("오늘 코디로 가져오기")
@@ -407,6 +481,12 @@ struct CoordiMainView: View {
                                                             Menu(content: {
 
                                                                 Button {
+                                                                    
+                                                                    isPutCoordiRecordSheetPresented = true
+                                                                    
+                                                                    selectedCoordiId = coordiRecord.coordiId
+                                                                    
+                                                                    coordiClothesList = coordiRecord.clothesList
                                                                     
                                                                 } label: {
                                                                     Text("코디 수정하기")
@@ -529,10 +609,24 @@ struct CoordiMainView: View {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $coordiImage)
         })
         .sheet(isPresented: $isAddCoordiRecordSheetPresented) {
-            AddCoordiRecordView(isAddCoordiRecordSheetPresented: $isAddCoordiRecordSheetPresented)
+            AddCoordiRecordView(coordiYear: $selectedYear, coordiMonth: $selectedMonth, coordiDay:
+                                    $selectedDays, isAddCoordiRecordSheetPresented: $isAddCoordiRecordSheetPresented)
+        }
+        .sheet(isPresented: $isPutCoordiRecordSheetPresented) {
+            
+            PutCoordiRecordView(selectedCoordiId: $selectedCoordiId, coordiClothesList: $coordiClothesList, isPutCoordiRecordSheetPresented: $isPutCoordiRecordSheetPresented)
+        }
+        .sheet(isPresented: $isPutGoOutTimeSheetPresented) {
+            
+            PutGoOutTimeView(selectedCoordiId: $toSetTimeCoordiId, selectedYear: $selectedYear, selectedMonth: $selectedMonth, selecteddDays: $selectedDays, goOutRegioin: $goOutRegion, goOutDepartTime: $goOutDepartTime, goOutArrivalTime: $goOutArrivalTime, isPutGoOutTimeSheetPresented: $isPutGoOutTimeSheetPresented)
+                .presentationDetents([.height(screenHeight / 2)])
+        }
+        .sheet(isPresented: $isRegisterGoOutTimeSheetPresented) {
+            
+            RegisterGoOutTimeView(selectedCoordiId: $toSetTimeCoordiId, selectedYear: $selectedYear, selectedMonth: $selectedMonth, selectedDays: $selectedDays, goOutRegion: $goOutRegion, isRegisterGoOutTimeSheetPresented: $isRegisterGoOutTimeSheetPresented)
         }
         .sheet(isPresented: $isAddCoordiPlanSheetPresented) {
-            AddCoordiPlanView(isAddCoordiPlanSheetPresented: $isAddCoordiPlanSheetPresented)
+            AddCoordiPlanView(isAddCoordiPlanSheetPresented: $isAddCoordiPlanSheetPresented, coordiYear: $selectedYear, coordiMonth: $selectedMonth, coordiDay: $selectedDays, coordiClothesList: $coordiClothesList)
         }
         .onAppear {
             
@@ -545,6 +639,7 @@ struct CoordiMainView: View {
             
             selectedWeekday = weekdayString(from: weekday)
 
+            coordiClothesList = []
             
             let initialIndex = selectedMonth - 3
             currentIndex = max(0, min(initialIndex, month.count - 5))
@@ -754,7 +849,7 @@ struct CoordiMainView: View {
                             }
                         }
                         .frame(width: screenWidth / 6.75, height: screenHeight / 10)
-                        .background(self.selectedDays == day.day ? .main : .white)
+                        .background(self.selectedDays == day.day ? .mainLight : .white)
                         .cornerRadius(15)
                         .overlay {
                             
