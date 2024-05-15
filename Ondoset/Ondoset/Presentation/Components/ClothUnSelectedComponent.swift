@@ -254,7 +254,7 @@ extension ClothSearchViewModel {
          guard clothesLastPage != -2 else { return }
          
          if let result = await clothesUseCase.getAllClothes(lastPage: clothesLastPage) {
-             setReceivedData(clothesList: result.ClothesList, lastPage: result.lastPage)
+             setReceivedData(clothesList: result.clothesList, lastPage: result.lastPage)
          }
      }
      

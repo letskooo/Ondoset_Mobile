@@ -15,23 +15,29 @@ struct SettingView: View {
     
     @State var isNotificationAvailable: Bool = false
     
+    @State var isProfileImageChanged: Bool = false
+    
     @State var logOutShowAlert: Bool = false
     @State var withdrawShowAlert: Bool = false
+    
+    // 닉네임 변경 sheet 활성화 여부
+    @State var isUpdateNicknameSheetPresented: Bool = false
     
     @ObservedObject var myPageVM: MyPageMainViewModel
     
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
+        
         ZStack {
     
             VStack(spacing: 0) {
                 
                 VStack(spacing: 0) {
                     
-                    if let imageURL = myPageVM.memberProfile?.profileImage, let url = URL(string: imageURL) {
+                    if isProfileImageChanged {
                         
-                        KFImage(url)
+                        Image(uiImage: profileImage)
                             .resizable()
                             .scaledToFill()
                             .frame(width: 96, height: 96)
@@ -49,41 +55,69 @@ struct SettingView: View {
                         
                     } else {
                         
-                        Image("basicProfileIcon")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 96, height: 96)
-                            .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                            .overlay {
-                                Circle().stroke(.main, lineWidth: 0.5)
-                            }
-                            .overlay {
-                                Image("addBtnWhite")
-                                    .offset(x: 40, y: 40)
-                            }
-                            .onTapGesture {
-                                openPhoto = true
-                            }
+                        if let imageURL = myPageVM.memberProfile?.profileImage, let url = URL(string: imageURL) {
+                            
+                            KFImage(url)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 96, height: 96)
+                                .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                                .overlay {
+                                    Circle().stroke(.main, lineWidth: 0.5)
+                                }
+                                .overlay {
+                                    Image("addBtnWhite")
+                                        .offset(x: 40, y: 40)
+                                }
+                                .onTapGesture {
+                                    openPhoto = true
+                                }
+                            
+                        } else {
+                            
+                            Image("basicProfileIcon")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 96, height: 96)
+                                .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                                .overlay {
+                                    Circle().stroke(.main, lineWidth: 0.5)
+                                }
+                                .overlay {
+                                    Image("addBtnWhite")
+                                        .offset(x: 40, y: 40)
+                                }
+                                .onTapGesture {
+                                    openPhoto = true
+                                }
+                        }
                     }
-                    
+
                     Text(myPageVM.memberProfile?.username ?? "사용자 아이디")
                         .font(Font.pretendard(.medium, size: 13))
                         .padding(.top, 16)
                     
-                    Text(myPageVM.memberProfile?.nickname ?? "사용자 닉네임")
-                        .font(Font.pretendard(.medium, size: 15))
-                        .padding(.top, 10)
-                        .overlay {
-                            Image("pencil")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 14, height: 14)
-                                .padding(.leading, 7)
-                                .offset(x: 33, y: 3)
-                        }
-                        .onTapGesture {
+                    HStack(spacing: 0) {
+                        
+                        
+                        
+                        Text(myPageVM.memberProfile?.nickname ?? "사용자 닉네임")
+                            .font(Font.pretendard(.medium, size: 15))
                             
-                        }
+                        
+                        Image("pencil")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 14, height: 14)
+                            .padding(.leading, 5)
+                        
+                        
+                    }
+                    .padding(.top, 10)
+                    .onTapGesture {
+                        isUpdateNicknameSheetPresented = true
+                    }
+
                   
                 }
                 
@@ -142,6 +176,170 @@ struct SettingView: View {
         .sheet(isPresented: $openPhoto, content: {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $profileImage)
         })
+        .sheet(isPresented: $isUpdateNicknameSheetPresented, content: {
+            
+            UpdateNicknameView(myPageVM: myPageVM, isUpdateNicknameSheetPresented: $isUpdateNicknameSheetPresented)
+                .presentationDetents([.height(screenHeight / 3.5)])
+        })
+        .onChange(of: profileImage) { image in
+            
+            Task {
+                
+                if let imageData = image.jpegData(compressionQuality: 0.1) {
+                    
+                    let result = await myPageVM.changeProfileImage(profileImage: imageData)
+                    
+                    if result {
+                        
+                        isProfileImageChanged = true
+                    }
+                }
+            }
+        }
+        .onDisappear {
+            
+            Task {
+                await myPageVM.readMyProfile()
+            }
+            
+        }
+    }
+}
+
+// 닉네임 변경 뷰
+struct UpdateNicknameView: View {
+    
+    @State var newNicknameInputText: String = ""
+    @State var isNewNicknameAvailable: Bool = false
+    @State var nicknamePhrase: String = ""
+    @State var isNicknamePhraseHidden: Bool = true
+    
+    @State var isNicknameCheckBtnAvailable: Bool = false
+    @State var isRegisterBtnAvailable: Bool = false
+    
+    @ObservedObject var myPageVM: MyPageMainViewModel
+    @Binding var isUpdateNicknameSheetPresented: Bool
+    
+    var body: some View {
+        
+        VStack(spacing: 0) {
+            
+            HStack {
+                
+                Button {
+                    
+                    isUpdateNicknameSheetPresented.toggle()
+                    
+                } label: {
+                    Text("닫기")
+                        .padding(.leading, 15)
+                        .font(Font.pretendard(.regular, size: 17))
+                        .foregroundStyle(.darkGray)
+                }
+                
+                Spacer()
+
+            }
+            .padding(.top, 15)
+            .overlay {
+                
+                Text("닉네임 변경")
+                    .font(Font.pretendard(.semibold, size: 17))
+                    .foregroundStyle(.black)
+                    .padding(.top, 10)
+            }
+            
+            HStack {
+                TextFieldComponent(width: 250, placeholder: "닉네임", inputText: $newNicknameInputText)
+                    .onChange(of: newNicknameInputText) { newNickname in
+                        
+                        if newNickname.count > 0 {
+                            
+                            isNicknameCheckBtnAvailable = true
+                            
+                        } else {
+                            
+                            isNicknameCheckBtnAvailable = false
+                            nicknamePhrase = ""
+                        }
+                    }
+                
+                ButtonComponent(isBtnAvailable: $isNicknameCheckBtnAvailable, width: 80, btnText: "중복 확인", radius: 8, action: {
+                    
+                    Task {
+                        
+                        let result = await myPageVM.checkNicknameDuplicate(nickname: newNicknameInputText)
+                        
+                        isNicknamePhraseHidden = false
+                        
+                        if result {
+                            
+                            
+                            isNewNicknameAvailable = true
+                            
+                        } else {
+                         
+                            isNewNicknameAvailable = false
+                        }
+                    }
+                    
+                })
+            }
+            .padding(.top, 10)
+            
+            HStack {
+                Text(isNewNicknameAvailable ? "사용 가능한 닉네임입니다." : "중복된 닉네임입니다. 다른 닉네임을 입력해주세요.")
+                    .font(Font.pretendard(.semibold, size: 10))
+                    .padding(.top, 12)
+                    .padding(.leading, 15)
+                    .foregroundStyle(isNicknameCheckBtnAvailable ? .blue : .black)
+                    .hidden(isNicknamePhraseHidden)
+                
+                Spacer()
+            }
+            .frame(width: screenWidth - 50)
+            
+            ButtonComponent(isBtnAvailable: $isRegisterBtnAvailable, width: screenWidth - 50, btnText: "변경하기", radius: 15, action: {
+                
+                Task {
+                    
+                    let result = await myPageVM.changeNickname(newNickname: newNicknameInputText)
+                    
+                    if result {
+                        isUpdateNicknameSheetPresented = false
+                    }
+                    
+                }
+            })
+            .padding(.top, 15)
+            
+            
+            
+            Spacer()
+            
+        }
+        .onChange(of: isNewNicknameAvailable) { _ in
+            
+            updateRegisterBtnStatus()
+            
+        }
+        .onDisappear {
+            
+            Task {
+                await myPageVM.readMyProfile()
+            }
+            
+        }
+    }
+    
+    func updateRegisterBtnStatus() {
+        
+        if isNewNicknameAvailable {
+            isRegisterBtnAvailable = true
+        } else {
+            isRegisterBtnAvailable = false
+        }
+        
     }
 }
 

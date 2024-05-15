@@ -9,7 +9,15 @@ import SwiftUI
 
 struct HomeMainView: View {
     
+    // 지역 정보 검색 화면 sheet
+    @State var isLocationViewSheetPresented: Bool = false
+    
+    // 지역 정보 검색 텍스트
+    @State var locationSearchText: String = ""
+    
     @StateObject var homeMainVM: HomeMainViewModel = .init()
+    
+    @StateObject var locationManager = LocationManager()
     
     var body: some View {
         
@@ -18,8 +26,9 @@ struct HomeMainView: View {
         NavigationStack {
             ZStack {
                 VStack(spacing: 0) {
-                    WeatherView()
+                    WeatherView(isLocationViewSheetPresented: $isLocationViewSheetPresented)
                         .environmentObject(homeMainVM)
+                        .environmentObject(locationManager)
                     HomeBottomView()
                         .environmentObject(homeMainVM)
                     Rectangle()
@@ -38,9 +47,22 @@ struct HomeMainView: View {
         }
         .onAppear(perform: {
             homeMainVM.homeViewDate = .now
+            
+            locationManager.requestLocation()
+            
+            if let location = locationManager.currentLocation {
+                
+                homeMainVM.homeViewLocate = .init(latitude: location.latitude, longitude: location.longitude)
+            }
+            
         })
         .sheet(isPresented: $homeMainVM.presentAIRecomm) {
             NavigationView { AICoordiRecommendView(viewType: homeMainVM.presentSheetViewType, AICoordiRecommendVM: .init(clothesData: homeMainVM.selectedClothTemplates ?? [.init(name: "")])) }
+        }
+        .sheet(isPresented: $isLocationViewSheetPresented) {
+            
+            LocationView(locationSearchText: $locationSearchText, lat: $homeMainVM.homeViewLocate.latitude, lon: $homeMainVM.homeViewLocate.longitude, isLocationViewSheetPresented: $isLocationViewSheetPresented)
+                .presentationDetents([.height(screenHeight / 3)])
         }
     }
 }

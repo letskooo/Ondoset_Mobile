@@ -21,21 +21,40 @@ struct FollowingListView: View {
         
         VStack(spacing: 0) {
             
-            SearchBarComponent(searchText: $searchText, placeHolder: "닉네임을 검색하세요") { _ in
-            }
+            
+            SearchBarComponent(searchText: $searchText, placeHolder: "닉네임을 검색하세요", searchAction: { text in
+                
+                print("잘 도ㅙ야함")
+                
+                Task {
+                    
+                    
+                    await followingVM.searchFollowingList(search: text)
+                }
+            })
             .padding(.horizontal, 18)
             .padding(.top, 5)
+            .onChange(of: searchText) { _ in
+                
+                followingVM.searchLastPage = -1
+                
+            }
             
             Rectangle()
                 .frame(width: screenWidth, height: 1)
                 .foregroundStyle(Color(hex: 0xEDEEFA))
                 .padding(.top, 15)
             
+            
+            
             ScrollView(showsIndicators: false) {
                 
                 VStack(spacing: 0) {
             
                     if followingVM.followingList == [] {
+                        
+                        BlankDataIndicateComponent(explainText: "아직 팔로우한 계정이 없어요 \n다른 계정을 팔로우하고 언제든 다시 찾아보세요")
+                            .offset(y: 200)
                         
                     } else {
                         

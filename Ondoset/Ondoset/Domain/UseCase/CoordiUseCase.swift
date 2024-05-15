@@ -23,6 +23,14 @@ class CoordiUseCase {
         return coordiRecordDTO.compactMap {$0.toCoordiRecord()}
     }
     
+    // 코디 하루 조회
+    func getDailyCoordi(getDailyCoordiDTO: GetDailyCoordiRequestDTO) async -> [CoordiRecord]? {
+        
+        guard let dailyCoordiDTO = await coordRepository.getDailyCoordi(getDailyCoordiDTO: getDailyCoordiDTO) else { return nil }
+
+        return dailyCoordiDTO.compactMap { $0.todailyCoordi() }
+    }
+    
     // 만족도 등록/수정
     func setSatisfaction(coordiId: Int, setSatisfactionDTO: SetSatisfactionRequestDTO) async -> Bool? {
         

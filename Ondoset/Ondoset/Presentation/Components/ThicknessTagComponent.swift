@@ -17,7 +17,7 @@ struct ThicknessTagComponent: View {
         
         Text(thickness.title)
             .font(Font.pretendard(.semibold, size: 13))  // 글꼴 설정
-            .padding(.horizontal, 20)  // 수평 패딩 추가
+            .padding(.horizontal, 10)  // 수평 패딩 추가
             .padding(.vertical, 4)     // 수직 패딩 추가
             .background(isSelected ? thickness.color : thickness.lightColor)  // 배경색
             .foregroundColor(isSelected ? .white : thickness.color)  // 텍스트 색상

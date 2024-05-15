@@ -24,11 +24,18 @@ struct AddOOTDView: View {
     // OOTD 이미지 선택 여부
     @State var isOOTDImageSelected: Bool = false
 
-    // 입은 옷 목록
+    // 입은 옷 목록(화면용)
     @State var ootdClothes: [String] = []
     
     // 사진 보관함 활성화 여부
     @State private var openPhoto: Bool = false
+    
+    @State var isLocationSearchSheetPresented: Bool = false
+    
+    @State var locationSearchText: String = "지역 검색"
+    @State var ootdLat: Double = 91.0
+    @State var ootdLon: Double = 91.0
+    
     
     @StateObject var addOOTDVM: AddOOTDViewModel = .init()
     @EnvironmentObject var wholeVM: WholeViewModel
@@ -75,6 +82,7 @@ struct AddOOTDView: View {
                     Image("addOOTDPhoto")
                         .resizable()
                         .aspectRatio(9/16, contentMode: .fill)
+                        .frame(width: screenWidth / 2.5)
                         .onTapGesture {
                             openPhoto = true
                         }
@@ -89,20 +97,22 @@ struct AddOOTDView: View {
                     
                     VStack {
                         
-                        Text("외출 출발 시간")
-                        DatePicker("외출 출발 시간", selection: $selectedDepartDate).labelsHidden()
-                            .frame(width: screenWidth / 2)
-                            .onAppear {
-                                
-                                var dateEpoch = dateToEpoch(selectedDate: selectedDepartDate)
-                                addOOTDVM.ootdDepartTime = dateEpoch
+                        Group {
+                            Text("외출 출발 시간")
+                            DatePicker("외출 출발 시간", selection: $selectedDepartDate)
+                                .labelsHidden()
+                                .onAppear {
+                                    
+                                    var dateEpoch = dateToEpoch(selectedDate: selectedDepartDate)
+                                    addOOTDVM.ootdDepartTime = dateEpoch
 
-                                print(selectedDepartDate)
-                                print(dateToString(selectedDate: selectedDepartDate))
-                                print(dateToEpoch(selectedDate: selectedDepartDate))
-                                
-                            }
-                            
+                                    print(selectedDepartDate)
+                                    print(dateToString(selectedDate: selectedDepartDate))
+                                    print(dateToEpoch(selectedDate: selectedDepartDate))
+                                    
+                                }
+                        }
+                        .padding(.top, 5)        
                     }
                     .onChange(of: selectedDepartDate) { date in
                         
@@ -114,10 +124,13 @@ struct AddOOTDView: View {
                         print(dateToEpoch(selectedDate: date))
                     }
                     
+                    Spacer()
+                    
                     VStack {
                         
                         Text("외출 도착 시간")
                         DatePicker("외출 도착 시간", selection: $selectedArrivalDate).labelsHidden()
+                            .frame(width: screenWidth / 4, height: 60)
                             .onAppear {
                                 
                                 var dateEpoch = dateToEpoch(selectedDate: selectedArrivalDate)
@@ -142,9 +155,10 @@ struct AddOOTDView: View {
                     }
                 }
                 .aspectRatio(9/16, contentMode: .fit)
-                .background(.yellow)
-            }
-            .padding(.horizontal, 10)
+//                .background(.yellow)
+                
+            }// HStack
+            .padding(.horizontal, 5)
             
             HStack {
                 
@@ -159,13 +173,19 @@ struct AddOOTDView: View {
                     
                     // 나중에 지역 검색 시트 화면 올라오고 지역 확정되면 아래 메소드가 나가는 걸로 해야함
                     Task {
-                        await addOOTDVM.getOOTDWeather()
+//                        await addOOTDVM.getOOTDWeather()
+                        isLocationSearchSheetPresented = true
                     }
                     
                 } label: {
                     
-                    Text("지역 검색")
-                    
+                    HStack {
+                        Text(locationSearchText)
+                            .font(Font.pretendard(.semibold, size: 15))
+                            .foregroundStyle(locationSearchText == "지역 검색" ? .blue : .black)
+                        
+                        Image("location")
+                    }
                 }
                 
             }
@@ -198,31 +218,32 @@ struct AddOOTDView: View {
             
             ScrollView(showsIndicators: false) {
                 
-                VStack {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]) {
                     
-                    VStack {
-                        ForEach(ootdClothes.indices, id: \.self) { index in
+                    ForEach(ootdClothes.indices, id: \.self) { index in
+                        
+                        HStack {
                             
-                            HStack {
-                                
-                                Text(ootdClothes[index])
-                                    .font(Font.pretendard(.semibold, size: 13))
-                                
-                                Button {
-                                    
-                                    ootdClothes.remove(at: index)
+                            Text(ootdClothes[index])
+                                .font(Font.pretendard(.semibold, size: 13))
+
+                            Button {
+
+                                ootdClothes.remove(at: index)
 //                                    addOOTDVM.addOOTD?.wearingList.remove(at: index)
-                                    //addOOTDVM.ootdWearingList?.remove(at: index)
-                                    
-                                    addOOTDVM.ootdWearingList.remove(at: index)
-                                    
-                                    
-                                } label: {
-                                    Image("xBtn")
-                                }
+                                //addOOTDVM.ootdWearingList?.remove(at: index)
+
+                                addOOTDVM.ootdWearingList.remove(at: index)
+
+
+                            } label: {
+                                Image("xBtn")
                             }
+                            
                         }
+                        
                     }
+                    
                 }
             }
             .padding(.top, 20)
@@ -244,6 +265,28 @@ struct AddOOTDView: View {
             .padding(.bottom, 20)
             
             Spacer()
+        }
+        .onChange(of: addOOTDVM.ootdDepartTime) { _ in
+            
+            Task {
+                
+                await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
+            }
+        }
+        .onChange(of: addOOTDVM.ootdArrivalTime) { _ in
+            
+            Task {
+                
+                await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
+            }
+        }
+        .onChange(of: ootdLat) { _ in
+            
+            Task {
+                
+                await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
+            }
+            
         }
         .padding(.horizontal, 20)
         .navigationTitle("내 OOTD 추가하기")
@@ -278,7 +321,11 @@ struct AddOOTDView: View {
         }
         .padding(.top, 10)
         .sheet(isPresented: $isSheetPresented) {
-            GetCoordiView(addOOTDVM: addOOTDVM, isSheetPresented: $isSheetPresented)
+            GetCoordiView(ootdClothes: $ootdClothes, addOOTDVM: addOOTDVM, isSheetPresented: $isSheetPresented)
+        }
+        .sheet(isPresented: $isLocationSearchSheetPresented) {
+            
+            LocationView(locationSearchText: $locationSearchText, lat: $ootdLat, lon: $ootdLon, isLocationViewSheetPresented: $isLocationSearchSheetPresented)
         }
         .sheet(isPresented: $openPhoto, content: {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $ootdImage)

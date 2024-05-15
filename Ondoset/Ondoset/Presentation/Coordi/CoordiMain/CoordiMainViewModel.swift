@@ -10,6 +10,7 @@ import Foundation
 class CoordiMainViewModel: ObservableObject {
     
     let coordiUseCase: CoordiUseCase = CoordiUseCase.shared
+
     
     @Published var coordiRecord: [CoordiRecord] = []
     
@@ -38,9 +39,9 @@ class CoordiMainViewModel: ObservableObject {
     }
     
     // 외출 시간 등록/수정
-    func setCoordiTime(coordiId: Int, lat: Double, lon: Double, departTime: Int, arrivalTime: Int) async -> Bool {
+    func setCoordiTime(coordiId: Int, lat: Double, lon: Double, region: String, departTime: Int, arrivalTime: Int) async -> Bool {
      
-        guard let _ = await coordiUseCase.setCoordiTime(coordiId: coordiId, setCoordiTimeDTO: SetCoordiTimeRequestDTO(lat: lat, lon: lon, departTime: departTime, arrivalTime: arrivalTime)) else { return false }
+        guard let _ = await coordiUseCase.setCoordiTime(coordiId: coordiId, setCoordiTimeDTO: SetCoordiTimeRequestDTO(lat: lat, lon: lon, region: region, departTime: departTime, arrivalTime: arrivalTime)) else { return false }
         
         return true
     }
@@ -78,9 +79,9 @@ class CoordiMainViewModel: ObservableObject {
     }
     
     // 과거 코디 기록 등록
-    func setCoordiRecord(lat: Double, lon: Double, departTime: Int, arrivalTime: Int, clothesList: [Int]) async -> Bool {
+    func setCoordiRecord(lat: Double, lon: Double, region: String, departTime: Int, arrivalTime: Int, clothesList: [Int]) async -> Bool {
         
-        guard let _ = await coordiUseCase.setCoordiRecord(setCoordiRecordDTO: SetCoordiRecordRequestDTO(lat: lat, lon: lon, departTime: departTime, arrivalTime: arrivalTime, clothesList: clothesList)) else { return false}
+        guard let _ = await coordiUseCase.setCoordiRecord(setCoordiRecordDTO: SetCoordiRecordRequestDTO(lat: lat, lon: lon, region: region, departTime: departTime, arrivalTime: arrivalTime, clothesList: clothesList)) else { return false}
         
         return true
     }

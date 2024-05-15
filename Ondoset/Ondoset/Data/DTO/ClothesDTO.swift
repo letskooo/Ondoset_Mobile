@@ -250,7 +250,7 @@ extension GetAllClothesResponseDTO {
             clothes.toClothes()
         }
         
-        return AllClothes(lastPage: lastPage, ClothesList: clothesList)
+        return AllClothes(lastPage: lastPage, clothesList: clothesList)
     }
 }
 

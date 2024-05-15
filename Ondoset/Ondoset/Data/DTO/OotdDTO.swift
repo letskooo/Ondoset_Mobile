@@ -95,6 +95,7 @@ extension FollowingDTO {
     }
 }
 
+// 팔로잉 목록 조회 응답 DTO
 struct ReadFollowingListResponseDTO: Decodable {
     
     let lastPage: Int
@@ -110,6 +111,23 @@ extension ReadFollowingListResponseDTO {
         return followingList
     }
 }
+
+// 추천뷰 조회 응답 DTO
+struct GetRecommendOOTDResponseDTO: Decodable {
+    
+    let lastPage: Int
+    let ootdList: [OOTDDTO]
+}
+
+extension GetRecommendOOTDResponseDTO {
+    
+    func toOOTD() -> [OOTD] {
+        let ootds = self.ootdList.map { $0.toOOTD() }
+        
+        return ootds
+    }
+}
+
 
 // 날씨뷰 조회 요청 DTO
 struct ReadWeatherOOTDRequestDTO: Codable {
@@ -137,6 +155,7 @@ extension ReadWeatherOOTDListResponseDTO {
 // OOTD 등록 DTO
 struct AddOOTDDTO: Encodable {
     
+    let region: String
     let departTime: Int
     let arrivalTime: Int
     let weather: String
@@ -242,6 +261,7 @@ struct GetOOTDWeatherResponseDTO: Decodable {
 // OOTD 등록 요청 DTO
 struct PostOOTDRequestDTO: Encodable {
     
+    let region: String
     let departTime: Int
     let arrivalTime: Int
     let weather: String
@@ -254,4 +274,81 @@ struct PostOOTDRequestDTO: Encodable {
 // OOTD 등록 응답 DTO
 struct PostOOTDResponseDTO: Decodable {
     let ootdId: Int
+}
+
+// OOTD 수정 요청 DTO
+struct PutOOTDRequestDTO: Encodable {
+    
+    let region: String
+    let departTime: Int
+    let arrivalTime: Int
+    let weather: String
+    let lowestTemp: Int
+    let highestTemp: Int
+    let image: Data?
+    let wearingList: [String]
+}
+
+// OOTD 수정 응답 DTO
+struct PutOOTDResponseDTO: Decodable {
+    
+    let ootdId: Int
+}
+
+// OOTD 수정용 조회 응답 DTO
+struct GetOOTDforPutResponseDTO: Decodable {
+    
+    let ootdId: Int
+    let region: String
+    let departTime: Int
+    let arrivalTime: Int
+    let weather: String
+    let lowestTemp: Int
+    let highestTemp: Int
+    let imageURL: String
+    let wearingList: [String]
+}
+
+extension GetOOTDforPutResponseDTO {
+    
+    func toGetOOTDforPut() -> GetOOTDforPut {
+        
+        return GetOOTDforPut(ootdId: self.ootdId, region: self.region, departTime: self.departTime, arrivalTime: self.arrivalTime, weather: Weather(rawValue: weather) ?? .SUNNY, lowestTemp: self.lowestTemp, highestTemp: self.highestTemp, imageURL: "\(Constants.serverURL)/images\(self.imageURL)", wearingList: self.wearingList)
+    }
+}
+
+// OOTD 기능 제한 확인 응답 DTO
+struct GetBanPeriodResponseDTO: Decodable {
+    
+    let banPeriod: Int
+}
+
+
+// 타인 프로필 및 OOTD 목록 조회 응답 DTO
+struct GetOtherProfileResponseDTO: Decodable {
+    
+    let lastPage: Int
+    let ootdList: [OOTDDTO]
+}
+
+extension GetOtherProfileResponseDTO {
+    
+    func toOtherProfile() -> OtherProfile {
+        
+        return OtherProfile(lastPage: self.lastPage, ootdList: self.ootdList.compactMap { $0.toOOTD()} )
+    }
+}
+
+// OOTD 신고 요청 DTO
+struct ReportOOTDRequestDTO: Encodable {
+    
+    let ootdId: Int
+    let reason: String
+}
+
+// 팔로잉 목록 검색 응답 DTO
+struct SearchFollowingListResponseDTO: Decodable {
+    
+    let lastPage: Int
+    let followingList: [FollowingDTO]
 }

@@ -10,9 +10,11 @@ import SwiftUI
 // MARK: WeatherView
 struct WeatherView: View {
     
+    @Binding var isLocationViewSheetPresented: Bool
+    
     var body: some View {
         VStack(spacing: 0){
-            WeatherHeaderView()
+            WeatherHeaderView(isLocationViewSheetPresented: $isLocationViewSheetPresented)
             WeatherMainView()
             WeatherFooterView()
         }
@@ -45,17 +47,36 @@ struct WeatherView: View {
     
     // MARK: WeatherHeaderView
     struct WeatherHeaderView: View {
+        
+        @Binding var isLocationViewSheetPresented: Bool
+        @EnvironmentObject var locationManager: LocationManager
+        @EnvironmentObject var homeMainVM: HomeMainViewModel
+        
         var body: some View {
             VStack(spacing: 0) {
                 HStack {
                     // TODO: 지도 관련 로직 추가 된 후 비즈니스 로직 작성
                     Image(systemName: "scope")
                         .padding()
+                        .onTapGesture {
+                            locationManager.requestLocation()
+                            
+                            if let location = locationManager.currentLocation {
+                                
+                                homeMainVM.homeViewLocate = .init(latitude: location.latitude, longitude: location.longitude)
+//                                homeMainVM.lat = location.latitude
+//                                homeMainVM.lon = location.longitude
+                            }
+                        }
+                    
                     Spacer()
                     SelectDateView()
                     Spacer()
                     Image(systemName: "mappin.and.ellipse")
                         .padding()
+                        .onTapGesture {
+                            isLocationViewSheetPresented = true
+                        }
                 }
             }
         }
@@ -95,6 +116,9 @@ struct WeatherView: View {
                 }
                 Spacer()
                 Image(homeMainVM.weatherMainImage)
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fit)
+//                    .frame(width: screenWidth / 3, height: screenHeight / 3)
                 Spacer()
             }
             .overlay {

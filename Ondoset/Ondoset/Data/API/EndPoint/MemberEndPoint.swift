@@ -16,7 +16,7 @@ enum MemberEndPoint {
     case signInMember(signInDTO: SignInRequestDTO)            // 로그인
     case saveOnboarding(onboardingDTO: OnboardingRequestDTO)  // 온보딩 결과 저장
     case withdrawMember                                       // 회원탈퇴
-    case updateNickname(nickname: String)                     // 닉네임 수정
+    case updateNickname(nickname: UpdateNicknameRequestDTO)   // 닉네임 수정
     case updateProfileImage(profileImage: Data)            // 프로필 이미지 수정
 }
 

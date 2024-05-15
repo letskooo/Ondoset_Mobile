@@ -59,13 +59,28 @@ class OOTDUseCase {
         }
     }
     
+    // 추천뷰 OOTD 조회
+    func getRecommendOOTDList(lastPage: Int) async -> PagingOOTD? {
+        
+        if let result = await ootdRepository.getRecommendOOTDList(lastPage: lastPage) {
+            
+            return PagingOOTD(lastPage: result.lastPage, ootdList: result.toOOTD())
+            
+        } else {
+            
+            return nil
+        }
+    }
+    
     // 날씨뷰 OOTD 조회
     func readWeatherOOTDList(data: ReadWeatherOOTDRequestDTO) async -> PagingOOTD? {
         
         if let result = await ootdRepository.readWeatherOOTDList(data: data) {
             
             return PagingOOTD(lastPage: result.lastPage, ootdList: result.toOOTD())
+            
         } else {
+            
             return nil
         }
     }
@@ -147,6 +162,91 @@ class OOTDUseCase {
             return true
         } else {
             return false
+        }
+    }
+    
+    // OOTD 기능 제한 확인
+    func getBanPeriod() async -> Int? {
+        
+        if let result = await ootdRepository.getBanPeriod() {
+            
+            return result.banPeriod
+            
+        } else {
+            
+            return nil
+        }
+    }
+    
+    // OOTD 수정용 조회
+    func getOOTDforPut(ootdId: Int) async -> GetOOTDforPut? {
+        
+        if let result = await ootdRepository.getOOTDforPut(ootdId: ootdId) {
+            
+            return result.toGetOOTDforPut()
+            
+        } else {
+            return nil
+        }
+    }
+    
+    // OOTD 수정
+    func putOOTD(ootdId: Int, putOOTDDTO: PutOOTDRequestDTO) async -> Bool {
+        
+        if let result = await ootdRepository.putOOTD(ootdId: ootdId, putOOTDDTO: putOOTDDTO) {
+            
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // OOTD 삭제
+    func deleteOOTD(ootdId: Int) async -> Bool? {
+        
+        if let result = await ootdRepository.deleteOOTD(ootdId: ootdId) {
+            
+            return true
+        } else {
+            return nil
+        }
+    }
+    
+    // 타인 프로필 및 ootd 목록 조회
+    func getOtherProfile(memberId: Int, lastPage: Int) async -> OtherProfile? {
+        
+        if let result = await ootdRepository.getOtherProfile(memberId: memberId, lastPage: lastPage) {
+            
+            return result.toOtherProfile()
+            
+        } else {
+            return nil
+        }
+    }
+    
+    // OOTD 신고
+    func reportOOTD(reportOOTDDTO: ReportOOTDRequestDTO) async -> Bool? {
+        
+        if let result = await ootdRepository.reportOOTD(reportOOTDDTO: reportOOTDDTO) {
+            
+            return true
+            
+        } else {
+            
+            return nil
+        }
+    }
+    
+    // 팔로잉 목록 검색
+    func searchFollowingList(search: String, lastPage: Int) async -> PagingFollowing? {
+        
+        if let result = await ootdRepository.searchFollowingList(search: search, lastPage: lastPage) {
+            
+            return PagingFollowing(lastPage: result.lastPage, followingList: result.toFollowing())
+            
+        } else {
+            
+            return nil
         }
     }
 }

@@ -77,4 +77,41 @@ class OOTDItemViewModel: ObservableObject {
             }
         }
     }
+    
+    // OOTD 기능 제한 확인
+    func getBanPeriod() async -> Int {
+        
+        if let result = await ootdUseCase.getBanPeriod() {
+            
+            print("금지 기간: \(result)")
+            
+            return result
+            
+        } else {
+            
+            return -3
+        }
+    }
+    
+    // OOTD 삭제
+    func deleteOOTD(ootdId: Int) async -> Bool {
+        
+        if let result = await ootdUseCase.deleteOOTD(ootdId: ootdId) {
+            
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // OOTD 신고
+    func reportOOTD(ootdId: Int, reason: String) async -> Bool {
+        
+        if let result = await ootdUseCase.reportOOTD(reportOOTDDTO: ReportOOTDRequestDTO(ootdId: ootdId, reason: reason)) {
+            
+            return true
+        } else {
+            return false
+        }
+    }
 }

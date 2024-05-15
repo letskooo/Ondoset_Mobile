@@ -17,6 +17,13 @@ final class CoordiRepository {
         return await APIManager.shared.performRequest(endPoint: CoordiEndPoint.getCoordiRecord(data: getCoordiRecordDTO))
     }
     
+    // 코디 하루 조회
+    func getDailyCoordi(getDailyCoordiDTO: GetDailyCoordiRequestDTO) async -> [GetDailyCoordiResponseDTO]? {
+        
+        return await APIManager.shared.performRequest(endPoint: CoordiEndPoint.getDailyCoordi(data: getDailyCoordiDTO))
+    }
+    
+    
     // 만족도 등록/수정
     func setSatisfaction(coordiId: Int, setSatisfactionDTO: SetSatisfactionRequestDTO) async -> SetSatisfactionResponseDTO? {
         

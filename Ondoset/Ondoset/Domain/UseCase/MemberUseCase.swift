@@ -102,21 +102,37 @@ class MemberUseCase {
     }
     
     // 회원 탈퇴
-    func withdrawMember() async {
+    func withdrawMember() async -> Bool? {
         
-        _ = await memberRepository.withdrawMember()
-        
+        if let result = await memberRepository.withdrawMember() {
+            
+            return true
+        } else {
+            return nil
+        }
     }
     
     // 닉네임 변경
-    func updateNickname(nickname: String) async {
+    func updateNickname(updateNicknameDTO: UpdateNicknameRequestDTO) async -> Bool? {
         
-        _ = await memberRepository.updateNickname(nickname: nickname)
+        if let result = await memberRepository.updateNickname(updateNicknameDTO: updateNicknameDTO) {
+            
+            return true
+        } else {
+            return nil
+        }
     }
     
     // 프로필 이미지 변경
-    func updateProfileImage(profileImage: Data) async {
+    func updateProfileImage(profileImage: Data) async -> Bool? {
         
-        _ = await memberRepository.updateProfileImage(profileImage: profileImage)
+        if let result = await memberRepository.updateProfileImage(profileImage: profileImage) {
+            
+            return true
+            
+        } else {
+            
+            return nil
+        }
     }
 }

@@ -119,7 +119,7 @@ struct MyPageMainView: View {
                             
                             Spacer()
                         
-                        }
+                        } // HStack
                         .frame(width: screenWidth, height: 120)
                         .overlay(alignment: .bottom) {
                             Rectangle()
@@ -130,36 +130,34 @@ struct MyPageMainView: View {
                         
                         if let myOotdList = myPageVM.memberProfile?.ootdList {
                             
-                            LazyVGrid(columns: columns, spacing: 1) {
+                            if myOotdList != [] {
                                 
-                                ForEach(myOotdList.indices, id: \.self) { index in
+                                LazyVGrid(columns: columns, spacing: 1) {
+                                    
+                                    ForEach(myOotdList.indices, id: \.self) { index in
                                         
-                                    let dateString = DateFormatter.string(epoch: myOotdList[index].date)
-   
-                                    NavigationLink(destination: OOTDItemView(ootdId: myOotdList[index].ootdId, ootdImageURL: myOotdList[index].imageURL, dateString: dateString, lowestTemp: myOotdList[index].lowestTemp, highestTemp: myOotdList[index].highestTemp)) {
-                                        OOTDComponent(date: dateString, minTemp: myOotdList[index].lowestTemp, maxTemp: myOotdList[index].highestTemp, ootdImageURL: myOotdList[index].imageURL)
-                                        .frame(width: screenWidth/2)
-                                    }
-                                    .onAppear {
+                                        let dateString = DateFormatter.string(epoch: myOotdList[index].date)
                                         
-                                        if index == myOotdList.count - 1 {
-                                            Task {
-                                                await myPageVM.pagingMyProfileOOTD()
+                                        NavigationLink(destination: OOTDItemView(ootdId: myOotdList[index].ootdId, ootdImageURL: myOotdList[index].imageURL, dateString: dateString, lowestTemp: myOotdList[index].lowestTemp, highestTemp: myOotdList[index].highestTemp)) {
+                                            OOTDComponent(date: dateString, minTemp: myOotdList[index].lowestTemp, maxTemp: myOotdList[index].highestTemp, ootdImageURL: myOotdList[index].imageURL)
+                                                .frame(width: screenWidth/2)
+                                        }
+                                        .onAppear {
+                                            
+                                            if index == myOotdList.count - 1 {
+                                                Task {
+                                                    await myPageVM.pagingMyProfileOOTD()
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            
-                        } else {
-                            
-                            VStack {
-                                Text("조회된 OOTD가 없어요")
-                                    .font(Font.pretendard(.bold, size: 15))
                                 
-                                Image("noOOTDList")
+                            } else {
+                                
+                                BlankDataIndicateComponent(explainText: "조회된 OOTD가 없어요")
+                                    .offset(y: 150)
                             }
-                            .padding(.top, 150)
                         }
                     }
   
@@ -175,6 +173,10 @@ struct MyPageMainView: View {
             }
             .onAppear {
                 wholeVM.isTabBarHidden = false
+                
+                Task {
+                    await myPageVM.readMyProfile()
+                }
             }
         }
     }

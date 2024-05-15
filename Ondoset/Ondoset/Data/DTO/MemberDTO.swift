@@ -50,3 +50,9 @@ struct OnboardingRequestDTO: Encodable {
     
     let answer: [Int]
 }
+
+// 닉네임 수정 요청 DTO
+struct UpdateNicknameRequestDTO: Encodable {
+    
+    let nickname: String
+}

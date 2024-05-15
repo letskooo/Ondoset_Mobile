@@ -35,6 +35,12 @@ final class OOTDRepository {
         return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.readFollowingList(lastPage: lastPage))
     }
     
+    // 추천뷰 OOTD 조회
+    func getRecommendOOTDList(lastPage: Int) async -> GetRecommendOOTDResponseDTO? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.getRecommendOOTDList(lastPage: lastPage))
+    }
+    
     // 날씨뷰 OOTD 조회
     func readWeatherOOTDList(data: ReadWeatherOOTDRequestDTO) async ->  ReadWeatherOOTDListResponseDTO? {
         
@@ -78,9 +84,48 @@ final class OOTDRepository {
     // OOTD 등록
     func postOOTD(data: PostOOTDRequestDTO) async -> PostOOTDResponseDTO? {
         
-        print(data.weather)
-        print(data.image)
-        
         return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.postOOTD(data: data))
+    }
+    
+    // OOTD 기능 제한 확인
+    func getBanPeriod() async -> GetBanPeriodResponseDTO? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.getBanPeriod)
+    }
+    
+    // OOTD 수정용 조회
+    func getOOTDforPut(ootdId: Int) async -> GetOOTDforPutResponseDTO? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.getOOTDforPut(ootdId: ootdId))
+    }
+    
+    // OOTD 수정
+    func putOOTD(ootdId: Int, putOOTDDTO: PutOOTDRequestDTO) async -> PutOOTDResponseDTO? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.putOOTD(ootdId: ootdId, data: putOOTDDTO))
+    }
+    
+    // OOTD 삭제
+    func deleteOOTD(ootdId: Int) async -> String? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.deleteOOTD(ootdId: ootdId))
+    }
+    
+    // 타인 프로필 및 ootd 목록 조회
+    func getOtherProfile(memberId: Int, lastPage: Int) async -> GetOtherProfileResponseDTO? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.getOtherProfile(memberId: memberId, lastPage: lastPage))
+    }
+    
+    // OOTD 신고
+    func reportOOTD(reportOOTDDTO: ReportOOTDRequestDTO) async -> String? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.reportOOTD(reportOOTDDTO: reportOOTDDTO))
+    }
+    
+    // 팔로잉 목록 검색
+    func searchFollowingList(search: String, lastPage: Int) async -> ReadFollowingListResponseDTO? {
+        
+        return await APIManager.shared.performRequest(endPoint: OOTDEndPoint.searchFollowingList(search: search, lastPage: lastPage))
     }
 }
