@@ -102,6 +102,11 @@ class MyPageMainViewModel: ObservableObject {
     // 회원 탈퇴
     func withdrawMember() async {
         
-        _ = await memberUseCase.withdrawMember()
+        if let result = await memberUseCase.withdrawMember() {
+            
+            DispatchQueue.main.async {
+                UserDefaults.standard.set(false, forKey: "isLogin")
+            }
+        }
     }
 }
