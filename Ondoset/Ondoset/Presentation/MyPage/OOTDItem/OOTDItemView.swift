@@ -244,8 +244,8 @@ struct OOTDItemView: View {
             }
             
             if showCantReportAlert {
-                
-                AlertComponent(showAlert: $showCantReportAlert, alertTitle: "신고할 수 없습니다.", alertContent: "사용자님의 활동에 문제가 감지되어 \n다음 기간동안 활동이 제한됩니다. \n기간: \(banPeriod)일", rightBtnTitle: "확인", rightBtnAction: {
+
+                ExtendedAlertComponent(showAlert: $showCantReportAlert, isTabBarExist: false, alertTitle: "신고할 수 없습니다.", content: AnyView(Text("사용자님의 활동에 문제가 감지되어 \n다음 기간동안 활동이 제한됩니다. \n기간: \(banPeriod)일")), rightBtnTitle: "확인", rightBtnAction: {
                     showCantReportAlert = false
                 })
                 
