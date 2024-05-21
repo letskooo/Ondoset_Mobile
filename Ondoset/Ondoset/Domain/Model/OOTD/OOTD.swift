@@ -39,6 +39,7 @@ struct MemberProfile: Hashable {
     let ootdCount: Int
     let likeCount: Int
     let followingCount: Int    
+    let lastPage: Int
 }
 
 struct PagingOOTD: Hashable {

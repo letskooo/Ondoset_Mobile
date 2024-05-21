@@ -306,6 +306,7 @@ struct PutOOTDView: View {
         .sheet(isPresented: $isLocationSearchSheetPresented) {
             
             LocationView(locationSearchText: $locationSearchText, lat: $ootdLat, lon: $ootdLon, isLocationViewSheetPresented: $isLocationSearchSheetPresented)
+                .presentationDetents([.height(screenHeight / 4)])
         }
         // 코디에서 불러오기 sheet 활성화
         .sheet(isPresented: $isSheetPresented) {

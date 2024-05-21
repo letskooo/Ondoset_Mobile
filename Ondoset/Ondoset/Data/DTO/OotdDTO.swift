@@ -42,7 +42,7 @@ extension ReadProfileResponseDTO {
         let ootds = self.ootdList.map { $0.toOOTD() }
         let imageURL: String? = self.profileImage != nil ? "\(Constants.serverURL)/images\(self.profileImage!)" : nil
         
-        return MemberProfile(username: self.username, nickname: self.nickname, profileImage: imageURL, ootdList: ootds, ootdCount: self.ootdCount, likeCount: self.likeCount, followingCount: self.followingCount)
+        return MemberProfile(username: self.username, nickname: self.nickname, profileImage: imageURL, ootdList: ootds, ootdCount: self.ootdCount, likeCount: self.likeCount, followingCount: self.followingCount, lastPage: self.lastPage)
     }
 }
 

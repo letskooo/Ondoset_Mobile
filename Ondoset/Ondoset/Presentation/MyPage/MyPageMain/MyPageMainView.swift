@@ -25,13 +25,12 @@ struct MyPageMainView: View {
                     
                     Spacer()
                 
+                    /// 설정 화면으로 이동
                     NavigationLink(destination: SettingView(myPageVM: myPageVM)) {
                         Image("setting")
                             .padding(.trailing, 16)
-                    }
-                    
-                    
-                }
+                    } // NavigationLink
+                } // HStack
                 .frame(height: 30)
                 .overlay {
                     Text(myPageVM.memberProfile?.username ?? "사용자 아이디")
@@ -128,40 +127,71 @@ struct MyPageMainView: View {
                             
                         }
                         
-                        if let myOotdList = myPageVM.memberProfile?.ootdList {
+                        if myPageVM.myOOTDList != [] {
                             
-                            if myOotdList != [] {
+                            LazyVGrid(columns: columns, spacing: 1) {
                                 
-                                LazyVGrid(columns: columns, spacing: 1) {
+                                ForEach(myPageVM.myOOTDList.indices, id: \.self) { index in
                                     
-                                    ForEach(myOotdList.indices, id: \.self) { index in
+                                    let dateString = DateFormatter.string(epoch: myPageVM.myOOTDList[index].date)
+                                    
+                                    NavigationLink(destination: OOTDItemView(ootdId: myPageVM.myOOTDList[index].ootdId, ootdImageURL: myPageVM.myOOTDList[index].imageURL, dateString: dateString, lowestTemp: myPageVM.myOOTDList[index].lowestTemp, highestTemp: myPageVM.myOOTDList[index].highestTemp)) {
+                                        OOTDComponent(date: dateString, minTemp: myPageVM.myOOTDList[index].lowestTemp, maxTemp: myPageVM.myOOTDList[index].highestTemp, ootdImageURL: myPageVM.myOOTDList[index].imageURL)
+                                            .frame(width: screenWidth/2)
+                                    }
+                                    .onAppear {
                                         
-                                        let dateString = DateFormatter.string(epoch: myOotdList[index].date)
-                                        
-                                        NavigationLink(destination: OOTDItemView(ootdId: myOotdList[index].ootdId, ootdImageURL: myOotdList[index].imageURL, dateString: dateString, lowestTemp: myOotdList[index].lowestTemp, highestTemp: myOotdList[index].highestTemp)) {
-                                            OOTDComponent(date: dateString, minTemp: myOotdList[index].lowestTemp, maxTemp: myOotdList[index].highestTemp, ootdImageURL: myOotdList[index].imageURL)
-                                                .frame(width: screenWidth/2)
-                                        }
-                                        .onAppear {
-                                            
-                                            if index == myOotdList.count - 1 {
-                                                Task {
-                                                    await myPageVM.pagingMyProfileOOTD()
-                                                }
+                                        ///
+                                        if index == myPageVM.myOOTDList.count - 1 {
+                                            Task {
+                                                await myPageVM.pagingMyProfileOOTD()
                                             }
                                         }
                                     }
                                 }
-                                
-                            } else {
-                                
-                                BlankDataIndicateComponent(explainText: "조회된 OOTD가 없어요")
-                                    .offset(y: 150)
                             }
+                            
+                        } else {
+                            /// OOTD가 없을 경우
+                            BlankDataIndicateComponent(explainText: "조회된 OOTD가 없어요")
+                                .offset(y: 150)
                         }
+                        
+//                        if let myOotdList = myPageVM.myOOTDList {
+//                            
+//                            if myOotdList != [] {
+//                                
+//                                LazyVGrid(columns: columns, spacing: 1) {
+//                                    
+//                                    ForEach(myOotdList.indices, id: \.self) { index in
+//                                        
+//                                        let dateString = DateFormatter.string(epoch: myOotdList[index].date)
+//                                        
+//                                        NavigationLink(destination: OOTDItemView(ootdId: myOotdList[index].ootdId, ootdImageURL: myOotdList[index].imageURL, dateString: dateString, lowestTemp: myOotdList[index].lowestTemp, highestTemp: myOotdList[index].highestTemp)) {
+//                                            OOTDComponent(date: dateString, minTemp: myOotdList[index].lowestTemp, maxTemp: myOotdList[index].highestTemp, ootdImageURL: myOotdList[index].imageURL)
+//                                                .frame(width: screenWidth/2)
+//                                        }
+//                                        .onAppear {
+//                                            
+//                                            /// 
+//                                            if index == myOotdList.count - 1 {
+//                                                Task {
+//                                                    await myPageVM.pagingMyProfileOOTD()
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                                
+//                            } else {
+//                                /// OOTD가 없을 경우
+//                                BlankDataIndicateComponent(explainText: "조회된 OOTD가 없어요")
+//                                    .offset(y: 150)
+//                            }
+//                        }
                     }
-  
-                }
+                } // ScrollView
+                /// 새로고침
                 .refreshable {
                     Task {
                         await myPageVM.readMyProfile()

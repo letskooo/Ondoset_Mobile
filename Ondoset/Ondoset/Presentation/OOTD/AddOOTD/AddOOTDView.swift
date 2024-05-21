@@ -326,6 +326,7 @@ struct AddOOTDView: View {
         .sheet(isPresented: $isLocationSearchSheetPresented) {
             
             LocationView(locationSearchText: $locationSearchText, lat: $ootdLat, lon: $ootdLon, isLocationViewSheetPresented: $isLocationSearchSheetPresented)
+                .presentationDetents([.height(screenHeight / 4)])
         }
         .sheet(isPresented: $openPhoto, content: {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $ootdImage)
