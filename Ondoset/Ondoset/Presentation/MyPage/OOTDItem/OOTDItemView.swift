@@ -75,6 +75,7 @@ struct OOTDItemView: View {
                         
                         Spacer()
                         
+                        /// 해당 OOTD 게시물이 사용자 본인의 것이 아닌 경우
                         if memberId != ootdItemVM.ootdItem?.memberId {
                             
                             FollowingBtnComponent(isFollowing: $ootdItemVM.isFollowing) {
@@ -92,6 +93,7 @@ struct OOTDItemView: View {
                                 }
                             }
                             
+                        /// 해당 OOTD 게시물이 사용자 본인의 것인 경우
                         } else {
                             
                             Menu(content: {
@@ -117,10 +119,11 @@ struct OOTDItemView: View {
                             })
                         }
                         
-                    }
+                    } // HStack
                     .padding(.horizontal, 24)
                     .padding(.bottom, 13)
                     
+                    /// OOTD 게시물 이미지
                     KFImage(URL(string: ootdImageURL))
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -152,7 +155,7 @@ struct OOTDItemView: View {
                             Text("\(highestTemp)°C")
                                 .font(Font.pretendard(.semibold, size: 13))
                                 .foregroundStyle(.max)
-                        }
+                        } // HStack
                         
                         Spacer()
                         
@@ -177,29 +180,22 @@ struct OOTDItemView: View {
                                     }
                             }
                         }
-                        
-                        
-                    }
+                    } // HStack
                     .padding(.vertical, 12)
                     .padding(.horizontal, 24)
                     
-                    VStack(spacing: 5) {
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]) {
                         
-                        HStack {
-                            ForEach(ootdItemVM.ootdItem?.wearing ?? [], id: \.self) { cloth in
-                                
-                                Text("# \(cloth)")
-                                    .font(Font.pretendard(.semibold, size: 13))
-                                
-                            }
+                        ForEach(ootdItemVM.ootdItem?.wearing ?? [], id: \.self) { cloth in
                             
-                            Spacer()
+                            Text("# \(cloth)")
+                                .font(Font.pretendard(.semibold, size: 13))
+                            
                         }
                     }
-                    .padding(.horizontal, 24)
-                    
-                                    
-                }
+                    .padding(.horizontal, 15)
+
+                } // VStack
             } // ScrollView
                 
             if showReportAlertView {
