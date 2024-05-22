@@ -636,6 +636,7 @@ struct CoordiMainView: View {
         }
         .sheet(isPresented: $isAddCoordiPlanSheetPresented) {
             AddCoordiPlanView(isAddCoordiPlanSheetPresented: $isAddCoordiPlanSheetPresented, coordiYear: $selectedYear, coordiMonth: $selectedMonth, coordiDay: $selectedDays, coordiClothesList: $coordiClothesList)
+                .environmentObject(coordiMainVM)
         }
         .onAppear {
             
@@ -698,6 +699,7 @@ struct CoordiMainView: View {
                             }
                             .labelsHidden()
                             .padding()
+                            .tint(.main)
                 
             } else {
                 
