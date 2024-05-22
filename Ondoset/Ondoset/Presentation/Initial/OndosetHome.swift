@@ -63,47 +63,50 @@ struct AppTabView: View {
         
         HStack {
             
-            Spacer()
-            
-            Image(selectedTab == .home ? "tabBarHomeSelected" : "tabBarHomeUnselected")
-                .onTapGesture {
-                    selectedTab = .home
-                }
-            
-            Spacer()
-            
-            Image(selectedTab == .record ? "tabBarRecordSelected" : "tabBarRecordUnselected")
-                .onTapGesture {
-                    selectedTab = .record
-                }
-            
-            Spacer()
-            
-            Image(selectedTab == .closet ? "tabBarClosetSelected" : "tabBarClosetUnselected")
-                .onTapGesture {
-                    selectedTab = .closet
-                }
-            
-            Spacer()
-            
-            Image(selectedTab == .ootd ? "tabBarOOTDSelected" : "tabBarOOTDUnselected")
-                .onTapGesture {
-                    selectedTab = .ootd
-                }
-            
-            Spacer()
-            
-            Image(selectedTab == .myPage ? "tabBarMyPageSelected" : "tabBarMyPageUnselected")
-                .onTapGesture {
-                    selectedTab = .myPage
-                }
-            
-            Spacer()
-            
+            HStack {
+                
+                Spacer()
+                
+                Image(selectedTab == .home ? "tabBarHomeSelected" : "tabBarHomeUnselected")
+                    .onTapGesture {
+                        selectedTab = .home
+                    }
+                
+                Spacer()
+                
+                Image(selectedTab == .record ? "tabBarRecordSelected" : "tabBarRecordUnselected")
+                    .onTapGesture {
+                        selectedTab = .record
+                    }
+                
+                Spacer()
+                
+                Image(selectedTab == .closet ? "tabBarClosetSelected" : "tabBarClosetUnselected")
+                    .onTapGesture {
+                        selectedTab = .closet
+                    }
+                
+                Spacer()
+                
+                Image(selectedTab == .ootd ? "tabBarOOTDSelected" : "tabBarOOTDUnselected")
+                    .onTapGesture {
+                        selectedTab = .ootd
+                    }
+                
+                Spacer()
+                
+                Image(selectedTab == .myPage ? "tabBarMyPageSelected" : "tabBarMyPageUnselected")
+                    .onTapGesture {
+                        selectedTab = .myPage
+                    }
+                
+                Spacer()
+                
+            } // HStack
+            .offset(y: -10)
         }
-        .frame(width: screenWidth, height: screenHeight / 10)
+        .frame(width: screenWidth, height: screenHeight / 9)
         .background(Color(hex: 0xF8F8F8))
-//        .padding(.bottom, 20)
     }
 }
 
