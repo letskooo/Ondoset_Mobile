@@ -55,13 +55,13 @@ struct PutGoOutTimeView: View {
                 Spacer()
 
             }
-            .padding(.top, 15)
+            .padding(.top, 20)
             .overlay {
                 
                 Text("외출 시간 수정하기")
                     .font(Font.pretendard(.semibold, size: 17))
                     .foregroundStyle(.black)
-                    .padding(.top, 10)
+                    .padding(.top, 20)
             }
             
             HStack {
@@ -359,6 +359,7 @@ struct PutGoOutTimeView: View {
         .sheet(isPresented: $isLocationViewSheetPresented) {
             
             LocationView(locationSearchText: $goOutRegioin, lat: $goOutLat, lon: $goOutLon, isLocationViewSheetPresented: $isLocationViewSheetPresented)
+                .presentationDetents([.height(screenHeight / 4)])
         }
         
         .onAppear {
