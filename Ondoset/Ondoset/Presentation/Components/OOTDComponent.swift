@@ -29,6 +29,7 @@ struct OOTDComponent: View {
                         Text(date)
                             .padding(.leading, 20)
                             .font(Font.pretendard(.semibold, size: 12))
+                            .foregroundStyle(.black)
 
                         Spacer()
 
