@@ -35,6 +35,7 @@ struct RegisterGoOutTimeView: View {
     @State var isSaveBtnAvailable: Bool = true
     
     @StateObject var putGoOutTimeVM: PutGoOutTimeViewModel = .init()
+    @EnvironmentObject var coordiMainVM: CoordiMainViewModel
     
     var body: some View {
         
@@ -348,6 +349,8 @@ struct RegisterGoOutTimeView: View {
                     if result {
                         
                         isRegisterGoOutTimeSheetPresented = false
+                        
+                        await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
                         
                     }
                 }

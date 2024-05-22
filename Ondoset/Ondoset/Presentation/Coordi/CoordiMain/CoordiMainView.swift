@@ -625,11 +625,14 @@ struct CoordiMainView: View {
             
             PutGoOutTimeView(selectedCoordiId: $toSetTimeCoordiId, selectedYear: $selectedYear, selectedMonth: $selectedMonth, selecteddDays: $selectedDays, goOutRegioin: $goOutRegion, goOutDepartTime: $goOutDepartTime, goOutArrivalTime: $goOutArrivalTime, isPutGoOutTimeSheetPresented: $isPutGoOutTimeSheetPresented)
                 .presentationDetents([.height(screenHeight / 4)])
+                .environmentObject(coordiMainVM)
+            
         }
         .sheet(isPresented: $isRegisterGoOutTimeSheetPresented) {
             
             RegisterGoOutTimeView(selectedCoordiId: $toSetTimeCoordiId, selectedYear: $selectedYear, selectedMonth: $selectedMonth, selectedDays: $selectedDays, goOutRegion: $goOutRegion, isRegisterGoOutTimeSheetPresented: $isRegisterGoOutTimeSheetPresented)
                 .presentationDetents([.height(screenHeight / 4)])
+                .environmentObject(coordiMainVM)
         }
         .sheet(isPresented: $isAddCoordiPlanSheetPresented) {
             AddCoordiPlanView(isAddCoordiPlanSheetPresented: $isAddCoordiPlanSheetPresented, coordiYear: $selectedYear, coordiMonth: $selectedMonth, coordiDay: $selectedDays, coordiClothesList: $coordiClothesList)
