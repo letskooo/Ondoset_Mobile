@@ -614,6 +614,7 @@ struct CoordiMainView: View {
         .sheet(isPresented: $isAddCoordiRecordSheetPresented) {
             AddCoordiRecordView(coordiYear: $selectedYear, coordiMonth: $selectedMonth, coordiDay:
                                     $selectedDays, isAddCoordiRecordSheetPresented: $isAddCoordiRecordSheetPresented)
+            .environmentObject(coordiMainVM)
         }
         .sheet(isPresented: $isPutCoordiRecordSheetPresented) {
             

@@ -10,6 +10,7 @@ import SwiftUI
 struct AddCoordiRecordView: View {
     
     @StateObject var addCoordiRecordVM: AddCoordiRecordViewModel = .init()
+    @EnvironmentObject var coordiMainVM: CoordiMainViewModel
     
     @State var selectedTab: Int = 0
     @State var searchText: String = ""
@@ -188,7 +189,7 @@ struct AddCoordiRecordView: View {
      
                 Spacer()
                 
-                NavigationLink(destination: AddCoordiRecordSecondView(addCoordiRecordVM: addCoordiRecordVM, departTime: $departTime, arrivalTime: $arrivalTime, pickerDepartTime: $pickerDepartTime, pickerArrivalTime: $pickerArrivalTime, coordiYear: $coordiYear, coordiMonth: $coordiMonth, coordiDay: $coordiDay, isAddCoordiRecordSheetPresented: $isAddCoordiRecordSheetPresented, locationSearchText: $locationSearchText, lat: $lat, lon: $lon)) {
+                NavigationLink(destination: AddCoordiRecordSecondView(addCoordiRecordVM: addCoordiRecordVM, departTime: $departTime, arrivalTime: $arrivalTime, pickerDepartTime: $pickerDepartTime, pickerArrivalTime: $pickerArrivalTime, coordiYear: $coordiYear, coordiMonth: $coordiMonth, coordiDay: $coordiDay, isAddCoordiRecordSheetPresented: $isAddCoordiRecordSheetPresented, locationSearchText: $locationSearchText, lat: $lat, lon: $lon).environmentObject(coordiMainVM)) {
                     Rectangle()
                         .foregroundStyle(nextBtnAvailable ? .main : .lightGray)
                         .frame(width: screenWidth - 50, height: 50)
