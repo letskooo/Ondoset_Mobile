@@ -618,7 +618,8 @@ struct CoordiMainView: View {
         }
         .sheet(isPresented: $isPutCoordiRecordSheetPresented) {
             
-            PutCoordiRecordView(selectedCoordiId: $selectedCoordiId, coordiClothesList: $coordiClothesList, isPutCoordiRecordSheetPresented: $isPutCoordiRecordSheetPresented)
+            PutCoordiRecordView(coordiYear: $selectedYear, coordiMonth: $selectedMonth, selectedCoordiId: $selectedCoordiId, coordiClothesList: $coordiClothesList, isPutCoordiRecordSheetPresented: $isPutCoordiRecordSheetPresented)
+                .environmentObject(coordiMainVM)
         }
         .sheet(isPresented: $isPutGoOutTimeSheetPresented) {
             

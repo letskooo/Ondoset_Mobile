@@ -12,6 +12,9 @@ struct PutCoordiRecordView: View {
     // 기존에 선택된 옷 리스트 표시 딕셔너리
     @State var selectedClothes: [Int: Bool] = [:]
     
+    @Binding var coordiYear: Int
+    @Binding var coordiMonth: Int 
+    
     // 수정하는 코디 아이디
     @Binding var selectedCoordiId: Int
     
@@ -36,6 +39,8 @@ struct PutCoordiRecordView: View {
     @State var isPostBtnAvailable: Bool = true
     
     @StateObject var putCoordiRecordVM: PutCoordiRecordViewModel = .init()
+    
+    @EnvironmentObject var coordiMainVM: CoordiMainViewModel
     
     let columns: [GridItem] = Array(repeating: .init(.fixed((screenWidth - 36)/3), spacing: 10), count: 3)
     
@@ -191,6 +196,8 @@ struct PutCoordiRecordView: View {
                         
                         isPutCoordiRecordSheetPresented = false
                         
+                        await coordiMainVM.getCoordiRecord(year: coordiYear, month: coordiMonth)
+                        
                     }
                 }
             }
@@ -234,5 +241,5 @@ struct PutCoordiRecordView: View {
 }
 
 #Preview {
-    PutCoordiRecordView(selectedCoordiId: .constant(0),coordiClothesList: .constant([]), isPutCoordiRecordSheetPresented: .constant(true))
+    PutCoordiRecordView(coordiYear: .constant(0), coordiMonth: .constant(0), selectedCoordiId: .constant(0), coordiClothesList: .constant([]), isPutCoordiRecordSheetPresented: .constant(true))
 }
