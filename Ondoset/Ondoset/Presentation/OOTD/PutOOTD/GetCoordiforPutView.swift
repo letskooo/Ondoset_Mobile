@@ -40,7 +40,9 @@ struct GetCoordiforPutView: View {
                 
                 Image("calendar")
                 
-                DatePicker("날짜를 선택하세요", selection: $selectedDate, displayedComponents: .date).labelsHidden()
+                DatePicker("날짜를 선택하세요", selection: $selectedDate, displayedComponents: .date)
+                    .labelsHidden()
+                    .tint(.main)
                 
                 Spacer()
                 
