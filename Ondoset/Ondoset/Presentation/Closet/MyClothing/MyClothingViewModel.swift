@@ -14,7 +14,11 @@ final class MyClothingViewModel: ObservableObject {
     private let clothesUseCase: ClothesUseCase = ClothesUseCase.shared
     
     @Published var myClothing: Clothes? = nil
-    @Published var myClothigName: String = ""
+    @Published var myClothigName: String = "" {
+        didSet {
+            setSaveAvailable()
+        }
+    }
     @Published var myClothingCategory: Category? = nil {
         didSet { self.updateTagList() }
     }
@@ -29,8 +33,16 @@ final class MyClothingViewModel: ObservableObject {
     }
     @Published var myClothingImageData: Data? = nil
     @Published var detailedTagList: [Tag] = []
-    @Published var myClothingDetailedTag: Tag = Tag(tag: "", tagId: -1) // (-1, "")
-    @Published var myClothingThickness: Thickness? = nil
+    @Published var myClothingDetailedTag: Tag = Tag(tag: "", tagId: -1) {
+        didSet {
+            setSaveAvailable()
+        }
+    }
+    @Published var myClothingThickness: Thickness? = nil {
+        didSet {
+            setSaveAvailable()
+        }
+    }
     @Published var saveAvailable: Bool = true
     
     private var tagList: AllTags?
@@ -46,6 +58,7 @@ final class MyClothingViewModel: ObservableObject {
             // TODO: 정해진 카테고리와 태그대로 API 호출 필요
         }
         Task { await self.getTagList() } // 태그 가져오기
+        setSaveAvailable()
     }
     
 }
@@ -114,6 +127,14 @@ extension MyClothingViewModel {
     private func getTagList() async {
         if let result = await clothesUseCase.getTagList() {
             self.tagList = result
+        }
+    }
+    
+    private func setSaveAvailable() {
+        if (myClothingDetailedTag.tagId != -1) && (myClothingThickness != nil) && (myClothigName != "") {
+            self.saveAvailable = true
+        } else {
+            self.saveAvailable = false
         }
     }
 }

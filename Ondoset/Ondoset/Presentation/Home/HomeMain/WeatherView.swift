@@ -114,11 +114,14 @@ struct WeatherView: View {
                         .font(.pretendard(.medium, size: 15))
                     
                 }
-                Spacer()
+                .frame(width: 150, height: 150)
+                .background(.ondosetBackground)
+                .clipShape(.rect(cornerRadius: 15))
+                Spacer(minLength: 26)
                 Image(homeMainVM.weatherMainImage)
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fit)
-//                    .frame(width: screenWidth / 3, height: screenHeight / 3)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 150, height: 150)
                 Spacer()
             }
             .overlay {
@@ -127,8 +130,7 @@ struct WeatherView: View {
                     .foregroundStyle(.darkGray)
                     .offset(x: 160, y: 80)
             }
-            .padding()
-            .background(Color.sub1Light)
+            .padding(.vertical)
         }
     }
     
@@ -189,7 +191,9 @@ struct WeatherView: View {
                     
                     Spacer()
                     Button(action: {
-                        isFold.toggle()
+                        withAnimation {
+                            isFold.toggle()
+                        }
                     }, label: {
                         Image(systemName: isFold ? "chevron.down" : "chevron.up")
                             .foregroundStyle(.main)
