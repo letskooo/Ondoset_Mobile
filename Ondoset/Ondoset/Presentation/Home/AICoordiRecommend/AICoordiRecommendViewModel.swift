@@ -26,6 +26,10 @@ final class AICoordiRecommendViewModel: ObservableObject {
     init(clothesData: [ClothTemplate]) {
         self.clothesData = clothesData
         
+        Task {
+            await self.fetchSatisfactionPrediction()
+        }
+        
         // 템플릿에서 옷 선택하기
         NotificationCenter.default.addObserver(forName: NSNotification.Name("SelectCloth"), object: nil, queue: .main) { notification in
             if let clothes = notification.userInfo?["clothes"] as? Clothes, let index = notification.userInfo?["index"] as? Range<Array<ClothTemplate>.Index>.Element {
@@ -108,7 +112,6 @@ extension AICoordiRecommendViewModel {
             switch result {
             case .GOOD:
                 self.tempIndicator = .good
-                self.isSaveAvailable = true
             case .COLD, .VERY_COLD:
                 self.tempIndicator = .cold
             case .HOT, .VERY_HOT:
@@ -116,6 +119,7 @@ extension AICoordiRecommendViewModel {
             default:
                 return
             }
+            self.isSaveAvailable = true
         }
     }
 }
