@@ -12,12 +12,6 @@ struct AddOOTDView: View {
     // 불러오기 sheet 활성화 여부
     @State private var isSheetPresented = false
     
-    // 외출 출발 날짜
-    @State var selectedDepartDate: Date = Date()
-    
-    // 외출 도착 시간
-    @State var selectedArrivalDate: Date = Date()
-    
     // OOTD 이미지
     @State var ootdImage: UIImage = UIImage()
     
@@ -37,6 +31,30 @@ struct AddOOTDView: View {
     @State var ootdLon: Double = 91.0
     
     
+    // 연도 피커
+    @State var pickerYear: Int = 0
+    // 월 피커
+    @State var pickerMonth: Int = 0
+    // 일 피커
+    @State var pickerDay: Int = 0
+    
+    // 출발 시간 피커
+    @State var pickerDepartTime: Int = -1
+    // 도착 시간 피커
+    @State var pickerArrivalTime: Int = -1
+    
+    // 연도 피커 보이기 여부
+    @State var showPickerYear: Bool = false
+    // 월 피커 보이기 여부
+    @State var showPickerMonth: Bool = false
+    // 일 피커 보이기 여부
+    @State var showPickerDay: Bool = false
+    // 출발 시간 피커 보이기 여부
+    @State var showPickerDepartTime: Bool = false
+    // 도착 시간 피커 보이기 여부
+    @State var showPickerArrivalTime: Bool = false
+    
+    
     @StateObject var addOOTDVM: AddOOTDViewModel = .init()
     @EnvironmentObject var wholeVM: WholeViewModel
     
@@ -46,7 +64,7 @@ struct AddOOTDView: View {
         
         VStack(spacing: 0) {
             
-            HStack(alignment: .top) {
+            HStack(alignment: .top, spacing: 5) {
                 
                 if isOOTDImageSelected {
                     
@@ -87,86 +105,421 @@ struct AddOOTDView: View {
                             openPhoto = true
                         }
                 }
-                
+//                
                 Spacer()
                 
-                VStack(spacing: 20) {
+                VStack(alignment: .leading, spacing: 20) {
+                    
+                    Spacer()
                     
                     Text("날짜 및 외출시간")
                         .font(Font.pretendard(.semibold, size: 17))
                     
-                    VStack {
+//                    Spacer()
+                    
+                    Text("터치하여 선택해주세요")
+                        .frame(width: 150)
+                        .font(Font.pretendard(.semibold, size: 15))
+                        .foregroundStyle(.darkGray)
+                    
+                    HStack(spacing: 0) {
                         
-                        Group {
-                            Text("외출 출발 시간")
-                            DatePicker("외출 출발 시간", selection: $selectedDepartDate)
-                                .labelsHidden()
-                                .onAppear {
+                        if showPickerYear {
+                            
+                            Picker("연 등록", selection: $pickerYear) {
+                                
+                                ForEach(2000..<2025, id: \.self) { year in
                                     
-                                    var dateEpoch = dateToEpoch(selectedDate: selectedDepartDate)
-                                    addOOTDVM.ootdDepartTime = dateEpoch
-
-                                    print(selectedDepartDate)
-                                    print(dateToString(selectedDate: selectedDepartDate))
-                                    print(dateToEpoch(selectedDate: selectedDepartDate))
+                                    Text("\(String(format: "%04d", year))년")
+                                        .font(Font.pretendard(.semibold, size: 17))
                                     
                                 }
-                        }
-                        .padding(.top, 5)        
-                    }
-                    .onChange(of: selectedDepartDate) { date in
-                        
-                        var dateEpoch = dateToEpoch(selectedDate: date)
-                        addOOTDVM.ootdDepartTime = dateEpoch
+                            }
+                            .frame(width: 75, height: 80)
+                            .pickerStyle(WheelPickerStyle())
+                            .onChange(of: pickerYear) { _ in
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    showPickerYear = false
+                                }
+                                
+                                // 연도가 바뀔 때마다 departTime 적용
+                                addOOTDVM.ootdDepartTime = epochTimeFrom(year: pickerYear, month: pickerMonth, day: pickerDay, hour: pickerDepartTime) ?? 0
+                                
+                                addOOTDVM.ootdArrivalTime = epochTimeFrom(year: pickerYear, month: pickerMonth, day: pickerDay, hour: pickerArrivalTime) ?? 0
 
-                        print(date)
-                        print(dateToString(selectedDate: date))
-                        print(dateToEpoch(selectedDate: date))
-                    }
+                                Task {
+                                    
+                                    await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
+                                }
+                                
+                                print("바뀐 pickerYear: \(pickerYear)")
+                            }
+                            
+                        } else {
+                            
+                            Text("\(String(format: "%04d", pickerYear))년")
+                                .frame(width: 75)
+                                .font(Font.pretendard(.semibold, size: 17))
+                                .onTapGesture {
+                                    showPickerYear = true
+                                }
+                        }
+                        
+                        if showPickerMonth {
+                            
+                            Picker("월 등록", selection: $pickerMonth) {
+                                
+                                ForEach(1..<13, id: \.self) { month in
+                                    
+                                    Text("\(month)월")
+                                        .font(Font.pretendard(.semibold, size: 17))
+                                    
+                                }
+                                
+                            }
+                            .frame(width: 55, height: 80)
+                            .offset(x: -15)
+                            .pickerStyle(WheelPickerStyle())
+                            .onChange(of: pickerMonth) { _ in
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    
+                                    showPickerMonth = false
+                                    
+                                    addOOTDVM.ootdDepartTime = epochTimeFrom(year: pickerYear, month: pickerMonth, day: pickerDay, hour: pickerDepartTime) ?? 0
+                                    
+                                    addOOTDVM.ootdArrivalTime = epochTimeFrom(year: pickerYear, month: pickerMonth, day: pickerDay, hour: pickerArrivalTime) ?? 0
+                                    
+                                    Task {
+                                        
+                                        await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
+                                    }
+                                    
+                                }
+                                
+                            }
+                            
+                        } else {
+                            Text("\(pickerMonth)월")
+                                .frame(width: 55)
+                                .offset(x: -15)
+                                .font(Font.pretendard(.semibold, size: 17))
+                                .onTapGesture {
+                                    showPickerMonth = true
+                                }
+                            
+                        }
+                        
+                        if showPickerDay {
+                            
+                            Picker("일 등록", selection: $pickerDay) {
+                                ForEach(1..<32, id: \.self) { day in
+                                    
+                                    Text("\(day)일")
+                                        .font(Font.pretendard(.semibold, size: 17))
+                                    
+                                }
+                            }
+                            .frame(width: 55, height: 80)
+                            .offset(x: -30)
+                            .pickerStyle(WheelPickerStyle())
+                            .onChange(of: pickerDay) { _ in
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    showPickerDay = false
+                                    
+                                    addOOTDVM.ootdDepartTime = epochTimeFrom(year: pickerYear, month: pickerMonth, day: pickerDay, hour: pickerDepartTime) ?? 0
+                                    
+                                    addOOTDVM.ootdArrivalTime = epochTimeFrom(year: pickerYear, month: pickerMonth, day: pickerDay, hour: pickerArrivalTime) ?? 0
+
+                                    Task {
+                                        
+                                        await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
+                                    }
+                                }
+                                
+                            }
+                            
+                        } else {
+                            Text("\(pickerDay)일")
+                                .frame(width: 55)
+                                .offset(x: -30)
+                                .font(Font.pretendard(.semibold, size: 17))
+                                .onTapGesture {
+                                    showPickerDay = true
+                                }
+                                
+                        }
+                        
+                        
+                    } // HStack
+                    .frame(width: 175, height: 25)
+//                    .padding(.horizontal, screenWidth / 6.5)
+                    
+                    HStack {
+                        
+                        Text("나간 시간")
+                            .frame(width: 90)
+                            .font(Font.pretendard(.semibold, size: 15))
+                            .foregroundStyle(.main)
+                        
+//                            .padding(.trailing, 12.5)
+                        
+                        if showPickerDepartTime {
+                            
+                            Picker("나간 시간 등록", selection: $pickerDepartTime) {
+                                
+                                ForEach(0..<24) { hour in
+                                    
+                                    if hour > 11 {
+                                        
+                                        if hour == 12 {
+                                            Text("오후 12시")
+                                                .font(Font.pretendard(.semibold, size: 15))
+                                                .tag(hour)
+                                        } else {
+                                            Text("오후 \(hour - 12)시")
+                                                .font(Font.pretendard(.semibold, size: 15))
+                                                .tag(hour)
+                                        }
+                                        
+                                    } else {
+                                        
+                                        if hour == 0 {
+                                            Text("오전 12시")
+                                                .font(Font.pretendard(.semibold, size: 15))
+                                                .tag(hour)
+                                        } else {
+                                            Text("오전 \(hour)시")
+                                                .font(Font.pretendard(.semibold, size: 15))
+                                                .tag(hour)
+                                        }
+                                    }
+                                }
+                                
+                            }
+                            .frame(width: 90, height: 60)
+                            .pickerStyle(WheelPickerStyle())
+                            .onChange(of: pickerDepartTime) { _ in
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    
+                                    showPickerDepartTime = false
+                                    
+                                    print("나간 시간: \(pickerDepartTime)")
+                                    
+                                    addOOTDVM.ootdDepartTime = epochTimeFrom(year: pickerYear, month: pickerMonth, day: pickerDay, hour: pickerDepartTime) ?? 0
+                                    
+                                    Task {
+                                        
+                                        await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
+                                    }
+                                }
+                                
+                            }
+                            
+                        } else {
+                         
+                            if pickerDepartTime > 11 {
+                                
+                                if pickerDepartTime == 12 {
+                                    Text("오후 \(pickerDepartTime)시")
+                                        .frame(width: 90)
+                                        .font(Font.pretendard(.semibold, size: 15))
+                                        
+                                        .onTapGesture {
+                                            showPickerDepartTime = true
+                                        }
+                                } else {
+                                    Text("오후 \(pickerDepartTime - 12)시")
+                                        .frame(width: 90)
+                                        .font(Font.pretendard(.semibold, size: 15))
+                                        .onTapGesture {
+                                            showPickerDepartTime = true
+                                        }
+                                }
+                                
+                            } else {
+                                if pickerDepartTime == 0 {
+                                    
+                                    Text("오전 12시")
+                                        .frame(width: 90)
+                                        .font(Font.pretendard(.semibold, size: 15))
+                                        
+                                        .onTapGesture {
+                                            showPickerDepartTime = true
+                                        }
+                                    
+                                } else {
+                                    Text("오전 \(pickerDepartTime)시")
+                                        .frame(width: 90)
+                                        .font(Font.pretendard(.semibold, size: 15))
+                                       
+                                        .onTapGesture {
+                                            showPickerDepartTime = true
+                                        }
+                                }
+                            }
+                        }
+                        
+                        
+                    } // HStack
+                    .padding(.top, 20)
+                    .frame(height: 25)
+                    .offset(x: -15)
+                    
+                    HStack {
+                        
+                        Text("들어온 시간")
+                            .frame(width: 100)
+                            .font(Font.pretendard(.semibold, size: 15))
+                            .foregroundStyle(.main)
+                        
+                        if showPickerArrivalTime {
+                            
+                            Picker("들어온 시간 등록", selection: $pickerArrivalTime) {
+                                
+                                ForEach(0..<24) { hour in
+                                    
+                                    if hour > 11 {
+                                        
+                                        if hour == 12 {
+                                            Text("오후 12시")
+                                                .font(Font.pretendard(.semibold, size: 15))
+                                                .tag(hour)
+                                        } else {
+                                            Text("오후 \(hour - 12)시")
+                                                .font(Font.pretendard(.semibold, size: 15))
+                                                .tag(hour)
+                                        }
+                                        
+                                    } else {
+                                        
+                                        if hour == 0 {
+                                            Text("오전 12시")
+                                                .font(Font.pretendard(.semibold, size: 15))
+                                                .tag(hour)
+                                        } else {
+                                            Text("오전 \(hour)시")
+                                                .font(Font.pretendard(.semibold, size: 15))
+                                                .tag(hour)
+                                        }
+                                    }
+                                }
+                                
+                            }
+                            .frame(width: 90, height: 75)
+                            .offset(x: -10)
+                            .pickerStyle(WheelPickerStyle())
+                            .onChange(of: pickerArrivalTime) { _ in
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    
+                                    showPickerArrivalTime = false
+                                    
+                                    print("들어온 시간: \(pickerArrivalTime)")
+                                    
+                                    addOOTDVM.ootdArrivalTime = epochTimeFrom(year: pickerYear, month: pickerMonth, day: pickerDay, hour: pickerArrivalTime) ?? 0
+                                    
+                                    Task {
+                                        
+                                        await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
+                                    }
+                                }
+                                
+                            }
+                            
+                        } else {
+                         
+                            if pickerArrivalTime > 11 {
+                                
+                                if pickerArrivalTime == 12 {
+                                    Text("오후 \(pickerArrivalTime)시")
+                                        .frame(width: 90)
+                                        .offset(x: -10)
+                                        .font(Font.pretendard(.semibold, size: 15))
+                                        
+                                        .onTapGesture {
+                                            showPickerArrivalTime = true
+                                        }
+                                } else {
+                                    Text("오후 \(pickerArrivalTime - 12)시")
+                                        .frame(width: 90)
+                                        .offset(x: -10)
+                                        .font(Font.pretendard(.semibold, size: 15))
+                                        .onTapGesture {
+                                            showPickerArrivalTime = true
+                                        }
+                                }
+                                
+                            } else {
+                                if pickerArrivalTime == 0 {
+                                    
+                                    Text("오전 12시")
+                                        .frame(width: 90)
+                                        .offset(x: -10)
+                                        .font(Font.pretendard(.semibold, size: 15))
+                                        
+                                        .onTapGesture {
+                                            showPickerArrivalTime = true
+                                        }
+                                    
+                                } else {
+                                    Text("오전 \(pickerArrivalTime)시")
+                                        .frame(width: 90)
+                                        .offset(x: -10)
+                                        .font(Font.pretendard(.semibold, size: 15))
+                                       
+                                        .onTapGesture {
+                                            showPickerArrivalTime = true
+                                        }
+                                }
+                            }
+                            
+                        }
+                        
+                        
+                    } // HStack
+                    .padding(.top, 15)
+                    .frame(height: 25)
+                    .offset(x: -15)
                     
                     Spacer()
-                    
-                    VStack {
-                        
-                        Text("외출 도착 시간")
-                        DatePicker("외출 도착 시간", selection: $selectedArrivalDate).labelsHidden()
-                            .frame(width: screenWidth / 4, height: 60)
-                            .onAppear {
-                                
-                                var dateEpoch = dateToEpoch(selectedDate: selectedArrivalDate)
-                                
-                                addOOTDVM.ootdArrivalTime = dateEpoch
-                                print(selectedArrivalDate)
-                                print(dateToString(selectedDate: selectedArrivalDate))
-                                print(dateToEpoch(selectedDate: selectedArrivalDate))
-                            }
-                        
 
-                    }
-                    .onChange(of: selectedArrivalDate) { date in
-                        
-                        var dateEpoch = dateToEpoch(selectedDate: date)
-                        
-                        addOOTDVM.ootdArrivalTime = dateEpoch
-                        print(date)
-                        print(dateToString(selectedDate: date))
-                        print(dateToEpoch(selectedDate: date))
-            
-                    }
-                }
-                .aspectRatio(9/16, contentMode: .fit)
-//                .background(.yellow)
+                } // VStack
+
                 
             }// HStack
-            .padding(.horizontal, 5)
+            .padding(.horizontal, 10)
+            .padding(.leading, 30)
             
             HStack {
                 
-                Text("입은 옷 정보")
-                    .padding(.top, 15)
-                    .padding(.bottom, 15)
-                    .font(Font.pretendard(.semibold, size: 17))
+//                HStack {
+//                    Image("\(Weather.getTy)")
+//                }
                 
+                HStack {
+                    
+                    Text("\(addOOTDVM.ootdLowestTemp)°C")
+                        .foregroundStyle(.blue)
+                        .font(Font.pretendard(.bold, size: 14))
+                    
+                    Text("/")
+                        .font(Font.pretendard(.bold, size: 14))
+                    
+                    Text("\(addOOTDVM.ootdHighestTemp)°C")
+                        .foregroundStyle(.red)
+                        .font(Font.pretendard(.bold, size: 14))
+                    
+                    Weather(rawValue: addOOTDVM.ootdWeather)?.imageMain
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20, height: 20)
+                }
+                .offset(y: 5)
+    
                 Spacer()
                 
                 Button {
@@ -182,14 +535,25 @@ struct AddOOTDView: View {
                     HStack {
                         Text(locationSearchText)
                             .font(Font.pretendard(.semibold, size: 15))
-                            .foregroundStyle(locationSearchText == "지역 검색" ? .blue : .black)
+                            .foregroundStyle(locationSearchText == "지역 검색" ? .main : .black)
                         
                         Image("location")
                     }
                 }
                 
             }
+            .padding(.top, 5)
+            
+            HStack {
                 
+                Text("입은 옷 정보")
+                    .padding(.top, 15)
+                    .padding(.bottom, 15)
+                    .font(Font.pretendard(.semibold, size: 17))
+                
+                Spacer()
+            }
+            
             Rectangle()
                 .frame(width: screenWidth - 36, height: 42)
                 .foregroundStyle(Color(hex: 0xEDEEFA))
@@ -230,9 +594,6 @@ struct AddOOTDView: View {
                             Button {
 
                                 ootdClothes.remove(at: index)
-//                                    addOOTDVM.addOOTD?.wearingList.remove(at: index)
-                                //addOOTDVM.ootdWearingList?.remove(at: index)
-
                                 addOOTDVM.ootdWearingList.remove(at: index)
 
 
@@ -282,6 +643,8 @@ struct AddOOTDView: View {
         }
         .onChange(of: ootdLat) { _ in
             
+            print("ootdLat: \(ootdLat)")
+            
             Task {
                 
                 await addOOTDVM.getOOTDWeather(lat: ootdLat, lon: ootdLon, departTime: addOOTDVM.ootdDepartTime, arrivalTime: addOOTDVM.ootdArrivalTime, location: locationSearchText)
@@ -326,6 +689,7 @@ struct AddOOTDView: View {
         .sheet(isPresented: $isLocationSearchSheetPresented) {
             
             LocationView(locationSearchText: $locationSearchText, lat: $ootdLat, lon: $ootdLon, isLocationViewSheetPresented: $isLocationSearchSheetPresented)
+                .presentationDetents([.height(screenHeight / 4)])
         }
         .sheet(isPresented: $openPhoto, content: {
             ImagePicker(sourceType: .photoLibrary, selectedImage: $ootdImage)
@@ -337,8 +701,15 @@ struct AddOOTDView: View {
                 addOOTDVM.ootdImage = imageData
             }
         }
+        // 화면이 나타날 때
         .onAppear {
             wholeVM.isTabBarHidden = true
+            
+            // 현재 시간을 불러오고 Picker 설정
+            extractDateComponents()
+            
+            print("현재 날짜: \(pickerYear), \(pickerMonth), \(pickerDay)")
+
         }
         .onChange(of: isOOTDImageSelected) { _ in
             
@@ -353,29 +724,38 @@ struct AddOOTDView: View {
         addOOTDVM.isRegisterBtnAvailable = isOOTDImageSelected && !ootdClothes.isEmpty
     }
     
-    // MARK: 나중에 32400 뺄 필요 없다고 하면 지우기
-    func dateToEpoch(selectedDate: Date) -> Int {
+    func extractDateComponents() {
         
-        let epochTime = selectedDate.timeIntervalSince1970
+        let now = Date()
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
         
-        return Int(epochTime)
-        //return (Int(epochTime) - 32400)
+        pickerYear = calendar.component(.year, from: now)
+        pickerMonth = calendar.component(.month, from: now)
+        pickerDay = calendar.component(.day, from: now)
+        pickerDepartTime = calendar.component(.hour, from: now)
+        pickerArrivalTime = calendar.component(.hour, from: now)
     }
     
-    func dateToString(selectedDate: Date) -> String {
+    func epochTimeFrom(year: Int, month: Int, day: Int, hour: Int) -> Int? {
         
-        let formatter = DateFormatter()
+        var calendar = Calendar.current
         
-        formatter.locale = Locale(identifier: "ko_kr")
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
         
-        formatter.dateFormat = "yyyy년 MM월 dd일 a HH시 mm분"
-        formatter.amSymbol = "오전"
-        formatter.pmSymbol = "오후"
+        var components = DateComponents()
+        components.year = year
+        components.month = month
+        components.day = day
+        components.hour = hour
         
-        return formatter.string(from: selectedDate)
+        guard let date = calendar.date(from: components) else { return nil }
+        
+        return Int(date.timeIntervalSince1970) - 32400
+        
     }
 }
 
 #Preview {
-    AddOOTDView()
+    AddOOTDView(pickerYear: 2024, pickerMonth: 5, pickerDay: 23, pickerDepartTime: 9, pickerArrivalTime: 12)
 }

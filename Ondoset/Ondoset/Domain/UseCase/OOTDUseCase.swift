@@ -7,7 +7,7 @@
 
 import Foundation
 
-class OOTDUseCase {
+final class OOTDUseCase {
     
     static let shared = OOTDUseCase()
     

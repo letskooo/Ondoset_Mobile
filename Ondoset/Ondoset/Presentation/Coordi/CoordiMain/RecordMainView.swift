@@ -128,6 +128,7 @@ struct RecordMainHeaderView: View {
             Image("calendar")
             
             DatePicker("외출 출발 시간", selection: $selectedDate, displayedComponents: .date).labelsHidden()
+                .tint(.main)
             
             Spacer()
         }

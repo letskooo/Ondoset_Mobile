@@ -12,6 +12,7 @@ class MyPageMainViewModel: ObservableObject {
     let memberUseCase: MemberUseCase = MemberUseCase.shared
     let ootdUseCase: OOTDUseCase = OOTDUseCase.shared
     
+    @Published var myOOTDList: [OOTD] = []
     
     @Published var memberProfile: MemberProfile?
     
@@ -36,6 +37,8 @@ class MyPageMainViewModel: ObservableObject {
             
             DispatchQueue.main.async {
                 self.memberProfile = profile
+                self.myOOTDList = profile.ootdList
+                self.lastPage = profile.lastPage
             }
         }
     }
@@ -46,7 +49,7 @@ class MyPageMainViewModel: ObservableObject {
         if lastPage != -2 {
             if let result = await ootdUseCase.pagingMyProfileOOTD(lastPage: lastPage) {
                 DispatchQueue.main.async {
-                    self.memberProfile?.ootdList.append(contentsOf: result.ootdList)
+                    self.myOOTDList.append(contentsOf: result.ootdList)
                     
                     self.lastPage = result.lastPage
                 }
@@ -99,6 +102,11 @@ class MyPageMainViewModel: ObservableObject {
     // 회원 탈퇴
     func withdrawMember() async {
         
-        _ = await memberUseCase.withdrawMember()
+        if let result = await memberUseCase.withdrawMember() {
+            
+            DispatchQueue.main.async {
+                UserDefaults.standard.set(false, forKey: "isLogin")
+            }
+        }
     }
 }

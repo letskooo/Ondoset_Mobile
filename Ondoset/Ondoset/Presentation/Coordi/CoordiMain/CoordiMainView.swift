@@ -597,6 +597,9 @@ struct CoordiMainView: View {
                             
                             if result {
                                 await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
+                                
+                                showCoordiDeleteAlert = false
+                                
                             }
                         }
                         
@@ -611,22 +614,29 @@ struct CoordiMainView: View {
         .sheet(isPresented: $isAddCoordiRecordSheetPresented) {
             AddCoordiRecordView(coordiYear: $selectedYear, coordiMonth: $selectedMonth, coordiDay:
                                     $selectedDays, isAddCoordiRecordSheetPresented: $isAddCoordiRecordSheetPresented)
+            .environmentObject(coordiMainVM)
         }
         .sheet(isPresented: $isPutCoordiRecordSheetPresented) {
             
-            PutCoordiRecordView(selectedCoordiId: $selectedCoordiId, coordiClothesList: $coordiClothesList, isPutCoordiRecordSheetPresented: $isPutCoordiRecordSheetPresented)
+            PutCoordiRecordView(coordiYear: $selectedYear, coordiMonth: $selectedMonth, selectedCoordiId: $selectedCoordiId, coordiClothesList: $coordiClothesList, isPutCoordiRecordSheetPresented: $isPutCoordiRecordSheetPresented)
+                .environmentObject(coordiMainVM)
         }
         .sheet(isPresented: $isPutGoOutTimeSheetPresented) {
             
             PutGoOutTimeView(selectedCoordiId: $toSetTimeCoordiId, selectedYear: $selectedYear, selectedMonth: $selectedMonth, selecteddDays: $selectedDays, goOutRegioin: $goOutRegion, goOutDepartTime: $goOutDepartTime, goOutArrivalTime: $goOutArrivalTime, isPutGoOutTimeSheetPresented: $isPutGoOutTimeSheetPresented)
-                .presentationDetents([.height(screenHeight / 2)])
+                .presentationDetents([.height(screenHeight / 4)])
+                .environmentObject(coordiMainVM)
+            
         }
         .sheet(isPresented: $isRegisterGoOutTimeSheetPresented) {
             
             RegisterGoOutTimeView(selectedCoordiId: $toSetTimeCoordiId, selectedYear: $selectedYear, selectedMonth: $selectedMonth, selectedDays: $selectedDays, goOutRegion: $goOutRegion, isRegisterGoOutTimeSheetPresented: $isRegisterGoOutTimeSheetPresented)
+                .presentationDetents([.height(screenHeight / 4)])
+                .environmentObject(coordiMainVM)
         }
         .sheet(isPresented: $isAddCoordiPlanSheetPresented) {
             AddCoordiPlanView(isAddCoordiPlanSheetPresented: $isAddCoordiPlanSheetPresented, coordiYear: $selectedYear, coordiMonth: $selectedMonth, coordiDay: $selectedDays, coordiClothesList: $coordiClothesList)
+                .environmentObject(coordiMainVM)
         }
         .onAppear {
             
@@ -689,6 +699,7 @@ struct CoordiMainView: View {
                             }
                             .labelsHidden()
                             .padding()
+                            .tint(.main)
                 
             } else {
                 

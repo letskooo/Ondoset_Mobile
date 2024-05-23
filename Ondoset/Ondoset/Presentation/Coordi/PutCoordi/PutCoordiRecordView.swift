@@ -12,6 +12,9 @@ struct PutCoordiRecordView: View {
     // 기존에 선택된 옷 리스트 표시 딕셔너리
     @State var selectedClothes: [Int: Bool] = [:]
     
+    @Binding var coordiYear: Int
+    @Binding var coordiMonth: Int 
+    
     // 수정하는 코디 아이디
     @Binding var selectedCoordiId: Int
     
@@ -37,6 +40,8 @@ struct PutCoordiRecordView: View {
     
     @StateObject var putCoordiRecordVM: PutCoordiRecordViewModel = .init()
     
+    @EnvironmentObject var coordiMainVM: CoordiMainViewModel
+    
     let columns: [GridItem] = Array(repeating: .init(.fixed((screenWidth - 36)/3), spacing: 10), count: 3)
     
     
@@ -54,21 +59,51 @@ struct PutCoordiRecordView: View {
                         switch selectedTab {
                             
                         case 1:
+                            
+                            putCoordiRecordVM.getAllClothesByTopLastPage = -1
+                            
+                            putCoordiRecordVM.clothesList.removeAll()
+                            
                             await putCoordiRecordVM.getAllClothesByCategory(category: .TOP, lastPage: putCoordiRecordVM.getAllClothesByTopLastPage)
                         
                         case 2:
+                            
+                            putCoordiRecordVM.getAllClothesByBottomLastPage = -1
+                            
+                            putCoordiRecordVM.clothesList.removeAll()
+                            
                             await putCoordiRecordVM.getAllClothesByCategory(category: .BOTTOM, lastPage: putCoordiRecordVM.getAllClothesByBottomLastPage)
                             
                         case 3:
+                            
+                            putCoordiRecordVM.getAllClothesByOuterLastPage = -1
+                            
+                            putCoordiRecordVM.clothesList.removeAll()
+                            
                             await putCoordiRecordVM.getAllClothesByCategory(category: .OUTER, lastPage: putCoordiRecordVM.getAllClothesByOuterLastPage)
                             
                         case 4:
+                            
+                            putCoordiRecordVM.getAllClothesByShoeLastPage = -1
+                            
+                            putCoordiRecordVM.clothesList.removeAll()
+                            
                             await putCoordiRecordVM.getAllClothesByCategory(category: .SHOE, lastPage: putCoordiRecordVM.getAllClothesByShoeLastPage)
                         
                         case 5:
+                            
+                            putCoordiRecordVM.getAllClothesByAccLastPage = -1
+                            
+                            putCoordiRecordVM.clothesList.removeAll()
+                            
                             await putCoordiRecordVM.getAllClothesByCategory(category: .ACC, lastPage: putCoordiRecordVM.getAllClothesByAccLastPage)
                
                         default:
+                            
+                            putCoordiRecordVM.getAllClothesLastPage = -1
+                            
+                            putCoordiRecordVM.clothesList.removeAll()
+                            
                             await putCoordiRecordVM.getAllClothes(lastPage: putCoordiRecordVM.getAllClothesLastPage)
                         }
                         
@@ -111,52 +146,35 @@ struct PutCoordiRecordView: View {
                     
                     LazyVGrid(columns: columns, spacing: 10) {
                         
-                        ForEach(putCoordiRecordVM.clothesList, id: \.self) { cloth in
+                        ForEach(putCoordiRecordVM.clothesList.indices, id: \.self) { index in
                             
                             ZStack {
-                                
-                                let longPressGesture = LongPressGesture(minimumDuration: 1)
-                                    .onChanged { _ in
-                                        
-                                        if !isLongPressed {
-                                            
-                                            isLongPressed = true
-                                            self.longPressedCloth = cloth
-                                            print("롱 프레스가 인식되고 있습니다.")
+                  
+                                ClothSearchComponent(clothes: putCoordiRecordVM.clothesList[index])
+                                    .onAppear {
+                                    
+                                        if index == putCoordiRecordVM.clothesList.count - 1 {
+                                            Task {
+                                                await putCoordiRecordVM.getAllClothes(lastPage: putCoordiRecordVM.getAllClothesLastPage)
+                                            }
                                         }
-                                        
                                     }
-                                    .onEnded { _ in
+                                    .onTapGesture {
+                                        selectedClothes[putCoordiRecordVM.clothesList[index].clothesId] = true
                                         
-                                        isLongPressed = false
-                                        print("롱 프레스가 종료되었습니다.")
+                                        coordiClothesList.append(putCoordiRecordVM.clothesList[index])
                                     }
-                                
-                                let tapGesture = TapGesture()
-                                    .onEnded {
-                                        selectedClothes[cloth.clothesId] = true
-                                        
-                                        coordiClothesList.append(cloth)
-                                        
-                                        // coordiClothesList.append(cloth)
-                                    }
-                                
-                                
-                                ClothSearchComponent(clothes: cloth)
-                                    .gesture(
-//                                        longPressGesture.exclusively(before: tapGesture)
-                                        tapGesture.exclusively(before: longPressGesture)
-                                    )
+                                    
 
-                                if selectedClothes[cloth.clothesId] ?? false {
+                                if selectedClothes[putCoordiRecordVM.clothesList[index].clothesId] ?? false {
                                     
                                     Color.black.opacity(0.3)
                                         .edgesIgnoringSafeArea(.all)
                                         .cornerRadius(10)
                                         .onTapGesture {
-                                            selectedClothes[cloth.clothesId] = false
+                                            selectedClothes[putCoordiRecordVM.clothesList[index].clothesId] = false
                                             
-                                            coordiClothesList.removeAll { $0 == cloth }
+                                            coordiClothesList.removeAll { $0 == putCoordiRecordVM.clothesList[index] }
                                             
                                             // coordiClothesList.removeAll { $0 == cloth }
                                         }
@@ -190,6 +208,8 @@ struct PutCoordiRecordView: View {
                     if result {
                         
                         isPutCoordiRecordSheetPresented = false
+                        
+                        await coordiMainVM.getCoordiRecord(year: coordiYear, month: coordiMonth)
                         
                     }
                 }
@@ -234,5 +254,5 @@ struct PutCoordiRecordView: View {
 }
 
 #Preview {
-    PutCoordiRecordView(selectedCoordiId: .constant(0),coordiClothesList: .constant([]), isPutCoordiRecordSheetPresented: .constant(true))
+    PutCoordiRecordView(coordiYear: .constant(0), coordiMonth: .constant(0), selectedCoordiId: .constant(0), coordiClothesList: .constant([]), isPutCoordiRecordSheetPresented: .constant(true))
 }

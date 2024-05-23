@@ -42,7 +42,7 @@ extension ReadProfileResponseDTO {
         let ootds = self.ootdList.map { $0.toOOTD() }
         let imageURL: String? = self.profileImage != nil ? "\(Constants.serverURL)/images\(self.profileImage!)" : nil
         
-        return MemberProfile(username: self.username, nickname: self.nickname, profileImage: imageURL, ootdList: ootds, ootdCount: self.ootdCount, likeCount: self.likeCount, followingCount: self.followingCount)
+        return MemberProfile(username: self.username, nickname: self.nickname, profileImage: imageURL, ootdList: ootds, ootdCount: self.ootdCount, likeCount: self.likeCount, followingCount: self.followingCount, lastPage: self.lastPage)
     }
 }
 
@@ -165,16 +165,6 @@ struct AddOOTDDTO: Encodable {
     let wearingList: [String]
 }
 
-// 프로필 조회 구조체
-struct ProfileShort: Decodable {
-    
-    let memberId: Int
-    let nickname: String
-    let imageURL: String?   // 프로필 이미지가 없으면 nil 값이 옴
-    let isFollowing: Bool
-    let ootdCount: Int
-}
-
 struct ProfileShortDTO: Decodable {
     
     let memberId: Int
@@ -196,9 +186,15 @@ struct GetOOTDResponseDTO: Decodable {
 extension GetOOTDResponseDTO {
     func toOOTDItem() -> OOTDItem {
         
-        let imageURL: String = "\(Constants.serverURL)/images\(self.profileShort.imageURL ?? "")"
+        if let image = self.profileShort.imageURL {
+            
+            return OOTDItem(memberId: self.profileShort.memberId, nickname: self.profileShort.nickname, imageURL: "\(Constants.serverURL)/images\(String(describing: image))", isFollowing: self.profileShort.isFollowing, ootdCount: self.profileShort.ootdCount, weather: self.weather, wearing: self.wearing, isLike: self.isLike)
+            
+        } else {
+            return OOTDItem(memberId: self.profileShort.memberId, nickname: self.profileShort.nickname, imageURL: nil, isFollowing: self.profileShort.isFollowing, ootdCount: self.profileShort.ootdCount, weather: self.weather, wearing: self.wearing, isLike: self.isLike)
+        }
         
-        return OOTDItem(memberId: self.profileShort.memberId, nickname: self.profileShort.nickname, imageURL: imageURL, isFollowing: self.profileShort.isFollowing, ootdCount: self.profileShort.ootdCount, weather: self.weather, wearing: self.wearing, isLike: self.isLike)
+        
     }
 }
 

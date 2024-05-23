@@ -22,7 +22,7 @@ struct OOTDItem: Hashable {
     
     let memberId: Int
     let nickname: String
-    let imageURL: String
+    let imageURL: String?
     let isFollowing: Bool
     let ootdCount: Int
     let weather: String
@@ -39,6 +39,7 @@ struct MemberProfile: Hashable {
     let ootdCount: Int
     let likeCount: Int
     let followingCount: Int    
+    let lastPage: Int
 }
 
 struct PagingOOTD: Hashable {

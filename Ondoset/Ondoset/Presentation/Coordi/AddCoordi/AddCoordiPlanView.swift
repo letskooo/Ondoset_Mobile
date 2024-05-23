@@ -40,6 +40,7 @@ struct AddCoordiPlanView: View {
     @Binding var coordiClothesList: [Clothes]
     
     @StateObject var addCoordiRecordVM: AddCoordiRecordViewModel = .init()
+    @EnvironmentObject var coordiMainVM: CoordiMainViewModel
     
     var body: some View {
         
@@ -210,6 +211,8 @@ struct AddCoordiPlanView: View {
                         if result {
                             
                             isAddCoordiPlanSheetPresented = false
+                            
+                            await coordiMainVM.getCoordiRecord(year: coordiYear, month: coordiMonth)
                         }
                         
                     } else {
@@ -223,6 +226,8 @@ struct AddCoordiPlanView: View {
                         if result {
                             
                             isAddCoordiPlanSheetPresented = false
+                            
+                            await coordiMainVM.getCoordiRecord(year: coordiYear, month: coordiMonth)
                         }
                     }
                 }

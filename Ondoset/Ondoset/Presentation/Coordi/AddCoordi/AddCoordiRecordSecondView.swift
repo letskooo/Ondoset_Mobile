@@ -12,6 +12,7 @@ struct AddCoordiRecordSecondView: View {
     // 선택된 지역
     
     @ObservedObject var addCoordiRecordVM: AddCoordiRecordViewModel
+    @EnvironmentObject var coordiMainVM: CoordiMainViewModel
     
     // 외출 출발 시간
     @Binding var departTime: Int
@@ -65,7 +66,7 @@ struct AddCoordiRecordSecondView: View {
 
                     Text(locationSearchText)
                         .font(Font.pretendard(.semibold, size: 15))
-                        .foregroundStyle(locationSearchText == "지역 검색" ? .blue : .black)
+                        .foregroundStyle(locationSearchText == "지역 검색" ? .main : .black)
 
                     Image("location")
                 }
@@ -108,6 +109,9 @@ struct AddCoordiRecordSecondView: View {
                         if result {
                             
                             isAddCoordiRecordSheetPresented = false
+                            
+                            /// 코디 추가 후 코디 다시 조회하기
+                            await coordiMainVM.getCoordiRecord(year: coordiYear, month: coordiMonth)
                         }
                     }
                 }
@@ -135,7 +139,7 @@ struct AddCoordiRecordSecondView: View {
         }
         .sheet(isPresented: $isLocationViewSheetPreented) {
             LocationView(locationSearchText: $locationSearchText, lat: $lat, lon: $lon, isLocationViewSheetPresented: $isLocationViewSheetPreented)
-                .presentationDetents([.height(screenHeight / 2)])
+                .presentationDetents([.height(screenHeight / 4)])
         }
         .onChange(of: lat) { _ in
             print("위도: \(lat)")

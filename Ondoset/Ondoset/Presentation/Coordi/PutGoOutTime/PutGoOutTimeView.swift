@@ -34,6 +34,7 @@ struct PutGoOutTimeView: View {
     @State var isSaveBtnAvailable: Bool = true
     
     @StateObject var putGoOutTimeVM: PutGoOutTimeViewModel = .init()
+    @EnvironmentObject var coordiMainVM: CoordiMainViewModel
     
     var body: some View {
         
@@ -61,7 +62,7 @@ struct PutGoOutTimeView: View {
                 Text("외출 시간 수정하기")
                     .font(Font.pretendard(.semibold, size: 17))
                     .foregroundStyle(.black)
-                    .padding(.top, 10)
+                    .padding(.top, 15)
             }
             
             HStack {
@@ -75,7 +76,7 @@ struct PutGoOutTimeView: View {
 
                     Text(goOutRegioin)
                         .font(Font.pretendard(.semibold, size: 15))
-                        .foregroundStyle(goOutRegioin == "지역 검색" ? .blue : .black)
+                        .foregroundStyle(goOutRegioin == "지역 검색" ? .main : .black)
 
                     Image("location")
                 }
@@ -136,12 +137,6 @@ struct PutGoOutTimeView: View {
                             .onChange(of: pickerDepartTime) { _ in
                                 
                                 print("출발 시간: \(pickerDepartTime)")
-                                
-//                                departTime = epochTimeFrom(year: coordiYear, month: coordiMonth, day: coordiDay, hour: pickerDepartTime) ?? 0
-//                                
-//                                print(departTime)
-//                                
-//                                updateBtnAvailable()
                                 
                                 goOutDepartTime = epochTimeFrom(year: selectedYear, month: selectedMonth, day: selecteddDays, hour: pickerDepartTime) ?? 0
                                 
@@ -257,12 +252,6 @@ struct PutGoOutTimeView: View {
                                 
                                 print("도착 시간: \(pickerArrivalTime)")
                                 
-//                                arrivalTime = epochTimeFrom(year: coordiYear, month: coordiMonth, day: coordiDay, hour: pickerArrivalTime) ?? 0
-//                                
-//                                print(arrivalTime)
-//                                
-//                                updateBtnAvailable()
-                                
                                 goOutArrivalTime = epochTimeFrom(year: selectedYear, month: selectedMonth, day: selecteddDays, hour: pickerArrivalTime) ?? 0
                                 
                                 print(goOutArrivalTime)
@@ -348,6 +337,8 @@ struct PutGoOutTimeView: View {
                         
                         isPutGoOutTimeSheetPresented = false
                         
+                        await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
+                        
                     }
                 }
             }
@@ -359,6 +350,7 @@ struct PutGoOutTimeView: View {
         .sheet(isPresented: $isLocationViewSheetPresented) {
             
             LocationView(locationSearchText: $goOutRegioin, lat: $goOutLat, lon: $goOutLon, isLocationViewSheetPresented: $isLocationViewSheetPresented)
+                .presentationDetents([.height(screenHeight / 4)])
         }
         
         .onAppear {

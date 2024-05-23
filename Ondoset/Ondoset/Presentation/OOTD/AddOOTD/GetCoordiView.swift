@@ -32,11 +32,14 @@ struct GetCoordiView: View {
                 Image("calendar")
                 
                 DatePicker("날짜를 선택하세요", selection: $selectedDate, displayedComponents: .date).labelsHidden()
+                    .tint(.main)
+                    
                 
                 Spacer()
                 
             }
-            .padding(.leading, 20)
+            .padding(.leading, 25)
+            .padding(.top, 10)
             
             // 이 날의 코디가 존재하지 않는다면
             if addOOTDVM.dailyCoordi == [] {

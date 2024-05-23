@@ -24,8 +24,6 @@ struct FollowingListView: View {
             
             SearchBarComponent(searchText: $searchText, placeHolder: "닉네임을 검색하세요", searchAction: { text in
                 
-                print("잘 도ㅙ야함")
-                
                 Task {
                     
                     
@@ -87,9 +85,13 @@ struct FollowingListView: View {
                                         
                                 }
                                 
-                                Text(followingVM.followingList[index].nickname)
-                                    .font(Font.pretendard(.medium, size: 15))
-                                    .padding(.leading ,16)
+                                NavigationLink(destination: OtherProfileView(nickname: followingVM.followingList[index].nickname ?? "테스트 타인 닉네임", profileImage: followingVM.followingList[index].imageURL, memberId: followingVM.followingList[index].memberId ?? 0, isFollowing: followingVM.followingList[index].isFollowing, ootdCount: followingVM.followingList[index].ootdCount ?? 0)) {
+                                    
+                                    Text(followingVM.followingList[index].nickname)
+                                        .font(Font.pretendard(.medium, size: 15))
+                                        .padding(.leading ,16)
+                                        .foregroundStyle(.black)
+                                }
                                 
                                 Spacer()
                                 

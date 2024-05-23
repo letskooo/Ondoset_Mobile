@@ -35,6 +35,7 @@ struct RegisterGoOutTimeView: View {
     @State var isSaveBtnAvailable: Bool = true
     
     @StateObject var putGoOutTimeVM: PutGoOutTimeViewModel = .init()
+    @EnvironmentObject var coordiMainVM: CoordiMainViewModel
     
     var body: some View {
         
@@ -62,7 +63,7 @@ struct RegisterGoOutTimeView: View {
                 Text("외출 시간 등록하기")
                     .font(Font.pretendard(.semibold, size: 17))
                     .foregroundStyle(.black)
-                    .padding(.top, 10)
+                    .padding(.top, 15)
             }
             
             HStack {
@@ -76,7 +77,7 @@ struct RegisterGoOutTimeView: View {
                     
                     Text(goOutRegion)
                         .font(Font.pretendard(.semibold, size: 15))
-                        .foregroundStyle(goOutRegion == "지역 검색" ? .blue : .black)
+                        .foregroundStyle(goOutRegion == "지역 검색" ? .main : .black)
                     
                     Image("location")
                 }
@@ -349,6 +350,8 @@ struct RegisterGoOutTimeView: View {
                         
                         isRegisterGoOutTimeSheetPresented = false
                         
+                        await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
+                        
                     }
                 }
             }
@@ -358,6 +361,8 @@ struct RegisterGoOutTimeView: View {
         .sheet(isPresented: $isLocationViewSheetPresented) {
             
             LocationView(locationSearchText: $goOutRegion, lat: $goOutLat, lon: $goOutLon, isLocationViewSheetPresented: $isLocationViewSheetPresented)
+                .presentationDetents([.height(screenHeight / 4)])
+            
         }
         
         .onAppear {

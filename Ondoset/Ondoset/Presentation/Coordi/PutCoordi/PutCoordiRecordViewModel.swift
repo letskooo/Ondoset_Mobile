@@ -22,10 +22,6 @@ class PutCoordiRecordViewModel: ObservableObject {
     // 조회되는 옷 목록
     @Published var clothesList: [Clothes] = []
     
-    // 코디 등록에 추가되는 옷 리스트
-//    @Published var coordiClothesList: [Clothes] = []
- 
-    
     init() {
         Task {
             await getAllClothes(lastPage: getAllClothesLastPage)
@@ -41,8 +37,8 @@ class PutCoordiRecordViewModel: ObservableObject {
                 
                 DispatchQueue.main.async {
                     
-                    self.clothesList.removeAll()
                     self.clothesList.append(contentsOf: result.clothesList)
+                    self.getAllClothesLastPage = result.lastPage
                     
                 }
             }
@@ -57,26 +53,28 @@ class PutCoordiRecordViewModel: ObservableObject {
             print("뷰모델 카테고리 탭 별 옷 조회: \(result)")
             
             DispatchQueue.main.async {
-                
-                self.clothesList.removeAll()
+             
                 self.clothesList.append(contentsOf: result.clothesList)
                 
-                
-                // 추후 페이징 처리 보수 필요
-//                switch category {
-//
-//                case .TOP:
-//                    self.getAllClothesByTopLastPage = result.lastPage
-//
-//                case .BOTTOM:
-//                    self.getAllClothesByBottomLastPage = result.lastPage
-//                case .OUTER:
-//                    self.getAllClothesByOuterLastPage = result.lastPage
-//                case .SHOE:
-//                    self.getAllClothesByShoeLastPage = result.lastPage
-//                case .ACC:
-//                    self.getAllClothesByAccLastPage = result.lastPage
-//                }
+                DispatchQueue.main.async {
+                    
+                    self.clothesList.append(contentsOf: result.clothesList)
+                    
+                    switch category {
+                        
+                    case .TOP:
+                        self.getAllClothesByTopLastPage = result.lastPage
+                        
+                    case .BOTTOM:
+                        self.getAllClothesByBottomLastPage = result.lastPage
+                    case .OUTER:
+                        self.getAllClothesByOuterLastPage = result.lastPage
+                    case .SHOE:
+                        self.getAllClothesByShoeLastPage = result.lastPage
+                    case .ACC:
+                        self.getAllClothesByAccLastPage = result.lastPage
+                    }
+                }
             }
         }
     }

@@ -10,7 +10,7 @@ import SwiftUI
 struct OOTDMainView: View {
     
     let views: [String] = ["추천", "날씨"]
-    @State var selectedView: String = "날씨"
+    @State var selectedView: String = "추천"
     
     @State var openWeatherOptions: Bool = false
     @State var openTempRateOptions: Bool = false
