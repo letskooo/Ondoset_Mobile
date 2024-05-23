@@ -109,27 +109,12 @@ struct ClothUnSelectedComponent: View {
                                                     width: 300
                                                 )
                                                 .onTapGesture {
-        //                                            print(clothSearchVM.presentingClothesData[index])
                                                     NotificationCenter.default.post(name: NSNotification.Name("SelectCloth"), object: nil, userInfo: ["clothes": clothSearchVM.presentingClothesData[index], "index": cellIndex])
                                                 }
                                             }
                                         }
                                     }
                                     .frame(height: 250)
-                                    HStack {
-                                        Spacer()
-                                        Button(action: {
-                                            
-                                        }, label: {
-                                            HStack(spacing: 0) {
-                                                Text("이 키워드로 쇼핑몰에서 찾아보기")
-                                                    .font(.pretendard(.semibold, size: 13))
-                                                Image(systemName: "chevron.forward")
-                                            }
-                                            .foregroundStyle(.main)
-                                        })
-                                    }
-                                    .padding(.horizontal)
                                     
                                 }
                             }
@@ -205,6 +190,9 @@ struct ClothUnSelectedComponent: View {
                 }
                 
             }
+            .onAppear(perform: {
+                clothSearchVM.clothesType = self.clothTemplate.category
+            })
     }
 }
 
@@ -224,12 +212,18 @@ final class ClothSearchViewModel: ObservableObject {
             }
         }
     }
+    @Published var clothesType: Category?
+    
     /// 검색 텍스트
     @Published var searchText: String = "" {
         didSet { searchClothes(by: self.searchText) }
     }
     /// 화면에 표시되는 Data
-    @Published var presentingClothesData: [Clothes] = []
+    @Published var presentingClothesData: [Clothes] = [] {
+        didSet {
+            self.tempResetPresentingData()
+        }
+    }
     /// 뒤(뷰모델)에서 관리되는 Data
     private var clothesData: [Clothes] = [] {
         didSet { setPresentingData() }
@@ -282,6 +276,18 @@ extension ClothSearchViewModel {
             guard let self = self else { return }
             self.searchText = "" // 새로운 화면이므로 텍스트 필드가 공백
             self.presentingClothesData = self.clothesData
+        }
+    }
+    
+    private func tempResetPresentingData() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.presentingClothesData = self.presentingClothesData.filter({
+                if self.clothesType != nil {
+                    return $0.category == self.clothesType
+                }
+                return true
+            })
         }
     }
     

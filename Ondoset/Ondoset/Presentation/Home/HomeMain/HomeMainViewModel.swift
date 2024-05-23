@@ -79,6 +79,7 @@ final class HomeMainViewModel: ObservableObject {
     init() {
         Task {
             await self.getHomeInfo()
+//            self.mockFetchWeatherInfo()
         }
         // 선택된 추천 삭제하기
         NotificationCenter.default.addObserver(forName: NSNotification.Name("DeleteSelectedRecommendation"), object: nil, queue: .main) { notification in
@@ -181,7 +182,7 @@ extension HomeMainViewModel {
                 // 예보목록
                 self.weatherForecasts = result.forecast.fcst.map {$0.toHourWeather()}
                 // 메인날씨이미지
-                self.weatherMainImage = Weather.getType(from: self.weatherForecasts.first?.weather ?? "")?.frontImage ?? .cloudyMain
+                self.weatherMainImage = Weather.getType(from: self.weatherForecasts.first?.weather ?? "")?.frontImage ?? .weatherSunny
                 
                 // BottomData
                 self.coordiPlan = result.plan
