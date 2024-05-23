@@ -12,7 +12,6 @@ struct AddCoordiRecordView: View {
     @StateObject var addCoordiRecordVM: AddCoordiRecordViewModel = .init()
     @EnvironmentObject var coordiMainVM: CoordiMainViewModel
     
-    @State var selectedTab: Int = 0
     @State var searchText: String = ""
     @State var nextBtnAvailable: Bool = false
     
@@ -42,6 +41,8 @@ struct AddCoordiRecordView: View {
     @State var lat: Double = 91.0       // 위도
     @State var lon: Double = 91.0       // 경도
     
+    @State var clothesList: [Clothes] = []
+    
     
     let columns: [GridItem] = Array(repeating: .init(.fixed((screenWidth - 36)/3), spacing: 10), count: 3)
     
@@ -52,34 +53,64 @@ struct AddCoordiRecordView: View {
             VStack {
                 navigationTopBar
                 
-                SegmentControlComponent(selectedTab: $selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue}, isMain: true)
-                    .onChange(of: selectedTab) { _ in
+                SegmentControlComponent(selectedTab: $addCoordiRecordVM.selectedTab, tabMenus: MyClosetTab.allCases.map{$0.rawValue}, isMain: true)
+                    .onChange(of: addCoordiRecordVM.selectedTab) { _ in
                         
                         Task {
                             
-                            switch selectedTab {
+                            switch addCoordiRecordVM.selectedTab {
                                 
                             case 1:
+                                
+                                addCoordiRecordVM.getAllClothesByTopLastPage = -1
+                                
+                                addCoordiRecordVM.clothesList.removeAll()
+                                
                                 await addCoordiRecordVM.getAllClothesByCategory(category: .TOP, lastPage: addCoordiRecordVM.getAllClothesByTopLastPage)
                             
                             case 2:
+                                
+                                addCoordiRecordVM.getAllClothesByBottomLastPage = -1
+                                
+                                addCoordiRecordVM.clothesList.removeAll()
+                                
                                 await addCoordiRecordVM.getAllClothesByCategory(category: .BOTTOM, lastPage: addCoordiRecordVM.getAllClothesByBottomLastPage)
                                 
                             case 3:
+                                
+                                addCoordiRecordVM.getAllClothesByOuterLastPage = -1
+                                
+                                addCoordiRecordVM.clothesList.removeAll()
+                                
                                 await addCoordiRecordVM.getAllClothesByCategory(category: .OUTER, lastPage: addCoordiRecordVM.getAllClothesByOuterLastPage)
                                 
                             case 4:
+                                
+                                addCoordiRecordVM.getAllClothesByShoeLastPage = -1
+                                
+                                addCoordiRecordVM.clothesList.removeAll()
+                                
                                 await addCoordiRecordVM.getAllClothesByCategory(category: .SHOE, lastPage: addCoordiRecordVM.getAllClothesByShoeLastPage)
                             
                             case 5:
+                                
+                                addCoordiRecordVM.getAllClothesByAccLastPage = -1
+                                
+                                addCoordiRecordVM.clothesList.removeAll()
+                                
                                 await addCoordiRecordVM.getAllClothesByCategory(category: .ACC, lastPage: addCoordiRecordVM.getAllClothesByAccLastPage)
                    
                             default:
+                                
+                                addCoordiRecordVM.getAllClothesLastPage = -1
+                                
+                                addCoordiRecordVM.clothesList.removeAll()
+                                
                                 await addCoordiRecordVM.getAllClothes(lastPage: addCoordiRecordVM.getAllClothesLastPage)
                             }
                             
                         }
-                        print("탭 넘버: \(selectedTab)")
+                        print("탭 넘버: \(addCoordiRecordVM.selectedTab)")
                         
                     }
                 
@@ -87,7 +118,7 @@ struct AddCoordiRecordView: View {
                     
                     Task {
                         
-                        switch selectedTab {
+                        switch addCoordiRecordVM.selectedTab {
                             
                         case 1:
                             await addCoordiRecordVM.searchClothByKeyword(category: .TOP, clothesName: text)
@@ -117,52 +148,53 @@ struct AddCoordiRecordView: View {
                         
                         LazyVGrid(columns: columns, spacing: 10) {
                             
-                            ForEach(addCoordiRecordVM.clothesList, id: \.self) { cloth in
+                            ForEach(addCoordiRecordVM.clothesList.indices, id: \.self) { index in
                                 
                                 ZStack {
                                     
-                                    let longPressGesture = LongPressGesture(minimumDuration: 1)
-                                        .onChanged { _ in
-                                            
-                                            if !isLongPressed {
-                                                
-                                                isLongPressed = true
-                                                self.longPressedCloth = cloth
-                                                print("롱 프레스가 인식되고 있습니다.")
+                                    ClothSearchComponent(clothes: addCoordiRecordVM.clothesList[index])
+                                        .onAppear {
+                                            if index == addCoordiRecordVM.clothesList.count - 1 {
+                                                Task {
+                                                    
+                                                    switch addCoordiRecordVM.selectedTab {
+                                                        
+                                                    case 1:
+                                                        await addCoordiRecordVM.getAllClothesByCategory(category: .TOP, lastPage: addCoordiRecordVM.getAllClothesByTopLastPage)
+                                                        
+                                                    case 2:
+                                                        await addCoordiRecordVM.getAllClothesByCategory(category: .BOTTOM, lastPage: addCoordiRecordVM.getAllClothesByBottomLastPage)
+                                                        
+                                                    case 3:
+                                                        await addCoordiRecordVM.getAllClothesByCategory(category: .OUTER, lastPage: addCoordiRecordVM.getAllClothesByOuterLastPage)
+                                                        
+                                                    case 4:
+                                                        await addCoordiRecordVM.getAllClothesByCategory(category: .SHOE, lastPage: addCoordiRecordVM.getAllClothesByShoeLastPage)
+                                                        
+                                                    case 5:
+                                                        await addCoordiRecordVM.getAllClothesByCategory(category: .ACC, lastPage: addCoordiRecordVM.getAllClothesByAccLastPage)
+                                                        
+                                                    default:
+                                                        await addCoordiRecordVM.getAllClothes(lastPage: addCoordiRecordVM.getAllClothesLastPage)
+                                                    }
+                                                }
                                             }
-                                            
                                         }
-                                        .onEnded { _ in
+                                        .onTapGesture {
+                                            selectedClothes[addCoordiRecordVM.clothesList[index].clothesId] = true
                                             
-                                            isLongPressed = false
-                                            print("롱 프레스가 종료되었습니다.")
+                                            addCoordiRecordVM.coordiClothesList.append(addCoordiRecordVM.clothesList[index])
                                         }
-                                    
-                                    let tapGesture = TapGesture()
-                                        .onEnded {
-                                            selectedClothes[cloth.clothesId] = true
-                                            
-                                            addCoordiRecordVM.coordiClothesList.append(cloth)
-                                            
-                                            // coordiClothesList.append(cloth)
-                                        }
-                                    
-                                    
-                                    ClothSearchComponent(clothes: cloth)
-                                        .gesture(
-    //                                        longPressGesture.exclusively(before: tapGesture)
-                                            tapGesture.exclusively(before: longPressGesture)
-                                        )
 
-                                    if selectedClothes[cloth.clothesId] ?? false {
+                                    if selectedClothes[addCoordiRecordVM.clothesList[index].clothesId] ?? false {
                                         
                                         Color.black.opacity(0.3)
                                             .edgesIgnoringSafeArea(.all)
                                             .cornerRadius(10)
                                             .onTapGesture {
-                                                selectedClothes[cloth.clothesId] = false
+                                                selectedClothes[addCoordiRecordVM.clothesList[index].clothesId] = false
                                                 
-                                                addCoordiRecordVM.coordiClothesList.removeAll { $0 == cloth }
+                                                addCoordiRecordVM.coordiClothesList.removeAll { $0 == addCoordiRecordVM.clothesList[index] }
                                                 
                                                 // coordiClothesList.removeAll { $0 == cloth }
                                             }

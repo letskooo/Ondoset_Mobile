@@ -57,13 +57,13 @@ struct RegisterGoOutTimeView: View {
                 Spacer()
                 
             }
-            .padding(.top, 20)
+            .padding(.top, 15)
             .overlay {
                 
                 Text("외출 시간 등록하기")
                     .font(Font.pretendard(.semibold, size: 17))
                     .foregroundStyle(.black)
-                    .padding(.top, 20)
+                    .padding(.top, 15)
             }
             
             HStack {
@@ -77,7 +77,7 @@ struct RegisterGoOutTimeView: View {
                     
                     Text(goOutRegion)
                         .font(Font.pretendard(.semibold, size: 15))
-                        .foregroundStyle(goOutRegion == "지역 검색" ? .blue : .black)
+                        .foregroundStyle(goOutRegion == "지역 검색" ? .main : .black)
                     
                     Image("location")
                 }

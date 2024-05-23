@@ -56,13 +56,13 @@ struct PutGoOutTimeView: View {
                 Spacer()
 
             }
-            .padding(.top, 20)
+            .padding(.top, 15)
             .overlay {
                 
                 Text("외출 시간 수정하기")
                     .font(Font.pretendard(.semibold, size: 17))
                     .foregroundStyle(.black)
-                    .padding(.top, 20)
+                    .padding(.top, 15)
             }
             
             HStack {
@@ -76,7 +76,7 @@ struct PutGoOutTimeView: View {
 
                     Text(goOutRegioin)
                         .font(Font.pretendard(.semibold, size: 15))
-                        .foregroundStyle(goOutRegioin == "지역 검색" ? .blue : .black)
+                        .foregroundStyle(goOutRegioin == "지역 검색" ? .main : .black)
 
                     Image("location")
                 }
@@ -137,12 +137,6 @@ struct PutGoOutTimeView: View {
                             .onChange(of: pickerDepartTime) { _ in
                                 
                                 print("출발 시간: \(pickerDepartTime)")
-                                
-//                                departTime = epochTimeFrom(year: coordiYear, month: coordiMonth, day: coordiDay, hour: pickerDepartTime) ?? 0
-//                                
-//                                print(departTime)
-//                                
-//                                updateBtnAvailable()
                                 
                                 goOutDepartTime = epochTimeFrom(year: selectedYear, month: selectedMonth, day: selecteddDays, hour: pickerDepartTime) ?? 0
                                 
@@ -257,12 +251,6 @@ struct PutGoOutTimeView: View {
                             .onChange(of: pickerArrivalTime) { _ in
                                 
                                 print("도착 시간: \(pickerArrivalTime)")
-                                
-//                                arrivalTime = epochTimeFrom(year: coordiYear, month: coordiMonth, day: coordiDay, hour: pickerArrivalTime) ?? 0
-//                                
-//                                print(arrivalTime)
-//                                
-//                                updateBtnAvailable()
                                 
                                 goOutArrivalTime = epochTimeFrom(year: selectedYear, month: selectedMonth, day: selecteddDays, hour: pickerArrivalTime) ?? 0
                                 

@@ -66,7 +66,7 @@ struct AddCoordiRecordSecondView: View {
 
                     Text(locationSearchText)
                         .font(Font.pretendard(.semibold, size: 15))
-                        .foregroundStyle(locationSearchText == "지역 검색" ? .blue : .black)
+                        .foregroundStyle(locationSearchText == "지역 검색" ? .main : .black)
 
                     Image("location")
                 }

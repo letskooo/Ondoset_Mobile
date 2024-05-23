@@ -211,6 +211,8 @@ struct AddCoordiPlanView: View {
                         if result {
                             
                             isAddCoordiPlanSheetPresented = false
+                            
+                            await coordiMainVM.getCoordiRecord(year: coordiYear, month: coordiMonth)
                         }
                         
                     } else {
@@ -223,10 +225,9 @@ struct AddCoordiPlanView: View {
                         
                         if result {
                             
-                            await coordiMainVM.getCoordiRecord(year: coordiYear, month: coordiYear)
-                            
                             isAddCoordiPlanSheetPresented = false
- 
+                            
+                            await coordiMainVM.getCoordiRecord(year: coordiYear, month: coordiMonth)
                         }
                     }
                 }
