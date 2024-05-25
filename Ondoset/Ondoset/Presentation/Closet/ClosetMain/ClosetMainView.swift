@@ -55,7 +55,8 @@ struct ClosetMainView: View {
                             }
                         })
                     }
-                    .padding(.vertical, 20)
+                    .padding(.vertical)
+                    Spacer(minLength: 60)
                 }
             }
         }

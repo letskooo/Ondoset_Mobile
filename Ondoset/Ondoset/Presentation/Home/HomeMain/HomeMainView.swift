@@ -35,6 +35,7 @@ struct HomeMainView: View {
                         .frame(height: 44)
                         .foregroundStyle(.white)
                 }
+                .padding(.vertical)
                 
                 if homeMainVM.isHomeInfoFetching {
                     Color.white.opacity(0.3)
