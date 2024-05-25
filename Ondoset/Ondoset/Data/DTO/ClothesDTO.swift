@@ -32,6 +32,7 @@ extension ClothesDTO {
         return Clothes(
             clothesId: self.clothesId,
             name: self.name,
+            imageURL: self.imageURL,
             category:  category,
             tag: self.tag,
             tagId: self.tagId,

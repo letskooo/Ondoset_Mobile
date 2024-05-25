@@ -8,12 +8,33 @@
 import Foundation
 import PhotosUI
 import _PhotosUI_SwiftUI
+import Kingfisher
 
 final class MyClothingViewModel: ObservableObject {
     
     private let clothesUseCase: ClothesUseCase = ClothesUseCase.shared
     
-    @Published var myClothing: Clothes? = nil
+    @Published var myClothing: Clothes? = nil {
+        didSet {
+            guard let myClothing = self.myClothing else { return }
+            print("@TAG- \(myClothing)")
+            
+            guard let imageURL = self.myClothing?.imageURL, let url = URL(string: "\(Constants.serverURL)/images\(imageURL)") else { return }
+            KingfisherManager.shared.retrieveImage(with: url) { result in
+                switch result {
+                    
+                case .success(let success):
+                    print("@TAGIMAGE- \(success.image.pngData())")
+                    DispatchQueue.main.async {
+                        self.myClothingImageData = success.image.pngData()
+                    }
+                case .failure(let error):
+                    print("Error loading image data: \(error)")
+                    return
+                }
+            }
+        }
+    }
     @Published var myClothigName: String = "" {
         didSet {
             setSaveAvailable()
