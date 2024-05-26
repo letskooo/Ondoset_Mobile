@@ -34,6 +34,20 @@ final class HomeMainViewModel: ObservableObject {
             }
         }
     }
+    @Published var homeViewPresentingDate: Date = .now {
+        didSet {
+            let calendar = Calendar.current
+            let hour = calendar.component(.hour, from: homeViewDate)
+            
+            if hour >= 23 && hour < 24 {
+                if let newDate = calendar.date(byAdding: .day, value: 1, to: homeViewDate) {
+                    homeViewPresentingDate = newDate
+                }
+            } else {
+                homeViewPresentingDate = homeViewDate
+            }
+        }
+    }
     @Published var homeViewLocate: CLLocationCoordinate2D = .init(latitude: 37.4551254, longitude: 127.1334847) {
         didSet {
             Task {

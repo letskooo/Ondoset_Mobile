@@ -8,12 +8,33 @@
 import Foundation
 import PhotosUI
 import _PhotosUI_SwiftUI
+import Kingfisher
 
 final class MyClothingViewModel: ObservableObject {
     
     private let clothesUseCase: ClothesUseCase = ClothesUseCase.shared
     
-    @Published var myClothing: Clothes? = nil
+    @Published var myClothing: Clothes? = nil {
+        didSet {
+            guard let myClothing = self.myClothing else { return }
+            print("@TAG- \(myClothing)")
+            
+            guard let imageURL = self.myClothing?.imageURL, let url = URL(string: "\(Constants.serverURL)/images\(imageURL)") else { return }
+            KingfisherManager.shared.retrieveImage(with: url) { result in
+                switch result {
+                    
+                case .success(let success):
+                    print("@TAGIMAGE- \(success.image.pngData())")
+                    DispatchQueue.main.async {
+                        self.myClothingImageData = success.image.pngData()
+                    }
+                case .failure(let error):
+                    print("Error loading image data: \(error)")
+                    return
+                }
+            }
+        }
+    }
     @Published var myClothigName: String = "" {
         didSet {
             setSaveAvailable()
@@ -77,8 +98,11 @@ extension MyClothingViewModel {
                     thickness: myClothingThickness?.rawValue
                 )
             )
-            if let res = res, res == true { print("수정완료") }
-        } 
+            if let res = res, res == true {
+                print("수정완료")
+                NotificationCenter.default.post(name: NSNotification.Name("RefreshPresentClothes"), object: nil, userInfo: nil)
+            }
+        }
         // 저장 케이스
         else {
             print("저장 : 내 옷 \(PostClothRequestDTO(name: myClothigName,tagId: myClothingDetailedTag.tagId,thickness: myClothingThickness?.rawValue,image: myClothingImageData))")
@@ -88,7 +112,10 @@ extension MyClothingViewModel {
                 thickness: myClothingThickness?.rawValue,
                 image: myClothingImageData)
             )
-            if let res = res, res == true { print("저장완료") }
+            if let res = res, res == true {
+                print("저장완료")
+                NotificationCenter.default.post(name: NSNotification.Name("RefreshPresentClothes"), object: nil, userInfo: nil)
+            }
         }
     }
 }

@@ -23,6 +23,7 @@ final class ClosetMainViewModel: ObservableObject {
         didSet {
             self.clothesLastPage = -1 // 탭 변경 시엔 항상 -1로 시작
             Task {
+                self.clothesData = []
                 selectedTab != 0
                 ? await getMyClothes(by: Category.allCases[selectedTab - 1])
                 : await getMyAllClothes()
@@ -42,7 +43,11 @@ final class ClosetMainViewModel: ObservableObject {
     /// 삭제할 옷 데이터
     @Published var clothesIdWillDeleted: Int = -1
     /// clothes Data last page
-    private var clothesLastPage: Int = -1
+    var clothesLastPage: Int = -1 {
+        didSet {
+            print("@TAG-lastPage 가요... : \(self.clothesLastPage)")
+        }
+    }
     
     init() {
         Task { await getMyAllClothes() }
@@ -64,6 +69,18 @@ final class ClosetMainViewModel: ObservableObject {
                 self.clothesIdWillDeleted = clothesId
             }
         }
+        
+        // 옷 목록 새로고침하기
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("RefreshPresentClothes"), object: nil, queue: .main) { _ in
+            print("RefreshPresentClothes")
+                self.clothesData = []
+                self.clothesLastPage = -1
+                Task {
+                    self.selectedTab != 0
+                    ? await self.getMyClothes(by: Category.allCases[self.selectedTab - 1])
+                    : await self.getMyAllClothes()
+                }
+        }
     }
     
     deinit {
@@ -74,6 +91,28 @@ final class ClosetMainViewModel: ObservableObject {
 
 // MARK: Interface Functions
 extension ClosetMainViewModel {
+
+    func loadMoreItems() async {
+//        self.clothesLastPage += 18
+        
+        switch selectedTab {
+            
+        case 0:
+            await getMyAllClothes()
+        case 1:
+            await getMyClothes(by: .TOP)
+        case 2:
+            await getMyClothes(by: .BOTTOM)
+        case 3:
+            await getMyClothes(by: .OUTER)
+        case 4:
+            await getMyClothes(by: .SHOE)
+        case 5:
+            await getMyClothes(by: .ACC)
+        default:
+            return
+        }
+    }
     
     func getClothesName(by clothesId: Int) -> String {
         return self.clothesData.first(where: { $0.clothesId == clothesId })?.name ?? ""
@@ -84,6 +123,7 @@ extension ClosetMainViewModel {
             await self.deleteMyClothes(with: clothesId)
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
+                self.clothesData = []
                 clothesLastPage = -1 // 탭 변경 시엔 항상 -1로 시작
                 Task {
                     self.selectedTab != 0
@@ -100,13 +140,14 @@ extension ClosetMainViewModel {
     
     /// 전체 clothes를 가져옵니다 by API
     private func getMyAllClothes() async {
-         guard clothesLastPage != -2 else { return }
-         
-         if let result = await clothesUseCase.getAllClothes(lastPage: clothesLastPage) {
-             setReceivedData(clothesList: result.clothesList, lastPage: result.lastPage)
-         }
-//        setReceivedData(clothesList: ClothesDTO.mockData(), lastPage: -1) // 테스트용
-     }
+        guard clothesLastPage != -2 else { return }
+        
+        if let result = await clothesUseCase.getAllClothes(lastPage: clothesLastPage) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.setReceivedData(clothesList: result.clothesList, lastPage: result.lastPage)
+            }
+        }
+    }
      
     /// 카테고리 값으로 clothes를 가져옵니다 by API
     private func getMyClothes(by category: Category) async {
@@ -127,9 +168,10 @@ extension ClosetMainViewModel {
     /// API에서 받은 Data를 clothesData에 전달합니다.
     private func setReceivedData(clothesList: [Clothes], lastPage: Int) {
         self.clothesLastPage = lastPage
+
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.clothesData = clothesList
+            self.clothesData.append(contentsOf: clothesList)
         }
     }
     
