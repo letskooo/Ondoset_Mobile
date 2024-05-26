@@ -53,6 +53,14 @@ struct ClosetMainView: View {
                                     additionBtn: AnyView(ClothOptionButton(clothesId: item.clothesId))
                                 )
                             }
+                            if !(closetMainVM.clothesLastPage == -2) {
+                                ProgressView()
+                                    .onAppear {
+                                        Task {
+                                            await closetMainVM.loadMoreItems()
+                                        }
+                                    }
+                            }
                         })
                     }
                     .padding(.vertical)

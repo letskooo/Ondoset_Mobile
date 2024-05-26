@@ -50,7 +50,7 @@ extension Satisfaction {
             return Image(.COLD)
             
         case .GOOD:
-            return Image(.GOOD)
+            return Image(.good)
 //            return Image(.GOOD)
             
         case .HOT:

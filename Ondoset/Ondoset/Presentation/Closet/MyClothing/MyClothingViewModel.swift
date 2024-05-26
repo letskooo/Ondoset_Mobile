@@ -98,8 +98,11 @@ extension MyClothingViewModel {
                     thickness: myClothingThickness?.rawValue
                 )
             )
-            if let res = res, res == true { print("수정완료") }
-        } 
+            if let res = res, res == true {
+                print("수정완료")
+                NotificationCenter.default.post(name: NSNotification.Name("RefreshPresentClothes"), object: nil, userInfo: nil)
+            }
+        }
         // 저장 케이스
         else {
             print("저장 : 내 옷 \(PostClothRequestDTO(name: myClothigName,tagId: myClothingDetailedTag.tagId,thickness: myClothingThickness?.rawValue,image: myClothingImageData))")
@@ -109,7 +112,10 @@ extension MyClothingViewModel {
                 thickness: myClothingThickness?.rawValue,
                 image: myClothingImageData)
             )
-            if let res = res, res == true { print("저장완료") }
+            if let res = res, res == true {
+                print("저장완료")
+                NotificationCenter.default.post(name: NSNotification.Name("RefreshPresentClothes"), object: nil, userInfo: nil)
+            }
         }
     }
 }
