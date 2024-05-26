@@ -18,7 +18,6 @@ enum Tab {
 
 struct OndosetHome: View {
     
-    
     @EnvironmentObject var wholeVM: WholeViewModel
     
     var body: some View {
@@ -29,7 +28,24 @@ struct OndosetHome: View {
             case .home:
                 HomeMainView()
             case .record:
-                CoordiMainView()
+                
+                if wholeVM.goToCoordiThroughHome {
+                    
+                    CoordiMainView(selectedYear: wholeVM.selectedCoordiYear, selectedMonth: wholeVM.selectedCoordiMonth, selectedDays: wholeVM.selectedCoordiDay)
+                    
+                } else {
+                    
+                    CoordiMainView()
+                }
+                
+//                if wholeVM.selectedCoordiDay != 0 && wholeVM.selectedCoordiMonth != 0 && wholeVM.selectedCoordiDay != 0 {
+//                    
+//                    CoordiMainView(selectedYear: wholeVM.selectedCoordiYear, selectedMonth: wholeVM.selectedCoordiMonth, selectedDays: wholeVM.selectedCoordiDay)
+//                    
+//                } else {
+//                    CoordiMainView()
+//                }
+                
             case .closet:
                 ClosetMainView()
             case .ootd:
