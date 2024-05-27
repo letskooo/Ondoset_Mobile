@@ -505,88 +505,6 @@ struct PutOOTDView: View {
             .padding(.horizontal, 10)
             .padding(.leading, 30)
             
-//            HStack(alignment: .top) {
-//                
-//                // 새로운 OOTD 이미지를 선택한 경우
-//                if isOOTDImageSelected {
-//                    
-//                    Image(uiImage: ootdImage)
-//                        .resizable()
-//                        .aspectRatio(9/16, contentMode: .fill)
-//                        .frame(width: screenWidth / 2.5)
-//                        .onTapGesture {
-//                            openPhoto = true
-//                        }
-//                        .onAppear {
-//
-//                            print(ootdImage)
-//
-//                            // MARK: 나중에 화질 구리면 0.1 -> 0.7로 수정
-//                            if let imageData = ootdImage.jpegData(compressionQuality: 0.1) {
-//                                putOOTDVM.ootdImage = imageData
-//                            }
-//
-//                        }
-//                        .onChange(of: ootdImage) { image in
-//
-//                            print(image)
-//
-//                            // MARK: 나중에 화질 구리면 0.1 -> 0.7로 수정
-//                            if let imageData = image.jpegData(compressionQuality: 0.1) {
-//                                putOOTDVM.ootdImage = imageData
-//                            }
-//                        }
-//                    
-//                } else {
-//                    // 기존 이미지
-//                    KFImage(URL(string: putOOTDVM.getOOTDforPut.imageURL))
-//                        .resizable()
-//                        .aspectRatio(9/16, contentMode: .fill)
-//                        .frame(width: screenWidth / 2.5)
-//                        .onTapGesture {
-//                            openPhoto = true
-//                        }
-//                }
-//                
-//                Spacer()
-//                
-//                VStack(spacing: 20) {
-//                    
-//                    Text("날짜 및 외출시간")
-//                        .font(Font.pretendard(.semibold, size: 17))
-//                    
-//                    VStack {
-//                        
-//                        Group {
-//                            Text("외출 출발 시간")
-//                            DatePicker("외출 출발 시간", selection: $selectedDepartDate)
-//                                .labelsHidden()
-//                                .tint(.main)
-//                                
-//                        }
-//                        .padding(.top, 5)
-//                    }
-//                    
-//                    Spacer()
-//                    
-//                    VStack {
-//                        
-//                        Text("외출 도착 시간")
-//                        DatePicker("외출 도착 시간", selection: $selectedArrivalDate).labelsHidden()
-//                            .frame(width: screenWidth / 4, height: 60)
-//                            .tint(.main)
-//                    }
-//                    .onChange(of: selectedArrivalDate) { date in
-//                        
-//            
-//                    }
-//                }
-//                .aspectRatio(9/16, contentMode: .fit)
-////                .background(.yellow)
-//                
-//            }// HStack
-//            .padding(.horizontal, 5)
-            
             HStack {
                 
                 HStack {
@@ -850,7 +768,6 @@ struct PutOOTDView: View {
         let epochTime = selectedDate.timeIntervalSince1970
         
         return Int(epochTime)
-        //return (Int(epochTime) - 32400)
     }
     
     func dateToString(selectedDate: Date) -> String {
@@ -898,24 +815,6 @@ struct PutOOTDView: View {
         pickerDay = calendar.component(.day, from: now)
         pickerDepartTime = calendar.component(.hour, from: now)
         pickerArrivalTime = calendar.component(.hour, from: now)
-    }
-    
-    func epochTimeFrom(year: Int, month: Int, day: Int, hour: Int) -> Int? {
-        
-        var calendar = Calendar.current
-        
-        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        
-        var components = DateComponents()
-        components.year = year
-        components.month = month
-        components.day = day
-        components.hour = hour
-        
-        guard let date = calendar.date(from: components) else { return nil }
-        
-        return Int(date.timeIntervalSince1970) - 32400
-        
     }
     
     func getTimeFromEpoch(departEpoch: Int, arrivalEpoch: Int) {

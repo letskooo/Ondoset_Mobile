@@ -736,24 +736,6 @@ struct AddOOTDView: View {
         pickerDepartTime = calendar.component(.hour, from: now)
         pickerArrivalTime = calendar.component(.hour, from: now)
     }
-    
-    func epochTimeFrom(year: Int, month: Int, day: Int, hour: Int) -> Int? {
-        
-        var calendar = Calendar.current
-        
-        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        
-        var components = DateComponents()
-        components.year = year
-        components.month = month
-        components.day = day
-        components.hour = hour
-        
-        guard let date = calendar.date(from: components) else { return nil }
-        
-        return Int(date.timeIntervalSince1970) - 32400
-        
-    }
 }
 
 #Preview {
