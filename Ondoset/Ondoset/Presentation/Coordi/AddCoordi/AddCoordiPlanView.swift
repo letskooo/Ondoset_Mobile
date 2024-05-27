@@ -117,39 +117,13 @@ struct AddCoordiPlanView: View {
                         ForEach(addCoordiRecordVM.clothesList, id: \.self) { cloth in
                             
                             ZStack {
-                                
-                                let longPressGesture = LongPressGesture(minimumDuration: 1)
-                                    .onChanged { _ in
-                                        
-                                        if !isLongPressed {
-                                            
-                                            isLongPressed = true
-                                            self.longPressedCloth = cloth
-                                            print("롱 프레스가 인식되고 있습니다.")
-                                        }
-                                        
-                                    }
-                                    .onEnded { _ in
-                                        
-                                        isLongPressed = false
-                                        print("롱 프레스가 종료되었습니다.")
-                                    }
-                                
-                                let tapGesture = TapGesture()
-                                    .onEnded {
+                                                                
+                                ClothSearchComponent(clothes: cloth)
+                                    .onTapGesture {
                                         selectedClothes[cloth.clothesId] = true
                                         
                                         coordiClothesList.append(cloth)
-                                        
-                                        // coordiClothesList.append(cloth)
                                     }
-                                
-                                
-                                ClothSearchComponent(clothes: cloth)
-                                    .gesture(
-//                                        longPressGesture.exclusively(before: tapGesture)
-                                        tapGesture.exclusively(before: longPressGesture)
-                                    )
 
                                 if selectedClothes[cloth.clothesId] ?? false {
                                     
@@ -160,8 +134,7 @@ struct AddCoordiPlanView: View {
                                             selectedClothes[cloth.clothesId] = false
                                             
                                             coordiClothesList.removeAll { $0 == cloth }
-                                            
-                                            // coordiClothesList.removeAll { $0 == cloth }
+
                                         }
                                     
                                     Image("clothCheck")
@@ -169,9 +142,7 @@ struct AddCoordiPlanView: View {
                                 
                             }
                             .onChange(of: coordiClothesList) { _ in
-                                
-//                                print(coordiClothesList)
-                                
+
                                 print("옷 리스트: \(coordiClothesList.map { $0.clothesId })")
                                 
                                 updateBtnAvailable()
@@ -202,10 +173,7 @@ struct AddCoordiPlanView: View {
                         let stateOfDay = calendar.startOfDay(for: now)
                         
                         let date = Int(stateOfDay.timeIntervalSince1970)
-//
-//                        let today = now.timeIntervalSince1970
-//                        let date = Int(today) - 32400
-                        
+    
                         let result = await addCoordiRecordVM.setCoordiPlan(date: date, clothesList: coordiClothesList.map { $0.clothesId } )
                         
                         if result {
@@ -270,44 +238,7 @@ struct AddCoordiPlanView: View {
             isSaveBtnAvailable = false
         }
     }
-    
-    func epochTimeFrom(year: Int, month: Int, day: Int) -> Int? {
-        
-        var calendar = Calendar.current
-        
-        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        
-        var components = DateComponents()
-        components.year = year
-        components.month = month
-        components.day = day
-        
-        guard let date = calendar.date(from: components) else { return nil }
-        
-        return Int(date.timeIntervalSince1970) - 32400
-        
-    }
-    
-    func isDatePast(year: Int, month: Int, day: Int) -> Bool {
-        let calendar = Calendar.current
-        var dateComponents = DateComponents()
-        dateComponents.year = year
-        dateComponents.month = month
-        dateComponents.day = day
 
-        guard let date = calendar.date(from: dateComponents) else {
-            print("Invalid date")
-            return false
-        }
-
-        let now = Date()
-        let makePast = -24 * 60 * 60
-        let today = now.addingTimeInterval(TimeInterval(makePast))
-
-        return date < today
-    }
-    
-    
     private var navigationTopBar: some View {
         HStack {
             
