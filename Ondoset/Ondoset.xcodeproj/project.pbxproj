@@ -49,6 +49,7 @@
 		47A46ED22BD97B3E0096525F /* LikeOOTDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A46ED12BD97B3E0096525F /* LikeOOTDView.swift */; };
 		47A46ED52BD97D9A0096525F /* FollowingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A46ED42BD97D9A0096525F /* FollowingListView.swift */; };
 		47A46ED82BD986E60096525F /* LikeOOTDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A46ED72BD986E60096525F /* LikeOOTDViewModel.swift */; };
+		47A6E2202C03A1270096A291 /* Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A6E21F2C03A1270096A291 /* Methods.swift */; };
 		47A718FD2BCB769200AD66A3 /* MemberDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A718FC2BCB769200AD66A3 /* MemberDTO.swift */; };
 		47A922362BDF9465003234F9 /* OOTDItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A922352BDF9465003234F9 /* OOTDItemView.swift */; };
 		47A922382BDF9481003234F9 /* OOTDItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A922372BDF9481003234F9 /* OOTDItemViewModel.swift */; };
@@ -208,6 +209,7 @@
 		47A46ED12BD97B3E0096525F /* LikeOOTDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeOOTDView.swift; sourceTree = "<group>"; };
 		47A46ED42BD97D9A0096525F /* FollowingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingListView.swift; sourceTree = "<group>"; };
 		47A46ED72BD986E60096525F /* LikeOOTDViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeOOTDViewModel.swift; sourceTree = "<group>"; };
+		47A6E21F2C03A1270096A291 /* Methods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Methods.swift; sourceTree = "<group>"; };
 		47A718FC2BCB769200AD66A3 /* MemberDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDTO.swift; sourceTree = "<group>"; };
 		47A922352BDF9465003234F9 /* OOTDItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDItemView.swift; sourceTree = "<group>"; };
 		47A922372BDF9481003234F9 /* OOTDItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOTDItemViewModel.swift; sourceTree = "<group>"; };
@@ -859,6 +861,7 @@
 				47C29E2A2BC2504900E3E2B9 /* Constants.swift */,
 				47E740362BD8DE72003A71D5 /* ImagePicker.swift */,
 				4738C8C12BEE031600AED673 /* LocationManager.swift */,
+				47A6E21F2C03A1270096A291 /* Methods.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1089,6 +1092,7 @@
 				47BE3A232BC380BA00F27E38 /* OOTDRepository.swift in Sources */,
 				4789E7232BEA0280002CF53A /* CoordiImageView.swift in Sources */,
 				47E7403D2BD8FB71003A71D5 /* OOTDEndPoint.swift in Sources */,
+				47A6E2202C03A1270096A291 /* Methods.swift in Sources */,
 				470479012BE28D4E002CFF82 /* DateFormatter.swift in Sources */,
 				47BE3A212BC380AD00F27E38 /* CoordiRepository.swift in Sources */,
 				47C29E142BC24A5500E3E2B9 /* MyPageMainView.swift in Sources */,
