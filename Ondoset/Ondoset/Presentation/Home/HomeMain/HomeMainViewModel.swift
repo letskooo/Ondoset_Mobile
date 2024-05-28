@@ -32,10 +32,6 @@ final class HomeMainViewModel: ObservableObject {
             Task {
                 await self.getHomeInfo()
             }
-        }
-    }
-    @Published var homeViewPresentingDate: Date = .now {
-        didSet {
             let calendar = Calendar.current
             let hour = calendar.component(.hour, from: homeViewDate)
             
@@ -46,6 +42,11 @@ final class HomeMainViewModel: ObservableObject {
             } else {
                 homeViewPresentingDate = homeViewDate
             }
+        }
+    }
+    @Published var homeViewPresentingDate: Date = .now {
+        didSet {
+            validateOfPrevDate()
         }
     }
     @Published var homeViewLocate: CLLocationCoordinate2D = .init(latitude: 37.4551254, longitude: 127.1334847) {
@@ -89,10 +90,14 @@ final class HomeMainViewModel: ObservableObject {
     @Published var recommendAI: [[Recommend]] = []
     /// 오늘과 비슷한 날씨의 타인 OOTD
     @Published var othersOOTD: [OOTDShort] = []
+    /// 날짜 뒤로  여부
+    @Published var isPrevDateAllowed = true
+    /// 날짜 앞으로 여부
+    @Published var isNextDateAllowed = true
     
     init() {
         Task {
-            await self.getHomeInfo()
+//            await self.getHomeInfo()
 //            self.mockFetchWeatherInfo()
         }
         // 선택된 추천 삭제하기
@@ -140,6 +145,18 @@ extension HomeMainViewModel {
 // MARK: Internal Functions
 extension HomeMainViewModel {
     
+    private func validateOfPrevDate() {
+        let calendar = Calendar.current
+        let now = Date()
+        guard let newDate = calendar.date(byAdding: .day, value: 1, to: now) else { return }
+        
+        // 오늘이면 false
+        self.isPrevDateAllowed = !calendar.isDate(self.homeViewPresentingDate, inSameDayAs: now)
+        // 모레 이후면 false == 2일 이후면
+        self.isNextDateAllowed = self.homeViewPresentingDate < newDate
+        
+    }
+    
     private func mockFetchWeatherInfo() {
         weatherTempDiff = 2
         // 체감온도
@@ -169,7 +186,7 @@ extension HomeMainViewModel {
     }
     
     private func getHomeInfo() async {
-        
+        print("how many@")
         DispatchQueue.main.async {
             self.isHomeInfoFetching = true
         }
