@@ -32,15 +32,19 @@ struct WeatherView: View {
                     homeMainVM.changeDate(with: -1)
                 }, label: {
                     Image(systemName: "chevron.backward")
-                        .foregroundStyle(.darkGray)
+                        .foregroundStyle(homeMainVM.isPrevDateAllowed ? .darkGray : .lightGray )
                 })
-                Text("\(DateFormatter.dateOnly.string(from: homeMainVM.homeViewDate))")
+                .disabled(!homeMainVM.isPrevDateAllowed)
+                
+                Text("\(DateFormatter.dateOnly.string(from: homeMainVM.homeViewPresentingDate))")
+                
                 Button(action: {
                     homeMainVM.changeDate(with: 1)
                 }, label: {
                     Image(systemName: "chevron.forward")
-                        .foregroundStyle(.darkGray)
+                        .foregroundStyle(homeMainVM.isNextDateAllowed ? .darkGray : .lightGray )
                 })
+                .disabled(!homeMainVM.isNextDateAllowed)
             }
         }
     }
