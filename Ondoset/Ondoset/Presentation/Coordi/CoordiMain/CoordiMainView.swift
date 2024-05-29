@@ -640,15 +640,59 @@ struct CoordiMainView: View {
         }
         .onAppear {
             
+//            if !wholeVM.goToCoordiThroughHome {
+//                
+//                let today = Date()
+//                
+//                selectedYear = Calendar.current.component(.year, from: today)
+//                selectedMonth = Calendar.current.component(.month, from: today)
+//                selectedDays = Calendar.current.component(.day, from: today)
+//                
+//                let weekday = Calendar.current.component(.weekday, from: today)
+//                
+//                selectedWeekday = weekdayString(from: weekday)
+//                
+//            } else {
+//                
+//                var components = DateComponents()
+//                
+//                selectedYear = wholeVM.selectedCoordiYear
+//                selectedMonth = wholeVM.selectedCoordiMonth
+//                selectedDays = wholeVM.selectedCoordiDay
+//                
+//                components.year = wholeVM.selectedCoordiYear
+//                components.month = wholeVM.selectedCoordiMonth
+//                components.day = wholeVM.selectedCoordiDay
+//                
+//                if let date = Calendar.current.date(from: components) {
+//                    
+//                    let weekday = Calendar.current.component(.weekday, from: date)
+//                    
+//                    selectedWeekday = weekdayString(from: weekday)
+//                }
+//            }
+            
             let today = Date()
-            selectedYear = Calendar.current.component(.year, from: today)
-            selectedMonth = Calendar.current.component(.month, from: today)
-            selectedDays = Calendar.current.component(.day, from: today)
+            
+            if !wholeVM.goToCoordiThroughHome {
+                
+                selectedYear = Calendar.current.component(.year, from: today)
+                selectedMonth = Calendar.current.component(.month, from: today)
+                selectedDays = Calendar.current.component(.day, from: today)
+                
+            } else {
+                
+                print("선택된 날짜: \(wholeVM.selectedCoordiYear).\(wholeVM.selectedCoordiMonth).\(wholeVM.selectedCoordiDay)")
+
+                selectedYear = wholeVM.selectedCoordiYear
+                selectedMonth = wholeVM.selectedCoordiMonth
+                selectedDays = wholeVM.selectedCoordiDay
+            }
             
             let weekday = Calendar.current.component(.weekday, from: today)
             
             selectedWeekday = weekdayString(from: weekday)
-
+        
             coordiClothesList = []
             
             let initialIndex = selectedMonth - 3
@@ -680,7 +724,10 @@ struct CoordiMainView: View {
                 await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
             }
         }
-
+        .onDisappear {
+            
+            wholeVM.goToCoordiThroughHome = false
+        }
     }
     
     // MARK: 화면 헤더
@@ -949,8 +996,6 @@ struct CoordiMainView: View {
                 }
                 
                 days = newDays
-
-        
     }
     
     func weekdayString(from number: Int) -> String {

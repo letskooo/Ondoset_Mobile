@@ -133,6 +133,8 @@ struct TodaysSetUpView: View {
 }
 // MARK: SetUpHistoryView
 struct SetUpHistoryView: View {
+    
+    @EnvironmentObject var wholeVM: WholeViewModel
     @EnvironmentObject var homeMainVM: HomeMainViewModel
 
     var body: some View {
@@ -141,6 +143,7 @@ struct SetUpHistoryView: View {
             ScrollView(.vertical) {
                 ForEach(homeMainVM.similRecord.indices, id: \.self) { index in
                     ScrollView(.horizontal) {
+                        
                         LazyHGrid(rows: [
                             GridItem(.flexible(),spacing: 10, alignment: .leading),
                             GridItem(.flexible(), spacing: 10, alignment: .leading)
@@ -158,6 +161,24 @@ struct SetUpHistoryView: View {
                         }
                         .padding(.vertical, 10)
                         .padding(.horizontal, 20)
+                        .onTapGesture {
+                            
+                            wholeVM.goToCoordiThroughHome = true
+                           
+                            let date = Date(timeIntervalSince1970: TimeInterval(homeMainVM.similRecord[index].date))
+                            
+                            let calendar = Calendar.current
+                            let components = calendar.dateComponents([.year, .month, .day], from: date)
+                            
+                            wholeVM.selectedCoordiYear = components.year ?? 0
+                            wholeVM.selectedCoordiMonth = components.month ?? 0
+                            wholeVM.selectedCoordiDay = components.day ?? 0
+                            
+                            withAnimation(.easeInOut(duration: 0.5)) {
+
+                                wholeVM.selectedTab = .record
+                            }
+                        }
                         
                     }
                     .background(index % 2 == 0 ? .ondosetBackground : .white )

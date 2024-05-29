@@ -54,6 +54,11 @@ struct AddOOTDView: View {
     // 도착 시간 피커 보이기 여부
     @State var showPickerArrivalTime: Bool = false
     
+    // OOTD 날짜가 과거가 아닌 경우 나타나는 Alert
+    @State var showDayAlert: Bool = false
+    
+    // 나간 시간이 들어온 시간보다 이후인 경우 나타나는 Alert
+    @State var showTimeAlert: Bool = false
     
     @StateObject var addOOTDVM: AddOOTDViewModel = .init()
     @EnvironmentObject var wholeVM: WholeViewModel
@@ -616,14 +621,39 @@ struct AddOOTDView: View {
                 
                 Task {
                     
-                    let result = await addOOTDVM.registerOOTD()
-                    
-                    if result {
-                        dismiss()
+                    if !isDatePast(year: pickerYear, month: pickerMonth, day: pickerDay) {
+                        
+                        showDayAlert = true
+                        
+                    } else if pickerDepartTime >= pickerArrivalTime {
+                        
+                        showTimeAlert = true
+                    } else {
+                        let result = await addOOTDVM.registerOOTD()
+                        
+                        if result {
+                            dismiss()
+                        }
                     }
                 }
             }
             .padding(.bottom, 20)
+            .alert("등록 날짜는 오늘보다 과거여야 합니다!", isPresented: $showDayAlert) {
+                
+                Button {
+                    showDayAlert = false
+                } label: {
+                    Text("확인")
+                }
+            }
+            .alert("나간 시간은 들어온 시간보다 더 이전이어야 합니다!", isPresented: $showTimeAlert) {
+                
+                Button {
+                    showTimeAlert = false
+                } label: {
+                    Text("확인")
+                }
+            }
             
             Spacer()
         }
@@ -735,24 +765,6 @@ struct AddOOTDView: View {
         pickerDay = calendar.component(.day, from: now)
         pickerDepartTime = calendar.component(.hour, from: now)
         pickerArrivalTime = calendar.component(.hour, from: now)
-    }
-    
-    func epochTimeFrom(year: Int, month: Int, day: Int, hour: Int) -> Int? {
-        
-        var calendar = Calendar.current
-        
-        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        
-        var components = DateComponents()
-        components.year = year
-        components.month = month
-        components.day = day
-        components.hour = hour
-        
-        guard let date = calendar.date(from: components) else { return nil }
-        
-        return Int(date.timeIntervalSince1970) - 32400
-        
     }
 }
 

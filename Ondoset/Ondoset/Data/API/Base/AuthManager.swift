@@ -21,8 +21,6 @@ class AuthManager: RequestInterceptor {
         // baseURL 확인
         guard urlRequest.url?.absoluteString.hasPrefix(Constants.serverURL) == true else { return }
         
-        //guard urlRequest.url?.absoluteString.hasPrefix(univURL) == true else { return }
-        
         // Access Token 조회
         guard let accessToken = KeyChainManager.readItem(key: "accessToken") else {
             
@@ -30,15 +28,16 @@ class AuthManager: RequestInterceptor {
             DispatchQueue.main.async {
                 UserDefaults.standard.set(false, forKey: "isLogin")
             }
-        
-//            completion(.failure(APIError.customError("키체인 토큰 조회 실패. 로그인이 필요합니다.")))
+
             return
         }
         
         // URLRequest 헤더 추가. return
         var urlRequest = urlRequest
 //        urlRequest.headers.add(.authorization(accessToken))
-        urlRequest.headers.add(.authorization(bearerToken: accessToken))
+//        urlRequest.headers.add(.authorization(bearerToken: accessToken))
+        
+        urlRequest.headers.add(.authorization(bearerToken: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im1lbWJlcjEiLCJtZW1iZXJJZCI6MSwiaWF0IjoxNzE2NDY3NTM1LCJleHAiOjE3MTY1NTM5MzV9.uRQNtBEEKonK7wWynSYkhrebiQfm-ObAAb13hEZ_TIw"))
         
         completion(.success(urlRequest))
         
@@ -48,21 +47,30 @@ class AuthManager: RequestInterceptor {
     
     func retry(_ request: Request, for session: Session, dueTo error: any Error, completion: @escaping (RetryResult) -> Void) {
         
-        // HTTP 응답 코드 확인, 재시도 여부 결정
-        // 400 상태 코드가 아니라면 Error 메시지와 함께 재시도하지 않음.
-        // 즉 400이면 재시도
-        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 400 else {
+        print("retry 호출되고 있어용~~~~")
+        
+//         HTTP 응답 코드 확인, 재시도 여부 결정
+//         401 상태 코드가 아니라면 doNotRetryWithError와 함께 재시도 없이 에러내용 리턴
+//         즉 401인 경우에만 재시도
+        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 else {
+            
+            print("retry 호출되고 있어용~~~~")
             
             completion(.doNotRetryWithError(error))
+            
+            print("===========401이 아니므로 더 이상 retry 안함================")
+            
             return
         }
+        
+        print("retry 호출되고 있어용~~~~")
+        print("=================401이어서 retry중================")
+        
         
         // 해당 경로로 accessToken 재발급 요청
         // 현재 임시 URL. 추후 수정 필요
         
         guard let url = URL(string: Constants.serverURL+"/member/jwt") else { return }
-        
-        //guard let url = URL(string: univURL+"/member/jwt") else { return }
         
         guard let accessToken = KeyChainManager.readItem(key: "accessToken"),
               let refreshToken = KeyChainManager.readItem(key: "refreshToken") else {

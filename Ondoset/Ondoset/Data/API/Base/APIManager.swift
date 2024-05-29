@@ -33,8 +33,11 @@ final class APIManager {
             print("APIManager의 print. 데이터 서버로 부터 받기 성공")
             print(String(data: result, encoding: .utf8))
             
-        } catch {
+        } catch(let error) {
             print("네트워크 에러")
+            print("===========")
+            print(error)
+            print("============")
             return nil
         }
         
