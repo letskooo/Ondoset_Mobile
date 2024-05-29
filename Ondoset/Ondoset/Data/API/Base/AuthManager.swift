@@ -35,7 +35,9 @@ class AuthManager: RequestInterceptor {
         // URLRequest 헤더 추가. return
         var urlRequest = urlRequest
 //        urlRequest.headers.add(.authorization(accessToken))
-        urlRequest.headers.add(.authorization(bearerToken: accessToken))
+//        urlRequest.headers.add(.authorization(bearerToken: accessToken))
+        
+        urlRequest.headers.add(.authorization(bearerToken: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im1lbWJlcjEiLCJtZW1iZXJJZCI6MSwiaWF0IjoxNzE2NDY3NTM1LCJleHAiOjE3MTY1NTM5MzV9.uRQNtBEEKonK7wWynSYkhrebiQfm-ObAAb13hEZ_TIw"))
         
         completion(.success(urlRequest))
         
