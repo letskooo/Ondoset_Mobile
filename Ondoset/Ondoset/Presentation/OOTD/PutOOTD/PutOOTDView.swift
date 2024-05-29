@@ -66,6 +66,12 @@ struct PutOOTDView: View {
     @State var ootdLat: Double = 91.0
     @State var ootdLon: Double = 91.0
     
+    // OOTD 날짜가 과거가 아닌 경우 나타나는 Alert
+    @State var showDayAlert: Bool = false
+    
+    // 나간 시간이 들어온 시간보다 이후인 경우 나타나는 Alert
+    @State var showTimeAlert: Bool = false
+    
     @Environment(\.dismiss) private var dismiss
     
     @StateObject var putOOTDVM: PutOOTDViewModel = .init()
@@ -619,16 +625,43 @@ struct PutOOTDView: View {
                 
                 Task {
                     
-                    // OOTD 수정하기 API 호출
-                    let result = await putOOTDVM.putOOTD(ootdId: ootdId, isOOTDImageSelected: isOOTDImageSelected)
-                    
-                    // 성공했다면 뒤로가기
-                    if result {
-                        dismiss()
+                    if !isDatePast(year: pickerYear, month: pickerMonth, day: pickerDay) {
+                        
+                        showDayAlert = true
+                        
+                    } else if pickerDepartTime >= pickerArrivalTime {
+                        
+                        showTimeAlert = true
+                        
+                    } else {
+                        
+                        // OOTD 수정하기 API 호출
+                        let result = await putOOTDVM.putOOTD(ootdId: ootdId, isOOTDImageSelected: isOOTDImageSelected)
+                        
+                        // 성공했다면 뒤로가기
+                        if result {
+                            dismiss()
+                        }
                     }
                 }
             }
             .padding(.bottom, 20)
+            .alert("등록 날짜는 오늘보다 과거여야 합니다!", isPresented: $showDayAlert) {
+                
+                Button {
+                    showDayAlert = false
+                } label: {
+                    Text("확인")
+                }
+            }
+            .alert("나간 시간은 들어온 시간보다 더 이전이어야 합니다!", isPresented: $showTimeAlert) {
+                
+                Button {
+                    showTimeAlert = false
+                } label: {
+                    Text("확인")
+                }
+            }
             
             Spacer()
         }

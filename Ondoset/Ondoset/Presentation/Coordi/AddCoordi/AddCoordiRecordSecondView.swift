@@ -47,6 +47,10 @@ struct AddCoordiRecordSecondView: View {
     @Binding var lat: Double                // 위도
     @Binding var lon: Double                // 경도
     
+    // 나간 시간이 들어온 시간보다 이후로 설정된 경우 나타나는 Alert창
+    @State var showAlert: Bool = false
+    
+    
     @Environment(\.dismiss) private var dismiss
 
     let columns: [GridItem] = Array(repeating: .init(.fixed((screenWidth - 36)/3), spacing: 10), count: 3)
@@ -102,19 +106,35 @@ struct AddCoordiRecordSecondView: View {
                     // 코디 기록 등록 API 호출
                     Task {
                         
-                        let clothesList = addCoordiRecordVM.coordiClothesList.map { $0.clothesId }
-                        
-                        let result = await addCoordiRecordVM.setCoordiRecord(lat: lat, lon: lon, region: locationSearchText, departTime: departTime, arrivalTime: arrivalTime, clothesList: clothesList)
+                        if pickerDepartTime < pickerArrivalTime {
                             
-                        if result {
+                            let clothesList = addCoordiRecordVM.coordiClothesList.map { $0.clothesId }
                             
-                            isAddCoordiRecordSheetPresented = false
+                            let result = await addCoordiRecordVM.setCoordiRecord(lat: lat, lon: lon, region: locationSearchText, departTime: departTime, arrivalTime: arrivalTime, clothesList: clothesList)
+                                
+                            if result {
+                                
+                                isAddCoordiRecordSheetPresented = false
+                                
+                                /// 코디 추가 후 코디 다시 조회하기
+                                await coordiMainVM.getCoordiRecord(year: coordiYear, month: coordiMonth)
+                            }
+                        } else {
                             
-                            /// 코디 추가 후 코디 다시 조회하기
-                            await coordiMainVM.getCoordiRecord(year: coordiYear, month: coordiMonth)
+                            showAlert = true
+                            
                         }
                     }
                 }
+                .alert("나간 시간은 들어온 시간보다 더 이전이어야 합니다!", isPresented: $showAlert) {
+                    
+                    Button {
+                        showAlert = false
+                    } label: {
+                        Text("확인")
+                    }
+                }
+                
                 
             }
             .padding(.horizontal, 16)

@@ -34,6 +34,9 @@ struct RegisterGoOutTimeView: View {
     
     @State var isSaveBtnAvailable: Bool = true
     
+    // 나간 시간이 들어온 시간보다 이후로 설정된 경우 나타나는 Alert창
+    @State var showAlert: Bool = false
+    
     @StateObject var putGoOutTimeVM: PutGoOutTimeViewModel = .init()
     @EnvironmentObject var coordiMainVM: CoordiMainViewModel
     
@@ -353,6 +356,14 @@ struct RegisterGoOutTimeView: View {
                         await coordiMainVM.getCoordiRecord(year: selectedYear, month: selectedMonth)
                         
                     }
+                }
+            }
+            .alert("나간 시간은 들어온 시간보다 더 이전이어야 합니다!", isPresented: $showAlert) {
+                
+                Button {
+                    showAlert = false
+                } label: {
+                    Text("확인")
                 }
             }
             
