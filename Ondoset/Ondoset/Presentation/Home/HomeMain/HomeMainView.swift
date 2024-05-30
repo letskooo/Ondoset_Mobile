@@ -58,8 +58,9 @@ struct HomeMainView: View {
             
         })
         .sheet(isPresented: $homeMainVM.presentAIRecomm) {
-            NavigationView { AICoordiRecommendView(viewType: homeMainVM.presentSheetViewType, AICoordiRecommendVM: .init(clothesData: homeMainVM.selectedClothTemplates ?? [.init(name: "")])) }
-        }
+                NavigationView { AICoordiRecommendView(viewType: homeMainVM.presentSheetViewType, AICoordiRecommendVM: .init(clothesData: homeMainVM.selectedClothTemplates ?? [.init(name: "")], presentingDate: homeMainVM.homeViewPresentingDate)) }
+            }
+
         .sheet(isPresented: $isLocationViewSheetPresented) {
             
             LocationView(locationSearchText: $locationSearchText, lat: $homeMainVM.homeViewLocate.latitude, lon: $homeMainVM.homeViewLocate.longitude, isLocationViewSheetPresented: $isLocationViewSheetPresented)
