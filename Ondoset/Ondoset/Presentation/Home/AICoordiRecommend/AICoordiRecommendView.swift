@@ -128,7 +128,7 @@ struct AICoordiRecommendView: View {
 }
 
 #Preview {
-    AICoordiRecommendView(viewType: .MyCoordi, AICoordiRecommendVM: .init(clothesData: ClothTemplate.mockData()))
+    AICoordiRecommendView(viewType: .MyCoordi, AICoordiRecommendVM: .init(clothesData: ClothTemplate.mockData(), presentingDate: Date()))
 }
 
 

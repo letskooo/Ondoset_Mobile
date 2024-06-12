@@ -8,6 +8,10 @@
 import Foundation
 import Alamofire
 
+enum APIError: Error {
+    case authenticationRetryNeeded
+}
+
 final class APIManager {
     
     static let shared = APIManager()
@@ -33,7 +37,26 @@ final class APIManager {
             print("APIManager의 print. 데이터 서버로 부터 받기 성공")
             print(String(data: result, encoding: .utf8))
             
+            if let jsonString = String(data: result, encoding: .utf8), let jsonData = jsonString.data(using: .utf8) {
+                
+                do {
+                    
+                    if let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+                        
+                        if let code = jsonObject["code"] as? String {
+                            
+                            if code == "auth_4010" {
+                                
+                                UserDefaults.standard.setValue(false, forKey: "isLogin")
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            
         } catch(let error) {
+            
             print("네트워크 에러")
             print("===========")
             print(error)
@@ -44,19 +67,28 @@ final class APIManager {
         do {
             
             let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
-                        
-            if decodedData.code == Constants.successResponseCode {
-                print(decodedData.code)
-                print(decodedData.message)
-                print(decodedData.result)
-
-                return decodedData.result
-            } else {
-                
-                print(decodedData.code)
-                print(decodedData.message)
-                return nil
-            }
+                   
+            return decodedData.result
+            
+//            switch decodedData.code {
+//                
+//            case Constants.successResponseCode:
+//                print("디코딩 코드: \(decodedData.code)")
+//                print(decodedData.message)
+//                print(decodedData.result)
+//                
+//                return decodedData.result
+//                
+//            case "auth_4010":
+//                
+//                throw APIError.authenticationRetryNeeded
+//                
+//            default:
+//                
+//                print("Error: \(decodedData.message)")
+//                return nil
+//                
+//            }
           
         } catch {
             print("디코딩 에러=== 데이터는 서버로부터 받아왔으나 디코딩 실패")

@@ -23,8 +23,9 @@ final class AICoordiRecommendViewModel: ObservableObject {
     @Published var currentDate: Date  = .now
     @Published var isSaveAvailable: Bool = false
     
-    init(clothesData: [ClothTemplate]) {
+    init(clothesData: [ClothTemplate], presentingDate: Date) {
         self.clothesData = clothesData
+        self.currentDate = presentingDate
         
         Task {
             await self.fetchSatisfactionPrediction()

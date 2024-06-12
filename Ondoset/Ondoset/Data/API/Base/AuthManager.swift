@@ -35,9 +35,9 @@ class AuthManager: RequestInterceptor {
         // URLRequest 헤더 추가. return
         var urlRequest = urlRequest
 //        urlRequest.headers.add(.authorization(accessToken))
-//        urlRequest.headers.add(.authorization(bearerToken: accessToken))
+        urlRequest.headers.add(.authorization(bearerToken: accessToken))
         
-        urlRequest.headers.add(.authorization(bearerToken: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im1lbWJlcjEiLCJtZW1iZXJJZCI6MSwiaWF0IjoxNzE2NDY3NTM1LCJleHAiOjE3MTY1NTM5MzV9.uRQNtBEEKonK7wWynSYkhrebiQfm-ObAAb13hEZ_TIw"))
+//        urlRequest.headers.add(.authorization(bearerToken: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im1lbWJlcjEiLCJtZW1iZXJJZCI6MSwiaWF0IjoxNzE2NDY3NTM1LCJleHAiOjE3MTY1NTM5MzV9.uRQNtBEEKonK7wWynSYkhrebiQfm-ObAAb13hEZ_TIw"))
         
         completion(.success(urlRequest))
         
@@ -46,15 +46,8 @@ class AuthManager: RequestInterceptor {
     /// Request 요청이 실패했을 때, 재시도 여부 결정
     
     func retry(_ request: Request, for session: Session, dueTo error: any Error, completion: @escaping (RetryResult) -> Void) {
-        
-        print("retry 호출되고 있어용~~~~")
-        
-//         HTTP 응답 코드 확인, 재시도 여부 결정
-//         401 상태 코드가 아니라면 doNotRetryWithError와 함께 재시도 없이 에러내용 리턴
-//         즉 401인 경우에만 재시도
-        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 else {
-            
-            print("retry 호출되고 있어용~~~~")
+
+        guard let apiError = error as? APIError, apiError == .authenticationRetryNeeded else {
             
             completion(.doNotRetryWithError(error))
             
@@ -62,10 +55,6 @@ class AuthManager: RequestInterceptor {
             
             return
         }
-        
-        print("retry 호출되고 있어용~~~~")
-        print("=================401이어서 retry중================")
-        
         
         // 해당 경로로 accessToken 재발급 요청
         // 현재 임시 URL. 추후 수정 필요
@@ -79,9 +68,7 @@ class AuthManager: RequestInterceptor {
             DispatchQueue.main.async {
                 UserDefaults.standard.set(false, forKey: "isLogin")
             }
-//            
-//            // 이것처럼 처리도 가능
-//            completion(.doNotRetryWithError(APIError.customError("키체인 토큰 조회 실패. 로그인이 필요합니다.")))
+
             return
         }
         
