@@ -31,10 +31,6 @@ class MyPageMainViewModel: ObservableObject {
         
         if let profile = await ootdUseCase.readMyProfile() {
             
-            print("================")
-            print(profile.profileImage)
-            print("======")
-            
             DispatchQueue.main.async {
                 self.memberProfile = profile
                 self.myOOTDList = profile.ootdList

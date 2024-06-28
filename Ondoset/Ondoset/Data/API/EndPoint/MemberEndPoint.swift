@@ -18,6 +18,7 @@ enum MemberEndPoint {
     case withdrawMember                                       // 회원탈퇴
     case updateNickname(nickname: UpdateNicknameRequestDTO)   // 닉네임 수정
     case updateProfileImage(profileImage: Data)            // 프로필 이미지 수정
+    case reissuanceToken(tokenReissuanceRequestDTO: TokenReissuanceRequestDTO)
 }
 
 extension MemberEndPoint: EndPoint {
@@ -47,6 +48,8 @@ extension MemberEndPoint: EndPoint {
             return "/nickname"
         case .updateProfileImage(profileImage: let profileImage):
             return "/profile-pic"
+        case .reissuanceToken:
+            return "/jwt"
         }
     }
     
@@ -55,7 +58,7 @@ extension MemberEndPoint: EndPoint {
         switch self {
         case .checkIdDuplicate, .checkNicknameDuplicate ,.withdrawMember:
             return .get
-        case .signUpMember, .signInMember, .saveOnboarding, .updateNickname, .updateProfileImage:
+        case .signUpMember, .signInMember, .saveOnboarding, .updateNickname, .updateProfileImage, .reissuanceToken:
             return .post
         }
     }
@@ -94,14 +97,18 @@ extension MemberEndPoint: EndPoint {
             
         case let .updateProfileImage(profileImage):
             return .uploadImage(image: profileImage)
+            
+        case .reissuanceToken(tokenReissuanceRequestDTO: let dto):
+            return .requestJson(parameters: dto)
         }
+        
     }
     
     var headers: HTTPHeaders? {
         
         switch self {
             
-        case .signUpMember, .signInMember, .saveOnboarding, .updateNickname:
+        case .signUpMember, .signInMember, .saveOnboarding, .updateNickname, .reissuanceToken:
             return ["Content-Type": "application/json"]
         case .updateProfileImage:
             return ["Content-Type": "multipart/form-data"]
