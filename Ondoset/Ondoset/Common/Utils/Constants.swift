@@ -18,10 +18,10 @@ struct Constants {
 }
 
 // 학과서버 죽으면 false, 쓸 수 있으면 true
-let isAvailableUnivURL: Bool = true
+let isAvailableUnivURL: Bool = false
 
 let univURL = "http://ceprj.gachon.ac.kr:60019"
-let ec2URL = "http://3.38.192.49:8080"
+let ec2URL = "http://ec2-43-201-46-189.ap-northeast-2.compute.amazonaws.com:8080"
 
 
 let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
