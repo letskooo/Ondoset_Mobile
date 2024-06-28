@@ -7,11 +7,17 @@
 
 import Foundation
 
+struct TokenReissuanceRequestDTO: Encodable {
+    
+    let accessToken: String
+    let refreshToken: String
+}
+
 // AccessToken 재발급 응답 DTO
 struct TokenReissuanceResponseDTO: Decodable {
     
     let accessToken: String
-    let refreshToken: String?
+    let refreshToken: String
 }
 
 // 아이디 중복 체크 응답 DTO
