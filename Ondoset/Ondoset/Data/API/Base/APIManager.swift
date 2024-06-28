@@ -18,90 +18,110 @@ final class APIManager {
     
     private init () {}
     
-    func requestData(endPoint: EndPoint) async -> DataResponse<Data, AFError> {
-        
-        let request = makeDataRequest(endPoint: endPoint)
-        return await request.serializingData().response
-    }
-    
-    // MARK: 기존 BaseResponse의 Result를 반환하는 메소드
+    // MARK: Repository에서 호출하는 메소드
     func performRequest<T: Decodable>(endPoint: EndPoint, decoder: DataDecoder = JSONDecoder()) async -> T? {
         
         var result: Data = .init()
         
         do {
             let request = await self.requestData(endPoint: endPoint)
-            
             result = try request.result.get()
-            
-            print("APIManager의 print. 데이터 서버로 부터 받기 성공")
-            print(String(data: result, encoding: .utf8))
-            
-            if let jsonString = String(data: result, encoding: .utf8), let jsonData = jsonString.data(using: .utf8) {
-                
-                do {
-                    
-                    if let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
-                        
-                        if let code = jsonObject["code"] as? String {
-                            
-                            if code == "auth_4010" {
-                                
-                                UserDefaults.standard.setValue(false, forKey: "isLogin")
-                                
-                            }
-                        }
-                    }
-                }
-            }
-            
-        } catch(let error) {
-            
-            print("네트워크 에러")
-            print("===========")
-            print(error)
-            print("============")
+        } catch {
+            print("====네트워크 에러====")
             return nil
         }
         
         do {
-            
             let decodedData = try result.decode(type: BaseResponse<T>.self, decoder: decoder)
-                   
             return decodedData.result
-            
-//            switch decodedData.code {
-//                
-//            case Constants.successResponseCode:
-//                print("디코딩 코드: \(decodedData.code)")
-//                print(decodedData.message)
-//                print(decodedData.result)
-//                
-//                return decodedData.result
-//                
-//            case "auth_4010":
-//                
-//                throw APIError.authenticationRetryNeeded
-//                
-//            default:
-//                
-//                print("Error: \(decodedData.message)")
-//                return nil
-//                
-//            }
-          
         } catch {
-            print("디코딩 에러=== 데이터는 서버로부터 받아왔으나 디코딩 실패")
-            print(error)
+            print("====디코딩 에러====")
             return nil
         }
+    }
+    
+    // 요청 메소드
+    func requestData(endPoint: EndPoint) async -> DataResponse<Data, AFError> {
+                 
+        var response = await makeDataRequest(endPoint: endPoint).serializingData().response
+        
+        // HTTP Status가 401일 때(토큰이 만료되었을 때)
+        if let statusCode = response.response?.statusCode, statusCode == 401 {
+
+
+            guard await ReissuanceToken() else {
+                
+                // 토큰 갱신에 실패한 경우
+                
+                print("==== 토큰 갱신 실패로 로그아웃 처리됨 ====")
+
+                // 로그아웃 처리
+                DispatchQueue.main.async {
+                    UserDefaults.standard.set(false, forKey: "isLogin")
+                }
+                return response
+            }
+            
+            // 토큰 갱신에 성공한 경우
+            // 원래 요청을 다시 시도
+            response = await makeDataRequest(endPoint: endPoint).serializingData().response
+        }
+        return response
+    }
+    
+    // 토큰 재발급 메소드
+    private func ReissuanceToken() async -> Bool {
+        
+        guard let accessToken = KeyChainManager.readItem(key: "accessToken"),
+              let refreshToken = KeyChainManager.readItem(key: "refreshToken") else {
+            
+            // 기존에 가지고 있던 토큰 확인 후 토큰이 없는 경우 false를 반환함으로써 requestData() 내부에서 로그아웃 처리로 이어짐
+            print("==== 토큰이 없어서 로그아웃 처리됨 ====")
+            return false
+        }
+        
+        // 기존에 가지고 있던 토큰이 있는 경우 토큰 재발급 요청을 보냄
+        let response = await makeDataRequest(endPoint: MemberEndPoint.reissuanceToken(tokenReissuanceRequestDTO: TokenReissuanceRequestDTO(accessToken: accessToken, refreshToken: refreshToken))).serializingData().response
+        
+        // 토큰 재발급 응답이 401일 경우 == RefreshToken도 만료되었을 경우
+        if response.response?.statusCode == 401 {
+            
+            print("====토큰 갱신 실패로 로그아웃 처리됨(APIManager)====")
+
+            // 로그아웃 처리
+            DispatchQueue.main.async {
+                UserDefaults.standard.set(false, forKey: "isLogin")
+            }
+            return false
+        }
+        
+        // 토큰 재발급이 정상적으로 이루어졌을 경우
+        
+        print("리프래시 토큰으로 액세스 토큰 재발급")
+        print("리프래시 토큰도 재발급됨.")
+        
+        var result: Data = .init()
+        
+        do {
+            result = try response.result.get()
+            
+            // 새롭게 발급받은 토큰을 키체인에 저장
+            let decodedData = try result.decode(type: BaseResponse<TokenReissuanceResponseDTO>.self, decoder: JSONDecoder())
+            KeyChainManager.addItem(key: "accessToken", value: decodedData.result.accessToken)
+            KeyChainManager.addItem(key: "refreshToken", value: decodedData.result.refreshToken)
+            
+        } catch {
+            
+            print("토큰 재발급 후 저장 과정에서 에러!")
+        }
+        
+        return true
     }
 }
 
 extension APIManager {
     
     /// Endpoint의 task에 따라 요청 데이터 생성
-    
     private func makeDataRequest(endPoint: EndPoint) -> DataRequest {
         
         switch endPoint.task {
