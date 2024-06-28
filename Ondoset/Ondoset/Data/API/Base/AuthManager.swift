@@ -13,6 +13,8 @@ import Alamofire
 
 class AuthManager: RequestInterceptor {
     
+    static let shared = AuthManager()
+    
     private var retryLimit = 2
     
     /// URLRequest를 보내는 과정을 가로채, Request의 내용을 변경함
@@ -34,11 +36,9 @@ class AuthManager: RequestInterceptor {
         
         // URLRequest 헤더 추가. return
         var urlRequest = urlRequest
-//        urlRequest.headers.add(.authorization(accessToken))
+
         urlRequest.headers.add(.authorization(bearerToken: accessToken))
-        
-//        urlRequest.headers.add(.authorization(bearerToken: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Im1lbWJlcjEiLCJtZW1iZXJJZCI6MSwiaWF0IjoxNzE2NDY3NTM1LCJleHAiOjE3MTY1NTM5MzV9.uRQNtBEEKonK7wWynSYkhrebiQfm-ObAAb13hEZ_TIw"))
-        
+
         completion(.success(urlRequest))
         
     }
@@ -46,74 +46,24 @@ class AuthManager: RequestInterceptor {
     /// Request 요청이 실패했을 때, 재시도 여부 결정
     
     func retry(_ request: Request, for session: Session, dueTo error: any Error, completion: @escaping (RetryResult) -> Void) {
-
-        guard let apiError = error as? APIError, apiError == .authenticationRetryNeeded else {
+        
+        print("=====retry 호출됨=========")
+        
+        // 횟수를 정해서 재시도를 함
+        // 근데 그거를 넘어서도 안 되면 Alert를 띄둔다
+        // 인터넷 상태 꽝임
+        
+        if request.retryCount < self.retryLimit {
             
-            completion(.doNotRetryWithError(error))
+            print("기존 요청 재시도")
             
-            print("===========401이 아니므로 더 이상 retry 안함================")
+            completion(.retry)
             
-            return
+        } else {
+            
+            completion(.doNotRetry)
+            
+            print("인터넷 연결이 좋지 않음. 잠시 후 다시 시도해주세요.")
         }
-        
-        // 해당 경로로 accessToken 재발급 요청
-        // 현재 임시 URL. 추후 수정 필요
-        
-        guard let url = URL(string: Constants.serverURL+"/member/jwt") else { return }
-        
-        guard let accessToken = KeyChainManager.readItem(key: "accessToken"),
-              let refreshToken = KeyChainManager.readItem(key: "refreshToken") else {
-            
-            // 토큰 없는 경우 로그아웃 처리
-            DispatchQueue.main.async {
-                UserDefaults.standard.set(false, forKey: "isLogin")
-            }
-
-            return
-        }
-        
-        // refresh만 받으면 그거에 맞게 수정
-        let parameters: Parameters = [
-            
-            "accessToken" : accessToken,
-            "refreshToken" : refreshToken
-        ]
-        
-        AF.request(url, method: .post, parameters: parameters,
-                   encoding: JSONEncoding.default).validate().responseDecodable(of: TokenReissuanceResponseDTO.self) { response in
-            
-            switch response.result {
-                
-                // 재발급 성공
-                case .success(let result):
-                    
-                    // 재발급된 토큰을 키체인에 저장
-                    KeyChainManager.addItem(key: "accessToken", value: result.accessToken)
-                    //KeyChainManager.addItem(key: "refreshToken", value: result.refreshToken)
-                    
-                    // 기존에 보내고자 했던 요청 재시도
-                    // 재시도 횟수 내일 때만 재시도
-                    request.retryCount < self.retryLimit ?
-                    completion(.retry) : completion(.doNotRetry)
-    //                completion(.retry) : completion(.doNotRetryWithError(APIError.customError("재시도 횟수 초과"))) //
-                    
-                // 재발급 실패(refreshToken 만료)
-                case .failure(let error):
-                    // 토큰 갱신 실패 시 에러 처리
-                    print(error)
-                    
-                    // 로그인 화면으로 이동
-                    DispatchQueue.main.async {
-                        UserDefaults.standard.set(false, forKey: "isLogin")
-                     
-                    }
-                    
-                    // 이것도 가능
-                    completion(.doNotRetryWithError(error))
-                    print("토큰 갱신 에러. 로그인 필요")
-                }
-                
-            }
-//            
-        }
+    }
 }
