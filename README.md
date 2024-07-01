@@ -23,6 +23,10 @@
 - 마이페이지 화면 및 기능
 - 재활용을 위한 뷰 컴포넌트 구현
 
+## 📱 주요 개발 화면
+![주요 개발 화면](https://github.com/letskooo/Ondoset_Mobile/blob/develop/image%2053.png)
+
+
 ## 📁 디렉토리 구조
 
 ```plaintext
